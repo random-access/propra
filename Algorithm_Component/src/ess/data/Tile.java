@@ -1,17 +1,18 @@
 package ess.data;
 
 public class Tile {
+	
+	private String ident;
+	private int width, height;
 
-	private int id, width, height;
-
-	public Tile(int id, int width, int height) {
-		this.id = id;
+	public Tile(String ident, int width, int height) {
+		this.ident = ident;
 		this.width = width;
 		this.height = height;
 	}
 	
-	public int getId() {
-		return id;
+	public String getIdent() {
+		return ident;
 	}
 
 	public int getWidth() {
@@ -36,7 +37,7 @@ public class Tile {
 
 	@Override
 	public String toString() {
-		return "Tile [id=" + id + ", width=" + width + ", height=" + height
+		return "Tile [ident=" + ident + ", width=" + width + ", height=" + height
 				+ "]";
 	}
 

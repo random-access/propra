@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RoemischerVerbund length2="140" length1="160">
+  <Fliesentypen>
+    <Fliesentyp ident="_0">
+      <length1>40</length1>
+      <length2>60</length2>
+    </Fliesentyp>
+    <Fliesentyp ident="_1">
+      <length1>60</length1>
+      <length2>40</length2>
+    </Fliesentyp>
+    <Fliesentyp ident="_2">
+      <length1>20</length1>
+      <length2>40</length2>
+    </Fliesentyp>
+    <Fliesentyp ident="_3">
+      <length1>40</length1>
+      <length2>20</length2>
+    </Fliesentyp>
+    <Fliesentyp ident="_4">
+      <length1>40</length1>
+      <length2>40</length2>
+    </Fliesentyp>
+  </Fliesentypen>
+  <Verlegungsplan>
+    <Platte fliesenId="_0">
+      <Nr>0</Nr>
+    </Platte>
+    <Platte fliesenId="_2">
+      <Nr>1</Nr>
+    </Platte>
+    <Platte fliesenId="_1">
+      <Nr>2</Nr>
+    </Platte>
+    <Platte fliesenId="_0">
+      <Nr>3</Nr>
+    </Platte>
+    <Platte fliesenId="_4">
+      <Nr>4</Nr>
+    </Platte>
+    <Platte fliesenId="_3">
+      <Nr>5</Nr>
+    </Platte>
+    <Platte fliesenId="_3">
+      <Nr>6</Nr>
+    </Platte>
+    <Platte fliesenId="_2">
+      <Nr>7</Nr>
+    </Platte>
+    <Platte fliesenId="_1">
+      <Nr>8</Nr>
+    </Platte>
+    <Platte fliesenId="_0">
+      <Nr>9</Nr>
+    </Platte>
+    <Platte fliesenId="_3">
+      <Nr>10</Nr>
+    </Platte>
+    <Platte fliesenId="_1">
+      <Nr>11</Nr>
+    </Platte>
+    <Platte fliesenId="_2">
+      <Nr>12</Nr>
+    </Platte>
+    <Platte fliesenId="_4">
+      <Nr>13</Nr>
+    </Platte>
+  </Verlegungsplan>
+</RoemischerVerbund>

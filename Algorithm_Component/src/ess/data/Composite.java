@@ -1,24 +1,31 @@
 package ess.data;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
-import ess.data.utils.SurfaceUtils;
+import ess.algorithm.utils.SurfaceUtils;
+import ess.algorithm.utils.TileUtils;
 
 public class Composite {
 
-	private final HashMap<Integer, Tile> tileSorts; //TODO is this the best data structure??
-	private final int[][] surface;
+	private final ArrayList<Tile> tiles;
+	private final String[][] surface;
 
-	public Composite(int [][] surface, HashMap<Integer, Tile> tileSorts) {
-		this.tileSorts = tileSorts;
+	public Composite(String[][] surface, ArrayList<Tile> tiles) {
+		this.tiles = tiles;
 		this.surface = surface;
 	}
 
-	public HashMap<Integer, Tile> getTileSorts() {
-		return tileSorts;
+	public ArrayList<Tile> getTiles() {
+		return tiles;
+	}
+	
+	public void sortTiles(Comparator<Tile> comparator) {
+		Collections.sort(tiles, comparator);
 	}
 
-	public int[][] getSurface() {
+	public String[][] getSurface() {
 		return surface;
 	}
 
@@ -32,9 +39,10 @@ public class Composite {
 
 	@Override
 	public String toString() {
-		return "Composite "
-				+ "\nTileSorts: " + tileSorts
-				+ "\nSurface: "
+		return "Composite\n"
+				+ "TileSorts: " 
+				+ "\n" + TileUtils.getTileListAsString(tiles)
+				+ "Surface: "
 				+ "\n" + SurfaceUtils.getSurfaceAsString(this.surface);
 	}
 

@@ -9,10 +9,10 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
+import ess.algorithm.utils.SurfaceUtils;
+import ess.algorithm.utils.TileUtils;
 import ess.data.Composite;
 import ess.data.Tile;
-import ess.data.utils.SurfaceUtils;
-import ess.data.utils.TileSortUtils;
 
 public class Composite_Test {
 	
@@ -22,30 +22,30 @@ public class Composite_Test {
 
 	@Before
 	public void buildTestComposite1() {
-		HashMap<Integer, Tile> tileSorts = new HashMap<Integer, Tile>();
-		tileSorts.put(0, new Tile(0, 20, 40));
-		tileSorts.put(1, new Tile(1, 20, 20));
-		tileSorts.put(2, new Tile(2, 60, 40));
-		tileSorts.put(3, new Tile(3, 40, 20));
-		tileSorts.put(4, new Tile(4, 40, 40));
-		tileSorts.put(5, new Tile(5, 40, 60));
+		ArrayList<Tile> tileSorts = new ArrayList<Tile>();
+		tileSorts.add(new Tile("_0", 20, 40));
+		tileSorts.add(new Tile("_1", 20, 20));
+		tileSorts.add(new Tile("_2", 60, 40));
+		tileSorts.add(new Tile("_3", 40, 20));
+		tileSorts.add(new Tile("_4", 40, 40));
+		tileSorts.add(new Tile("_5", 40, 60));
 		
-		int [][] surface = SurfaceUtils.initSurface(width1, height1);
+		String[][] surface = SurfaceUtils.initSurface(width1, height1);
 		
 		composite1 = new Composite(surface, tileSorts);
 	}
 	
 	@Before
 	public void buildTestComposite2() {
-		HashMap<Integer, Tile> tileSorts = new HashMap<Integer, Tile>();
-		tileSorts.put(0, new Tile(0, 20, 40));
-		tileSorts.put(4, new Tile(4, 20, 20));
-		tileSorts.put(1, new Tile(1, 60, 40));
-		tileSorts.put(2, new Tile(2, 40, 20));
-		tileSorts.put(3, new Tile(3, 40, 40));
-		tileSorts.put(5, new Tile(5, 40, 60));
+		ArrayList<Tile> tileSorts = new ArrayList<Tile>();
+		tileSorts.add(new Tile("_0", 20, 40));
+		tileSorts.add(new Tile("_4", 20, 20));
+		tileSorts.add(new Tile("_1", 60, 40));
+		tileSorts.add(new Tile("_2", 40, 20));
+		tileSorts.add(new Tile("_3", 40, 40));
+		tileSorts.add(new Tile("_5", 40, 60));
 		
-		int [][] surface = SurfaceUtils.initSurface(width2, height2);
+		String[][] surface = SurfaceUtils.initSurface(width2, height2);
 		
 		composite2 = new Composite(surface, tileSorts);
 	}
@@ -67,18 +67,18 @@ public class Composite_Test {
 		assertEquals(c2.getWidth(), width2);
 	}
 
-	/* @Test
+	@Test
 	public void testTileSortsHeightComparator() {
 		// Arrange (set all necessary preconditions and inputs.)
 		Composite c = composite1;
 
 		// Act (on the object or method under test.)
-		c.sortTiles(TileSortUtils.getHeightComparator());
+		c.sortTiles(TileUtils.getHeightComparator());
 
 		// Assert (that the expected results have occurred.))
-		for (int i = 0; i < c.getTileSorts().size()-1; i++) {
-			Tile currentTile = c.getTileSorts().get(i);
-			Tile nextTile = c.getTileSorts().get(i + 1);
+		for (int i = 0; i < c.getTiles().size()-1; i++) {
+			Tile currentTile = c.getTiles().get(i);
+			Tile nextTile = c.getTiles().get(i + 1);
 			assertTrue(currentTile.getHeight() <= nextTile.getHeight());
 		}
 	}
@@ -89,12 +89,12 @@ public class Composite_Test {
 		Composite c = composite1;
 
 		// Act (on the object or method under test.)
-		c.sortTiles(TileSortUtils.getWidthComparator());
+		c.sortTiles(TileUtils.getWidthComparator());
 
 		// Assert (that the expected results have occurred.))
-		for (int i = 0; i < c.getTileSorts().size() - 1; i++) {
-			Tile currentTile = c.getTileSorts().get(i);
-			Tile nextTile = c.getTileSorts().get(i + 1);
+		for (int i = 0; i < c.getTiles().size() - 1; i++) {
+			Tile currentTile = c.getTiles().get(i);
+			Tile nextTile = c.getTiles().get(i + 1);
 			assertTrue(currentTile.getWidth() <= nextTile.getWidth());
 		}
 	}
@@ -105,15 +105,14 @@ public class Composite_Test {
 		Composite c = composite1;
 
 		// Act (on the object or method under test.)
-		c.sortTiles(TileSortUtils.getAreaComparator());
+		c.sortTiles(TileUtils.getAreaComparator());
 
 		// Assert (that the expected results have occurred.))
-		for (int i = 0; i < c.getTileSorts().size() - 1; i++) {
-			Tile currentTile = c.getTileSorts().get(i);
-			Tile nextTile = c.getTileSorts().get(i + 1);
+		for (int i = 0; i < c.getTiles().size() - 1; i++) {
+			Tile currentTile = c.getTiles().get(i);
+			Tile nextTile = c.getTiles().get(i + 1);
 			assertTrue(currentTile.getArea() <= nextTile.getArea());
 		}
-		System.out.println();
-	} */
+	} 
 
 }

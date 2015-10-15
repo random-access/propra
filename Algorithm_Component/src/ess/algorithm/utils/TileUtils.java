@@ -1,13 +1,24 @@
-package ess.data.utils;
+package ess.algorithm.utils;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 
 import ess.data.Tile;
 
-public class TileSortUtils {
+public class TileUtils {
 
 	// prevent instantiation
-	private TileSortUtils() {}
+	private TileUtils() {}
+	
+	public static Tile findTileByIdent(ArrayList<Tile> tiles, String ident) {
+		for (Tile t : tiles) {
+			if (ident.equals(t.getIdent())) {
+				return t;
+			}
+		}
+		return null; // TODO
+	}
 	
 	
 	public static Comparator<Tile> getHeightComparator() {
@@ -56,6 +67,14 @@ public class TileSortUtils {
 				}
 			}
 		};
+	}
+	
+	public static String getTileListAsString(Collection<Tile> tiles) {
+		StringBuilder sb = new StringBuilder();
+		for (Tile t : tiles) {
+			sb.append(t).append("\n");
+		}
+		return sb.toString();
 	}
 
 }
