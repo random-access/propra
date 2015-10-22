@@ -1,13 +1,26 @@
 package ess.io;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.input.sax.XMLReaders;
 
 import ess.data.Composite;
 import ess.data.Tile;
@@ -37,11 +50,10 @@ public class XMLDataImporter {
 	 * @throws InvalidTilePosException
 	 *             the invalid tile pos exception
 	 */
-	public Composite importComposite(String pathToSource) throws DataExchangeException {
-		try {
-			File xml = getFile(pathToSource);
-			SAXBuilder saxBuilder = new SAXBuilder();
-			Document doc = saxBuilder.build(xml);
+	public Composite importComposite(String xmlSrc) throws DataExchangeException {
+		try (InputStream is = transform (xmlSrc, XMLValues.PATH_TO_DTD)){
+			SAXBuilder sb = new SAXBuilder(XMLReaders.DTDVALIDATING);
+			Document doc = sb.build(is);
 			Element rootElement = doc.getRootElement();
 			int cols = convertSize(rootElement.getAttributeValue(XMLValues.LENGTH_1));
 			int rows = convertSize(rootElement.getAttributeValue(XMLValues.LENGTH_2));
@@ -53,12 +65,24 @@ public class XMLDataImporter {
 		}
 	}
 
-	private File getFile(String pathToSource) throws FileNotFoundException {
-		File xml = new File(pathToSource);
-		if (xml.exists() && xml.isFile()) {
-			return xml;
-		} else {
-			throw new FileNotFoundException("File \"" + pathToSource + "\" doesn't exist or is a directory!");
+	private InputStream transform(String xmlSrc, String pathToDTD) throws FileNotFoundException, TransformerException {
+		locateFiles(xmlSrc, pathToDTD);
+		TransformerFactory tf = TransformerFactory.newInstance();
+		Transformer tr = tf.newTransformer();
+		tr.setOutputProperty(
+			    OutputKeys.DOCTYPE_SYSTEM, pathToDTD);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		Result res = new StreamResult(baos);
+		tr.transform(new StreamSource(xmlSrc), res);
+		return new ByteArrayInputStream(baos.toByteArray());
+	}
+	
+	private void locateFiles(String xmlSrc, String pathToDTD) throws FileNotFoundException {
+		if (!Files.isRegularFile(Paths.get(xmlSrc))) {
+			throw new FileNotFoundException(xmlSrc + " not found or not a directory");
+		}
+		if (!Files.isReadable(Paths.get(pathToDTD))) {
+			throw new FileNotFoundException("DTD validation file " + pathToDTD + " not found or not readable");
 		}
 	}
 
@@ -93,4 +117,9 @@ public class XMLDataImporter {
 		return externalSize / XMLValues.CONVERSION_UNIT;
 	}
 
+	public static void main(String[] args) throws DataExchangeException {
+		XMLDataImporter im = new XMLDataImporter();
+		Composite c = im.importComposite("/home/monika/Schreibtisch/test1.xml");
+		System.out.println(c);
+	}
 }

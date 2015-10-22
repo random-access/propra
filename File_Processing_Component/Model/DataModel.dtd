@@ -1,21 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
- 	<!ELEMENT RoemischerVerbund (Fliesentypen,Verlegungsplan)>
- 	<!ATTLIST RoemischerVerbund 
- 		length CDATA #REQUIRED
- 		width CDATA #REQUIRED 
- 	>
- 
- 	<!ELEMENT Fliesentypen (Fliesentyp*)>
- 	<!ELEMENT Fliesentyp (length, width)>
- 	<!ATTLIST Fliesentyp 
- 		ident ID #REQUIRED
- 	>
- 	<!ELEMENT length (#PCDATA)>
- 	<!ELEMENT width (#PCDATA)>
- 
- 	<!ELEMENT Verlegungsplan (Platte*)>
- 	<!ELEMENT Platte (Nr)>
- 	<!ATTLIST Platte 
- 		fliesenId IDREF #REQUIRED
- 	>
- 	<!ELEMENT Nr (#PCDATA)>
+	<!ELEMENT RoemischerVerbund (Fliesentypen,Verlegungsplan?)>
+  	<!ATTLIST RoemischerVerbund 
+  		length1 CDATA #REQUIRED
+  		length2 CDATA #REQUIRED 
+  	>
+  
+  	<!ELEMENT Fliesentypen (Fliesentyp*)>
+  	<!ELEMENT Fliesentyp (length1, length2)>
+  	<!ATTLIST Fliesentyp 
+  		ident ID #REQUIRED
+  	>
+  	<!ELEMENT length1 (#PCDATA)>
+  	<!ELEMENT length2 (#PCDATA)>
+  
+  	<!ELEMENT Verlegungsplan (Platte*)>
+  	<!ELEMENT Platte (Nr)>
+  	<!ATTLIST Platte 
+  		fliesenId IDREF #REQUIRED
+  	>
+  	<!ELEMENT Nr (#PCDATA)>

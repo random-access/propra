@@ -5,6 +5,8 @@ public class XMLValues {
 	// prevents instantiation
 	private XMLValues() {}
 	
+	public static final String PATH_TO_DTD = "Model/DataModel.dtd";
+	
 	public static final int CONVERSION_UNIT = 20;
 	
 	public static final String LENGTH_1 = "length1";

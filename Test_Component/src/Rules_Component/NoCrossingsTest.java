@@ -13,8 +13,6 @@ import ess.data.Tile;
 import ess.data.TileUtils;
 import ess.io.XMLDataExchanger;
 import ess.io.exc.DataExchangeException;
-import ess.rules.IRule;
-import ess.rules.NoCrossingsRule;
 
 public class NoCrossingsTest {
 
@@ -29,7 +27,7 @@ public class NoCrossingsTest {
 		SurfaceUtils.insertTile(surface, TileUtils.findTileByIdent(tiles, "_1"), new Position(0,3));
 		System.out.println(c);
 		
-		IRule rule = new NoCrossingsRule();
+		// IRule rule = new NoCrossingsRule();
 		// boolean validMove = rule.checkCurrentMove(surface, TileUtils.findTileByIdent(c.getTileSorts(), "_4"), new Point(2,2));
 		
 		// assertTrue(validMove);
