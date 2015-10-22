@@ -4,20 +4,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import ess.algorithm.utils.SurfaceUtils;
-import ess.algorithm.utils.TileUtils;
 import ess.data.Composite;
 import ess.data.Tile;
+import ess.data.TileUtils;
 
 public class Composite_Test {
 	
-	private int width1 = 10, height1 = 5;
-	private int width2 = 5, height2 = 2;
+	private int rows1 = 5, cols1 = 10;
+	private int rows2 = 2, cols2 = 5;
 	private Composite composite1, composite2;
 
 	@Before
@@ -30,9 +28,9 @@ public class Composite_Test {
 		tileSorts.add(new Tile("_4", 40, 40));
 		tileSorts.add(new Tile("_5", 40, 60));
 		
-		String[][] surface = SurfaceUtils.initSurface(width1, height1);
+		ArrayList<String> surface = new ArrayList<String>();
 		
-		composite1 = new Composite(surface, tileSorts);
+		composite1 = new Composite(rows1, cols1, surface, tileSorts);
 	}
 	
 	@Before
@@ -45,9 +43,9 @@ public class Composite_Test {
 		tileSorts.add(new Tile("_3", 40, 40));
 		tileSorts.add(new Tile("_5", 40, 60));
 		
-		String[][] surface = SurfaceUtils.initSurface(width2, height2);
+		ArrayList<String> surface = new ArrayList<String>();
 		
-		composite2 = new Composite(surface, tileSorts);
+		composite2 = new Composite(rows2, cols2, surface, tileSorts);
 	}
 	
 	@Test
@@ -61,10 +59,10 @@ public class Composite_Test {
 		// Act (on the object or method under test.)
 		
 		// Assert (that the expected results have occurred.))
-		assertEquals(c1.getHeight(), height1);
-		assertEquals(c1.getWidth(), width1);
-		assertEquals(c2.getHeight(), height2);
-		assertEquals(c2.getWidth(), width2);
+		assertEquals(c1.getRows(), rows1);
+		assertEquals(c1.getCols(), cols1);
+		assertEquals(c2.getRows(), rows2);
+		assertEquals(c2.getCols(), cols2);
 	}
 
 	@Test
@@ -73,13 +71,13 @@ public class Composite_Test {
 		Composite c = composite1;
 
 		// Act (on the object or method under test.)
-		c.sortTiles(TileUtils.getHeightComparator());
+		c.sortTileSorts(TileUtils.getHeightComparator());
 
 		// Assert (that the expected results have occurred.))
-		for (int i = 0; i < c.getTiles().size()-1; i++) {
-			Tile currentTile = c.getTiles().get(i);
-			Tile nextTile = c.getTiles().get(i + 1);
-			assertTrue(currentTile.getHeight() <= nextTile.getHeight());
+		for (int i = 0; i < c.getTileSorts().size()-1; i++) {
+			Tile currentTile = c.getTileSorts().get(i);
+			Tile nextTile = c.getTileSorts().get(i + 1);
+			assertTrue(currentTile.getRows() <= nextTile.getRows());
 		}
 	}
 
@@ -89,13 +87,13 @@ public class Composite_Test {
 		Composite c = composite1;
 
 		// Act (on the object or method under test.)
-		c.sortTiles(TileUtils.getWidthComparator());
+		c.sortTileSorts(TileUtils.getWidthComparator());
 
 		// Assert (that the expected results have occurred.))
-		for (int i = 0; i < c.getTiles().size() - 1; i++) {
-			Tile currentTile = c.getTiles().get(i);
-			Tile nextTile = c.getTiles().get(i + 1);
-			assertTrue(currentTile.getWidth() <= nextTile.getWidth());
+		for (int i = 0; i < c.getTileSorts().size() - 1; i++) {
+			Tile currentTile = c.getTileSorts().get(i);
+			Tile nextTile = c.getTileSorts().get(i + 1);
+			assertTrue(currentTile.getCols() <= nextTile.getCols());
 		}
 	}
 
@@ -105,13 +103,13 @@ public class Composite_Test {
 		Composite c = composite1;
 
 		// Act (on the object or method under test.)
-		c.sortTiles(TileUtils.getAreaComparator());
+		c.sortTileSorts(TileUtils.getAreaComparator());
 
 		// Assert (that the expected results have occurred.))
-		for (int i = 0; i < c.getTiles().size() - 1; i++) {
-			Tile currentTile = c.getTiles().get(i);
-			Tile nextTile = c.getTiles().get(i + 1);
-			assertTrue(currentTile.getArea() <= nextTile.getArea());
+		for (int i = 0; i < c.getTileSorts().size() - 1; i++) {
+			Tile currentTile = c.getTileSorts().get(i);
+			Tile nextTile = c.getTileSorts().get(i + 1);
+			assertTrue(currentTile.getNumberOfFields() <= nextTile.getNumberOfFields());
 		}
 	} 
 

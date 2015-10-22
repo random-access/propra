@@ -1,10 +1,8 @@
-package ess.algorithm.utils;
+package ess.data;
 
 import java.awt.Point;
 
-import ess.algorithm.exception.InvalidTilePosException;
-import ess.data.Tile;
-
+// TODO: Auto-generated Javadoc
 /**
  * This is a helper class, providing some generally useful operations on
  * surfaces, covering:
@@ -22,57 +20,50 @@ import ess.data.Tile;
  *
  */
 public class SurfaceUtils {
+	
+	public static final String INIT_VALUE = "";
 
 	// prevents instantiation
 	private SurfaceUtils() {}
 
 	/**
-	 * Creates an empty surface and initializes it with -1 (assuming there are
-	 * no tile IDs below zero)
+	 * Creates an empty surface and initializes it with "" (assuming there are
+	 * no tile IDs with an empty string). The empty string is easier to compare to other Strings than 
+	 * null, 
 	 * 
-	 * @param width
-	 *            number of columns the surface should have
-	 * @param height
-	 *            number of rows the surface should have
-	 * @return
+	 * TODO find out if empty String is ok 
+	 *
+	 * @param cols            number of columns the surface should have
+	 * @param rows            number of rows the surface should have
+	 * @return the string[][]
 	 */
-	public static String[][] initSurface(int width, int height) {
-		String[][] surface = new String[height][width];
+	public static String[][] initSurface(int rows, int cols) {
+		String[][] surface = new String[rows][cols];
 		for (int i = 0; i < surface.length; i++) {
 			for (int j = 0; j < surface[0].length; j++) {
-				surface[i][j] = null;
+				surface[i][j] = INIT_VALUE;
 			}
 		}
 		return surface;
 	}
 
 	/**
-	 * Inserts a given tile in the given surface at the given position For
-	 * example: insertTile called on an empty surface with 3 rows and 4 columns,
+	 * Inserts a given tile in the given surface at the given position, for
+	 * example: called on an empty surface with 3 rows and 4 columns,
 	 * for a 3x2 tile with insert position (0,2) will produce the following
 	 * result: <br>
 	 * _ _ x x x _ <br>
 	 * _ _ x x x _ <br>
-	 * _ _ _ _ _ _ <br>
-	 * 
-	 * @param surface
-	 *            a 2-dimensional int array, initially filled with -1
-	 * @param tile
-	 *            the tile that should be inserted
-	 * @param position
-	 *            the left upper corner of the position the tile should be
+	 * _ _ _ _ _ _ <br>.
+	 *
+	 * @param surface            a 2-dimensional int array, initially filled with -1
+	 * @param tile            the tile that should be inserted
+	 * @param position            the left upper corner of the position the tile should be
 	 *            inserted
-	 * @throws InvalidTilePosException
 	 */
-	public static void insertTile(String[][] surface, Tile tile, Point position)
-			throws InvalidTilePosException {
-		for (int i = position.x; i < position.x + tile.getHeight(); i++) {
-			for (int j = position.y; j < position.y + tile.getWidth(); j++) {
-				if (i < 0 || j < 0 || i >= surface.length
-						|| j >= surface[0].length) {
-					throw new InvalidTilePosException(
-							"Tile exceeds surface at " + position);
-				}
+	public static void insertTile(String[][] surface, Tile tile, Position position) {
+		for (int i = position.getRow(); i < position.getRow() + tile.getRows(); i++) {
+			for (int j = position.getColumn(); j < position.getColumn() + tile.getCols(); j++) {
 				surface[i][j] = tile.getIdent();
 			}
 		}
@@ -82,7 +73,7 @@ public class SurfaceUtils {
 	 * Returns the next free position in the given surface, that means the next
 	 * position from top left to bottom right with value != -1.<br>
 	 * <br>
-	 * Point p holds the following values:
+	 * {@link Point} p holds the following values:
 	 * <ul>
 	 * <li>p.x: the row, starting with 0 at the top of the array</li>
 	 * <li>p.y: the column, starting with 0 at the left side of the array</li>
@@ -105,24 +96,23 @@ public class SurfaceUtils {
 	 * @param surface
 	 *            a 2-dimensional int array, initially filled with -1
 	 * @return a point with the next free position in the given surface or
-	 *         (-1,-1) if no free position is available anymore
+	 *         null if no free position is available anymore
 	 */
-	public static Point getNextFreePosition(String[][] surface) {
+	public static Position getNextFreePosition(String[][] surface) {
 		for (int i = 0; i < surface.length; i++) {
 			for (int j = 0; j < surface[0].length; j++) {
-				if (surface[i][j] == null) {
-					return new Point(i, j);
+				if (surface[i][j].equals(INIT_VALUE)) {
+					return new Position(i, j);
 				}
 			}
 		}
-		return new Point(-1, -1);
+		return null;
 	}
 
 	/**
-	 * Prints the surface to standard output
-	 * 
-	 * @param surface
-	 *            a 2-dimensional int array
+	 * Prints the surface to standard output.
+	 *
+	 * @param surface            a 2-dimensional int array
 	 */
 	public static void printSurface(String[][] surface) {
 		for (int i = 0; i < surface.length; i++) {
@@ -134,10 +124,9 @@ public class SurfaceUtils {
 	}
 
 	/**
-	 * Returns a human-readable, textual representation of the surface
-	 * 
-	 * @param surface
-	 *            a 2-dimensional int array
+	 * Returns a human-readable, textual representation of the surface.
+	 *
+	 * @param surface            a 2-dimensional int array
 	 * @return a String with the textual representation of the given surface
 	 */
 	public static String getSurfaceAsString(String[][] surface) {

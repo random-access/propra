@@ -1,54 +1,96 @@
 package ess.io;
 
-import java.awt.Point;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
-import ess.algorithm.exception.InvalidTilePosException;
-import ess.algorithm.utils.SurfaceUtils;
-import ess.algorithm.utils.TileUtils;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
+
 import ess.data.Composite;
 import ess.data.Tile;
-import ess.io.exc.InvalidTileSizeException;
+import ess.io.exc.DataExchangeException;
+import ess.io.exc.InvalidSizeValueException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class XMLDataImporter.
+ */
 public class XMLDataImporter {
-	
-	private static final int CONVERSION_UNIT = 20;
 
-	public Composite importComposite(int width, int height, Tile[] tileSorts, String[] surfaceTiles)
-			throws InvalidTileSizeException, InvalidTilePosException {
-		width = getInternalSize(width);
-		height = getInternalSize(height);
-		ArrayList<Tile> tiles = convertTiles(tileSorts);
-		String[][] surface = convertSurface(width, height, surfaceTiles, tiles);
-		return new Composite(surface, tiles);
-	}
-
-	private String[][] convertSurface(int width, int height, String[] surfaceTiles, ArrayList<Tile> tiles)
-			throws InvalidTilePosException {
-		String[][] surface = SurfaceUtils.initSurface(width, height);
-		for (int i = 0; i < surfaceTiles.length; i++) {
-			Point pos = SurfaceUtils.getNextFreePosition(surface);
-			Tile tile = TileUtils.findTileByIdent(tiles, surfaceTiles[i]);
-			SurfaceUtils.insertTile(surface, tile, pos);
+	/**
+	 * Import composite.
+	 *
+	 * @param cols
+	 *            the width
+	 * @param rows
+	 *            the height
+	 * @param tileSorts
+	 *            the tile sorts
+	 * @param surfaceTiles
+	 *            the surface tiles
+	 * @return the composite
+	 * @throws InvalidSizeValueException
+	 *             the invalid tile size exception
+	 * @throws InvalidTilePosException
+	 *             the invalid tile pos exception
+	 */
+	public Composite importComposite(String pathToSource) throws DataExchangeException {
+		try {
+			File xml = getFile(pathToSource);
+			SAXBuilder saxBuilder = new SAXBuilder();
+			Document doc = saxBuilder.build(xml);
+			Element rootElement = doc.getRootElement();
+			int cols = convertSize(rootElement.getAttributeValue(XMLValues.LENGTH_1));
+			int rows = convertSize(rootElement.getAttributeValue(XMLValues.LENGTH_2));
+			ArrayList<Tile> tileSorts = readTileSorts(rootElement);
+			ArrayList<String> surfaceTiles = readSurfaceTiles(rootElement);
+			return new Composite(rows, cols, surfaceTiles, tileSorts);
+		} catch (Exception e) {
+			throw new DataExchangeException(e);
 		}
-		return surface;
 	}
 
-	private ArrayList<Tile> convertTiles(Tile[] tileSorts) throws InvalidTileSizeException {
-		ArrayList<Tile> tiles = new ArrayList<>();
-		for (Tile tile : tileSorts) {
-			tile.setWidth(getInternalSize(tile.getWidth()));
-			tile.setHeight(getInternalSize(tile.getHeight()));
-			tiles.add(tile);
+	private File getFile(String pathToSource) throws FileNotFoundException {
+		File xml = new File(pathToSource);
+		if (xml.exists() && xml.isFile()) {
+			return xml;
+		} else {
+			throw new FileNotFoundException("File \"" + pathToSource + "\" doesn't exist or is a directory!");
+		}
+	}
+
+	private ArrayList<String> readSurfaceTiles(Element rootElement) {
+		Element verlegungsplan = rootElement.getChild(XMLValues.VERLEGUNGSPLAN);
+		List<Element> fliesen = verlegungsplan.getChildren();
+		ArrayList<String> tiles = new ArrayList<>();
+		for (Element elem : fliesen) {
+			tiles.add(elem.getAttributeValue(XMLValues.FLIESEN_ID));
 		}
 		return tiles;
 	}
 
-	private int getInternalSize(int externalSize) throws InvalidTileSizeException {
-		if (externalSize <= 0 || externalSize % CONVERSION_UNIT != 0) {
-			throw new InvalidTileSizeException();
+	private ArrayList<Tile> readTileSorts(Element rootElement) throws InvalidSizeValueException {
+		Element fliesentypen = rootElement.getChild(XMLValues.FLIESENTYPEN);
+		List<Element> fliesen = fliesentypen.getChildren();
+		ArrayList<Tile> tiles = new ArrayList<>();
+		for (Element elem : fliesen) {
+			String id = elem.getAttributeValue(XMLValues.IDENT);
+			int length1 = convertSize(elem.getChildText(XMLValues.LENGTH_1));
+			int length2 = convertSize(elem.getChildText(XMLValues.LENGTH_2));
+			tiles.add(new Tile(id, length1, length2));
 		}
-		return externalSize / CONVERSION_UNIT;
+		return tiles;
+	}
+
+	private int convertSize(String valueToConvert) throws InvalidSizeValueException {
+		int externalSize = Integer.parseInt(valueToConvert);
+		if (externalSize <= 0 || externalSize % XMLValues.CONVERSION_UNIT != 0) {
+			throw new InvalidSizeValueException();
+		}
+		return externalSize / XMLValues.CONVERSION_UNIT;
 	}
 
 }

@@ -2,12 +2,10 @@ package Algorithm_Component;
 
 import static org.junit.Assert.*;
 
-import java.awt.Point;
-
 import org.junit.Test;
 
-import ess.algorithm.exception.InvalidTilePosException;
-import ess.algorithm.utils.SurfaceUtils;
+import ess.data.Position;
+import ess.data.SurfaceUtils;
 import ess.data.Tile;
 
 public class Surface_Utils_Test {
@@ -15,20 +13,15 @@ public class Surface_Utils_Test {
 	@Test
 	public void testInsertTileOrder() {
 		// Arrange (set all necessary preconditions and inputs.)
-		int width = 10;
-		int height = 6;
-		String[][] surface = SurfaceUtils.initSurface(width, height);
+		int cols = 10;
+		int rows = 6;
+		String[][] surface = SurfaceUtils.initSurface(rows, cols);
 
 		// Act (on the object or method under test.)
-		for (int i = 0; i < width * height; i++) {
+		for (int i = 0; i < cols * rows; i++) {
 			Tile t = new Tile("_" + i, 1, 1);
-			Point p = new Point(i / width, i % width);
-			try {
-				SurfaceUtils.insertTile(surface, t, p);
-			} catch (InvalidTilePosException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Position p = new Position(i / cols, i % cols);
+			SurfaceUtils.insertTile(surface, t, p);
 		}
 		SurfaceUtils.printSurface(surface);
 
@@ -36,8 +29,7 @@ public class Surface_Utils_Test {
 		int currentId = 0;
 		for (int i = 0; i < surface.length; i++) {
 			for (int j = 0; j < surface[0].length; j++) {
-				assertEquals("Wrong value in surface. ", surface[i][j],
-						"_" + currentId++);
+				assertEquals("Wrong value in surface. ", surface[i][j], "_" + currentId++);
 			}
 		}
 	}
@@ -49,15 +41,11 @@ public class Surface_Utils_Test {
 		int height = 3;
 		String[][] surface = SurfaceUtils.initSurface(width, height);
 		Tile t1 = new Tile("_2", 1, 3);
-		Point p1 = new Point(0, 1);
+		Position p1 = new Position(0, 1);
 
 		// Act (on the object or method under test.)
-		try {
-			SurfaceUtils.insertTile(surface, t1, p1);
-		} catch (InvalidTilePosException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		SurfaceUtils.insertTile(surface, t1, p1);
+		SurfaceUtils.printSurface(surface);
 
 		// Assert (that the expected results have occurred.))
 		assertEquals(surface[0][1], t1.getIdent());
