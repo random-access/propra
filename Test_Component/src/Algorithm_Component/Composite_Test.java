@@ -21,12 +21,12 @@ public class Composite_Test {
 	@Before
 	public void buildTestComposite1() {
 		ArrayList<Tile> tileSorts = new ArrayList<Tile>();
-		tileSorts.add(new Tile("_0", 20, 40));
+		tileSorts.add(new Tile("_0", 40, 20));
 		tileSorts.add(new Tile("_1", 20, 20));
-		tileSorts.add(new Tile("_2", 60, 40));
-		tileSorts.add(new Tile("_3", 40, 20));
+		tileSorts.add(new Tile("_2", 40, 60));
+		tileSorts.add(new Tile("_3", 20, 40));
 		tileSorts.add(new Tile("_4", 40, 40));
-		tileSorts.add(new Tile("_5", 40, 60));
+		tileSorts.add(new Tile("_5", 60, 40));
 		
 		ArrayList<String> surface = new ArrayList<String>();
 		
@@ -36,12 +36,12 @@ public class Composite_Test {
 	@Before
 	public void buildTestComposite2() {
 		ArrayList<Tile> tileSorts = new ArrayList<Tile>();
-		tileSorts.add(new Tile("_0", 20, 40));
+		tileSorts.add(new Tile("_0", 40, 20));
 		tileSorts.add(new Tile("_4", 20, 20));
-		tileSorts.add(new Tile("_1", 60, 40));
-		tileSorts.add(new Tile("_2", 40, 20));
+		tileSorts.add(new Tile("_1", 40, 60));
+		tileSorts.add(new Tile("_2", 20, 40));
 		tileSorts.add(new Tile("_3", 40, 40));
-		tileSorts.add(new Tile("_5", 40, 60));
+		tileSorts.add(new Tile("_5", 60, 40));
 		
 		ArrayList<String> surface = new ArrayList<String>();
 		
@@ -59,10 +59,10 @@ public class Composite_Test {
 		// Act (on the object or method under test.)
 		
 		// Assert (that the expected results have occurred.))
-		assertEquals(c1.getRows(), rows1);
-		assertEquals(c1.getCols(), cols1);
-		assertEquals(c2.getRows(), rows2);
-		assertEquals(c2.getCols(), cols2);
+		assertEquals(c1.getSurface().getRows(), rows1);
+		assertEquals(c1.getSurface().getCols(), cols1);
+		assertEquals(c2.getSurface().getRows(), rows2);
+		assertEquals(c2.getSurface().getCols(), cols2);
 	}
 
 	@Test

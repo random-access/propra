@@ -1,18 +1,12 @@
 package ess.rules;
 
-import ess.data.Position;
-import ess.data.Tile;
+import ess.data.Composite;
+import ess.data.SurfaceEntry;
 
 public class MaxLineLengthRule implements IRule{
 
 	@Override
-	public boolean checkWholeSurface(String[][] surface) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean checkCurrentMove(String[][] surface, Tile t, Position pos) {
+	public boolean check(Composite c, SurfaceEntry e) {
 		// TODO Auto-generated method stub
 		return false;
 	}

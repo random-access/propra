@@ -88,8 +88,11 @@ public class XMLDataImporter {
 
 	private ArrayList<String> readSurfaceTiles(Element rootElement) {
 		Element verlegungsplan = rootElement.getChild(XMLValues.VERLEGUNGSPLAN);
-		List<Element> fliesen = verlegungsplan.getChildren();
 		ArrayList<String> tiles = new ArrayList<>();
+		if (verlegungsplan == null) {
+			return tiles;
+		}
+		List<Element> fliesen = verlegungsplan.getChildren();
 		for (Element elem : fliesen) {
 			tiles.add(elem.getAttributeValue(XMLValues.FLIESEN_ID));
 		}
@@ -102,9 +105,9 @@ public class XMLDataImporter {
 		ArrayList<Tile> tiles = new ArrayList<>();
 		for (Element elem : fliesen) {
 			String id = elem.getAttributeValue(XMLValues.IDENT);
-			int length1 = convertSize(elem.getChildText(XMLValues.LENGTH_1));
-			int length2 = convertSize(elem.getChildText(XMLValues.LENGTH_2));
-			tiles.add(new Tile(id, length1, length2));
+			int cols = convertSize(elem.getChildText(XMLValues.LENGTH_1));
+			int rows = convertSize(elem.getChildText(XMLValues.LENGTH_2));
+			tiles.add(new Tile(id, rows, cols));
 		}
 		return tiles;
 	}
@@ -115,11 +118,5 @@ public class XMLDataImporter {
 			throw new InvalidSizeValueException();
 		}
 		return externalSize / XMLValues.CONVERSION_UNIT;
-	}
-
-	public static void main(String[] args) throws DataExchangeException {
-		XMLDataImporter im = new XMLDataImporter();
-		Composite c = im.importComposite("/home/monika/Schreibtisch/test1.xml");
-		System.out.println(c);
 	}
 }

@@ -3,7 +3,6 @@ package ess.algorithm;
 import java.util.List;
 
 import ess.data.Composite;
-import ess.data.SurfaceUtils;
 import ess.io.IDataExchanger;
 import ess.io.XMLDataExchanger;
 import ess.io.exc.DataExchangeException;
@@ -42,8 +41,9 @@ public class RoemischerVerbund implements IRoemischerVerbund {
 
 		IDataExchanger xmlExchanger = new XMLDataExchanger();
 		Validator validator = new Validator();
+		Composite composite = null;
 		try {
-			Composite composite = xmlExchanger.readFromSource(xmlFile);
+			composite = xmlExchanger.readFromSource(xmlFile);
 			validator.validateSolution(composite);
 		} catch (DataExchangeException e) {
 			// TODO handle exception
@@ -52,7 +52,7 @@ public class RoemischerVerbund implements IRoemischerVerbund {
 		List<Validation> errorList = validator.getErrorList();
 		if (errorList.isEmpty()) {
 			// TODO notify main component that solution can be displayed
-			SurfaceUtils.printSurface(validator.getSurface());
+			System.out.println(composite.getSurface());
 			System.out.println();
 		}
 		return errorList;

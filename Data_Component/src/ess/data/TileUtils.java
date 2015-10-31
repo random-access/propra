@@ -1,6 +1,5 @@
 package ess.data;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 
@@ -9,26 +8,6 @@ import java.util.Comparator;
  * The Class TileUtils.
  */
 public class TileUtils {
-
-	// prevent instantiation
-	private TileUtils() {}
-	
-	/**
-	 * Find tile by ident.
-	 *
-	 * @param tiles the tiles
-	 * @param ident the ident
-	 * @return the tile
-	 */
-	public static Tile findTileByIdent(ArrayList<Tile> tiles, String ident) {
-		for (Tile t : tiles) {
-			if (ident.equals(t.getIdent())) {
-				return t;
-			}
-		}
-		return null; // TODO
-	}
-	
 	
 	/**
 	 * Gets the height comparator.

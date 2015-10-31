@@ -1,12 +1,10 @@
 package ess.rules;
 
-import ess.data.Position;
-import ess.data.Tile;
+import ess.data.Composite;
+import ess.data.SurfaceEntry;
 
 public interface IRule {
 	
-	public boolean checkWholeSurface(String[][] surface);
-	
-	public boolean checkCurrentMove(String[][] surface, Tile t, Position pos);
+	public boolean check(Composite c, SurfaceEntry e);
 	
 }

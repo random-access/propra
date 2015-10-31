@@ -14,20 +14,21 @@ package ess.data;
  */
 public class Tile {
 	
-	private String ident;
-	private int cols, rows;
+	private String id;
+	private int rows, cols;
 
 	/**
 	 * Instantiates a new tile.
 	 *
 	 * @param ident an identification string unique in a composite.
-	 * @param cols an integer greater than zero.
 	 * @param rows an integer greater than zero.
+	 * @param cols an integer greater than zero.
 	 */
-	public Tile(String ident, int cols, int rows) {
-		this.ident = ident;
-		this.cols = cols;
+	public Tile(String ident, int rows, int cols) {
+		this.id = ident;
 		this.rows = rows;
+		this.cols = cols;
+		
 	}
 	
 	/**
@@ -36,7 +37,7 @@ public class Tile {
 	 * @return the ident of this tile.
 	 */
 	public String getIdent() {
-		return ident;
+		return id;
 	}
 
 	/**
@@ -59,8 +60,6 @@ public class Tile {
 	
 	/**
 	 * Gets the number of fields of this tile (number of fields = rows * columns)
-	 * 
-	 * Used e.g. for sorting a collection of tiles by their size
 	 *
 	 * @return number of fields this tile has
 	 */
@@ -68,12 +67,43 @@ public class Tile {
 		return cols * rows;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + cols;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + rows;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Tile other = (Tile) obj;
+		if (cols != other.cols)
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (rows != other.rows)
+			return false;
+		return true;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Tile [ident=" + ident + ", rows=" + rows+ ", cols=" + cols
+		return "Tile [ident=" + id + ", rows=" + rows+ ", cols=" + cols
 				+ "]";
 	}
 

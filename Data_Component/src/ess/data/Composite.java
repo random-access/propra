@@ -18,9 +18,9 @@ import java.util.Comparator;
  */
 public class Composite {
 	
-	private int rows, cols;
 	private final ArrayList<Tile> tileSorts;
 	private final ArrayList<String> surfaceTileList;
+	private Surface surface;
 
 	/**
 	 * Instantiates a new composite.
@@ -31,31 +31,10 @@ public class Composite {
 	 * @param tileSorts the tiles
 	 */
 	public Composite(int rows, int cols, ArrayList<String> surfaceTileList, ArrayList<Tile> tileSorts) {
-		this.rows = rows;
-		this.cols = cols;
 		this.tileSorts = tileSorts;
 		this.surfaceTileList = surfaceTileList;
+		this.surface = new Surface(rows, cols);
 	}
-	
-	/**
-	 * Gets the rows.
-	 *
-	 * @return the rows
-	 */
-	public int getRows() {
-		return rows;
-	}
-
-
-	/**
-	 * Gets the cols.
-	 *
-	 * @return the cols
-	 */
-	public int getCols() {
-		return cols;
-	}
-
 
 
 	/**
@@ -77,7 +56,7 @@ public class Composite {
 	}
 
 	/**
-	 * Gets the surface.
+	 * Gets the surface tile list
 	 *
 	 * @return the surface
 	 */
@@ -85,6 +64,24 @@ public class Composite {
 		return surfaceTileList;
 	}
 	
+	/**
+	 * Gets the surface.
+	 *
+	 * @return the surface
+	 */
+	public Surface getSurface() {
+		return surface;
+	}
+	
+	
+	public Tile findTileById(String ident) {
+		for (Tile t : tileSorts) {
+			if (ident.equals(t.getIdent())) {
+				return t;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * To string.
@@ -97,8 +94,9 @@ public class Composite {
 	@Override
 	public String toString() {
 		return "Composite:\n"
+				+ "Surface: " + surface
 				+ "TileSorts:\n" + TileUtils.getTileListAsString(tileSorts)
-				+ "SurfaceTileList:\n " + surfaceTileList.toString() + "\n"; // TODO
+				+ "SurfaceTileList:\n " + surfaceTileList.toString() + "\n";
 	}
 
 }
