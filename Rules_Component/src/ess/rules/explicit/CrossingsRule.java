@@ -1,20 +1,22 @@
-package ess.rules;
+package ess.rules.explicit;
 
 import ess.data.Composite;
 import ess.data.Corner;
 import ess.data.Position;
 import ess.data.Surface;
 import ess.data.SurfaceEntry;
+import ess.rules.sets.ErrorType;
 
-public class NoCrossingsRule implements IRule {
+public class CrossingsRule extends ExplicitRule {
 
 	@Override
 	public boolean check(Composite c, SurfaceEntry e) {
 		Surface surface = c.getSurface();
-		return checkCorner(Corner.TOP_LEFT, surface, e) 
+		boolean noCrossing = checkCorner(Corner.TOP_LEFT, surface, e) 
 				&& checkCorner(Corner.TOP_RIGHT, surface, e) 
 				&& checkCorner(Corner.BOTTOM_LEFT, surface, e)
 				&& checkCorner(Corner.BOTTOM_RIGHT, surface, e);
+		return noCrossing;
 	}
 	
 	private boolean checkCorner(Corner corner, Surface surface, SurfaceEntry e) {
@@ -28,9 +30,14 @@ public class NoCrossingsRule implements IRule {
 		
 		if (cornerNeighbourEntry == null) {
 			return sameRowEntry == null || sameColumnEntry == null;
-		}
+		} 
 		return cornerNeighbourEntry.equals(sameRowEntry) || cornerNeighbourEntry.equals(sameColumnEntry);
 	}
 
+	@Override
+	public ErrorType getErrorType() {
+		return ErrorType.CROSSINGS;
+	}
+	
 
 }

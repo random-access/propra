@@ -1,37 +1,34 @@
 package ess.algorithm;
 
+import java.util.EnumSet;
 import java.util.LinkedList;
 
 import ess.algorithm.RoemischerVerbund.Validation;
-import ess.algorithm.modules.AbstractRuleChecker;
 import ess.algorithm.modules.IPositionFinder;
+import ess.algorithm.modules.RuleChecker;
 import ess.algorithm.modules.TopToBottomPosFinder;
-import ess.algorithm.modules.ValidationRuleChecker;
 import ess.data.Composite;
-import ess.data.Corner;
 import ess.data.Position;
 import ess.data.SurfaceEntry;
 import ess.data.Tile;
-import ess.rules.IRule;
-import ess.rules.TileExceedsSurfaceRule;
 
 public class Validator {
 	
-	private boolean isValidated;
 	private SurfaceEntry[][] surface;
 	private IPositionFinder posFinder;
-	private AbstractRuleChecker ruleChecker;
-	private IRule tileExceedsSurfaceRule;
+	private RuleChecker ruleChecker;
+	private LinkedList<Validation> errorList = new LinkedList<>();
 	
 	public Validator() {
+		errorList.addAll(EnumSet.allOf(Validation.class));
 		posFinder = new TopToBottomPosFinder();
-		ruleChecker = new ValidationRuleChecker();
-		tileExceedsSurfaceRule = new TileExceedsSurfaceRule();
+		ruleChecker = new RuleChecker();
 	}
 
-	public void validateSolution(Composite c) {
+	public void validateSolution(Composite c, int maxLineLenght) {
+		c.setMaxLineLength(maxLineLenght / 20); // TODO check if valid
 		fillSurface(c);
-		isValidated = true;
+		errorList = ruleChecker.getErrorList();
 	}
 	
 	/**
@@ -48,7 +45,7 @@ public class Validator {
 	 * @return a list of errors found while validating or a list with all errors if validation was not executed
 	 */
 	public LinkedList<Validation> getErrorList() {
-		return isValidated? ruleChecker.getErrorList() : ruleChecker.getListWithAllErrors();
+		return errorList;
 	}
 
 	private void fillSurface(Composite c) {
@@ -57,18 +54,14 @@ public class Validator {
 		for (String ident : c.getSurfaceTileList()) {
 			pos = posFinder.findNextFreePosition(c, ruleChecker);
 			tile = c.findTileById(ident);
-			
-			// TODO check if there is still space in the surface to place a tile
-			
-			// check if tile can be placed without exceeding the surface borders
-			ruleChecker.checkRule(tileExceedsSurfaceRule, Validation.FLIESE_UNPASSEND, c, tile, pos);
-			
 			SurfaceEntry e = new SurfaceEntry(tile, pos);
 			
-			c.getSurface().insertEntry(e);
-			
-			
+			if (ruleChecker.checkImplicitRules(c, e)) {
+				c.getSurface().insertEntry(e);
+				ruleChecker.checkExplicitRules(c, e);
+			} else {
+				return;
+			}
 		}
-		// TODO check if there are any empty positions left
 	}
 }

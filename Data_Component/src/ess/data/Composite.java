@@ -21,6 +21,7 @@ public class Composite {
 	private final ArrayList<Tile> tileSorts;
 	private final ArrayList<String> surfaceTileList;
 	private Surface surface;
+	private int maxLineLength;
 
 	/**
 	 * Instantiates a new composite.
@@ -73,6 +74,13 @@ public class Composite {
 		return surface;
 	}
 	
+	public void setMaxLineLength(int maxLineLength) {
+		this.maxLineLength = maxLineLength;
+	}
+	
+	public int getMaxLineLength() {
+		return maxLineLength;
+	}
 	
 	public Tile findTileById(String ident) {
 		for (Tile t : tileSorts) {

@@ -44,7 +44,7 @@ public class RoemischerVerbund implements IRoemischerVerbund {
 		Composite composite = null;
 		try {
 			composite = xmlExchanger.readFromSource(xmlFile);
-			validator.validateSolution(composite);
+			validator.validateSolution(composite, maxFugenLaenge);
 		} catch (DataExchangeException e) {
 			// TODO handle exception
 			System.out.println(e.getMessage());
@@ -52,8 +52,6 @@ public class RoemischerVerbund implements IRoemischerVerbund {
 		List<Validation> errorList = validator.getErrorList();
 		if (errorList.isEmpty()) {
 			// TODO notify main component that solution can be displayed
-			System.out.println(composite.getSurface());
-			System.out.println();
 		}
 		return errorList;
 	}

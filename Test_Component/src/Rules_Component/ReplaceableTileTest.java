@@ -9,7 +9,7 @@ import ess.data.Position;
 import ess.data.SurfaceEntry;
 import ess.io.XMLDataExchanger;
 import ess.io.exc.DataExchangeException;
-import ess.rules.ReplacableTileRule;
+import ess.rules.explicit.ReplacableTileRule;
 
 public class ReplaceableTileTest {
 

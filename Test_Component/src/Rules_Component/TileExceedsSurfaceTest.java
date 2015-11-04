@@ -9,7 +9,7 @@ import ess.data.Composite;
 import ess.data.Position;
 import ess.data.SurfaceEntry;
 import ess.data.Tile;
-import ess.rules.TileExceedsSurfaceRule;
+import ess.rules.implicit.EntryExceedsSurfaceRule;
 
 public class TileExceedsSurfaceTest {
 
@@ -23,7 +23,7 @@ public class TileExceedsSurfaceTest {
 		SurfaceEntry e = new SurfaceEntry(tile, pos);
 	
 		// Act (on the object or method under test.)
-		boolean result = new TileExceedsSurfaceRule().check(c, e);
+		boolean result = new EntryExceedsSurfaceRule().check(c, e);
 		c.getSurface().insertEntry(e);
 
 		// Assert (that the expected results have occurred.))
@@ -44,7 +44,7 @@ public class TileExceedsSurfaceTest {
 
 		// Act (on the object or method under test.)
 
-		boolean result = new TileExceedsSurfaceRule().check(c, e);
+		boolean result = new EntryExceedsSurfaceRule().check(c, e);
 
 		// Assert (that the expected results have occurred.))
 		assertTrue("Tile has a valid position", result);
@@ -59,7 +59,7 @@ public class TileExceedsSurfaceTest {
 		SurfaceEntry e = new SurfaceEntry(tile, pos);
 		
 		// Act (on the object or method under test.)
-		boolean result = new TileExceedsSurfaceRule().check(c, e);
+		boolean result = new EntryExceedsSurfaceRule().check(c, e);
 		// Assert (that the expected results have occurred.))
 		assertFalse("Tile exceeds right edge", result);
 	}
@@ -74,7 +74,7 @@ public class TileExceedsSurfaceTest {
 		SurfaceEntry e = new SurfaceEntry(tile, pos);
 
 		// Act (on the object or method under test.)
-		boolean result = new TileExceedsSurfaceRule().check(c, e);
+		boolean result = new EntryExceedsSurfaceRule().check(c, e);
 		// Assert (that the expected results have occurred.))
 		assertFalse("Tile exceeds left edge", result);
 	}
@@ -89,7 +89,7 @@ public class TileExceedsSurfaceTest {
 		SurfaceEntry e = new SurfaceEntry(tile, pos);
 
 		// Act (on the object or method under test.)
-		boolean result = new TileExceedsSurfaceRule().check(c, e);
+		boolean result = new EntryExceedsSurfaceRule().check(c, e);
 		// Assert (that the expected results have occurred.))
 		assertFalse("Tile exceeds top edge", result);
 	}
@@ -104,7 +104,7 @@ public class TileExceedsSurfaceTest {
 		SurfaceEntry e = new SurfaceEntry(tile, pos);
 		
 		// Act (on the object or method under test.)
-		boolean result = new TileExceedsSurfaceRule().check(c, e);
+		boolean result = new EntryExceedsSurfaceRule().check(c, e);
 		// Assert (that the expected results have occurred.))
 		assertFalse("Tile exceeds bottom edge", result);
 	}
@@ -119,7 +119,7 @@ public class TileExceedsSurfaceTest {
 		SurfaceEntry e = new SurfaceEntry(tile, pos);
 
 		// Act (on the object or method under test.)
-		boolean result = new TileExceedsSurfaceRule().check(c, e);
+		boolean result = new EntryExceedsSurfaceRule().check(c, e);
 		// Assert (that the expected results have occurred.))
 		assertFalse("Tile exceeds top left corner", result);
 	}
@@ -134,7 +134,7 @@ public class TileExceedsSurfaceTest {
 		SurfaceEntry e = new SurfaceEntry(tile, pos);
 
 		// Act (on the object or method under test.)
-		boolean result = new TileExceedsSurfaceRule().check(c, e);
+		boolean result = new EntryExceedsSurfaceRule().check(c, e);
 		// Assert (that the expected results have occurred.))
 		assertFalse("Tile exceeds top right corner", result);
 	}
@@ -149,7 +149,7 @@ public class TileExceedsSurfaceTest {
 		SurfaceEntry e = new SurfaceEntry(tile, pos);
 		
 		// Act (on the object or method under test.)
-		boolean result = new TileExceedsSurfaceRule().check(c, e);
+		boolean result = new EntryExceedsSurfaceRule().check(c, e);
 		// Assert (that the expected results have occurred.))
 		assertFalse("Tile exceeds bottom left corner", result);
 	}
@@ -164,7 +164,7 @@ public class TileExceedsSurfaceTest {
 		SurfaceEntry e = new SurfaceEntry(tile, pos);
 
 		// Act (on the object or method under test.)
-		boolean result = new TileExceedsSurfaceRule().check(c, e);
+		boolean result = new EntryExceedsSurfaceRule().check(c, e);
 		
 		
 		System.out.println(c.getSurface());

@@ -1,6 +1,7 @@
-package ess.rules;
+package ess.rules.explicit;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import ess.data.Composite;
 import ess.data.Corner;
@@ -8,19 +9,24 @@ import ess.data.Edge;
 import ess.data.Position;
 import ess.data.SurfaceEntry;
 import ess.data.Tile;
+import ess.rules.implicit.EntryExceedsSurfaceRule;
+import ess.rules.sets.ErrorType;
 
-public class ReplacableTileRule implements IRule {
+public class ReplacableTileRule extends ExplicitRule {
+	
+	private static final Logger log = Logger.getGlobal();
 
 	@Override
 	public boolean check(Composite c, SurfaceEntry e) {
 		Tile t = e.getTile();
 		ArrayList<Tile> tiles = c.getTilesLargerThan(t.getRows(), t.getCols(), t.getNumberOfFields());
 		for (Tile tile : tiles) {
-			System.out.println("Testing " + tile + "...");
 			if (tileIsReplacement(c, e, tile)) {
+				// log.info("replacement found for " + e);
 				return false;
 			}
 		}
+		// log.info("No larger tile replacing smaller tiles found.");
 		return true;
 	}
 
@@ -40,7 +46,6 @@ public class ReplacableTileRule implements IRule {
 	 */
 	private boolean tileIsReplacement(Composite c, SurfaceEntry e, Tile tile) {
 		for (Corner corner : Corner.values()) {
-			System.out.println("Testing " + corner + "...");
 			if (tileIsReplacementInCorner(c, e, tile, corner)) {
 				return true;
 			}
@@ -68,16 +73,13 @@ public class ReplacableTileRule implements IRule {
 	private boolean tileIsReplacementInCorner(Composite c, SurfaceEntry e, Tile tile, Corner corner) {
 		SurfaceEntry coverEntry = getCoverEntry(c, e, tile, corner);
 		if (coverEntry == null) {
-			System.out.println("CoverEntry is null in " + corner);
 			return false;
 		}
 		for (Edge edge : Edge.values()) {
-			System.out.println("Testing " + edge);
 			if (!isTileBorder(c, coverEntry, edge)) {
 				return false;
 			}
 		}
-		System.out.println(coverEntry);
 		return true;
 	}
 
@@ -99,7 +101,7 @@ public class ReplacableTileRule implements IRule {
 		Position corner2 = coverEntry.getCorner(edge.getSecondCorner());
 		for (int i = corner1.getRow(); i <= corner2.getRow(); i++) {
 			for (int j = corner1.getColumn(); j <= corner2.getColumn(); j++) {
-				System.out.println("testing " + i + "," + j + "...");
+				log.finest("Examining position " + i + "," + j + "...");
 				SurfaceEntry inside = c.getSurface().getEntryAt(i, j);
 				SurfaceEntry outside = c.getSurface().getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());
 				if (outside != null) {
@@ -134,12 +136,16 @@ public class ReplacableTileRule implements IRule {
 	 */
 	private SurfaceEntry getCoverEntry(Composite c, SurfaceEntry e, Tile tile, Corner corner) {
 		SurfaceEntry entry = new SurfaceEntry(tile, e.getCorner(corner), corner);
-		TileExceedsSurfaceRule rule = new TileExceedsSurfaceRule();
+		EntryExceedsSurfaceRule rule = new EntryExceedsSurfaceRule();
 		if (rule.check(c, entry)) {
-			System.out.println(entry);
 			return entry;
 		}
 		return null;
+	}
+
+	@Override
+	public ErrorType getErrorType() {
+		return ErrorType.REPLACEABLE_TILE;
 	}
 
 }

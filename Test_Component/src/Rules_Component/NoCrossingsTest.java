@@ -12,7 +12,7 @@ import ess.data.SurfaceEntry;
 import ess.io.XMLDataExchanger;
 import ess.io.exc.DataExchangeException;
 import ess.rules.IRule;
-import ess.rules.NoCrossingsRule;
+import ess.rules.explicit.CrossingsRule;
 
 public class NoCrossingsTest {
 
@@ -25,7 +25,7 @@ public class NoCrossingsTest {
 		s.insertEntry(new SurfaceEntry(c.findTileById("_2"), new Position(0,2)));
 		s.insertEntry(new SurfaceEntry(c.findTileById("_1"), new Position(0,3)));
 		
-		IRule rule = new NoCrossingsRule();
+		IRule rule = new CrossingsRule();
 		boolean validMove = rule.check(c, new SurfaceEntry(c.findTileById("_4"), new Position(2,2)));
 		s.insertEntry(new SurfaceEntry(c.findTileById("_4"), new Position(2,2)));
 		System.out.println(c);
@@ -40,7 +40,7 @@ public class NoCrossingsTest {
 		s.insertEntry(new SurfaceEntry(c.findTileById("_0"), new Position(0,0)));
 		s.insertEntry(new SurfaceEntry(c.findTileById("_1"), new Position(0,3)));
 		
-		IRule rule = new NoCrossingsRule();
+		IRule rule = new CrossingsRule();
 		boolean validMove = rule.check(c, new SurfaceEntry(c.findTileById("_0"), new Position(2,3)));
 		s.insertEntry(new SurfaceEntry(c.findTileById("_0"), new Position(2,3)));
 		System.out.println(c);
@@ -58,7 +58,7 @@ public class NoCrossingsTest {
 		s.insertEntry(new SurfaceEntry(c.findTileById("_2"), new Position(0,2)));
 		s.insertEntry(new SurfaceEntry(c.findTileById("_1"), new Position(0,3)));
 		
-		IRule rule = new NoCrossingsRule();
+		IRule rule = new CrossingsRule();
 		boolean validMove = rule.check(c, new SurfaceEntry(c.findTileById("_0"), new Position(2,3)));
 		s.insertEntry(new SurfaceEntry(c.findTileById("_0"), new Position(2,3)));
 		System.out.println(c);
@@ -74,7 +74,7 @@ public class NoCrossingsTest {
 		Surface s = c.getSurface();
 		s.insertEntry(new SurfaceEntry(c.findTileById("_0"), new Position(21,17)));
 		
-		IRule rule = new NoCrossingsRule();
+		IRule rule = new CrossingsRule();
 		boolean validMove = rule.check(c, new SurfaceEntry(c.findTileById("_1"), new Position(22,19)));
 		s.insertEntry(new SurfaceEntry(c.findTileById("_1"), new Position(22,19)));
 		System.out.println(c);
@@ -90,10 +90,12 @@ public class NoCrossingsTest {
 		Surface s = c.getSurface();
 		s.insertEntry(new SurfaceEntry(c.findTileById("_0"), new Position(0,0)));
 		s.insertEntry(new SurfaceEntry(c.findTileById("_2"), new Position(1,2)));
+		SurfaceEntry e = new SurfaceEntry(c.findTileById("_0"), new Position(3,0));
+		s.insertEntry(e);
 		
-		IRule rule = new NoCrossingsRule();
-		boolean validMove = rule.check(c, new SurfaceEntry(c.findTileById("_0"), new Position(3,0)));
-		s.insertEntry(new SurfaceEntry(c.findTileById("_0"), new Position(3,0)));
+		IRule rule = new CrossingsRule();
+		boolean validMove = rule.check(c, e);
+		
 		System.out.println(c);
 		
 		assertFalse(validMove);
