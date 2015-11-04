@@ -1,5 +1,6 @@
 package ess.data;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * Tiles are rectangular areas filling the surface of a composite.
@@ -66,6 +67,7 @@ public class Tile {
 	public int getNumberOfFields() {
 		return cols * rows;
 	}
+	
 
 	@Override
 	public int hashCode() {

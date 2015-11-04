@@ -1,12 +1,12 @@
 package ess.rules;
 
 import ess.data.Composite;
+import ess.data.Corner;
 import ess.data.Position;
 import ess.data.Surface;
 import ess.data.SurfaceEntry;
-import ess.rules.helpers.Corner;
 
-public class NoCrossingsRule extends AbstractTileRule implements IRule {
+public class NoCrossingsRule implements IRule {
 
 	@Override
 	public boolean check(Composite c, SurfaceEntry e) {
@@ -17,19 +17,19 @@ public class NoCrossingsRule extends AbstractTileRule implements IRule {
 				&& checkCorner(Corner.BOTTOM_RIGHT, surface, e);
 	}
 	
-	private boolean checkCorner(Corner c, Surface surface, SurfaceEntry e) {
-		Position cornerPos = getCornerPosition(c, e);
-		if (isEdgePosition(surface, cornerPos)) {
+	private boolean checkCorner(Corner corner, Surface surface, SurfaceEntry e) {
+		Position cornerPos = e.getCorner(corner);
+		if (surface.isEdgePosition(cornerPos)) {
 			return true;
 		}
-		SurfaceEntry corner = surface.getFields()[cornerPos.getRow()+c.getNeighbourRowOffset()][cornerPos.getColumn()+ c.getNeighbourColOffset()];
-		SurfaceEntry sameRow = surface.getFields()[cornerPos.getRow()][cornerPos.getColumn()+c.getNeighbourColOffset()];
-		SurfaceEntry sameColumn = surface.getFields()[cornerPos.getRow()+c.getNeighbourRowOffset()][cornerPos.getColumn()];
+		SurfaceEntry cornerNeighbourEntry = surface.getNeighbourCornerEntry(e, corner);
+		SurfaceEntry sameRowEntry = surface.getRowCornerNeighbourEntry(e, corner);
+		SurfaceEntry sameColumnEntry = surface.getColCornerNeighbourEntry(e, corner);
 		
-		if (corner == null) {
-			return sameRow == null || sameColumn == null;
+		if (cornerNeighbourEntry == null) {
+			return sameRowEntry == null || sameColumnEntry == null;
 		}
-		return corner.equals(sameRow) || corner.equals(sameColumn);
+		return cornerNeighbourEntry.equals(sameRowEntry) || cornerNeighbourEntry.equals(sameColumnEntry);
 	}
 
 

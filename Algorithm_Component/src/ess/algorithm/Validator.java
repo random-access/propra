@@ -8,6 +8,7 @@ import ess.algorithm.modules.IPositionFinder;
 import ess.algorithm.modules.TopToBottomPosFinder;
 import ess.algorithm.modules.ValidationRuleChecker;
 import ess.data.Composite;
+import ess.data.Corner;
 import ess.data.Position;
 import ess.data.SurfaceEntry;
 import ess.data.Tile;

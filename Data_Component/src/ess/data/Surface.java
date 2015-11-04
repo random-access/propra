@@ -24,6 +24,14 @@ public class Surface {
 	public SurfaceEntry[][] getFields() {
 		return fields;
 	}
+	
+	public SurfaceEntry getEntryAt(Position pos) {
+		return (isInsideSurface(pos)) ? fields[pos.getRow()][pos.getColumn()] : null;
+	}
+	
+	public SurfaceEntry getEntryAt(int row, int col) {
+		return(isInsideSurface(row, col)) ? fields[row][col] : null;
+	}
 
 	/**
 	 * Inserts a given tile in the given surface at the given position, for
@@ -43,8 +51,8 @@ public class Surface {
 	 *            inserted
 	 */
 	public void insertEntry(SurfaceEntry e) {
-		for (int i = e.getTopLeft().getRow(); i <= e.getBottomLeft().getRow(); i++) {
-			for (int j = e.getTopLeft().getColumn(); j <= e.getTopRight().getColumn(); j++) {
+		for (int i = e.getCorner(Corner.TOP_LEFT).getRow(); i <= e.getCorner(Corner.BOTTOM_LEFT).getRow(); i++) {
+			for (int j = e.getCorner(Corner.TOP_LEFT).getColumn(); j <= e.getCorner(Corner.TOP_RIGHT).getColumn(); j++) {
 				fields[i][j] = e;
 			}
 		}
@@ -88,6 +96,58 @@ public class Surface {
 			}
 		}
 		return null;
+	}
+	
+
+	public boolean isEdgePosition(Position pos) {
+		return isEdgeRow(pos) || isEdgeCol(pos);
+	}
+	
+	public boolean isEdgeRow(Position pos) {
+		return isEdgeRow(pos.getRow()); 
+	}
+	
+	public boolean isEdgeRow(int row) {
+		return row == 0 || row == this.getRows()-1; 
+	}
+	
+	public boolean isEdgeCol(Position pos) {
+		return isEdgeCol(pos.getColumn());
+	}
+	
+	public boolean isEdgeCol(int col) {
+		return col == 0 || col == this.getCols()-1; 
+	}
+	
+	public boolean isInsideSurface (int row, int col) {
+		// TODO use rule from rules component
+		return row >= 0 && col >= 0 && row < this.getRows() && col < this.getCols();
+	}
+	
+	public boolean isInsideSurface(Position pos) {
+		// TODO use rule from rules component
+		return isInsideSurface(pos.getRow(), pos.getColumn());
+	}
+	
+	public SurfaceEntry getRowCornerNeighbourEntry(SurfaceEntry e, Corner c) {
+		int row = e.getCorner(c).getRow();
+		int col = e.getCorner(c).getColumn()+c.getNextColOffset();
+		Position pos = new Position (row, col);
+		return (isInsideSurface(pos)) ? getEntryAt(pos) : null;
+	}
+	
+	public SurfaceEntry getColCornerNeighbourEntry(SurfaceEntry e, Corner c) {
+		int row = e.getCorner(c).getRow()+c.getNextRowOffset();
+		int col = e.getCorner(c).getColumn();
+		Position pos = new Position (row, col);
+		return (isInsideSurface(pos)) ? getEntryAt(pos) : null;
+	}
+	
+	public SurfaceEntry getNeighbourCornerEntry(SurfaceEntry e, Corner c) {
+		int row = e.getCorner(c).getRow()+c.getNextRowOffset();
+		int col = e.getCorner(c).getColumn()+c.getNextColOffset();
+		Position pos = new Position (row, col);
+		return (isInsideSurface(pos)) ? getEntryAt(pos) : null;
 	}
 
 	/**

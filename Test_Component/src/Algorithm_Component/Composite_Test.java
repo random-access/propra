@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import ess.data.Composite;
 import ess.data.Tile;
-import ess.data.TileUtils;
+import ess.data.TileComparator;
 
 public class Composite_Test {
 	
@@ -71,7 +71,7 @@ public class Composite_Test {
 		Composite c = composite1;
 
 		// Act (on the object or method under test.)
-		c.sortTileSorts(TileUtils.getHeightComparator());
+		c.sortTileSorts(TileComparator.ROWS_ASC);
 
 		// Assert (that the expected results have occurred.))
 		for (int i = 0; i < c.getTileSorts().size()-1; i++) {
@@ -87,7 +87,7 @@ public class Composite_Test {
 		Composite c = composite1;
 
 		// Act (on the object or method under test.)
-		c.sortTileSorts(TileUtils.getWidthComparator());
+		c.sortTileSorts(TileComparator.COLS_ASC);
 
 		// Assert (that the expected results have occurred.))
 		for (int i = 0; i < c.getTileSorts().size() - 1; i++) {
@@ -103,7 +103,7 @@ public class Composite_Test {
 		Composite c = composite1;
 
 		// Act (on the object or method under test.)
-		c.sortTileSorts(TileUtils.getAreaComparator());
+		c.sortTileSorts(TileComparator.FIELDS_ASC);
 
 		// Assert (that the expected results have occurred.))
 		for (int i = 0; i < c.getTileSorts().size() - 1; i++) {

@@ -82,6 +82,16 @@ public class Composite {
 		}
 		return null;
 	}
+	
+	public ArrayList<Tile> getTilesLargerThan(int rows, int cols, int numberOfFields) {
+		ArrayList<Tile> filteredTiles = new ArrayList<>();
+		for (Tile t : tileSorts) {
+			if (t.getRows() >= rows && t.getCols() >= cols && t.getNumberOfFields() > numberOfFields) {
+				filteredTiles.add(t);
+			}
+		}
+		return filteredTiles;
+	}
 
 	/**
 	 * To string.
@@ -95,8 +105,22 @@ public class Composite {
 	public String toString() {
 		return "Composite:\n"
 				+ "Surface: " + surface
-				+ "TileSorts:\n" + TileUtils.getTileListAsString(tileSorts)
+				+ "TileSorts:\n" + getTileListAsString()
 				+ "SurfaceTileList:\n " + surfaceTileList.toString() + "\n";
+	}
+	
+	/**
+	 * Gets the tile list as string.
+	 *
+	 * @param tiles the tiles
+	 * @return the tile list as string
+	 */
+	private String getTileListAsString() {
+		StringBuilder sb = new StringBuilder();
+		for (Tile t : tileSorts) {
+			sb.append(t).append("\n");
+		}
+		return sb.toString();
 	}
 
 }
