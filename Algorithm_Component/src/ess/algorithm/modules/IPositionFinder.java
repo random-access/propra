@@ -6,4 +6,5 @@ import ess.data.Position;
 public interface IPositionFinder {
 	
 	public Position findNextFreePosition(Composite composite, RuleChecker ruleChecker);
+	
 }

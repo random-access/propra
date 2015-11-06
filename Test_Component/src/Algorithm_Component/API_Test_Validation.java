@@ -27,8 +27,6 @@ public class API_Test_Validation {
 
 		// Act (on the object or method under test.)
 		List<Validation> errorList = api.validateSolution("", -1);
-		System.out.println(errorList);
-		System.out.println("*********************");
 
 		// Assert (that the expected results have occurred.))
 		assertTrue("errorList ist null", errorList != null);
@@ -43,8 +41,6 @@ public class API_Test_Validation {
 
 		// Act (on the object or method under test.)
 		List<Validation> errorList = api.validateSolution("instances/validationInstances/test1.xml", 80);
-		System.out.println(errorList);
-		System.out.println("*********************");
 		
 		// Assert (that the expected results have occurred.))
 		assertTrue("errorList ist null", errorList != null);
@@ -61,8 +57,6 @@ public class API_Test_Validation {
 
 		// Act (on the object or method under test.)
 		List<Validation> errorList = api.validateSolution("instances/validationInstances/test2.xml", 80);
-		System.out.println(errorList);
-		System.out.println("*********************");
 		
 		// Assert (that the expected results have occurred.))
 		assertTrue("errorList ist null", errorList != null);
@@ -79,8 +73,6 @@ public class API_Test_Validation {
 
 		// Act (on the object or method under test.)
 		List<Validation> errorList = api.validateSolution("instances/validationInstances/test3.xml", 110);
-		System.out.println(errorList);
-		System.out.println("*********************");
 		
 		// Assert (that the expected results have occurred.))
 		assertTrue("errorList ist null", errorList != null);
@@ -97,8 +89,6 @@ public class API_Test_Validation {
 
 		// Act (on the object or method under test.)
 		List<Validation> errorList = api.validateSolution("instances/validationInstances/test1_florian.xml", 34000);
-		System.out.println(errorList);
-		System.out.println("*********************");
 		
 		// Assert (that the expected results have occurred.))
 		assertTrue("errorList ist null", errorList != null);

@@ -3,19 +3,20 @@ package ess.data;
 public class SurfaceEntry {
 
 	private Tile tile;
-	private Position topLeft, topRight, bottomLeft, bottomRight;
+	private Position pos;
 
 	public SurfaceEntry(Tile tile, Position pos) {
-		this(tile, pos, Corner.TOP_LEFT);
+		this.tile = tile;
+		this.pos = pos;
 	}
 
-	public SurfaceEntry(Tile tile, Position pos, Corner corner) {
+	public SurfaceEntry(Tile tile, Position p, Corner corner) {
 		this.tile = tile;
-		this.topLeft = getTopLeft(tile, pos, corner);
-		this.topRight = new Position(topLeft.getRow(), topLeft.getColumn() + tile.getCols() - 1);
-		this.bottomLeft = new Position(topLeft.getRow() + tile.getRows() - 1, topLeft.getColumn());
-		this.bottomRight = new Position(topLeft.getRow() + tile.getRows() - 1, topLeft.getColumn() + tile.getCols() - 1);
-			
+		this.pos = getTopLeft(tile, p, corner);
+	}
+	
+	public Position getPosition() {
+		return getCorner(Corner.TOP_LEFT);
 	}
 
 	public Tile getTile() {
@@ -25,28 +26,16 @@ public class SurfaceEntry {
 	public Position getCorner(Corner c) {
 		switch (c) {
 		case TOP_RIGHT:
-			return topRight;
+			return new Position(pos.getRow(), pos.getColumn() + tile.getCols() - 1);
 		case BOTTOM_LEFT: 
-			return bottomLeft;
+			return new Position(pos.getRow() + tile.getRows() - 1, pos.getColumn());
 		case BOTTOM_RIGHT: 
-			return bottomRight;
+			return new Position(pos.getRow() + tile.getRows() - 1, pos.getColumn() + tile.getCols() - 1);
 		default:
-			return topLeft;
+			return pos;
 
 		}
 	}
-	
-	/* public Position getRowCornerNeighbourPos(Corner c) {
-		return new Position (getCorner(c).getRow(), getCorner(c).getColumn()+c.getNextColOffset());
-	}
-	
-	public Position getColCornerNeighbourPos(Corner c) {
-		return new Position (getCorner(c).getRow()+c.getNextRowOffset(), getCorner(c).getColumn());
-	}
-	
-	public Position getNeighbourCornerPos(Corner c) {
-		return new Position(getCorner(c).getRow() + c.getNextRowOffset(), getCorner(c).getColumn() + c.getNextColOffset());
-	} */
 	
 	private Position getTopLeft(Tile t, Position pos, Corner c) {
 		switch (c) {
@@ -64,10 +53,6 @@ public class SurfaceEntry {
 
 	@Override
 	public String toString() {
-		return "SurfaceEntry [tile=" + tile + ", topLeft=" + topLeft + ", topRight=" + topRight + ", bottomLeft=" + bottomLeft
-				+ ", bottomRight=" + bottomRight + "]";
+		return "SurfaceEntry [tile=" + tile + ", topLeft=" + pos + "]";
 	}
-	
-	
-
 }

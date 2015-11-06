@@ -57,6 +57,14 @@ public class Surface {
 			}
 		}
 	}
+	
+	public void removeEntry(SurfaceEntry e) {
+		for (int i = e.getCorner(Corner.TOP_LEFT).getRow(); i <= e.getCorner(Corner.BOTTOM_LEFT).getRow(); i++) {
+			for (int j = e.getCorner(Corner.TOP_LEFT).getColumn(); j <= e.getCorner(Corner.TOP_RIGHT).getColumn(); j++) {
+				fields[i][j] = null;
+			}
+		}
+	}
 
 	/**
 	 * Returns the next free position in the given surface, that means the next

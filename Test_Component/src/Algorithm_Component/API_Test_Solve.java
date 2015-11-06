@@ -73,22 +73,26 @@ public class API_Test_Solve {
 		assertFalse("Lösung müsste ungültig sein", valid);
 	}
 	
-	@Test
-	public void solveInstance1() throws IOException {
-		
-		// Arrange (set all necessary preconditions and inputs.)
-		IRoemischerVerbund api = new RoemischerVerbund();
-		String filePath = WriteFileToTempDirectory("instances/solveInstances/test1.xml");
-		
-		//Act (on the object or method under test.)
-		Boolean valid = api.solve(filePath, 140);
-		
-		//Assert (that the expected results have occurred.))
-		assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
-	}
+//	@Test
+//	public void solveInstance1() throws IOException {
+//		
+//		System.out.println("***********  Test 1 ********************");
+//		
+//		// Arrange (set all necessary preconditions and inputs.)
+//		IRoemischerVerbund api = new RoemischerVerbund();
+//		String filePath = WriteFileToTempDirectory("instances/solveInstances/test1.xml");
+//		
+//		//Act (on the object or method under test.)
+//		Boolean valid = api.solve(filePath, 140);
+//		
+//		//Assert (that the expected results have occurred.))
+//		assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+//	}
 	
 	@Test
 	public void solveInstance2() throws IOException {
+		
+		System.out.println("***********  Test 2 ********************");
 		
 		// Arrange (set all necessary preconditions and inputs.)
 		IRoemischerVerbund api = new RoemischerVerbund();
@@ -103,6 +107,8 @@ public class API_Test_Solve {
 	
 	@Test
 	public void solveInstance3() throws IOException {
+		
+		System.out.println("***********  Test 1 ********************");
 		
 		// Arrange (set all necessary preconditions and inputs.)
 		IRoemischerVerbund api = new RoemischerVerbund();

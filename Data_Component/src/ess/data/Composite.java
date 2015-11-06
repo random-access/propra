@@ -98,6 +98,7 @@ public class Composite {
 				filteredTiles.add(t);
 			}
 		}
+		Collections.sort(filteredTiles, TileComparator.FIELDS_DESC);
 		return filteredTiles;
 	}
 

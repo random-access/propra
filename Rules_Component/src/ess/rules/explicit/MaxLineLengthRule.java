@@ -20,7 +20,7 @@ public class MaxLineLengthRule extends ExplicitRule{
 		for (Edge edge : Edge.values()) {
 			int lineLength = calculateLineLength(c,e,edge);
 			if (lineLength > c.getMaxLineLength()) {
-				// log.info("Max. line length exceeded, value is " + lineLength);
+				log.info("Max. line length exceeded, value is " + lineLength);
 				return false;
 			}
 			// log.info("Line is shorter, value is " + lineLength);

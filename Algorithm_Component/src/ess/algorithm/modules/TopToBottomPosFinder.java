@@ -1,5 +1,7 @@
 package ess.algorithm.modules;
 
+import java.util.LinkedList;
+
 import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Surface;
@@ -17,5 +19,6 @@ public class TopToBottomPosFinder implements IPositionFinder {
 			}
 		}
 		return null;
-	}
+	}	
+	
 }

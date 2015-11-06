@@ -22,7 +22,7 @@ public class ReplacableTileRule extends ExplicitRule {
 		ArrayList<Tile> tiles = c.getTilesLargerThan(t.getRows(), t.getCols(), t.getNumberOfFields());
 		for (Tile tile : tiles) {
 			if (tileIsReplacement(c, e, tile)) {
-				// log.info("replacement found for " + e);
+				log.info("replacement found for " + e);
 				return false;
 			}
 		}

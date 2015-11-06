@@ -16,7 +16,7 @@ public class SameTileRule extends ExplicitRule {
 	public boolean check(Composite c, SurfaceEntry e) {
 		for (Edge edge : Edge.values()) {
 			if (hasEdgeWithSameTile(c,e,edge)) {
-				// log.info("Common edge with same tile found.");
+				log.info("Common edge with same tile found.");
 				return false;
 			}
 		}

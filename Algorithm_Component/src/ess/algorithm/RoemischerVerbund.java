@@ -67,6 +67,22 @@ public class RoemischerVerbund implements IRoemischerVerbund {
 	 */
 	@Override
 	public boolean solve(String xmlFile, int maxFugenLaenge) {
+		IDataExchanger xmlExchanger = new XMLDataExchanger();
+		Solver solver = null;
+		Composite composite = null;
+		try {
+			composite = xmlExchanger.readFromSource(xmlFile);
+			solver = new Solver(composite, maxFugenLaenge);
+			boolean solved = solver.solve();
+			if (solved) {
+				// TODO write data into xml file
+				// TODO notify main component that solution can be displayed
+			}
+			return solved;
+		} catch (DataExchangeException e) {
+			// TODO handle exception
+			System.out.println(e.getMessage());
+		}
 		return false;
 	}
 }
