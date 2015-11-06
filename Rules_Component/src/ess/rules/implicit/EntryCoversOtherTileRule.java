@@ -10,7 +10,7 @@ import ess.rules.sets.ErrorType;
 
 public class EntryCoversOtherTileRule implements ImplicitRule{
 	
-	private static final Logger log = Logger.getLogger(ReplacableTileRule.class.getSimpleName());
+	private static final Logger log = Logger.getGlobal();
 
 	@Override
 	public boolean check(Composite c, SurfaceEntry e) {

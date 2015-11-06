@@ -1,11 +1,13 @@
 package ess.algorithm;
 
 import java.util.LinkedList;
+import java.util.logging.Logger;
 
 import ess.algorithm.modules.IPositionFinder;
+import ess.algorithm.modules.IRuleChecker;
 import ess.algorithm.modules.ITileChooser;
 import ess.algorithm.modules.LargeToSmallTileChooser;
-import ess.algorithm.modules.RuleChecker;
+import ess.algorithm.modules.SolveRuleChecker;
 import ess.algorithm.modules.TopToBottomPosFinder;
 import ess.data.Composite;
 import ess.data.Position;
@@ -13,9 +15,11 @@ import ess.data.SurfaceEntry;
 import ess.data.Tile;
 
 public class Solver {
+	
+	private static final Logger log = Logger.getGlobal();
 
 	private IPositionFinder posFinder;
-	private RuleChecker ruleChecker;
+	private IRuleChecker ruleChecker;
 	private ITileChooser tileChooser;
 
 	private LinkedList<Position> posList;
@@ -29,38 +33,46 @@ public class Solver {
 
 		// TODO read from config file
 		posFinder = new TopToBottomPosFinder();
-		ruleChecker = new RuleChecker();
+		ruleChecker = new SolveRuleChecker();
 		tileChooser = new LargeToSmallTileChooser(c);
 	}
-
+	
+	
 	public boolean solve() {
-		Position pos = posFinder.findNextFreePosition(c, ruleChecker);
-		if (pos == null) {
-			return true;
-		}
-		Tile tile = null;
+		Position pos = null;
+		Tile tile= null;
 		do {
-			
-			// wenn schon ein eintrag vorhanden an Pos -> löschen
-			SurfaceEntry entry = c.getSurface().getEntryAt(pos);
-			if (entry != null) {
-				tile = entry.getTile();
-				c.getSurface().removeEntry(entry);
+			if (pos == null) {
+				pos = posFinder.findNextFreePosition(c, ruleChecker);
+				if (pos == null) {
+					return true;
+				}
+				tile = null;
+			} else {
+				SurfaceEntry entry = c.getSurface().getEntryAt(pos);
+				if (entry != null) {
+					tile = entry.getTile();
+					c.getSurface().removeEntry(entry);
+				}
 			}
-			// nächste zu testende Fliese wählen
 			tile = tileChooser.getNextTile(tile);
-			while (tile != null) {
-				System.out.println("Trying tile " + tile.getIdent() + " at " + pos + "...");
+			boolean foundTileThatFits = false;
+			while (tile != null && !foundTileThatFits) {
+				log.info("Trying tile " + tile.getIdent() + " at " + pos + "...");
 				if (placeNextTile(tile, pos)) {
 					posList.add(pos);
-					System.out.println(c);
-					return solve();
+					log.info(c.toString());
+					foundTileThatFits = true;
+					pos = null;
+				} else {
+					tile = tileChooser.getNextTile(tile);
 				}
-				tile = tileChooser.getNextTile(tile);
 			}
-			// pos auf letzten Eintrag in Liste setzen
-			if (!posList.isEmpty()) {
-				pos = posList.pollLast();
+			if (!foundTileThatFits) {
+				if (!posList.isEmpty()) {
+					pos = posList.pollLast();
+					log.info("Return to pos " + pos + "...");
+				} 
 			}
 		} while (!posList.isEmpty());
 		return false;
@@ -76,16 +88,6 @@ public class Solver {
 			c.getSurface().removeEntry(entry);
 		}
 		return false;
-	}
-
-	private void removeTile(Position pos) {
-		SurfaceEntry entry = c.getSurface().getEntryAt(pos);
-		if (entry != null) {
-			c.getSurface().removeEntry(entry);
-		}
-		if (posList.getLast().equals(pos)) {
-			posList.removeLast();
-		}
 	}
 
 }

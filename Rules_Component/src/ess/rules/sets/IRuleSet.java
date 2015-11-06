@@ -2,15 +2,16 @@ package ess.rules.sets;
 
 import java.util.LinkedList;
 
-import ess.data.Composite;
-import ess.data.SurfaceEntry;
+import ess.rules.IRule;
 
 public interface IRuleSet {
 
-	public boolean checkExplicitRules(Composite c, SurfaceEntry e);
+	public LinkedList<IRule> getExplicitRules();
 	
-	public boolean checkImplicitRules(Composite c, SurfaceEntry e);
+	public LinkedList<IRule> getImplicitRules();
 	
 	public LinkedList<ErrorType> getErrorList ();
+
+	public void addError(ErrorType errorType);
 
 }

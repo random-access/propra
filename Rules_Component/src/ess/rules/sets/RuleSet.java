@@ -17,8 +17,8 @@ import ess.rules.implicit.ImplicitRule;
 public class RuleSet implements IRuleSet {
 	
 	private LinkedList<ErrorType> errorList;
-	private LinkedList<ExplicitRule> explicitRuleSet;
-	private LinkedList<ImplicitRule> implicitRuleSet;
+	private LinkedList<IRule> explicitRuleSet;
+	private LinkedList<IRule> implicitRuleSet;
 	
 	public RuleSet() {
 		errorList = new LinkedList<>();
@@ -36,32 +36,17 @@ public class RuleSet implements IRuleSet {
 	}
 	
 	@Override
-	public boolean checkExplicitRules(Composite c, SurfaceEntry e) {
-		boolean validMove = true;
-		for (IRule rule : explicitRuleSet) {
-			boolean ok = rule.check(c, e);
-			if (!ok) {
-				addError(rule.getErrorType());
-			}
-			validMove &= ok;
-		}
-		return validMove;
+	public LinkedList<IRule>  getExplicitRules() {
+		return explicitRuleSet;
 	}
 
 	@Override
-	public boolean checkImplicitRules(Composite c, SurfaceEntry e) {
-		boolean validMove = true;
-		for (IRule rule : implicitRuleSet) {
-			boolean ok = rule.check(c, e);
-			if (!ok) {
-				addError(rule.getErrorType());
-			}
-			validMove &= ok;
-		}
-		return validMove;
+	public LinkedList<IRule> getImplicitRules() {
+		return implicitRuleSet;
 	}
 	
-	private void addError(ErrorType errorType) {
+	@Override
+	public void addError(ErrorType errorType) {
 		if (!errorList.contains(errorType)) {
 			errorList.add(errorType);
 		}

@@ -13,7 +13,8 @@ public class LargeToSmallTileChooser implements ITileChooser {
 
 	public LargeToSmallTileChooser(Composite composite) {
 		tileSorts = new ArrayList<Tile>(composite.getTileSorts());
-		Collections.sort(tileSorts, TileComparator.FIELDS_DESC);
+		Collections.sort(tileSorts, TileComparator.FIELDS_ASC);
+		Collections.sort(tileSorts, TileComparator.COLS_DESC);
 	}
 
 	@Override

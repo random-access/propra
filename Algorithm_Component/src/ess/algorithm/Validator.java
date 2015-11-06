@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 import ess.algorithm.RoemischerVerbund.Validation;
 import ess.algorithm.modules.IPositionFinder;
-import ess.algorithm.modules.RuleChecker;
+import ess.algorithm.modules.ValidationRuleChecker;
 import ess.algorithm.modules.TopToBottomPosFinder;
 import ess.data.Composite;
 import ess.data.Position;
@@ -16,13 +16,13 @@ public class Validator {
 	
 	private SurfaceEntry[][] surface;
 	private IPositionFinder posFinder;
-	private RuleChecker ruleChecker;
+	private ValidationRuleChecker ruleChecker;
 	private LinkedList<Validation> errorList = new LinkedList<>();
 	
 	public Validator() {
 		errorList.addAll(EnumSet.allOf(Validation.class));
 		posFinder = new TopToBottomPosFinder();
-		ruleChecker = new RuleChecker();
+		ruleChecker = new ValidationRuleChecker();
 	}
 
 	public void validateSolution(Composite c, int maxLineLenght) {
