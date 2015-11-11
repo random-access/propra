@@ -20,10 +20,9 @@ public class MaxLineLengthRule extends ExplicitRule{
 		for (Edge edge : Edge.values()) {
 			int lineLength = calculateLineLength(c,e,edge);
 			if (lineLength > c.getMaxLineLength()) {
-				log.info("Max. line length exceeded, value is " + lineLength);
+				log.fine("Max. line length exceeded, value is " + lineLength);
 				return false;
 			}
-			// log.info("Line is shorter, value is " + lineLength);
 		}
 		return true;
 	}
@@ -42,9 +41,16 @@ public class MaxLineLengthRule extends ExplicitRule{
 	}
 	
 	private int getEntryLength(Edge edge, SurfaceEntry e) {
-		int rowsToCount = Math.abs(e.getTile().getRows() * edge.getNextColOffset());
-		int colsToCount = Math.abs(e.getTile().getCols() * edge.getNextRowOffset());
-		return rowsToCount + colsToCount;
+		switch (edge) {
+		case TOP: 
+		case BOTTOM:
+			return e.getTile().getCols();
+		case LEFT:
+		case RIGHT:
+			return e.getTile().getRows();
+		default:
+			throw new IllegalArgumentException("Not a valid edge!");
+		}
 	}
 
 	private int getLineLength(Composite c, Edge edge, Position startPos, Position step) {
@@ -55,10 +61,10 @@ public class MaxLineLengthRule extends ExplicitRule{
 		while (s.isInsideSurface(currentInsidePos) && isLine) {
 			Position currentOutsidePos = new Position(currentInsidePos.getRow() + edge.getNextRowOffset(), currentInsidePos.getColumn() + edge.getNextColOffset());
 			
-			SurfaceEntry insideEdge = c.getSurface().getEntryAt(currentInsidePos);
-			SurfaceEntry outsideEdge = c.getSurface().getEntryAt(currentOutsidePos);
-			if (!s.isInsideSurface(currentOutsidePos) || insideEdge == null && outsideEdge == null || insideEdge != null && outsideEdge != null && 
-					insideEdge.equals(outsideEdge)) {
+			SurfaceEntry insideEntry = c.getSurface().getEntryAt(currentInsidePos);
+			SurfaceEntry outsideEntry = c.getSurface().getEntryAt(currentOutsidePos);
+			if (!s.isInsideSurface(currentOutsidePos) || insideEntry == null && outsideEntry == null || insideEntry != null && outsideEntry != null && 
+					insideEntry.equals(outsideEntry)) {
 				isLine = false;
 			} else {
 				currentLineLength++;

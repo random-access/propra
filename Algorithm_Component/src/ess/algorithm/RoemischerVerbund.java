@@ -6,6 +6,8 @@ import ess.data.Composite;
 import ess.io.IDataExchanger;
 import ess.io.XMLDataExchanger;
 import ess.io.exc.DataExchangeException;
+import ess.utils.ProPraLogger;
+import ess.utils.PropertyException;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -38,16 +40,25 @@ public class RoemischerVerbund implements IRoemischerVerbund {
 	 */
 	@Override
 	public List<Validation> validateSolution(String xmlFile, int maxFugenLaenge) {
-
-		IDataExchanger xmlExchanger = new XMLDataExchanger();
-		Validator validator = new Validator();
-		Composite composite = null;
 		try {
+			ProPraLogger.setup();
+		} catch (PropertyException e1) {
+			System.out.println(e1.getMessage());
+		}
+		IDataExchanger xmlExchanger = new XMLDataExchanger();
+		Validator validator = null; // TODO
+		try {
+			validator = new Validator();
+			Composite composite = null;
+		
 			composite = xmlExchanger.readFromSource(xmlFile);
 			validator.validateSolution(composite, maxFugenLaenge);
 		} catch (DataExchangeException e) {
 			// TODO handle exception
 			System.out.println(e.getMessage());
+		} catch (PropertyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		List<Validation> errorList = validator.getErrorList();
 		if (errorList.isEmpty()) {
@@ -67,6 +78,11 @@ public class RoemischerVerbund implements IRoemischerVerbund {
 	 */
 	@Override
 	public boolean solve(String xmlFile, int maxFugenLaenge) {
+		try {
+			ProPraLogger.setup();
+		} catch (PropertyException e1) {
+			System.out.println(e1.getMessage());
+		}
 		IDataExchanger xmlExchanger = new XMLDataExchanger();
 		Solver solver = null;
 		Composite composite = null;
@@ -82,6 +98,9 @@ public class RoemischerVerbund implements IRoemischerVerbund {
 		} catch (DataExchangeException e) {
 			// TODO handle exception
 			System.out.println(e.getMessage());
+		} catch (PropertyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return false;
 	}

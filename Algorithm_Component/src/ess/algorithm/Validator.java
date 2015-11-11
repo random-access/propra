@@ -11,6 +11,7 @@ import ess.data.Composite;
 import ess.data.Position;
 import ess.data.SurfaceEntry;
 import ess.data.Tile;
+import ess.utils.PropertyException;
 
 public class Validator {
 	
@@ -19,7 +20,7 @@ public class Validator {
 	private ValidationRuleChecker ruleChecker;
 	private LinkedList<Validation> errorList = new LinkedList<>();
 	
-	public Validator() {
+	public Validator() throws PropertyException {
 		errorList.addAll(EnumSet.allOf(Validation.class));
 		posFinder = new TopToBottomPosFinder();
 		ruleChecker = new ValidationRuleChecker();

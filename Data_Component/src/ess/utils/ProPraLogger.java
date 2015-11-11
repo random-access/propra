@@ -1,10 +1,8 @@
 package ess.utils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.Properties;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
@@ -14,60 +12,144 @@ import java.util.logging.SimpleFormatter;
 
 public class ProPraLogger {
 	
-	private static final String KEY_LOG_LEVEL = "log_level";
-	private static final String KEY_LOG_FILE = "log_file";
-	private static final String KEY_LOG_CONSOLE = "log_console";
+	// constant for log file names
+	private static final String LOGFILE_NAME = "log_%g.txt";
 	
-	private static final String PATH_TO_PROPERTIES = "../Rules_Component/config/config.properties";
+	// constants for log rotation & file size
 	private static final int MB = 1048576;
+	private static final int LOG_FILE_SIZE = 100 * MB;
+	private static final int NO_OF_LOGFILES = 5;
 	
+	// the global logger
 	private static Logger logger;
 	
+	// used to make sure the logger is configured only once, avoiding unnecessary re-configuration
+	// because there are 2 entry points (API and Main) and therefore the logger cannot simply be initialized
+	// in the main method
+	private static volatile boolean isInitialized = false;
+
 	// prevents instatiation
 	private ProPraLogger() {}
 	
-	public static void setup() throws FileNotFoundException, IOException, IllegalArgumentException {
-		// load properties file
-		Properties properties = loadProperties();
-		
-		// Get the global logger object & set log level
-	    logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-	    
-	    setLogLevel(properties.getProperty(KEY_LOG_LEVEL));
-	    handleLoggingToConsole(properties.getProperty(KEY_LOG_CONSOLE));
-	    handleLoggingToFile(properties.getProperty(KEY_LOG_FILE));
-	}
-	
-	private static void handleLoggingToFile(String path) throws SecurityException, IOException {
-		if (path == null) {
-			return;
+	/**
+	 * Configures the global logger by configuring:
+	 * <ul>
+	 * 		<li>The log level: Only messages with an equal or higher {@link Level} get logged</li>
+	 * 		<li>Console output: Can be turned off or on</li>
+	 * 		<li>Logging to file: If a log directory is specified, log messages will be written
+	 * 			to files (with Log Rotation)</li>
+	 * </ul>
+	 * These 3 parameters can be controlled through a properties file that is placed in the workspace.
+	 * @throws PropertyException if there is an error in the properties file, invalid property values
+	 * or if logs cannot be written to the given destination.
+	 */
+	public static void setup() throws PropertyException {
+		if (!isInitialized) {
+			ProPraProperties properties = ProPraProperties.getInstance();
+
+			// Get the global logger object & set log level
+			logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+			setLogLevel(properties.getValue(ProPraProperties.KEY_LOG_LEVEL));
+			
+
+			// Configure log output
+			handleLoggingToConsole(properties.getValue(ProPraProperties.KEY_LOG_CONSOLE));
+			handleLoggingToFile(properties.getValue(ProPraProperties.KEY_LOG_FILE));
+			
+			// Customize formatting
+			Logger rootLogger = Logger.getLogger("");
+			for (Handler h : rootLogger.getHandlers()) {
+				h.setFormatter(new CustomLogFormatter());
+			}
+			
+			isInitialized = true;
+			logger.info("Initialized logging.");
 		}
-		FileHandler fileHandler = new FileHandler(path + "log_%g.txt", 100 * MB, 5, false);
-		fileHandler.setFormatter(new SimpleFormatter());
-		logger.addHandler(fileHandler);
 	}
 
-	
-	private static void handleLoggingToConsole(String consoleOutput) {
+	/**
+	 * Parse the path to a directory where the logs should be stored.
+	 * Create the necessary directory structure if it doesn't exist yet and
+	 * setup a file handler to manage writing to file. 
+	 * The logs are rotated
+	 * @param path log directory
+	 * @throws PropertyException if log directory cannot be created due to insufficient permissions
+	 * or other I/O errors
+	 */
+	private static void handleLoggingToFile(String path) throws PropertyException {
+		try {
+			// do not log, if no pathname is specified
+			if (path == null || path.isEmpty()) {
+				return;
+			}
+			
+			// create necessary directory hierarchy, if directory doesn't exist yet
+			if (!Files.isDirectory(Paths.get(path))) {
+				Files.createDirectory(Paths.get(path));
+			}
+			
+			// create a file handler to manage logging to file and add it to the logger
+			FileHandler fileHandler = new FileHandler(path + LOGFILE_NAME, LOG_FILE_SIZE, NO_OF_LOGFILES, false);
+			fileHandler.setFormatter(new SimpleFormatter());
+			logger.addHandler(fileHandler);
+		} catch (SecurityException | IOException e) {
+			throw new PropertyException("Error: Log file could not be created. Please check if the path you "
+					+ "provided in config.properties is a valid directory name and you have write permissions. ");
+		}
+
+	}
+
+	/**
+	 * Parse the value of log_console from config.properties to determine if
+	 * logging should be displayed.
+	 * 
+	 * @param consoleOutput
+	 *            a String containing "true" if there should be log output, else
+	 *            "false".
+	 * @throws PropertyException
+	 *             if the string is neither "true" nor "false".
+	 */
+	private static void handleLoggingToConsole(String consoleOutput) throws PropertyException {
+		// do not accept invalid input, just in case
+		if (!consoleOutput.equalsIgnoreCase("true") && !(consoleOutput.equalsIgnoreCase("false"))) {
+			throw new PropertyException("Invalid parameter in properties file for key \"log_console\", "
+					+ "must be either \"true\" or \"false\"");
+		}
+		
+		// if there should be console output, there is nothing to do
 		if (Boolean.parseBoolean(consoleOutput)) {
 			return;
 		}
+		
+		// remove the ConsoleHandler from the root logger to disable console output
 		Logger rootLogger = Logger.getLogger("");
-	    Handler[] handlers = rootLogger.getHandlers();
-	    if (handlers[0] instanceof ConsoleHandler) {
-	      rootLogger.removeHandler(handlers[0]);
-	    }
+		Handler[] handlers = rootLogger.getHandlers();
+		if (handlers[0] instanceof ConsoleHandler) {
+			rootLogger.removeHandler(handlers[0]);
+		}
 	}
-	
-	private static void setLogLevel(String logLevelName) {
-		Level logLevel = Level.parse(logLevelName);
-	    logger.setLevel(logLevel);
+
+	/**
+	 * Parse the value of log_level from config.properties. Every log with level
+	 * equal or above the given log level will pass the filter and be displayed
+	 * or written to file.
+	 * 
+	 * @param logLevelName
+	 *            should be one of the 7 LogLevels defined in {@link Level}. The
+	 *            values OFF (no logging at all) and ALL (all messages get
+	 *            logged) are accepted as well.
+	 * @see Level
+	 * @throws PropertyException
+	 *             if logLevelName doesn't contain a valid log level.
+	 */
+	private static void setLogLevel(String logLevelName) throws PropertyException {
+		try {
+			Level logLevel = Level.parse(logLevelName.toUpperCase());
+			logger.setLevel(logLevel);
+		} catch (IllegalArgumentException e) {
+			throw new PropertyException("Invalid parameter in properties file for key \"log_level\", "
+					+ "must be a valid log level", e);
+		}
 	}
-	
-	private static Properties loadProperties() throws FileNotFoundException, IOException {
-		File propertiesFile = new File(PATH_TO_PROPERTIES);
-		Properties properties = new Properties();
-		properties.load(new FileReader(propertiesFile));
-		return properties;
-	}
+
 }

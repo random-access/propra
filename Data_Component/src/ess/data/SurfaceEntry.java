@@ -25,6 +25,8 @@ public class SurfaceEntry {
 
 	public Position getCorner(Corner c) {
 		switch (c) {
+		case TOP_LEFT: 
+			return pos;
 		case TOP_RIGHT:
 			return new Position(pos.getRow(), pos.getColumn() + tile.getCols() - 1);
 		case BOTTOM_LEFT: 
@@ -32,13 +34,15 @@ public class SurfaceEntry {
 		case BOTTOM_RIGHT: 
 			return new Position(pos.getRow() + tile.getRows() - 1, pos.getColumn() + tile.getCols() - 1);
 		default:
-			return pos;
+			throw new IllegalArgumentException("Not a valid value for corner.");
 
 		}
 	}
 	
 	private Position getTopLeft(Tile t, Position pos, Corner c) {
 		switch (c) {
+		case TOP_LEFT:
+			return pos;
 		case TOP_RIGHT:
 			return new Position(pos.getRow(), pos.getColumn() - t.getCols() + 1);
 		case BOTTOM_LEFT: 
@@ -46,7 +50,7 @@ public class SurfaceEntry {
 		case BOTTOM_RIGHT: 
 			return new Position(pos.getRow() - t.getRows() + 1, pos.getColumn() - t.getCols() + 1);
 		default:
-			return pos;
+			throw new IllegalArgumentException("Not a valid value for corner.");
 
 		}
 	}

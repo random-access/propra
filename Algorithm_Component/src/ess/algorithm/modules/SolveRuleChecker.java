@@ -5,12 +5,13 @@ import ess.data.SurfaceEntry;
 import ess.rules.IRule;
 import ess.rules.sets.IRuleSet;
 import ess.rules.sets.RuleSet;
+import ess.utils.PropertyException;
 
 public class SolveRuleChecker implements IRuleChecker {
 
 private IRuleSet ruleSet;
 	
-	public SolveRuleChecker() {
+	public SolveRuleChecker() throws PropertyException {
 		ruleSet = new RuleSet();
 	}
 

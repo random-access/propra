@@ -8,12 +8,13 @@ import ess.data.SurfaceEntry;
 import ess.rules.IRule;
 import ess.rules.sets.IRuleSet;
 import ess.rules.sets.RuleSet;
+import ess.utils.PropertyException;
 
 public class ValidationRuleChecker implements IRuleChecker{
 
 	private IRuleSet ruleSet;
 	
-	public ValidationRuleChecker() {
+	public ValidationRuleChecker() throws PropertyException {
 		ruleSet = new RuleSet();
 	}
 	
@@ -42,7 +43,7 @@ public class ValidationRuleChecker implements IRuleChecker{
 	}
 	
 	public LinkedList<Validation> getErrorList() {
-		return RuleMapper.mapErrors(ruleSet);
+		return ErrorMapper.mapErrors(ruleSet);
 	}
 	
 }

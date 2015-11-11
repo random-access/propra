@@ -4,21 +4,21 @@ import java.awt.Point;
 
 public class Surface {
 
-	private int rows, cols;
+	// private int rows, cols;
 	private SurfaceEntry[][] fields;
 
 	public Surface(int rows, int cols) {
-		this.rows = rows;
-		this.cols = cols;
+		// this.rows = rows;
+		// this.cols = cols;
 		fields = new SurfaceEntry[rows][cols];
 	}
 
 	public int getRows() {
-		return rows;
+		return fields.length;
 	}
 
 	public int getCols() {
-		return cols;
+		return fields[0].length;
 	}
 
 	public SurfaceEntry[][] getFields() {
@@ -96,8 +96,8 @@ public class Surface {
 	 *         if no free position is available anymore
 	 */
 	public Position getNextFreePosition() {
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
+		for (int i = 0; i < fields.length; i++) {
+			for (int j = 0; j < fields[0].length; j++) {
 				if (fields[i][j] == null) {
 					return new Position(i, j);
 				}
@@ -166,9 +166,9 @@ public class Surface {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("rows: ").append(rows).append(", cols: ").append(cols).append("\n");
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
+		sb.append("rows: ").append(fields.length).append(", cols: ").append(fields[0].length).append("\n");
+		for (int i = 0; i < fields.length; i++) {
+			for (int j = 0; j < fields[0].length; j++) {
 				SurfaceEntry e = fields[i][j];
 				if (e == null) {
 					sb.append("__ ");

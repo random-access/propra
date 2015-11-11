@@ -9,7 +9,7 @@ import ess.data.Position;
 import ess.data.SurfaceEntry;
 import ess.io.XMLDataExchanger;
 import ess.io.exc.DataExchangeException;
-import ess.rules.explicit.ReplacableTileRule;
+import ess.rules.explicit.ReplaceableTileRule;
 
 public class ReplaceableTileTest {
 
@@ -23,7 +23,7 @@ public class ReplaceableTileTest {
 		c.getSurface().insertEntry(e1);
 		c.getSurface().insertEntry(e2);
 		System.out.println(c);
-		ReplacableTileRule rule = new ReplacableTileRule();
+		ReplaceableTileRule rule = new ReplaceableTileRule();
 		assertFalse(rule.check(c, e2));
 	}
 	
@@ -37,7 +37,7 @@ public class ReplaceableTileTest {
 		c.getSurface().insertEntry(e1);
 		c.getSurface().insertEntry(e2);
 		System.out.println(c);
-		ReplacableTileRule rule = new ReplacableTileRule();
+		ReplaceableTileRule rule = new ReplaceableTileRule();
 		assertFalse(rule.check(c, e2));
 	}
 	
@@ -50,7 +50,7 @@ public class ReplaceableTileTest {
 		c.getSurface().insertEntry(e1);
 		c.getSurface().insertEntry(e2);
 		System.out.println(c);
-		ReplacableTileRule rule = new ReplacableTileRule();
+		ReplaceableTileRule rule = new ReplaceableTileRule();
 		assertTrue(rule.check(c, e2));
 	}
 	
@@ -65,7 +65,7 @@ public class ReplaceableTileTest {
 		c.getSurface().insertEntry(e2);
 		c.getSurface().insertEntry(e3);
 		System.out.println(c);
-		ReplacableTileRule rule = new ReplacableTileRule();
+		ReplaceableTileRule rule = new ReplaceableTileRule();
 		assertFalse(rule.check(c, e3));
 	}
 }

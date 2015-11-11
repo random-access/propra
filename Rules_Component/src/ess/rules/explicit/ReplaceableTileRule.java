@@ -12,7 +12,7 @@ import ess.data.Tile;
 import ess.rules.implicit.EntryExceedsSurfaceRule;
 import ess.rules.sets.ErrorType;
 
-public class ReplacableTileRule extends ExplicitRule {
+public class ReplaceableTileRule extends ExplicitRule {
 	
 	private static final Logger log = Logger.getGlobal();
 
@@ -22,7 +22,7 @@ public class ReplacableTileRule extends ExplicitRule {
 		ArrayList<Tile> tiles = c.getTilesLargerThan(t.getRows(), t.getCols(), t.getNumberOfFields());
 		for (Tile tile : tiles) {
 			if (tileIsReplacement(c, e, tile)) {
-				log.info("replacement found for " + e);
+				log.fine("replacement found for " + e);
 				return false;
 			}
 		}

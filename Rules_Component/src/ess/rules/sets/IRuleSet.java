@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import ess.rules.IRule;
 
 public interface IRuleSet {
-
+	
 	public LinkedList<IRule> getExplicitRules();
 	
 	public LinkedList<IRule> getImplicitRules();

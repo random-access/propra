@@ -15,13 +15,12 @@ public class CrossingsRule extends ExplicitRule {
 
 	@Override
 	public boolean check(Composite c, SurfaceEntry e) {
-		Surface surface = c.getSurface();
-		boolean noCrossing = checkCorner(Corner.TOP_LEFT, surface, e) 
-				&& checkCorner(Corner.TOP_RIGHT, surface, e) 
-				&& checkCorner(Corner.BOTTOM_LEFT, surface, e)
-				&& checkCorner(Corner.BOTTOM_RIGHT, surface, e);
+		boolean noCrossing = checkCorner(Corner.TOP_LEFT, c.getSurface(), e) 
+				&& checkCorner(Corner.TOP_RIGHT, c.getSurface(), e) 
+				&& checkCorner(Corner.BOTTOM_LEFT, c.getSurface(), e)
+				&& checkCorner(Corner.BOTTOM_RIGHT, c.getSurface(), e);
 		if(!noCrossing) {
-			log.info("Found a crossing");
+			log.fine("Found a crossing");
 		}
 		return noCrossing;
 	}
