@@ -34,9 +34,11 @@ public class CrossingsRule extends ExplicitRule {
 		SurfaceEntry sameRowEntry = surface.getRowCornerNeighbourEntry(e, corner);
 		SurfaceEntry sameColumnEntry = surface.getColCornerNeighbourEntry(e, corner);
 		
+		// if the entry opposite this corner is not filled yet, there must be 1 neighbour not filled either, e.g.
 		if (cornerNeighbourEntry == null) {
 			return sameRowEntry == null || sameColumnEntry == null;
 		} 
+		// if the entry opposite this corner is filled, it must be the same as one of its neighbours
 		return cornerNeighbourEntry.equals(sameRowEntry) || cornerNeighbourEntry.equals(sameColumnEntry);
 	}
 

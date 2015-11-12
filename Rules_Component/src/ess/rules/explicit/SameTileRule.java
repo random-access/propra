@@ -29,7 +29,7 @@ public class SameTileRule extends ExplicitRule {
 		Position corner2 = e.getCorner(edge.getSecondCorner());
 		for (int i = corner1.getRow(); i <= corner2.getRow(); i++) {
 			for (int j = corner1.getColumn(); j <= corner2.getColumn(); j++) {
-				SurfaceEntry inside = c.getSurface().getEntryAt(i, j);
+				SurfaceEntry inside = e; // c.getSurface().getEntryAt(i, j);
 				SurfaceEntry outside = c.getSurface().getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());
 				if (outside == null || inside != null && !inside.getTile().equals(outside.getTile())){
 					return false;

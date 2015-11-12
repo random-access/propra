@@ -6,7 +6,7 @@ import ess.data.Position;
 public class OutsideToInsidePosFinder implements IPositionFinder {
 
 	@Override
-	public Position findNextFreePosition(Composite composite, IRuleChecker ruleChecker) {
+	public Position findNextFreePosition(Composite composite, Position pos) {
 		
 		int rows = composite.getSurface().getRows();
 		int cols = composite.getSurface().getCols();

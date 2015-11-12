@@ -82,9 +82,9 @@ public class Composite {
 		return maxLineLength;
 	}
 	
-	public Tile findTileById(String ident) {
+	public Tile findTileById(String id) {
 		for (Tile t : tileSorts) {
-			if (ident.equals(t.getIdent())) {
+			if (id.equals(t.getIdent())) {
 				return t;
 			}
 		}
@@ -106,9 +106,6 @@ public class Composite {
 	 * To string.
 	 *
 	 * @return the string
-	 */
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {

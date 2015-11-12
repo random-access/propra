@@ -53,7 +53,7 @@ public class Validator {
 		Position pos = null;
 		Tile tile = null;
 		for (String ident : c.getSurfaceTileList()) {
-			pos = posFinder.findNextFreePosition(c, ruleChecker);
+			pos = posFinder.findNextFreePosition(c, pos);
 			tile = c.findTileById(ident);
 			SurfaceEntry e = new SurfaceEntry(tile, pos);
 			

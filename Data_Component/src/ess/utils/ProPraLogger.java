@@ -10,6 +10,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+/**
+ * This class provides a customized global Logger object. 
+ * The minimum log level and the output target can be set in the config.properties file.
+ * To format the log output, an instance {@link CustomLogFormatter} is used
+ * 
+ * @author Monika Schrenk
+ *
+ */
 public class ProPraLogger {
 	
 	// constant for log file names
@@ -71,7 +79,7 @@ public class ProPraLogger {
 	 * Parse the path to a directory where the logs should be stored.
 	 * Create the necessary directory structure if it doesn't exist yet and
 	 * setup a file handler to manage writing to file. 
-	 * The logs are rotated
+	 * The logs are rotated.
 	 * @param path log directory
 	 * @throws PropertyException if log directory cannot be created due to insufficient permissions
 	 * or other I/O errors

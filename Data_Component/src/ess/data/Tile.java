@@ -21,12 +21,12 @@ public class Tile {
 	/**
 	 * Instantiates a new tile.
 	 *
-	 * @param ident an identification string unique in a composite.
+	 * @param id an identification string unique in a composite.
 	 * @param rows an integer greater than zero.
 	 * @param cols an integer greater than zero.
 	 */
-	public Tile(String ident, int rows, int cols) {
-		this.id = ident;
+	public Tile(String id, int rows, int cols) {
+		this.id = id;
 		this.rows = rows;
 		this.cols = cols;
 		

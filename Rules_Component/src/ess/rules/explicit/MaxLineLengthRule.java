@@ -37,7 +37,7 @@ public class MaxLineLengthRule extends ExplicitRule{
 		Position p1 = e.getCorner(c1);
 		Position p2 = e.getCorner(c2);
 
-		return getLineLength(c,edge,p1, backStep) + getLineLength(c,edge,p2,fwdStep) + getEntryLength(edge,e);
+		return getLineLength(c,edge,p1,backStep) + getLineLength(c,edge,p2,fwdStep) + getEntryLength(edge,e);
 	}
 	
 	private int getEntryLength(Edge edge, SurfaceEntry e) {

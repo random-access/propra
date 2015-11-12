@@ -65,7 +65,7 @@ public class Solver {
 		Tile tile= null;
 		do {
 			if (pos == null) {
-				pos = posFinder.findNextFreePosition(c, ruleChecker);
+				pos = posFinder.findNextFreePosition(c, pos);
 				if (pos == null) {
 					log.info("Iterations: " + counter);
 					log.info("Found a solution :) \n" + c);
