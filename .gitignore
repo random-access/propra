@@ -10,7 +10,10 @@ target/
 *.class
  
 # Package Files #
-*.jar
+
+# JAR files I would normally exclude from git but in this case I need some external libraries
+# *.jar 
+
 *.war
 *.ear
 *.db
@@ -45,7 +48,7 @@ Desktop.ini
 ######################
  
 *.pydevproject
-.project
+## .project
 .metadata
 bin/**
 tmp/**
@@ -55,10 +58,11 @@ tmp/**/*
 *.swp
 *~.nib
 local.properties
-.classpath
+## .classpath
 .settings/
 .loadpath
 /src/main/resources/rebel.xml
+
 # External tool builders
 .externalToolBuilders/
  
