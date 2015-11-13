@@ -5,9 +5,10 @@ import java.util.logging.Logger;
 import ess.data.Composite;
 import ess.data.Corner;
 import ess.data.SurfaceEntry;
+import ess.rules.IRule;
 import ess.rules.sets.ErrorType;
 
-public class EntryCoversOtherTileRule implements ImplicitRule{
+public class EntryCoversOtherTileRule implements IRule{
 	
 	private static final Logger log = Logger.getGlobal();
 

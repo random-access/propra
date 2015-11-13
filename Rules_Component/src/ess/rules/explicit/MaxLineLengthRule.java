@@ -8,9 +8,10 @@ import ess.data.Edge;
 import ess.data.Position;
 import ess.data.Surface;
 import ess.data.SurfaceEntry;
+import ess.rules.IRule;
 import ess.rules.sets.ErrorType;
 
-public class MaxLineLengthRule extends ExplicitRule{
+public class MaxLineLengthRule implements IRule {
 	
 	private static final Logger log = Logger.getGlobal();
 			

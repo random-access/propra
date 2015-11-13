@@ -7,9 +7,10 @@ import ess.data.Corner;
 import ess.data.Position;
 import ess.data.Surface;
 import ess.data.SurfaceEntry;
+import ess.rules.IRule;
 import ess.rules.sets.ErrorType;
 
-public class CrossingsRule extends ExplicitRule {
+public class CrossingsRule implements IRule {
 	
 	private static final Logger log = Logger.getGlobal();
 

@@ -5,9 +5,10 @@ import java.util.logging.Logger;
 import ess.data.Composite;
 import ess.data.Corner;
 import ess.data.SurfaceEntry;
+import ess.rules.IRule;
 import ess.rules.sets.ErrorType;
 
-public class EntryExceedsSurfaceRule implements ImplicitRule {
+public class EntryExceedsSurfaceRule implements IRule {
 	
 	private static final Logger log = Logger.getGlobal();
 

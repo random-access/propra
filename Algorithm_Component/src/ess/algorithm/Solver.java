@@ -106,13 +106,10 @@ public class Solver {
 
 	private boolean placeNextTile(Tile tile, Position pos) {
 		SurfaceEntry entry = new SurfaceEntry(tile, pos);
-		if (ruleChecker.checkImplicitRules(c, entry)) {
+		if (ruleChecker.checkImplicitRules(c, entry) && ruleChecker.checkExplicitRules(c, entry)) {
 			c.getSurface().insertEntry(entry);
-			if (ruleChecker.checkExplicitRules(c, entry)) {
-				counter++;
-				return true;
-			}
-			c.getSurface().removeEntry(entry);
+			counter++;
+			return true;
 		}
 		return false;
 	}

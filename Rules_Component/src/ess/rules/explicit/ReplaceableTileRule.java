@@ -9,10 +9,11 @@ import ess.data.Edge;
 import ess.data.Position;
 import ess.data.SurfaceEntry;
 import ess.data.Tile;
+import ess.rules.IRule;
 import ess.rules.implicit.EntryExceedsSurfaceRule;
 import ess.rules.sets.ErrorType;
 
-public class ReplaceableTileRule extends ExplicitRule {
+public class ReplaceableTileRule implements IRule {
 	
 	private static final Logger log = Logger.getGlobal();
 
@@ -76,7 +77,7 @@ public class ReplaceableTileRule extends ExplicitRule {
 			return false;
 		}
 		for (Edge edge : Edge.values()) {
-			if (!isTileBorder(c, coverEntry, edge)) {
+			if (!isTileBorder(c, coverEntry, edge, e)) {
 				return false;
 			}
 		}
@@ -96,11 +97,15 @@ public class ReplaceableTileRule extends ExplicitRule {
 	 *            the edge to be tested
 	 * @return true, if this edge is a tile border, else false
 	 */
-	private boolean isTileBorder(Composite c, SurfaceEntry coverEntry, Edge edge) {
+	private boolean isTileBorder(Composite c, SurfaceEntry coverEntry, Edge edge, SurfaceEntry e) {
 		Position corner1 = coverEntry.getCorner(edge.getFirstCorner());
 		Position corner2 = coverEntry.getCorner(edge.getSecondCorner());
 		for (int i = corner1.getRow(); i <= corner2.getRow(); i++) {
 			for (int j = corner1.getColumn(); j <= corner2.getColumn(); j++) {
+				if (i >= e.getPosition().getRow() && i < e.getPosition().getRow() + e.getTile().getRows()
+						&& j >= e.getPosition().getColumn() && j < e.getPosition().getColumn() + e.getTile().getCols()) {
+					continue;
+				}
 				log.finest("Examining position " + i + "," + j + "...");
 				SurfaceEntry inside = c.getSurface().getEntryAt(i, j);
 				SurfaceEntry outside = c.getSurface().getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());

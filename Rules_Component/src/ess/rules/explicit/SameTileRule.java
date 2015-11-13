@@ -6,9 +6,10 @@ import ess.data.Composite;
 import ess.data.Edge;
 import ess.data.Position;
 import ess.data.SurfaceEntry;
+import ess.rules.IRule;
 import ess.rules.sets.ErrorType;
 
-public class SameTileRule extends ExplicitRule {
+public class SameTileRule implements IRule {
 	
 	private static final Logger log = Logger.getGlobal();
 
@@ -28,10 +29,9 @@ public class SameTileRule extends ExplicitRule {
 		Position corner1 = e.getCorner(edge.getFirstCorner());
 		Position corner2 = e.getCorner(edge.getSecondCorner());
 		for (int i = corner1.getRow(); i <= corner2.getRow(); i++) {
-			for (int j = corner1.getColumn(); j <= corner2.getColumn(); j++) {
-				SurfaceEntry inside = e; // c.getSurface().getEntryAt(i, j);
+			for (int j = corner1.getColumn(); j <= corner2.getColumn(); j++) { 
 				SurfaceEntry outside = c.getSurface().getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());
-				if (outside == null || inside != null && !inside.getTile().equals(outside.getTile())){
+				if (outside == null || !e.getTile().equals(outside.getTile())){
 					return false;
 				}
 			}

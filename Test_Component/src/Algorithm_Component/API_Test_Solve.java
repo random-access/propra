@@ -83,7 +83,7 @@ public class API_Test_Solve {
 //	@Test
 //	public void solveInstance1() throws IOException {
 //
-//		System.out.println("***********  Test 1 ********************");
+//		System.out.println("******** ***  Test 1 ********************");
 //
 //		// Arrange (set all necessary preconditions and inputs.)
 //		IRoemischerVerbund api = new RoemischerVerbund();
