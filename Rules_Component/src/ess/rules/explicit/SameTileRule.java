@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import ess.data.Composite;
 import ess.data.Edge;
 import ess.data.Position;
-import ess.data.SurfaceEntry;
+import ess.data.Tile;
 import ess.rules.IRule;
 import ess.rules.sets.ErrorType;
 
@@ -14,9 +14,9 @@ public class SameTileRule implements IRule {
 	private static final Logger log = Logger.getGlobal();
 
 	@Override
-	public boolean check(Composite c, SurfaceEntry e) {
+	public boolean check(Composite c, Tile tile, Position pos) {
 		for (Edge edge : Edge.values()) {
-			if (hasEdgeWithSameTile(c,e,edge)) {
+			if (hasEdgeWithSameTile(c, tile, pos,edge)) {
 				log.fine("Common edge with same tile found.");
 				return false;
 			}
@@ -25,13 +25,13 @@ public class SameTileRule implements IRule {
 		return true;
 	}
 	
-	private boolean hasEdgeWithSameTile(Composite c, SurfaceEntry e, Edge edge) {
-		Position corner1 = e.getCorner(edge.getFirstCorner());
-		Position corner2 = e.getCorner(edge.getSecondCorner());
+	private boolean hasEdgeWithSameTile(Composite c, Tile tile, Position pos, Edge edge) {
+		Position corner1 = c.getSurface().getCornerPos(tile, pos, edge.getFirstCorner());
+		Position corner2 = c.getSurface().getCornerPos(tile, pos, edge.getSecondCorner());
 		for (int i = corner1.getRow(); i <= corner2.getRow(); i++) {
-			for (int j = corner1.getColumn(); j <= corner2.getColumn(); j++) { 
-				SurfaceEntry outside = c.getSurface().getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());
-				if (outside == null || !e.getTile().equals(outside.getTile())){
+			for (int j = corner1.getCol(); j <= corner2.getCol(); j++) { 
+				Tile outsideTile = c.getSurface().getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());
+				if (outsideTile == null || !tile.equals(outsideTile)){
 					return false;
 				}
 			}

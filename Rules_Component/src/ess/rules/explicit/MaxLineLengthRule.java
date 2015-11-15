@@ -7,7 +7,7 @@ import ess.data.Corner;
 import ess.data.Edge;
 import ess.data.Position;
 import ess.data.Surface;
-import ess.data.SurfaceEntry;
+import ess.data.Tile;
 import ess.rules.IRule;
 import ess.rules.sets.ErrorType;
 
@@ -16,39 +16,42 @@ public class MaxLineLengthRule implements IRule {
 	private static final Logger log = Logger.getGlobal();
 			
 	@Override
-	public boolean check(Composite c, SurfaceEntry e) {
-		
+	public boolean check(Composite c, Tile tile, Position pos) {
+		// System.out.println("Testing insertion of tile " + tile + " at " + pos);
 		for (Edge edge : Edge.values()) {
-			int lineLength = calculateLineLength(c,e,edge);
+			// System.out.println("Testing edge " + edge);
+			int lineLength = calculateLineLength(c, tile, pos, edge);
+			// System.out.println("Line length " + lineLength);
 			if (lineLength > c.getMaxLineLength()) {
 				log.fine("Max. line length exceeded, value is " + lineLength);
 				return false;
 			}
 		}
+		
 		return true;
 	}
 
-	private int calculateLineLength(Composite c, SurfaceEntry e, Edge edge) {
+	private int calculateLineLength(Composite c, Tile tile, Position pos, Edge edge) {
 		Corner c1 = edge.getFirstCorner();
 		Corner c2 = edge.getSecondCorner();
 		
 		Position backStep = new Position(c1.getNextRowOffset() - edge.getNextRowOffset(), c1.getNextColOffset() - edge.getNextColOffset());
 		Position fwdStep = new Position(c2.getNextRowOffset() - edge.getNextRowOffset(), c2.getNextColOffset() - edge.getNextColOffset()); 
 		
-		Position p1 = e.getCorner(c1);
-		Position p2 = e.getCorner(c2);
+		Position p1 = c.getSurface().getCornerPos(tile,  pos, c1);
+		Position p2 = c.getSurface().getCornerPos(tile,  pos, c2);
 
-		return getLineLength(c,edge,p1,backStep) + getLineLength(c,edge,p2,fwdStep) + getEntryLength(edge,e);
+		return getLineLength(c,edge,p1,backStep) + getLineLength(c,edge,p2,fwdStep) + getEntryLength(edge, tile);
 	}
 	
-	private int getEntryLength(Edge edge, SurfaceEntry e) {
+	private int getEntryLength(Edge edge, Tile t) {
 		switch (edge) {
 		case TOP: 
 		case BOTTOM:
-			return e.getTile().getCols();
+			return t.getCols();
 		case LEFT:
 		case RIGHT:
-			return e.getTile().getRows();
+			return t.getRows();
 		default:
 			throw new IllegalArgumentException("Not a valid edge!");
 		}
@@ -56,22 +59,22 @@ public class MaxLineLengthRule implements IRule {
 
 	private int getLineLength(Composite c, Edge edge, Position startPos, Position step) {
 		Surface s = c.getSurface();
-		Position currentInsidePos = new Position(startPos.getRow() + step.getRow(), startPos.getColumn() + step.getColumn());
+		Position currentInsidePos = new Position(startPos.getRow() + step.getRow(), startPos.getCol() + step.getCol());
 		int currentLineLength = 0;
 		boolean isLine = true;
 		while (s.isInsideSurface(currentInsidePos) && isLine) {
-			Position currentOutsidePos = new Position(currentInsidePos.getRow() + edge.getNextRowOffset(), currentInsidePos.getColumn() + edge.getNextColOffset());
+			Position currentOutsidePos = new Position(currentInsidePos.getRow() + edge.getNextRowOffset(), currentInsidePos.getCol() + edge.getNextColOffset());
 			
-			SurfaceEntry insideEntry = c.getSurface().getEntryAt(currentInsidePos);
-			SurfaceEntry outsideEntry = c.getSurface().getEntryAt(currentOutsidePos);
-			if (!s.isInsideSurface(currentOutsidePos) || insideEntry == null && outsideEntry == null || insideEntry != null && outsideEntry != null && 
-					insideEntry.equals(outsideEntry)) {
+			Tile insideTile = c.getSurface().getEntryAt(currentInsidePos);
+			Tile outsideTile = c.getSurface().getEntryAt(currentOutsidePos);
+			if (!s.isInsideSurface(currentOutsidePos) || insideTile == null && outsideTile == null || insideTile != null && outsideTile != null && 
+					insideTile == outsideTile) {
 				isLine = false;
 			} else {
 				currentLineLength++;
 			}
 			currentInsidePos.setRow(currentInsidePos.getRow() + step.getRow());
-			currentInsidePos.setColumn(currentInsidePos.getColumn() + step.getColumn());
+			currentInsidePos.setColumn(currentInsidePos.getCol() + step.getCol());
 		}
 		return currentLineLength;
 	}

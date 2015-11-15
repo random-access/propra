@@ -1,5 +1,6 @@
 package ess.data;
 
+
 public enum Corner {
 	TOP_LEFT(-1,-1), TOP_RIGHT (-1,1), BOTTOM_RIGHT(1,1), BOTTOM_LEFT (1,-1);
 	
@@ -17,5 +18,6 @@ public enum Corner {
 	public int getNextColOffset() {
 		return nextColOffset;
 	}
+	
 }
 

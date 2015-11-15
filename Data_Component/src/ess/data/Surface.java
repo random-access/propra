@@ -1,16 +1,17 @@
 package ess.data;
 
 import java.awt.Point;
+import java.security.InvalidParameterException;
 
 public class Surface {
 
 	// private int rows, cols;
-	private SurfaceEntry[][] fields;
+	private Tile[][] fields;
 
 	public Surface(int rows, int cols) {
 		// this.rows = rows;
 		// this.cols = cols;
-		fields = new SurfaceEntry[rows][cols];
+		fields = new Tile[rows][cols];
 	}
 
 	public int getRows() {
@@ -21,15 +22,15 @@ public class Surface {
 		return fields[0].length;
 	}
 
-	public SurfaceEntry[][] getFields() {
+	public Tile[][] getFields() {
 		return fields;
 	}
 	
-	public SurfaceEntry getEntryAt(Position pos) {
-		return (isInsideSurface(pos)) ? fields[pos.getRow()][pos.getColumn()] : null;
+	public Tile getEntryAt(Position pos) {
+		return (isInsideSurface(pos)) ? fields[pos.getRow()][pos.getCol()] : null;
 	}
 	
-	public SurfaceEntry getEntryAt(int row, int col) {
+	public Tile getEntryAt(int row, int col) {
 		return(isInsideSurface(row, col)) ? fields[row][col] : null;
 	}
 
@@ -50,17 +51,18 @@ public class Surface {
 	 *            the left upper corner of the position the tile should be
 	 *            inserted
 	 */
-	public void insertEntry(SurfaceEntry e) {
-		for (int i = e.getCorner(Corner.TOP_LEFT).getRow(); i <= e.getCorner(Corner.BOTTOM_LEFT).getRow(); i++) {
-			for (int j = e.getCorner(Corner.TOP_LEFT).getColumn(); j <= e.getCorner(Corner.TOP_RIGHT).getColumn(); j++) {
-				fields[i][j] = e;
+	public void insertEntry(Tile t, Position pos) {
+		Tile tile = new Tile (t.getId(), t.getRows(), t.getCols());
+		for (int i = pos.getRow(); i <= pos.getRow()+t.getRows()-1; i++) {
+			for (int j = pos.getCol(); j <= pos.getCol()+t.getCols()-1; j++) {
+				fields[i][j] = tile;
 			}
 		}
 	}
 	
-	public void removeEntry(SurfaceEntry e) {
-		for (int i = e.getCorner(Corner.TOP_LEFT).getRow(); i <= e.getCorner(Corner.BOTTOM_LEFT).getRow(); i++) {
-			for (int j = e.getCorner(Corner.TOP_LEFT).getColumn(); j <= e.getCorner(Corner.TOP_RIGHT).getColumn(); j++) {
+	public void removeEntry(Tile t, Position pos) {
+		for (int i = pos.getRow(); i <= pos.getRow()+t.getRows()-1; i++) {
+			for (int j = pos.getCol(); j <= pos.getCol()+t.getCols()-1; j++) {
 				fields[i][j] = null;
 			}
 		}
@@ -120,7 +122,7 @@ public class Surface {
 	}
 	
 	public boolean isEdgeCol(Position pos) {
-		return isEdgeCol(pos.getColumn());
+		return isEdgeCol(pos.getCol());
 	}
 	
 	public boolean isEdgeCol(int col) {
@@ -134,28 +136,69 @@ public class Surface {
 	
 	public boolean isInsideSurface(Position pos) {
 		// TODO use rule from rules component
-		return isInsideSurface(pos.getRow(), pos.getColumn());
+		return isInsideSurface(pos.getRow(), pos.getCol());
 	}
 	
-	public SurfaceEntry getRowCornerNeighbourEntry(SurfaceEntry e, Corner c) {
-		int row = e.getCorner(c).getRow();
-		int col = e.getCorner(c).getColumn()+c.getNextColOffset();
-		Position pos = new Position (row, col);
-		return (isInsideSurface(pos)) ? getEntryAt(pos) : null;
+	public Tile getRowCornerNeighbourEntry(Tile tile, Position pos, Corner c) {
+		Position nPos = new Position(getCornerRow(tile, pos, c), 
+				getCornerCol(tile, pos, c) + c.getNextColOffset());
+		return (isInsideSurface(nPos)) ? getEntryAt(nPos) : null;
 	}
 	
-	public SurfaceEntry getColCornerNeighbourEntry(SurfaceEntry e, Corner c) {
-		int row = e.getCorner(c).getRow()+c.getNextRowOffset();
-		int col = e.getCorner(c).getColumn();
-		Position pos = new Position (row, col);
-		return (isInsideSurface(pos)) ? getEntryAt(pos) : null;
+	public Tile getColCornerNeighbourEntry(Tile tile, Position pos, Corner c) {
+		Position nPos = new Position(getCornerRow(tile, pos, c)+c.getNextRowOffset(), 
+				getCornerCol(tile, pos, c));
+		return (isInsideSurface(nPos)) ? getEntryAt(nPos) : null;
 	}
 	
-	public SurfaceEntry getNeighbourCornerEntry(SurfaceEntry e, Corner c) {
-		int row = e.getCorner(c).getRow()+c.getNextRowOffset();
-		int col = e.getCorner(c).getColumn()+c.getNextColOffset();
-		Position pos = new Position (row, col);
-		return (isInsideSurface(pos)) ? getEntryAt(pos) : null;
+	public Tile getNeighbourCornerEntry(Tile tile, Position pos, Corner c) {
+		Position nPos = new Position(getCornerRow(tile, pos, c)+c.getNextRowOffset(), 
+				getCornerCol(tile, pos, c) + c.getNextColOffset());
+		return (isInsideSurface(nPos)) ? getEntryAt(nPos) : null;
+	}
+	
+	public Position getCornerPos(Tile t, Position p, Corner c) {
+		return new Position(getCornerRow(t, p, c), getCornerCol(t, p, c));
+	}
+	
+	private int getCornerRow(Tile t, Position p, Corner c) {
+		switch (c) {
+		case TOP_LEFT:
+		case TOP_RIGHT:
+			return p.getRow();
+		case BOTTOM_LEFT:
+		case BOTTOM_RIGHT:
+			return p.getRow()+ t.getRows()-1;
+			default:
+				throw new InvalidParameterException("No corner " + c + " existing.");
+		}
+	}
+	private int getCornerCol(Tile t, Position p, Corner c) {
+		switch (c) {
+		case TOP_LEFT:
+		case BOTTOM_LEFT:
+			return p.getCol();
+		case TOP_RIGHT:
+		case BOTTOM_RIGHT:
+			return p.getCol()+t.getCols()-1;
+			default:
+				throw new InvalidParameterException("No corner " + c + " existing.");
+		}
+	}
+	
+	public Position getTopLeft(Tile t, Position p, Corner c) {
+		switch (c) {
+		case TOP_LEFT:
+			return p;
+		case TOP_RIGHT:
+			return new Position (p.getRow(), p.getCol()-t.getCols()+1);
+		case BOTTOM_LEFT:
+			return new Position (p.getRow()-t.getRows()+1, p.getCol());
+		case BOTTOM_RIGHT:
+			return new Position (p.getRow()-t.getRows()+1, p.getCol()-t.getCols()+1);
+			default:
+				throw new InvalidParameterException("No corner " + c + " existing");
+		}
 	}
 
 	/**
@@ -169,11 +212,11 @@ public class Surface {
 		sb.append("rows: ").append(fields.length).append(", cols: ").append(fields[0].length).append("\n");
 		for (int i = 0; i < fields.length; i++) {
 			for (int j = 0; j < fields[0].length; j++) {
-				SurfaceEntry e = fields[i][j];
-				if (e == null) {
+				Tile t = fields[i][j];
+				if (t == null) {
 					sb.append("__ ");
 				} else {
-					sb.append(e.getTile().getId()).append(" ");
+					sb.append(t.getId()).append(" ");
 				}
 			}
 			sb.append("\n");

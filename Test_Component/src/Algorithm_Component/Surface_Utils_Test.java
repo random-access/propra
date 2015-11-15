@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import ess.data.Position;
 import ess.data.Surface;
-import ess.data.SurfaceEntry;
 import ess.data.Tile;
 
 public class Surface_Utils_Test {
@@ -22,8 +21,7 @@ public class Surface_Utils_Test {
 		for (int i = 0; i < cols * rows; i++) {
 			Tile t = new Tile("_" + i, 1, 1);
 			Position p = new Position(i / cols, i % cols);
-			SurfaceEntry e = new SurfaceEntry(t,p);
-			surface.insertEntry(e);
+			surface.insertEntry(t,p);
 		}
 		System.out.println(surface);
 		System.out.println();
@@ -32,7 +30,7 @@ public class Surface_Utils_Test {
 		int currentId = 0;
 		for (int i = 0; i < surface.getRows(); i++) {
 			for (int j = 0; j < surface.getCols(); j++) {
-				assertEquals("Wrong value in surface. ", surface.getFields()[i][j].getTile().getId(), "_" + currentId++);
+				assertEquals("Wrong value in surface. ", surface.getFields()[i][j].getId(), "_" + currentId++);
 			}
 		}
 	}
@@ -44,17 +42,16 @@ public class Surface_Utils_Test {
 		int height = 3;
 		Surface s = new Surface(width, height);
 		Tile t1 = new Tile("_2", 3, 1);
-		Position p1 = new Position(0, 1);
-		SurfaceEntry e1 = new SurfaceEntry(t1,p1);
+		Position p1 = new Position(0, 1);;
 
 		// Act (on the object or method under test.)
-		s.insertEntry(e1);
+		s.insertEntry(t1, p1);
 		System.out.println(s);
 
 		// Assert (that the expected results have occurred.))
-		assertEquals(s.getFields()[0][1].getTile(), t1);
-		assertEquals(s.getFields()[1][1].getTile(), t1);
-		assertEquals(s.getFields()[2][1].getTile(), t1);
+		assertEquals(s.getFields()[0][1], t1);
+		assertEquals(s.getFields()[1][1], t1);
+		assertEquals(s.getFields()[2][1], t1);
 	}
 
 }

@@ -93,5 +93,6 @@ public class API_Test_Validation {
 		// Assert (that the expected results have occurred.))
 		assertTrue("errorList ist null", errorList != null);
 		assertTrue(errorList.size() == 0);
+		System.out.println(errorList.size());
 	}
 }

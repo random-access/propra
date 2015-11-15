@@ -1,7 +1,8 @@
 package ess.algorithm.modules;
 
 import ess.data.Composite;
-import ess.data.SurfaceEntry;
+import ess.data.Position;
+import ess.data.Tile;
 import ess.rules.IRule;
 import ess.rules.sets.IRuleSet;
 import ess.rules.sets.RuleSet;
@@ -16,9 +17,9 @@ private IRuleSet ruleSet;
 	}
 
 	@Override
-	public boolean checkExplicitRules(Composite composite, SurfaceEntry entry) {
+	public boolean checkExplicitRules(Composite composite, Tile tile, Position pos) {
 		for (IRule rule : ruleSet.getExplicitRules()) {
-			 if (!rule.check(composite, entry)){
+			 if (!rule.check(composite, tile, pos)){
 				 return false;
 			 }
 		}
@@ -26,9 +27,9 @@ private IRuleSet ruleSet;
 	}
 
 	@Override
-	public boolean checkImplicitRules(Composite composite, SurfaceEntry entry) {
+	public boolean checkImplicitRules(Composite composite, Tile tile, Position pos) {
 		for (IRule rule : ruleSet.getImplicitRules()) {
-			 if (!rule.check(composite, entry)){
+			 if (!rule.check(composite, tile, pos)){
 				 return false;
 			 }
 		}

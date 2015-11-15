@@ -11,10 +11,9 @@ import ess.algorithm.modules.ITileChooser;
 import ess.algorithm.modules.SolveRuleChecker;
 import ess.data.Composite;
 import ess.data.Position;
-import ess.data.SurfaceEntry;
 import ess.data.Tile;
-import ess.utils.PropertyException;
 import ess.utils.ProPraProperties;
+import ess.utils.PropertyException;
 
 public class Solver {
 	
@@ -65,6 +64,7 @@ public class Solver {
 		Tile tile= null;
 		do {
 			if (pos == null) {
+				// trying to fill the next free position after successfully placing a tile
 				pos = posFinder.findNextFreePosition(c, pos);
 				if (pos == null) {
 					log.info("Iterations: " + counter);
@@ -73,11 +73,9 @@ public class Solver {
 				}
 				tile = null;
 			} else {
-				SurfaceEntry entry = c.getSurface().getEntryAt(pos);
-				if (entry != null) {
-					tile = entry.getTile();
-					c.getSurface().removeEntry(entry);
-				}
+				// after not finding any possible tile we have to remove one tile
+				tile = c.getSurface().getEntryAt(pos);
+				c.getSurface().removeEntry(tile, pos);
 			}
 			tile = tileChooser.getNextTile(pos, tile);
 			boolean foundTileThatFits = false;
@@ -105,9 +103,8 @@ public class Solver {
 	}
 
 	private boolean placeNextTile(Tile tile, Position pos) {
-		SurfaceEntry entry = new SurfaceEntry(tile, pos);
-		if (ruleChecker.checkImplicitRules(c, entry) && ruleChecker.checkExplicitRules(c, entry)) {
-			c.getSurface().insertEntry(entry);
+		if (ruleChecker.checkImplicitRules(c, tile, pos) && ruleChecker.checkExplicitRules(c, tile, pos)) {
+			c.getSurface().insertEntry(tile, pos);
 			counter++;
 			return true;
 		}

@@ -4,7 +4,8 @@ import java.util.LinkedList;
 
 import ess.algorithm.RoemischerVerbund.Validation;
 import ess.data.Composite;
-import ess.data.SurfaceEntry;
+import ess.data.Position;
+import ess.data.Tile;
 import ess.rules.IRule;
 import ess.rules.sets.IRuleSet;
 import ess.rules.sets.RuleSet;
@@ -18,10 +19,10 @@ public class ValidationRuleChecker implements IRuleChecker{
 		ruleSet = new RuleSet();
 	}
 	
-	public boolean checkImplicitRules(Composite composite, SurfaceEntry entry) {
+	public boolean checkImplicitRules(Composite composite, Tile tile, Position pos) {
 		boolean validMove = true;
 		for (IRule rule : ruleSet.getImplicitRules()) {
-			boolean ok = rule.check(composite, entry);
+			boolean ok = rule.check(composite, tile, pos);
 			if (!ok) {
 				ruleSet.addError(rule.getErrorType());
 			}
@@ -30,10 +31,10 @@ public class ValidationRuleChecker implements IRuleChecker{
 		return validMove;
 	}
 	
-	public boolean checkExplicitRules(Composite composite, SurfaceEntry entry) {
+	public boolean checkExplicitRules(Composite composite, Tile tile, Position pos) {
 		boolean validMove = true;
 		for (IRule rule : ruleSet.getExplicitRules()) {
-			boolean ok = rule.check(composite, entry);
+			boolean ok = rule.check(composite, tile, pos);
 			if (!ok) {
 				ruleSet.addError(rule.getErrorType());
 			}

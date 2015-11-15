@@ -110,6 +110,7 @@ public class Composite {
 	@Override
 	public String toString() {
 		return "Composite:\n"
+				+ "Max. line length: " + maxLineLength + "\n"
 				+ "Surface: " + surface
 				+ "TileSorts:\n" + getTileListAsString()
 				+ "SurfaceTileList:\n " + surfaceTileList.toString() + "\n";

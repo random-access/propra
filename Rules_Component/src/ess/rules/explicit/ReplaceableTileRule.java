@@ -7,10 +7,8 @@ import ess.data.Composite;
 import ess.data.Corner;
 import ess.data.Edge;
 import ess.data.Position;
-import ess.data.SurfaceEntry;
 import ess.data.Tile;
 import ess.rules.IRule;
-import ess.rules.implicit.EntryExceedsSurfaceRule;
 import ess.rules.sets.ErrorType;
 
 public class ReplaceableTileRule implements IRule {
@@ -18,12 +16,11 @@ public class ReplaceableTileRule implements IRule {
 	private static final Logger log = Logger.getGlobal();
 
 	@Override
-	public boolean check(Composite c, SurfaceEntry e) {
-		Tile t = e.getTile();
-		ArrayList<Tile> tiles = c.getTilesLargerThan(t.getRows(), t.getCols(), t.getNumberOfFields());
-		for (Tile tile : tiles) {
-			if (tileIsReplacement(c, e, tile)) {
-				log.fine("replacement found for " + e);
+	public boolean check(Composite c, Tile tile, Position pos) {
+		ArrayList<Tile> tiles = c.getTilesLargerThan(tile.getRows(), tile.getCols(), tile.getNumberOfFields());
+		for (Tile rTile : tiles) {
+			if (tileIsReplacement(c, tile, pos, rTile)) {
+				log.fine("replacement found for " + tile + " at " + pos);
 				return false;
 			}
 		}
@@ -45,9 +42,9 @@ public class ReplaceableTileRule implements IRule {
 	 * @return true, if this tile replaces an area filled with smaller tiles,
 	 *         else false
 	 */
-	private boolean tileIsReplacement(Composite c, SurfaceEntry e, Tile tile) {
+	private boolean tileIsReplacement(Composite c, Tile tile, Position pos, Tile rTile) {
 		for (Corner corner : Corner.values()) {
-			if (tileIsReplacementInCorner(c, e, tile, corner)) {
+			if (tileIsReplacementInCorner(c, tile, pos, rTile, corner)) {
 				return true;
 			}
 		}
@@ -71,13 +68,13 @@ public class ReplaceableTileRule implements IRule {
 	 * @return true, if tile replaces an area filled with smaller tiles when
 	 *         positioned in corner, else false
 	 */
-	private boolean tileIsReplacementInCorner(Composite c, SurfaceEntry e, Tile tile, Corner corner) {
-		SurfaceEntry coverEntry = getCoverEntry(c, e, tile, corner);
-		if (coverEntry == null) {
+	private boolean tileIsReplacementInCorner(Composite c, Tile tile, Position pos, Tile rTile, Corner corner) {
+		Position rPos = getReplacementPos(c, tile, pos, rTile, corner);
+		if (rPos == null) {
 			return false;
 		}
 		for (Edge edge : Edge.values()) {
-			if (!isTileBorder(c, coverEntry, edge, e)) {
+			if (!isTileBorder(c, rTile, rPos, edge, tile, pos)) {
 				return false;
 			}
 		}
@@ -97,23 +94,26 @@ public class ReplaceableTileRule implements IRule {
 	 *            the edge to be tested
 	 * @return true, if this edge is a tile border, else false
 	 */
-	private boolean isTileBorder(Composite c, SurfaceEntry coverEntry, Edge edge, SurfaceEntry e) {
-		Position corner1 = coverEntry.getCorner(edge.getFirstCorner());
-		Position corner2 = coverEntry.getCorner(edge.getSecondCorner());
+	private boolean isTileBorder(Composite c, Tile rTile, Position rPos, Edge edge, Tile tile, Position pos) {
+		Position corner1 = c.getSurface().getCornerPos(rTile, rPos, edge.getFirstCorner());
+		Position corner2 = c.getSurface().getCornerPos(rTile, rPos, edge.getSecondCorner());
 		for (int i = corner1.getRow(); i <= corner2.getRow(); i++) {
-			for (int j = corner1.getColumn(); j <= corner2.getColumn(); j++) {
-				if (i >= e.getPosition().getRow() && i < e.getPosition().getRow() + e.getTile().getRows()
-						&& j >= e.getPosition().getColumn() && j < e.getPosition().getColumn() + e.getTile().getCols()) {
+			for (int j = corner1.getCol(); j <= corner2.getCol(); j++) {
+				// testing positions of new tile -> skip test, because replacement is possible anyway
+				if (i >= pos.getRow() && i < pos.getRow() + tile.getRows()
+						&& j >= pos.getCol() && j < pos.getCol() + tile.getCols()) {
 					continue;
 				}
 				log.finest("Examining position " + i + "," + j + "...");
-				SurfaceEntry inside = c.getSurface().getEntryAt(i, j);
-				SurfaceEntry outside = c.getSurface().getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());
+				Tile inside = c.getSurface().getEntryAt(i, j);
+				Tile outside = c.getSurface().getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());
+				// no replacement, if there is no tile inside or inside & outside are the same
 				if (outside != null) {
 					if (inside == null || outside.equals(inside)) {
 						return false;
 					}
 				} else {
+					// no replacement if neither outside nor inside position has a tile
 					if (inside == null)  {
 						return false;
 					}
@@ -139,13 +139,9 @@ public class ReplaceableTileRule implements IRule {
 	 * @return a SurfaceEntry with the positions of tile placed in corner, null
 	 *         if this entry exceeds the surface.
 	 */
-	private SurfaceEntry getCoverEntry(Composite c, SurfaceEntry e, Tile tile, Corner corner) {
-		SurfaceEntry entry = new SurfaceEntry(tile, e.getCorner(corner), corner);
-		EntryExceedsSurfaceRule rule = new EntryExceedsSurfaceRule();
-		if (rule.check(c, entry)) {
-			return entry;
-		}
-		return null;
+	private Position getReplacementPos(Composite c, Tile t, Position pos, Tile rTile, Corner corner) {
+		Position rPos = c.getSurface().getTopLeft(rTile, c.getSurface().getCornerPos(t, pos, corner), corner);
+		return c.getSurface().isInsideSurface(rPos) ? rPos : null;
 	}
 
 	@Override

@@ -71,7 +71,7 @@ public class ProPraLogger {
 			}
 			
 			isInitialized = true;
-			logger.info("Initialized logging.");
+			logger.info("Initialized logging, log level: " + logger.getLevel());
 		}
 	}
 
@@ -154,6 +154,9 @@ public class ProPraLogger {
 		try {
 			Level logLevel = Level.parse(logLevelName.toUpperCase());
 			logger.setLevel(logLevel);
+			Logger rootLog = Logger.getLogger("");
+			rootLog.setLevel( logLevel);
+			rootLog.getHandlers()[0].setLevel( logLevel );
 		} catch (IllegalArgumentException e) {
 			throw new PropertyException("Invalid parameter in properties file for key \"log_level\", "
 					+ "must be a valid log level", e);

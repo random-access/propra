@@ -55,11 +55,10 @@ public class Validator {
 		for (String ident : c.getSurfaceTileList()) {
 			pos = posFinder.findNextFreePosition(c, pos);
 			tile = c.findTileById(ident);
-			SurfaceEntry e = new SurfaceEntry(tile, pos);
 			
-			if (ruleChecker.checkImplicitRules(c, e)) {
-				c.getSurface().insertEntry(e);
-				ruleChecker.checkExplicitRules(c, e);
+			if (ruleChecker.checkImplicitRules(c, tile, pos)) {
+				c.getSurface().insertEntry(tile, pos);
+				ruleChecker.checkExplicitRules(c, tile, pos);
 			} else {
 				return;
 			}
