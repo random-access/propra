@@ -9,10 +9,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /*
- * Sie können sich Informationen über das Unittesten mit Hilfe von JUnit unter
+ * Sie kÃ¶nnen sich Informationen Ã¼ber das Unittesten mit Hilfe von JUnit unter
  * http://www.vogella.com/tutorials/JUnit/article.html aneignen. In dem dort
- * hinterlegten sehr langen und ausführlichen Dokument, sind alle notwendigen
- * Hilfsmittel erläutert.
+ * hinterlegten sehr langen und ausfÃ¼hrlichen Dokument, sind alle notwendigen
+ * Hilfsmittel erlÃ¤utert.
  * 
  * Designen Sie Ihre Unit-Tests nach dem Arrange-Act-Assert-Prinzip
  * (http://c2.com/cgi/wiki?ArrangeActAssert).
@@ -30,7 +30,7 @@ public class API_Test_Validation {
 
 		// Assert (that the expected results have occurred.))
 		assertTrue("errorList ist null", errorList != null);
-		assertTrue("Alle 5 Fehler müssen in diesem Fall ausgegeben werden", errorList.size() == 5);
+		assertTrue("Alle 5 Fehler mÃ¼ssen in diesem Fall ausgegeben werden", errorList.size() == 5);
 	}
 
 	@Test
@@ -46,7 +46,7 @@ public class API_Test_Validation {
 		assertTrue("errorList ist null", errorList != null);
 		assertTrue("Es wurden nicht alle bzw. nicht die korrekten Fehler erkannt", errorList.size() == 2);
 		assertTrue("Fliese austauschbar nicht erkannt", errorList.contains(Validation.FLIESEN_AUSTAUSCHBAR));
-		assertTrue("Maximale Fugenlänge nicht erkannt", errorList.contains(Validation.MAX_FUGENLAENGE));
+		assertTrue("Maximale FugenlÃ¤nge nicht erkannt", errorList.contains(Validation.MAX_FUGENLAENGE));
 	}
 
 	@Test
@@ -62,7 +62,7 @@ public class API_Test_Validation {
 		assertTrue("errorList ist null", errorList != null);
 		assertTrue("Es wurden nicht alle bzw. nicht die korrekten Fehler erkannt", errorList.size() == 2);
 		assertTrue("Gleiche Fliese nicht erkannt", errorList.contains(Validation.GLEICHE_FLIESEN));
-		assertTrue("Maximale Fugenlänge nicht erkannt", errorList.contains(Validation.MAX_FUGENLAENGE));
+		assertTrue("Maximale FugenlÃ¤nge nicht erkannt", errorList.contains(Validation.MAX_FUGENLAENGE));
 	}
 
 	@Test
@@ -78,7 +78,7 @@ public class API_Test_Validation {
 		assertTrue("errorList ist null", errorList != null);
 		assertTrue("Es wurden nicht alle bzw. nicht die korrekten Fehler erkannt", errorList.size() == 2);
 		assertTrue("Fugenkreuze nicht erkannt", errorList.contains(Validation.FLIESEN_AUSTAUSCHBAR));
-		assertTrue("Maximale Fugenlänge nicht erkannt", errorList.contains(Validation.MAX_FUGENLAENGE));
+		assertTrue("Maximale FugenlÃ¤nge nicht erkannt", errorList.contains(Validation.MAX_FUGENLAENGE));
 	}
 	
 	@Test
