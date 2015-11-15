@@ -37,7 +37,7 @@ public class Tile {
 	 *
 	 * @return the ident of this tile.
 	 */
-	public String getIdent() {
+	public String getId() {
 		return id;
 	}
 

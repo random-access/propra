@@ -32,7 +32,7 @@ public class Surface_Utils_Test {
 		int currentId = 0;
 		for (int i = 0; i < surface.getRows(); i++) {
 			for (int j = 0; j < surface.getCols(); j++) {
-				assertEquals("Wrong value in surface. ", surface.getFields()[i][j].getTile().getIdent(), "_" + currentId++);
+				assertEquals("Wrong value in surface. ", surface.getFields()[i][j].getTile().getId(), "_" + currentId++);
 			}
 		}
 	}

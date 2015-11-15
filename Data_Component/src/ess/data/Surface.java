@@ -173,7 +173,7 @@ public class Surface {
 				if (e == null) {
 					sb.append("__ ");
 				} else {
-					sb.append(e.getTile().getIdent()).append(" ");
+					sb.append(e.getTile().getId()).append(" ");
 				}
 			}
 			sb.append("\n");

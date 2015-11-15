@@ -84,7 +84,7 @@ public class Composite {
 	
 	public Tile findTileById(String id) {
 		for (Tile t : tileSorts) {
-			if (id.equals(t.getIdent())) {
+			if (id.equals(t.getId())) {
 				return t;
 			}
 		}

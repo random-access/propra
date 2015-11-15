@@ -82,7 +82,7 @@ public class Solver {
 			tile = tileChooser.getNextTile(pos, tile);
 			boolean foundTileThatFits = false;
 			while (tile != null && !foundTileThatFits) {
-				log.fine("Trying tile " + tile.getIdent() + " at " + pos + "...");
+				log.fine("Trying tile " + tile.getId() + " at " + pos + "...");
 				if (placeNextTile(tile, pos)) {
 					posList.add(pos);
 					log.fine(c.toString());
