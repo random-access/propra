@@ -14,7 +14,7 @@ public class XMLValues {
 	/**
 	 * Path to the DTD file for XML validation, this path works in the whole project
 	 */
-	public static final String PATH_TO_DTD = "../File_Processing_Component/Model/DataModel.dtd";
+	public static final String PATH_TO_DTD = "/resources/DataModel.dtd";
 	
 	/**
 	 * Integer used for converting tiles to their internal representation.

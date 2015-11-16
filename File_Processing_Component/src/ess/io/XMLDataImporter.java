@@ -67,11 +67,12 @@ public class XMLDataImporter {
 	}
 
 	private InputStream transform(String xmlSrc, String pathToDTD) throws FileNotFoundException, TransformerException {
-		locateFiles(xmlSrc, pathToDTD);
+		String dtdLocation = this.getClass().getResource(pathToDTD).toString();
+		// locateFiles(xmlSrc, dtdLocation); // TODO check paths elsewhere
 		TransformerFactory tf = TransformerFactory.newInstance();
 		Transformer tr = tf.newTransformer();
 		tr.setOutputProperty(
-			    OutputKeys.DOCTYPE_SYSTEM, pathToDTD);
+			    OutputKeys.DOCTYPE_SYSTEM, dtdLocation);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		Result res = new StreamResult(baos);
 		tr.transform(new StreamSource(xmlSrc), res);
