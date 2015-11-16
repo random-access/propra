@@ -4,27 +4,26 @@ import java.util.List;
 
 import ess.algorithm.RoemischerVerbund.Validation;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface IRoemischerVerbund.
  */
 public interface IRoemischerVerbund {
 
 	/**
-	 * Überprüft die eingegebene Lösung auf Korrektheit.
+	 * ÃœberprÃ¼ft die eingegebene LÃ¶sung auf Korrektheit.
 	 *
 	 * @param xmlFile Dokument, das validiert werden soll.
-	 * @param maxFugenLaenge maximale Fugenlänge der zu berechnenden Lösung.
+	 * @param maxFugenLaenge maximale FugenlÃ¤nge der zu berechnenden LÃ¶sung.
 	 * @return Liste von Fehlern, die fehlgeschlagen sind.
 	 */
 	public abstract List<Validation> validateSolution(String xmlFile, int maxFugenLaenge);
 
 	/**
-	 * Ermittelt eine Lösung zu den eingegebenen Daten.
+	 * Ermittelt eine LÃ¶sung zu den eingegebenen Daten.
 	 *
-	 * @param xmlFile Eingabedokument, das die Probleminstanzen enthält.
-	 * @param maxFugenLaenge maximale Fugenlänge der zu berechnenden Lösung.
-	 * @return konnte eine Lösung gefunden werden? true = ja, false = nein.
+	 * @param xmlFile Eingabedokument, das die Probleminstanzen enthÃ¤lt.
+	 * @param maxFugenLaenge maximale FugenlÃ¤nge der zu berechnenden LÃ¶sung.
+	 * @return konnte eine LÃ¶sung gefunden werden? true = ja, false = nein.
 	 */
 	public abstract boolean solve(String xmlFile, int maxFugenLaenge);
 }

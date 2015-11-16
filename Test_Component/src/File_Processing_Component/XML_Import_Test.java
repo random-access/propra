@@ -46,7 +46,7 @@ public class XML_Import_Test {
 		
 		try {
 			c = xmlExchanger.readFromSource(pathToSource);
-			System.out.println(c);
+			// System.out.println(c);
 		} catch (DataExchangeException e) {
 			System.out.println(e.getMessage());
 		}
@@ -62,7 +62,7 @@ public class XML_Import_Test {
 		
 		try {
 			c = xmlExchanger.readFromSource(pathToSource);
-			System.out.println(c);
+			// System.out.println(c);
 		} catch (DataExchangeException e) {
 			System.out.println(e.getMessage());
 		}

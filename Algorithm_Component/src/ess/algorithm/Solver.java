@@ -83,7 +83,7 @@ public class Solver {
 				log.fine("Trying tile " + tile.getId() + " at " + pos + "...");
 				if (placeNextTile(tile, pos)) {
 					posList.add(pos);
-					log.fine(c.toString());
+					// log.fine(c.toString());
 					foundTileThatFits = true;
 					pos = null;
 				} else {

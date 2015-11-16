@@ -25,7 +25,7 @@ public class ReplaceableTileTest {
 		assertFalse(rule.check(c, c.findTileById("_2"), new Position(1,2)));
 		
 		c.getSurface().insertEntry(c.findTileById("_2"), new Position(1,2));
-		System.out.println(c);
+		// System.out.println(c);
 	}
 	
 	
@@ -40,7 +40,7 @@ public class ReplaceableTileTest {
 		assertFalse(rule.check(c, c.findTileById("_3"), new Position(1,2)));
 		
 		c.getSurface().insertEntry(c.findTileById("_3"), new Position(1,2));
-		System.out.println(c);
+		// System.out.println(c);
 	}
 	
 	@Test
@@ -54,7 +54,7 @@ public class ReplaceableTileTest {
 		assertTrue(rule.check(c, c.findTileById("_3"), new Position(1,1)));
 		
 		c.getSurface().insertEntry(c.findTileById("_3"), new Position(1,1));
-		System.out.println(c);
+		// System.out.println(c);
 	}
 	
 	@Test
@@ -69,6 +69,6 @@ public class ReplaceableTileTest {
 		assertFalse(rule.check(c, c.findTileById("_2"), new Position(2,3)));
 		
 		c.getSurface().insertEntry(c.findTileById("_2"), new Position(2,3));
-		System.out.println(c);
+		// System.out.println(c);
 	}
 }

@@ -16,7 +16,7 @@ public class UITest {
 		new Validator().validateSolution(c, 120);
 		ICompositeView view = new MainWindow(c);
         view.display();
-        System.out.println(c);
+        // System.out.println(c);
 	}
 	
 }

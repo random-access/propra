@@ -27,7 +27,7 @@ public class NoCrossingsTest {
 		IRule rule = new CrossingsRule();
 		boolean validMove = rule.check(c, c.findTileById("_4"), new Position(2,2));
 		s.insertEntry(c.findTileById("_4"), new Position(2,2));
-		System.out.println(c);
+		// System.out.println(c);
 		assertTrue(validMove);
 	}
 	
@@ -43,7 +43,7 @@ public class NoCrossingsTest {
 		boolean validMove = rule.check(c, c.findTileById("_0"), new Position(2,3));
 		s.insertEntry(c.findTileById("_0"), new Position(2,3));
 		
-		System.out.println(c);
+		// System.out.println(c);
 		
 		assertTrue(validMove);
 	}
@@ -62,7 +62,7 @@ public class NoCrossingsTest {
 		boolean validMove = rule.check(c, c.findTileById("_0"), new Position(2,3));
 		s.insertEntry(c.findTileById("_0"), new Position(2,3));
 		
-		System.out.println(c);
+		// System.out.println(c);
 		
 		assertFalse(validMove);
 	}
@@ -79,7 +79,7 @@ public class NoCrossingsTest {
 		boolean validMove = rule.check(c, c.findTileById("_1"), new Position(22,19));
 		s.insertEntry(c.findTileById("_1"), new Position(22,19));
 		
-		System.out.println(c);
+		// System.out.println(c);
 		
 		assertTrue(validMove);
 	}
@@ -97,7 +97,7 @@ public class NoCrossingsTest {
 		IRule rule = new CrossingsRule();
 		boolean validMove = rule.check(c, c.findTileById("_0"), new Position(3,0));
 		
-		System.out.println(c);
+		// System.out.println(c);
 		
 		assertFalse(validMove);
 	}

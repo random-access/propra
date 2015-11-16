@@ -12,30 +12,30 @@ import ess.utils.PropertyException;
 // TODO: Auto-generated Javadoc
 /**
  * Diese Klasse wird als API (Application Programming Interface) verwendet. Das
- * bedeutet, dass diese Klasse als Bibliothek für andere Applikationen verwendet
+ * bedeutet, dass diese Klasse als Bibliothek fÃ¼r andere Applikationen verwendet
  * werden kann.
  * 
  * Bitte achten Sie darauf, am bereits implementierten Rahmen (Klassenname,
- * Package, Methodensignaturen) !!KEINE!! Veränderungen vorzunehmen.
- * Selbstverständlich können und müssen Sie innerhalb einer Methode Änderungen
+ * Package, Methodensignaturen) !!KEINE!! VerÃ¤nderungen vorzunehmen.
+ * SelbstverstÃ¤ndlich kÃ¶nnen und mÃ¼ssen Sie innerhalb einer Methode Ã„nderungen
  * vornehmen.
  */
 public class RoemischerVerbund implements IRoemischerVerbund {
 
 	/**
-	 * Fehlertypen, die bei der Validierung auftreten können.
+	 * Fehlertypen, die bei der Validierung auftreten koennen.
 	 */
 	public enum Validation {
 		FLIESEN_AUSTAUSCHBAR, GLEICHE_FLIESEN, MAX_FUGENLAENGE, FUGENKREUZE, FLIESE_UNPASSEND;
 	}
 
 	/**
-	 * Überprüft die eingegebene Lösung auf Korrektheit.
+	 * Ãœberprueft die eingegebene LÃ¶sung auf Korrektheit.
 	 *
 	 * @param xmlFile
 	 *            Dokument, das validiert werden soll.
 	 * @param maxFugenLaenge
-	 *            maximale Fugenlänge der zu berechnenden Lösung.
+	 *            maximale FugenlÃ¤nge der zu berechnenden LÃ¶sung.
 	 * @return Liste von Fehlern, die fehlgeschlagen sind.
 	 */
 	@Override
@@ -68,13 +68,13 @@ public class RoemischerVerbund implements IRoemischerVerbund {
 	}
 
 	/**
-	 * Ermittelt eine Lösung zu den eingegebenen Daten.
+	 * Ermittelt eine LÃ¶sung zu den eingegebenen Daten.
 	 *
 	 * @param xmlFile
-	 *            Eingabedokument, das die Probleminstanzen enthält.
+	 *            Eingabedokument, das die Probleminstanzen enthÃ¤lt.
 	 * @param maxFugenLaenge
-	 *            maximale Fugenlänge der zu berechnenden Lösung.
-	 * @return konnte eine Lösung gefunden werden? true = ja, false = nein.
+	 *            maximale FugenlÃ¤nge der zu berechnenden LÃ¶sung.
+	 * @return konnte eine LÃ¶sung gefunden werden? true = ja, false = nein.
 	 */
 	@Override
 	public boolean solve(String xmlFile, int maxFugenLaenge) {

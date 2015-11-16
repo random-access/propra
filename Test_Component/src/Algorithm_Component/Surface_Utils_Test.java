@@ -23,8 +23,6 @@ public class Surface_Utils_Test {
 			Position p = new Position(i / cols, i % cols);
 			surface.insertEntry(t,p);
 		}
-		System.out.println(surface);
-		System.out.println();
 		
 		// Assert (that the expected results have occurred.))
 		int currentId = 0;
@@ -46,7 +44,6 @@ public class Surface_Utils_Test {
 
 		// Act (on the object or method under test.)
 		s.insertEntry(t1, p1);
-		System.out.println(s);
 
 		// Assert (that the expected results have occurred.))
 		assertEquals(s.getFields()[0][1], t1);

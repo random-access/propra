@@ -28,7 +28,7 @@ public class MaxLineLengthTest {
 		boolean validMove = rule.check(c, c.findTileById("_4"), new Position(2,2));
 		s.insertEntry(c.findTileById("_4"), new Position(2,2));
 		
-		System.out.println(c);
+		// System.out.println(c);
 		assertTrue(validMove);
 	}
 	
@@ -47,7 +47,7 @@ public class MaxLineLengthTest {
 		boolean validMove = rule.check(c, c.findTileById("_2"), new Position(2,2));
 		s.insertEntry(c.findTileById("_4"), new Position(2,2));
 		
-		System.out.println(c);
+		// System.out.println(c);
 		assertFalse(validMove);
 	}
 	
@@ -66,7 +66,7 @@ public class MaxLineLengthTest {
 		boolean validMove = rule.check(c, c.findTileById("_3"), new Position(0,2));
 		s.insertEntry(c.findTileById("_3"), new Position(0,2));
 		
-		System.out.println(c);
+		// System.out.println(c);
 		assertTrue(validMove);
 	}
 	
@@ -86,7 +86,7 @@ public class MaxLineLengthTest {
 		boolean validMove = rule.check(c, c.findTileById("_3"), new Position(2,4));
 		s.insertEntry(c.findTileById("_3"), new Position(2,4));
 		
-		System.out.println(c);
+		// System.out.println(c);
 		assertFalse(validMove);
 	}
 
