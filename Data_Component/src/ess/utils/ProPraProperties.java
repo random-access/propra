@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import ess.strings.CustomErrorMessages;
+
 /**
  * This class reads all values from config.properties, stores them in a Property 
  * object and provides a basic method to retrieve the value from a certain key
@@ -77,7 +79,7 @@ public class ProPraProperties {
 		try {
 			properties = loadProperties();
 		} catch (IOException e) {
-			throw new PropertyException("Error: Property file is not existing or cannot be read.", e);
+			throw new PropertyException(CustomErrorMessages.ERROR_PROPERTY_READ, e);
 		}
 	}
 	

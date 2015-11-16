@@ -5,17 +5,16 @@ import java.util.LinkedList;
 
 import ess.algorithm.RoemischerVerbund.Validation;
 import ess.algorithm.modules.IPositionFinder;
-import ess.algorithm.modules.ValidationRuleChecker;
 import ess.algorithm.modules.TopToBottomPosFinder;
+import ess.algorithm.modules.ValidationRuleChecker;
 import ess.data.Composite;
 import ess.data.Position;
-import ess.data.SurfaceEntry;
 import ess.data.Tile;
 import ess.utils.PropertyException;
 
 public class Validator {
 	
-	private SurfaceEntry[][] surface;
+	private Tile[][] surface;
 	private IPositionFinder posFinder;
 	private ValidationRuleChecker ruleChecker;
 	private LinkedList<Validation> errorList = new LinkedList<>();
@@ -36,7 +35,7 @@ public class Validator {
 	 * This method returns the surface, a 2 dimensional String array
 	 * @return
 	 */
-	public SurfaceEntry[][] getSurface() {
+	public Tile[][] getSurface() {
 		return surface;
 	}
 	

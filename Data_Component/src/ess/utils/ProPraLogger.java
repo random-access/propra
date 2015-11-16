@@ -10,6 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import ess.strings.CustomErrorMessages;
+
 /**
  * This class provides a customized global Logger object. 
  * The minimum log level and the output target can be set in the config.properties file.
@@ -101,8 +103,7 @@ public class ProPraLogger {
 			fileHandler.setFormatter(new SimpleFormatter());
 			logger.addHandler(fileHandler);
 		} catch (SecurityException | IOException e) {
-			throw new PropertyException("Error: Log file could not be created. Please check if the path you "
-					+ "provided in config.properties is a valid directory name and you have write permissions. ");
+			throw new PropertyException(CustomErrorMessages.ERROR_LOG_CREATE, e);
 		}
 
 	}
@@ -120,8 +121,7 @@ public class ProPraLogger {
 	private static void handleLoggingToConsole(String consoleOutput) throws PropertyException {
 		// do not accept invalid input, just in case
 		if (!consoleOutput.equalsIgnoreCase("true") && !(consoleOutput.equalsIgnoreCase("false"))) {
-			throw new PropertyException("Invalid parameter in properties file for key \"log_console\", "
-					+ "must be either \"true\" or \"false\"");
+			throw new PropertyException(CustomErrorMessages.ERROR_INVALID_KEY_LOG_CONSOLE);
 		}
 		
 		// if there should be console output, there is nothing to do
@@ -158,8 +158,7 @@ public class ProPraLogger {
 			rootLog.setLevel( logLevel);
 			rootLog.getHandlers()[0].setLevel( logLevel );
 		} catch (IllegalArgumentException e) {
-			throw new PropertyException("Invalid parameter in properties file for key \"log_level\", "
-					+ "must be a valid log level", e);
+			throw new PropertyException(CustomErrorMessages.ERROR_INVALID_KEY_LOG_LEVEL, e);
 		}
 	}
 

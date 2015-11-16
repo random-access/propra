@@ -26,6 +26,7 @@ import ess.data.Composite;
 import ess.data.Tile;
 import ess.io.exc.DataExchangeException;
 import ess.io.exc.InvalidSizeValueException;
+import ess.strings.CustomErrorMessages;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -79,10 +80,10 @@ public class XMLDataImporter {
 	
 	private void locateFiles(String xmlSrc, String pathToDTD) throws FileNotFoundException {
 		if (!Files.isRegularFile(Paths.get(xmlSrc))) {
-			throw new FileNotFoundException(xmlSrc + " not found or not a directory");
+			throw new FileNotFoundException(String.format(CustomErrorMessages.ERROR_PATH_NOT_FOUND, xmlSrc));
 		}
 		if (!Files.isReadable(Paths.get(pathToDTD))) {
-			throw new FileNotFoundException("DTD validation file " + pathToDTD + " not found or not readable");
+			throw new FileNotFoundException(String.format(CustomErrorMessages.ERROR_DTD_NOT_FOUND, pathToDTD));
 		}
 	}
 

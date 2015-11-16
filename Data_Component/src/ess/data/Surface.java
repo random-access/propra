@@ -3,6 +3,8 @@ package ess.data;
 import java.awt.Point;
 import java.security.InvalidParameterException;
 
+import ess.strings.CustomErrorMessages;
+
 public class Surface {
 
 	// private int rows, cols;
@@ -170,7 +172,7 @@ public class Surface {
 		case BOTTOM_RIGHT:
 			return p.getRow()+ t.getRows()-1;
 			default:
-				throw new InvalidParameterException("No corner " + c + " existing.");
+				throw new InvalidParameterException(CustomErrorMessages.ERROR_INVALID_ENUM + c);
 		}
 	}
 	private int getCornerCol(Tile t, Position p, Corner c) {
@@ -182,7 +184,7 @@ public class Surface {
 		case BOTTOM_RIGHT:
 			return p.getCol()+t.getCols()-1;
 			default:
-				throw new InvalidParameterException("No corner " + c + " existing.");
+				throw new InvalidParameterException(CustomErrorMessages.ERROR_INVALID_ENUM + c);
 		}
 	}
 	
@@ -197,7 +199,7 @@ public class Surface {
 		case BOTTOM_RIGHT:
 			return new Position (p.getRow()-t.getRows()+1, p.getCol()-t.getCols()+1);
 			default:
-				throw new InvalidParameterException("No corner " + c + " existing");
+				throw new InvalidParameterException(CustomErrorMessages.ERROR_INVALID_ENUM + c);
 		}
 	}
 
