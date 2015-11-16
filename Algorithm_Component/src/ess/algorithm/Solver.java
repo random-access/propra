@@ -12,6 +12,7 @@ import ess.algorithm.modules.SolveRuleChecker;
 import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Tile;
+import ess.utils.ProPraLogger;
 import ess.utils.ProPraProperties;
 import ess.utils.PropertyException;
 
@@ -28,6 +29,7 @@ public class Solver {
 	private Composite c;
 
 	public Solver(Composite c, int maxLineLength) throws PropertyException {
+		ProPraLogger.setup();
 		this.c = c;
 		c.setMaxLineLength(maxLineLength / 20); // TODO check
 		posList = new LinkedList<>();

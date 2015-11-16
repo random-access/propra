@@ -27,8 +27,8 @@ public class XMLDataExchanger implements IDataExchanger {
 	 */
 	@Override
 	public void writeToTarget(Composite composite, String pathToTarget) throws DataExchangeException {
-		// TODO Auto-generated method stub
-
+		// new XMLDataExporter().exportComposite(composite, pathToTarget);
+		// TODO
 	}
 
 }

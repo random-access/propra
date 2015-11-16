@@ -14,4 +14,5 @@ public class CustomErrorMessages {
 	public static final String ERROR_DTD_NOT_FOUND = "DTD Validierungs-Datei %s existiert nicht oder kann nicht gelesen werden.";
 	
 	public static final String ERROR_INVALID_ENUM = "Nicht berücksichtigter Enum-Wert: %s";
+
 }
