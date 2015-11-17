@@ -1,8 +1,6 @@
 package ess.utils;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -69,11 +67,10 @@ public class ProPraProperties {
 	// A map, holding the actual property key-value pairs
 	private Properties properties;
 
-	// path to properties file, relative to the project root in order to
-	// make this file accessible in all subprojects
+	// path to properties file
 	private static final String PATH_TO_PROPERTIES = "/resources/config.properties";
 
-	// private constructor (Singleton pattern)
+	// private constructor - prevent instantiation from outside this class
 	private ProPraProperties() throws PropertyException {
 		try {
 			properties = loadProperties();
@@ -85,8 +82,8 @@ public class ProPraProperties {
 
 	/**
 	 * Returns a singleton of ProPraProperties. This method is synchronized to
-	 * make sure that every caller receives the same data, in case somewhere in
-	 * the future write access to config files will be granted to some caller.
+	 * make sure that every caller receives the same data, synchronization is not 
+	 * yet needed because the config file only gets read.
 	 * 
 	 * @return an instance of ProPraProperties
 	 * @throws PropertyException
@@ -109,13 +106,8 @@ public class ProPraProperties {
 	 */
 	private Properties loadProperties() throws FileNotFoundException,
 			IOException {
-//		File propertiesFile = new File(PATH_TO_PROPERTIES);
-//		System.out.println(propertiesFile.getAbsolutePath());
-//		Properties properties = new Properties();
-//		properties.load(new FileReader(propertiesFile));
-//		return properties;
 		Properties properties = new Properties();
-		properties.load(this.getClass().getResourceAsStream(PATH_TO_PROPERTIES));
+		properties.load(getClass().getResourceAsStream(PATH_TO_PROPERTIES));
 		return properties;
 	}
 

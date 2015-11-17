@@ -75,7 +75,7 @@ public class RoemischerVerbund extends UIObservable implements IRoemischerVerbun
 		try {
 			IDataExchanger dataExchanger = new XMLDataExchanger();
 			composite = dataExchanger.readFromSource(xmlFile);
-			Solver solver = new Solver(composite, maxLineLength);
+			ISolver solver = new Solver(composite, maxLineLength);
 			boolean solved = solver.solve();
 			if (solved) {
 				dataExchanger.writeToTarget(composite, xmlFile);

@@ -4,8 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +24,6 @@ import ess.data.Composite;
 import ess.data.Tile;
 import ess.io.exc.DataExchangeException;
 import ess.io.exc.InvalidSizeValueException;
-import ess.strings.CustomErrorMessages;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -79,14 +76,14 @@ public class XMLDataImporter {
 		return new ByteArrayInputStream(baos.toByteArray());
 	}
 	
-	private void locateFiles(String xmlSrc, String pathToDTD) throws FileNotFoundException {
-		if (!Files.isRegularFile(Paths.get(xmlSrc))) {
-			throw new FileNotFoundException(String.format(CustomErrorMessages.ERROR_PATH_NOT_FOUND, xmlSrc));
-		}
-		if (!Files.isReadable(Paths.get(pathToDTD))) {
-			throw new FileNotFoundException(String.format(CustomErrorMessages.ERROR_DTD_NOT_FOUND, pathToDTD));
-		}
-	}
+//	private void locateFiles(String xmlSrc, String pathToDTD) throws FileNotFoundException {
+//		if (!Files.isRegularFile(Paths.get(xmlSrc))) {
+//			throw new FileNotFoundException(String.format(CustomErrorMessages.ERROR_PATH_NOT_FOUND, xmlSrc));
+//		}
+//		if (!Files.isReadable(Paths.get(pathToDTD))) {
+//			throw new FileNotFoundException(String.format(CustomErrorMessages.ERROR_DTD_NOT_FOUND, pathToDTD));
+//		}
+//	}
 
 	private ArrayList<String> readSurfaceTiles(Element rootElement) {
 		Element verlegungsplan = rootElement.getChild(XMLValues.VERLEGUNGSPLAN);

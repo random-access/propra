@@ -16,18 +16,40 @@ import ess.utils.ProPraLogger;
 import ess.utils.ProPraProperties;
 import ess.utils.PropertyException;
 
-public class Solver {
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Solver.
+ */
+public class Solver implements ISolver{
 	
+	/** The Constant log. */
 	private static final Logger log = Logger.getGlobal();
 
+	/** The pos finder. */
 	private IPositionFinder posFinder;
+	
+	/** The rule checker. */
 	private IRuleChecker ruleChecker;
+	
+	/** The tile chooser. */
 	private ITileChooser tileChooser;
 
+	/** The pos list. */
 	private LinkedList<Position> posList;
+	
+	/** The counter. */
 	private long counter;
+	
+	/** The c. */
 	private Composite c;
-
+	
+	/**
+	 * Instantiates a new solver.
+	 *
+	 * @param c the c
+	 * @param maxLineLength the max line length
+	 * @throws PropertyException the property exception
+	 */
 	public Solver(Composite c, int maxLineLength) throws PropertyException {
 		ProPraLogger.setup();
 		this.c = c;
@@ -35,7 +57,7 @@ public class Solver {
 		posList = new LinkedList<>();
 		loadModules();
 	}
-	
+
 	private void loadModules() throws PropertyException {
 		try {
 			// load properties from file
@@ -60,10 +82,15 @@ public class Solver {
 		}
 	}
 	
-	
+	/* (non-Javadoc)
+	 * @see ess.algorithm.ISolver#solve()
+	 */
+	@Override
 	public boolean solve() {
 		Position pos = null;
 		Tile tile= null;
+		
+		// try to place tiles using backtracking as long as there are any possibilities
 		do {
 			if (pos == null) {
 				// trying to fill the next free position after successfully placing a tile
@@ -75,23 +102,28 @@ public class Solver {
 				}
 				tile = null;
 			} else {
-				// after not finding any possible tile we have to remove one tile
+				// after not finding any possible tile, the last tile has to be removed from surface
+				// remember this tile to be able to choose the next one below
 				tile = c.getSurface().getEntryAt(pos);
 				c.getSurface().removeEntry(tile, pos);
 			}
 			tile = tileChooser.getNextTile(pos, tile);
 			boolean foundTileThatFits = false;
+			
+			// try out all possible tiles at the current position
 			while (tile != null && !foundTileThatFits) {
 				log.fine("Trying tile " + tile.getId() + " at " + pos + "...");
 				if (placeNextTile(tile, pos)) {
 					posList.add(pos);
-					// log.fine(c.toString());
 					foundTileThatFits = true;
 					pos = null;
 				} else {
 					tile = tileChooser.getNextTile(pos, tile);
 				}
 			}
+			
+			// retrieve last position from posList, if no possible tile 
+			// could be found at the current position
 			if (!foundTileThatFits) {
 				if (!posList.isEmpty()) {
 					pos = posList.pollLast();
@@ -103,7 +135,9 @@ public class Solver {
 		log.info("Found no solution :(.");
 		return false;
 	}
-
+	
+	// try to insert tile at pos
+	// check all rules, return true if tile could be placed, else false
 	private boolean placeNextTile(Tile tile, Position pos) {
 		if (ruleChecker.checkImplicitRules(c, tile, pos) && ruleChecker.checkExplicitRules(c, tile, pos)) {
 			c.getSurface().insertEntry(tile, pos);
