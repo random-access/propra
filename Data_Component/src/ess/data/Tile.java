@@ -1,12 +1,12 @@
 package ess.data;
 
 
-// TODO: Auto-generated Javadoc
+// TODO: Javadoc
 /**
  * Tiles are rectangular areas filling the surface of a composite.
  * 
- * They are read from an input source (e.g. XML-files) and get 
- * converted into internal measurements via {@link #getRows()} and {@link #getCols()}.<br>
+ * They are read from an input source (e.g. XML-files),the measurements get 
+ * converted into internal measurements during import.<br>
  * <br>
  * The attribute ident holds an identification String which can be used for identifying a tile, because it is 
  * unique in a composite. //TODO override equals method
@@ -19,13 +19,14 @@ public class Tile {
 	private int rows, cols;
 
 	/**
-	 * Instantiates a new tile.
+	 * Instantiates a new tile with its identifier, its internal width and its internal height.
 	 *
 	 * @param id an identification string unique in a composite.
 	 * @param rows an integer greater than zero.
 	 * @param cols an integer greater than zero.
 	 */
 	public Tile(String id, int rows, int cols) {
+		// TODO check that row and col values are greater than zero
 		this.id = id;
 		this.rows = rows;
 		this.cols = cols;

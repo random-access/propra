@@ -3,7 +3,6 @@ package com.ess.main;
 import java.util.logging.Logger;
 
 import ess.algorithm.RoemischerVerbund;
-import ess.strings.CustomInfoMessages;
 import ess.utils.ProPraLogger;
 import ess.utils.PropertyException;
 
@@ -55,8 +54,7 @@ public class Main {
 				break;
 			}
 		} catch (InvalidInputException | PropertyException e) {
-			System.out.println("*** FEHLER: " + e.getMessage() + " ***\n");
-			System.out.println(CustomInfoMessages.INFO_USAGE);
+			System.out.println(e.getMessage());
 			System.exit(0);
 		}
 	}

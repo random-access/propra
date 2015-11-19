@@ -1,5 +1,6 @@
 package ess.data;
 
+//TODO Javadoc
 public class Position {
 	
 	private int row, column;

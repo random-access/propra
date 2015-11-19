@@ -20,7 +20,7 @@ public class DisplayObserver implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		log.info("Got display request!");
+		log.info("Got display request...");
 		if (o instanceof UIObservable) {
 			UIObservable obs = (UIObservable) o;
 			Composite c = obs.getComposite();

@@ -1,5 +1,6 @@
 package ess.data;
 
+// TODO Javadoc
 public enum Edge {
 	TOP(-1,0, Corner.TOP_LEFT, Corner.TOP_RIGHT), 
 	LEFT(0,-1, Corner.TOP_LEFT, Corner.BOTTOM_LEFT), 

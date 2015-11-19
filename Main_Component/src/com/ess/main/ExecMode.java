@@ -1,5 +1,7 @@
 package com.ess.main;
 
+import ess.strings.CustomErrorMessages;
+
 public enum ExecMode {
 	
 	SOLVE, SOLVE_DISPLAY, VALIDATE, VALIDATE_DISPLAY, DISPLAY;
@@ -17,7 +19,7 @@ public enum ExecMode {
 		case "d":
 			return DISPLAY;
 			default:
-				throw new InvalidInputException("Invalid exec mode");
+				throw new InvalidInputException(CustomErrorMessages.ERROR_INVALID_EXEC_MODE);
 		}
 	}
 }

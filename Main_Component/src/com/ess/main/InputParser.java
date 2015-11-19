@@ -1,5 +1,8 @@
 package com.ess.main;
 
+import ess.strings.CustomErrorMessages;
+import ess.strings.CustomInfoMessages;
+
 public class InputParser {
 	
 	private ExecMode mode;
@@ -30,10 +33,10 @@ public class InputParser {
 			try {
 				return Integer.parseInt(lineArg.replace("l=", ""));
 			} catch (NumberFormatException e) {
-				throw new InvalidInputException("Line length cannot be parsed");
+				throw new InvalidInputException(CustomErrorMessages.ERROR_INVALID_LENGTH);
 			}
 		} else {
-			throw new InvalidInputException();
+			throw new InvalidInputException(CustomErrorMessages.ERROR_INVALID_PARAM);
 		}
 	}
 
@@ -41,7 +44,7 @@ public class InputParser {
 		if (pathArg.startsWith("if=")) {
 			return pathArg.replace("if=", "");
 		} else {
-			throw new InvalidInputException("Path cannot be parsed");
+			throw new InvalidInputException(CustomErrorMessages.ERROR_INVALID_PARAM);
 		}
 	}
 	
@@ -50,13 +53,16 @@ public class InputParser {
 			String mode = modeArg.replace("r=", "");
 			return ExecMode.getExecModeByShortcut(mode);
 		} else {
-			throw new InvalidInputException("Mode cannot be parsed");
+			throw new InvalidInputException(CustomErrorMessages.ERROR_INVALID_PARAM);
 		}
 	}
 	
 	private void checkParamSize(String[] args) throws InvalidInputException {
+		if (args.length == 0) {
+			throw new InvalidInputException(CustomInfoMessages.INFO_USAGE);
+		}
 		if (args.length != 3) {
-			throw new InvalidInputException("Wrong param size");
+			throw new InvalidInputException(CustomErrorMessages.ERRO_INVALID_PARAM_COUNT);
 		}
 	}
 	
