@@ -2,8 +2,9 @@ package ess.io;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ import ess.data.Composite;
 import ess.data.Tile;
 import ess.io.exc.DataExchangeException;
 import ess.io.exc.InvalidSizeValueException;
+import ess.strings.CustomErrorMessages;
 import ess.utils.PropertyException;
 
 // TODO: Auto-generated Javadoc
@@ -72,7 +74,7 @@ public class XMLDataImporter {
 		try {
 			String dtdLocation = this.getClass().getResource(pathToDTD)
 					.toString();
-			// locateFiles(xmlSrc, dtdLocation);
+			locateFile(xmlSrc);
 			// TODO check paths elsewhere && output appropriate exceptions
 			TransformerFactory tf = TransformerFactory.newInstance();
 			Transformer tr = tf.newTransformer();
@@ -82,11 +84,15 @@ public class XMLDataImporter {
 			tr.transform(new StreamSource(xmlSrc), res);
 			return new ByteArrayInputStream(baos.toByteArray());
 		} catch (TransformerConfigurationException e) {
-			//TODO change message to something more meaningful
-			throw new PropertyException("TransformerConfigurationException"); 
+			throw new PropertyException(CustomErrorMessages.ERROR_VALIDATING_XML); 
 		} catch (TransformerException e) {
-			//TODO change message to something more meaningful
-			throw new PropertyException("TransformerException");
+			throw new PropertyException(String.format(CustomErrorMessages.ERROR_INVALID_CONTENT, xmlSrc));
+		}
+	}
+
+	private void locateFile(String xmlSrc) throws PropertyException {
+		if (!Files.isRegularFile(Paths.get(xmlSrc))) {
+			throw new PropertyException(String.format(CustomErrorMessages.ERROR_PATH_NOT_FOUND, "\"" + xmlSrc + "\""));
 		}
 	}
 

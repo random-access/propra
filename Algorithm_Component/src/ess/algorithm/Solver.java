@@ -112,7 +112,6 @@ public class Solver implements ISolver{
 			
 			// try out all possible tiles at the current position
 			while (tile != null && !foundTileThatFits) {
-				log.fine("Trying tile " + tile.getId() + " at " + pos + "...");
 				if (placeNextTile(tile, pos)) {
 					posList.add(pos);
 					foundTileThatFits = true;
@@ -127,7 +126,6 @@ public class Solver implements ISolver{
 			if (!foundTileThatFits) {
 				if (!posList.isEmpty()) {
 					pos = posList.pollLast();
-					log.fine("Return to pos " + pos + "...");
 				} 
 			}
 		} while (!posList.isEmpty());

@@ -1,7 +1,5 @@
 package ess.rules.explicit;
 
-import java.util.logging.Logger;
-
 import ess.data.Composite;
 import ess.data.Corner;
 import ess.data.Edge;
@@ -12,22 +10,14 @@ import ess.rules.IRule;
 import ess.rules.sets.ErrorType;
 
 public class MaxLineLengthRule implements IRule {
-	
-	private static final Logger log = Logger.getGlobal();
 			
 	@Override
 	public boolean check(Composite c, Tile tile, Position pos) {
-		// System.out.println("Testing insertion of tile " + tile + " at " + pos);
 		for (Edge edge : Edge.values()) {
-			// System.out.println("Testing edge " + edge);
-			int lineLength = calculateLineLength(c, tile, pos, edge);
-			// System.out.println("Line length " + lineLength);
-			if (lineLength > c.getMaxLineLength()) {
-				log.fine("Max. line length exceeded, value is " + lineLength);
+			if (calculateLineLength(c, tile, pos, edge) > c.getMaxLineLength()) {
 				return false;
 			}
 		}
-		
 		return true;
 	}
 

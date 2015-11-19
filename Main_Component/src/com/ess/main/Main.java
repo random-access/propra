@@ -36,6 +36,7 @@ public class Main {
 			log.info("Setting mode to " + inputParser.getMode() + "...");
 			switch (inputParser.getMode()) {
 			case SOLVE:
+				new HeadlessObserver().observe(v);
 				v.solve(inputParser.getPath(), inputParser.getMaxTileLength());
 				break;
 			case SOLVE_DISPLAY:
@@ -43,11 +44,13 @@ public class Main {
 				v.solve(inputParser.getPath(), inputParser.getMaxTileLength());
 				break;
 			case VALIDATE:
+				new HeadlessObserver().observe(v);
 				v.validateSolution(inputParser.getPath(),
 						inputParser.getMaxTileLength());
 				break;
 			case VALIDATE_DISPLAY:
 			case DISPLAY:
+				// TODO distinguish between DISPLAY & VALIDATE_DISPLAY
 				new DisplayObserver().observe(v);
 				v.validateSolution(inputParser.getPath(),
 						inputParser.getMaxTileLength());

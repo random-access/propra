@@ -4,7 +4,7 @@ import java.util.Observable;
 
 import ess.data.Composite;
 
-public abstract class UIObservable extends Observable {
+public abstract class OutputObservable extends Observable {
 	
 	public abstract Composite getComposite();
 	

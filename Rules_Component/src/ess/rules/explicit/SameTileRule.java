@@ -1,7 +1,5 @@
 package ess.rules.explicit;
 
-import java.util.logging.Logger;
-
 import ess.data.Composite;
 import ess.data.Edge;
 import ess.data.Position;
@@ -10,22 +8,18 @@ import ess.rules.IRule;
 import ess.rules.sets.ErrorType;
 
 public class SameTileRule implements IRule {
-	
-	private static final Logger log = Logger.getGlobal();
 
 	@Override
 	public boolean check(Composite c, Tile tile, Position pos) {
 		for (Edge edge : Edge.values()) {
-			if (hasEdgeWithSameTile(c, tile, pos,edge)) {
-				log.fine("Common edge with same tile found.");
+			if (hasCommonEdgeWithSameTile(c, tile, pos, edge)) {
 				return false;
 			}
 		}
-		// log.info("Found no common egde with same tile.");
 		return true;
 	}
 	
-	private boolean hasEdgeWithSameTile(Composite c, Tile tile, Position pos, Edge edge) {
+	private boolean hasCommonEdgeWithSameTile(Composite c, Tile tile, Position pos, Edge edge) {
 		Position corner1 = c.getSurface().getCornerPos(tile, pos, edge.getFirstCorner());
 		Position corner2 = c.getSurface().getCornerPos(tile, pos, edge.getSecondCorner());
 		for (int i = corner1.getRow(); i <= corner2.getRow(); i++) {

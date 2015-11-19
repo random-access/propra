@@ -12,7 +12,9 @@ public class CustomErrorMessages {
 			+ "der Property-Datei angegeben haben ein gültiger Verzeichnisname ist und ob Sie Schreibrechte haben.";
 	public static final String ERROR_PROPERTY_READ = "Property-Datei existiert nicht oder kann nicht gelesen werden.";
 	public static final String ERROR_PATH_NOT_FOUND = "%s existiert nicht oder ist ein Verzeichnis.";
+	public static final String ERROR_INVALID_CONTENT = "Die Datei %s kann nicht eingelesen werden, da die Struktur keinem Römischen Verbund entspricht.";
 	public static final String ERROR_DTD_NOT_FOUND = "DTD Validierungs-Datei %s existiert nicht oder kann nicht gelesen werden.";
+	public static final String ERROR_VALIDATING_XML = "Ein interner Fehler ist aufgetreten, die DTD-Validierung konnte nicht initialisiert werden.";
 	
 	public static final String ERROR_INVALID_ENUM = "Nicht berücksichtigter Enum-Wert: %s";
 	

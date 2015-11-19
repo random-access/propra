@@ -1,7 +1,5 @@
 package ess.rules.explicit;
 
-import java.util.logging.Logger;
-
 import ess.data.Composite;
 import ess.data.Corner;
 import ess.data.Position;
@@ -11,19 +9,13 @@ import ess.rules.IRule;
 import ess.rules.sets.ErrorType;
 
 public class CrossingsRule implements IRule {
-	
-	private static final Logger log = Logger.getGlobal();
 
 	@Override
 	public boolean check(Composite c, Tile tile, Position pos) {
-		boolean noCrossing = checkCorner(Corner.TOP_LEFT, c.getSurface(), tile, pos) 
+		return checkCorner(Corner.TOP_LEFT, c.getSurface(), tile, pos) 
 				&& checkCorner(Corner.TOP_RIGHT, c.getSurface(), tile, pos) 
 				&& checkCorner(Corner.BOTTOM_LEFT, c.getSurface(), tile, pos)
 				&& checkCorner(Corner.BOTTOM_RIGHT, c.getSurface(), tile, pos);
-		if(!noCrossing) {
-			log.fine("Found a crossing");
-		}
-		return noCrossing;
 	}
 	
 	private boolean checkCorner(Corner corner, Surface surface, Tile tile, Position pos) {

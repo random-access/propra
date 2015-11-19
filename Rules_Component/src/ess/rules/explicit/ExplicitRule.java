@@ -7,7 +7,9 @@ import ess.rules.IRule;
 
 public abstract class ExplicitRule implements IRule {
 	
-protected ArrayList<Position> errorEntries = new ArrayList<>();
+	// TODO use list to localize the errors or remove it
+	
+	protected ArrayList<Position> errorEntries = new ArrayList<>();
 	
 	public void resetErrorEntries() {
 		errorEntries.clear();

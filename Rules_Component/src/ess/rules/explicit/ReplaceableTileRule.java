@@ -1,7 +1,6 @@
 package ess.rules.explicit;
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 import ess.data.Composite;
 import ess.data.Corner;
@@ -12,19 +11,15 @@ import ess.rules.IRule;
 import ess.rules.sets.ErrorType;
 
 public class ReplaceableTileRule implements IRule {
-	
-	private static final Logger log = Logger.getGlobal();
 
 	@Override
 	public boolean check(Composite c, Tile tile, Position pos) {
 		ArrayList<Tile> tiles = c.getTilesLargerThan(tile.getRows(), tile.getCols(), tile.getNumberOfFields());
 		for (Tile rTile : tiles) {
 			if (tileIsReplacement(c, tile, pos, rTile)) {
-				log.fine("replacement found for " + tile + " at " + pos);
 				return false;
 			}
 		}
-		// log.info("No larger tile replacing smaller tiles found.");
 		return true;
 	}
 
@@ -104,7 +99,6 @@ public class ReplaceableTileRule implements IRule {
 						&& j >= pos.getCol() && j < pos.getCol() + tile.getCols()) {
 					continue;
 				}
-				log.finest("Examining position " + i + "," + j + "...");
 				Tile inside = c.getSurface().getEntryAt(i, j);
 				Tile outside = c.getSurface().getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());
 				// no replacement, if there is no tile inside or inside & outside are the same

@@ -23,7 +23,7 @@ import ess.utils.PropertyException;
  * Selbstverständlich können und müssen Sie innerhalb einer Methode Änderungen
  * vornehmen.
  */
-public class RoemischerVerbund extends UIObservable implements IRoemischerVerbund {
+public class RoemischerVerbund extends OutputObservable implements IRoemischerVerbund {
 	
 	private Logger log = Logger.getGlobal();
 	
@@ -56,7 +56,7 @@ public class RoemischerVerbund extends UIObservable implements IRoemischerVerbun
 			sendNotificationThatUICanBeDisplayed();
 			return errorList;
 		} catch (DataExchangeException | PropertyException e) {
-			System.out.println(e.getMessage());
+			System.out.println(e.getCause().getMessage());
 			return addAllErrorsToErrorList();
 		} 
 	}
@@ -83,7 +83,7 @@ public class RoemischerVerbund extends UIObservable implements IRoemischerVerbun
 			}
 			return solved;
 		} catch (DataExchangeException | PropertyException e) {
-			System.out.println(e.getMessage());
+			System.out.println(e.getCause().getMessage());
 			return false;
 		}
 	}

@@ -12,8 +12,6 @@ public class Surface {
 	private Tile[][] fields;
 
 	public Surface(int rows, int cols) {
-		// this.rows = rows;
-		// this.cols = cols;
 		fields = new Tile[rows][cols];
 	}
 
