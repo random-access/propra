@@ -53,7 +53,7 @@ public class RoemischerVerbund extends OutputObservable implements IRoemischerVe
 			composite = dataExchanger.readFromSource(xmlFile);
 			Validator validator = new Validator(composite, maxLineLength);
 			errorList = validator.validateSolution();
-			sendNotificationThatUICanBeDisplayed();
+			sendNotificationToOutputObservers();
 			return errorList;
 		} catch (DataExchangeException | PropertyException e) {
 			System.out.println(e.getCause().getMessage());
@@ -79,7 +79,7 @@ public class RoemischerVerbund extends OutputObservable implements IRoemischerVe
 			boolean solved = solver.solve();
 			if (solved) {
 				dataExchanger.writeToTarget(composite, xmlFile);
-				sendNotificationThatUICanBeDisplayed();
+				sendNotificationToOutputObservers();
 			}
 			return solved;
 		} catch (DataExchangeException | PropertyException e) {
@@ -94,8 +94,8 @@ public class RoemischerVerbund extends OutputObservable implements IRoemischerVe
 		return errorList;
 	}
 	
-	private void sendNotificationThatUICanBeDisplayed() {
-		log.info("Sending display request...");
+	private void sendNotificationToOutputObservers() {
+		log.info("Sending output request...");
 		setChanged();
 		notifyObservers();
 	}

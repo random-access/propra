@@ -8,7 +8,7 @@ import ess.algorithm.OutputObservable;
 
 public class HeadlessObserver implements Observer{
 
-Logger log = Logger.getGlobal();
+	Logger log = Logger.getGlobal();
 	
 	public void observe(OutputObservable obs) {
 		obs.addObserver(this);
@@ -17,7 +17,7 @@ Logger log = Logger.getGlobal();
 
 	@Override
 	public void update(Observable o, Object arg) {
-		log.info("Processing headless request...");
+		log.info("Got headless request...");
 		if (o instanceof OutputObservable) {
 			OutputObservable obs = (OutputObservable) o;
 			for (String s : obs.getErrors()) {

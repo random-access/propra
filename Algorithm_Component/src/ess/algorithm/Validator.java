@@ -42,8 +42,8 @@ public class Validator {
 			pos = posFinder.findNextFreePosition(c, pos);
 			tile = c.findTileById(ident);
 			if (ruleChecker.checkImplicitRules(c, tile, pos)) {
-				c.getSurface().insertEntry(tile, pos);
 				ruleChecker.checkExplicitRules(c, tile, pos);
+				c.getSurface().insertEntry(tile, pos);
 			} else {
 				return;
 			}

@@ -128,4 +128,21 @@ public class API_Test_Validation {
 		assertTrue("Alle 5 Fehler müssen in diesem Fall ausgegeben werden",
 				errorList.size() == 5);
 	}
+	
+	@Test
+	public void validateSolutionKlaus1() {
+
+		// Arrange (set all necessary preconditions and inputs.)
+		IRoemischerVerbund api = new RoemischerVerbund();
+
+		// Act (on the object or method under test.)
+		List<Validation> errorList = api.validateSolution(
+				"instances/validationInstances/klaus-validation1.xml", 100);
+
+		// Assert (that the expected results have occurred.))
+		assertTrue("errorList ist null", errorList != null);
+		assertTrue("Es wurden nicht alle bzw. nicht die korrekten Fehler erkannt",
+				errorList.size() == 2);
+		assertTrue("Max. Fugenlänge wurde nicht erkannt", errorList.contains(Validation.MAX_FUGENLAENGE));
+	}
 }

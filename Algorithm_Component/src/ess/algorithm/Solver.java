@@ -3,7 +3,6 @@ package ess.algorithm;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
-import java.util.logging.Logger;
 
 import ess.algorithm.modules.IPositionFinder;
 import ess.algorithm.modules.IRuleChecker;
@@ -23,7 +22,7 @@ import ess.utils.PropertyException;
 public class Solver implements ISolver{
 	
 	/** The Constant log. */
-	private static final Logger log = Logger.getGlobal();
+	// private static final Logger log = Logger.getGlobal();
 
 	/** The pos finder. */
 	private IPositionFinder posFinder;
@@ -38,7 +37,7 @@ public class Solver implements ISolver{
 	private LinkedList<Position> posList;
 	
 	/** The counter. */
-	private long counter;
+	// private long counter;
 	
 	/** The c. */
 	private Composite c;
@@ -96,8 +95,8 @@ public class Solver implements ISolver{
 				// trying to fill the next free position after successfully placing a tile
 				pos = posFinder.findNextFreePosition(c, pos);
 				if (pos == null) {
-					log.info("Iterations: " + counter);
-					log.info("Found a solution :) \n" + c);
+					// log.info("Iterations: " + counter);
+					// log.info("Found a solution :) \n" + c);
 					return true;
 				}
 				tile = null;
@@ -129,8 +128,8 @@ public class Solver implements ISolver{
 				} 
 			}
 		} while (!posList.isEmpty());
-		log.info("Iterations: " + counter);
-		log.info("Found no solution :(.");
+		// log.info("Iterations: " + counter);
+		// log.info("Found no solution :(.");
 		return false;
 	}
 	
@@ -139,7 +138,7 @@ public class Solver implements ISolver{
 	private boolean placeNextTile(Tile tile, Position pos) {
 		if (ruleChecker.checkImplicitRules(c, tile, pos) && ruleChecker.checkExplicitRules(c, tile, pos)) {
 			c.getSurface().insertEntry(tile, pos);
-			counter++;
+			// counter++;
 			return true;
 		}
 		return false;

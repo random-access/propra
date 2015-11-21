@@ -24,8 +24,8 @@ public class CompositePanel extends JComponent {
 
 	public CompositePanel(Surface surface) {
 		this.surface = surface;
-		System.out.println("Stroke-correction: " + STROKE_CORRECTION);
-		System.out.println("Minor stroke-correction: " + MINOR_STROKE_CORR);
+		// System.out.println("Stroke-correction: " + STROKE_CORRECTION);
+		// System.out.println("Minor stroke-correction: " + MINOR_STROKE_CORR);
 	}
 	
 	@Override

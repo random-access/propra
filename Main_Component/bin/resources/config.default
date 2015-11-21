@@ -12,10 +12,12 @@
 #############
 
 ##  Explicit Rules  ##
+## To activate a rule, set its value to "true", to deactivate it, set its value to "false" ##
 SameTileRule=true
 CrossingsRule=true
 MaxLineLengthRule=true
 ReplaceableTileRule=true
+
 
 #########################
 ### Solver Heuristics ###
@@ -48,12 +50,11 @@ log_level=off
 
 ## Define if logging should be outputted on console ##
 ## set to true, if logging should be displayed in console, else false ##
-log_console=true
+log_console=false
 
 ## Define if logging should be saved in an external log file ##
 ## Comment the following line out to enable logging to file, and set a target directory ##
 # log_file=/full/path/to/logdirectory/
-# log_file=/home/monika/Schreibtisch/Logs/
 
 
 
