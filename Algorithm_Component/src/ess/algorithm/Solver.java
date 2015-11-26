@@ -3,6 +3,7 @@ package ess.algorithm;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 
 import ess.algorithm.modules.IPositionFinder;
@@ -88,7 +89,8 @@ public class Solver implements ISolver{
 	@Override
 	public boolean solve() {
 		Position pos = null;
-		Tile tile= null;
+		Tile tile = null;
+		boolean foundTileThatFits;
 		
 		// try to place tiles using backtracking as long as there are any possibilities
 		do {
@@ -98,7 +100,7 @@ public class Solver implements ISolver{
 				if (ruleChecker.checkEndConditions(c, tile, pos)) {
 					// log.info("Iterations: " + counter);
 					// log.info("Found a solution :) \n" + c);
-					setOutputTileList();
+					prepareCompositeForDataOutput();
 					return true;
 				}
 				tile = null;
@@ -109,7 +111,7 @@ public class Solver implements ISolver{
 				c.getSurface().removeEntry(tile, pos);
 			}
 			tile = tileChooser.getNextTile(pos, tile);
-			boolean foundTileThatFits = false;
+			foundTileThatFits = false;
 			
 			// try out all possible tiles at the current position
 			while (tile != null && !foundTileThatFits) {
@@ -125,9 +127,7 @@ public class Solver implements ISolver{
 			// retrieve last position from posList, if no possible tile 
 			// could be found at the current position
 			if (!foundTileThatFits) {
-				if (!posList.isEmpty()) {
-					pos = posList.pollLast();
-				} 
+				pos = posList.pollLast();
 			}
 		} while (!posList.isEmpty());
 		// log.info("Iterations: " + counter);
@@ -146,7 +146,10 @@ public class Solver implements ISolver{
 		return false;
 	}
 	
-	private void setOutputTileList() {
+	private void prepareCompositeForDataOutput() {
+		// In case TileChooser doesn't choose positions in order, they must get sorted now
+		Collections.sort(posList); 
+		
 		ArrayList<String> output = new ArrayList<>();
 		for (Position pos : posList) {
 			output.add(c.getSurface().getEntryAt(pos).getId());

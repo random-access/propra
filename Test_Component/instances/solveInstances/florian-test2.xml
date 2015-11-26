@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RoemischerVerbund length1="1000" length2="140">
+    <Fliesentypen>
+        <Fliesentyp ident="_0">
+            <length1>40</length1>
+            <length2>60</length2>
+        </Fliesentyp>
+        <Fliesentyp ident="_1">
+            <length1>60</length1>
+            <length2>40</length2>
+        </Fliesentyp>
+        <Fliesentyp ident="_2">
+            <length1>20</length1>
+            <length2>40</length2>
+        </Fliesentyp>
+        <Fliesentyp ident="_3">
+            <length1>40</length1>
+            <length2>20</length2>
+        </Fliesentyp>
+        <Fliesentyp ident="_4">
+            <length1>40</length1>
+            <length2>40</length2>
+        </Fliesentyp>
+    </Fliesentypen>
+</RoemischerVerbund>

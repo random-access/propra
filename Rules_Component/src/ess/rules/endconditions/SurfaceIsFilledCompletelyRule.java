@@ -1,4 +1,4 @@
-package ess.rules.end;
+package ess.rules.endconditions;
 
 import ess.data.Composite;
 import ess.data.Position;

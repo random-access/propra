@@ -11,7 +11,7 @@ public interface IRuleSet {
 	
 	public LinkedList<IRule> getImplicitRules();
 	
-	public LinkedList<IRule> getEndRules();
+	public LinkedList<IRule> getEndConditions();
 	
 	public LinkedList<ErrorType> getErrorList ();
 

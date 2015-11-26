@@ -158,4 +158,32 @@ public class API_Test_Solve {
 		// Assert (that the expected results have occurred.))
 		assertFalse("Für diese Instanz existiert keine zulässige Lösung", valid);
 	}
+	
+	@Test
+	public void solveInstance7() throws IOException {
+
+		// Arrange (set all necessary preconditions and inputs.)
+		IRoemischerVerbund api = new RoemischerVerbund();
+		String filePath = WriteFileToTempDirectory("instances/solveInstances/florian-test1.xml");
+
+		// Act (on the object or method under test.)
+		Boolean valid = api.solve(filePath, 140);
+
+		// Assert (that the expected results have occurred.))
+		assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+	}
+	
+	@Test
+	public void solveInstance8() throws IOException {
+
+		// Arrange (set all necessary preconditions and inputs.)
+		IRoemischerVerbund api = new RoemischerVerbund();
+		String filePath = WriteFileToTempDirectory("instances/solveInstances/florian-test2.xml");
+
+		// Act (on the object or method under test.)
+		Boolean valid = api.solve(filePath, 140);
+
+		// Assert (that the expected results have occurred.))
+		assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+	}
 }

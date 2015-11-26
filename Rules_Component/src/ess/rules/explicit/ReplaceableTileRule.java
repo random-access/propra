@@ -92,6 +92,8 @@ public class ReplaceableTileRule implements IRule {
 	private boolean isTileBorder(Composite c, Tile rTile, Position rPos, Edge edge, Tile tile, Position pos) {
 		Position corner1 = c.getSurface().getCornerPos(rTile, rPos, edge.getFirstCorner());
 		Position corner2 = c.getSurface().getCornerPos(rTile, rPos, edge.getSecondCorner());
+		Tile inside = null;
+		Tile outside = null;
 		for (int i = corner1.getRow(); i <= corner2.getRow(); i++) {
 			for (int j = corner1.getCol(); j <= corner2.getCol(); j++) {
 				
@@ -100,8 +102,8 @@ public class ReplaceableTileRule implements IRule {
 						&& j >= pos.getCol() && j < pos.getCol() + tile.getCols()) {
 					continue;
 				}
-				Tile inside = c.getSurface().getEntryAt(i, j);
-				Tile outside = c.getSurface().getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());
+				inside = c.getSurface().getEntryAt(i, j);
+				outside = c.getSurface().getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());
 				
 				// no replacement, if there is no tile inside or inside & outside are the same
 				if (outside != null) {

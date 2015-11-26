@@ -31,7 +31,7 @@ public class MaxLineLengthRule implements IRule {
 		Position p1 = c.getSurface().getCornerPos(tile,  pos, c1);
 		Position p2 = c.getSurface().getCornerPos(tile,  pos, c2);
 
-		return getLineLength(c,edge,p1,backStep) + getLineLength(c,edge,p2,fwdStep) + getEntryLength(edge, tile);
+		return getLineLength(c.getSurface(),edge,p1,backStep) + getLineLength(c.getSurface(),edge,p2,fwdStep) + getEntryLength(edge, tile);
 	}
 	
 	private int getEntryLength(Edge edge, Tile t) {
@@ -47,16 +47,19 @@ public class MaxLineLengthRule implements IRule {
 		}
 	}
 
-	private int getLineLength(Composite c, Edge edge, Position startPos, Position step) {
-		Surface s = c.getSurface();
+	private int getLineLength(Surface s, Edge edge, Position startPos, Position step) {
 		Position currentInnerPos = new Position(startPos.getRow() + step.getRow(), startPos.getCol() + step.getCol());
+		Position currentOuterPos = new Position(0,0);
 		int currentLineLength = 0;
 		boolean isLine = true;
+		Tile innerTile = null;
+		Tile outerTile = null;
 		while (s.isInsideSurface(currentInnerPos) && isLine) {
-			Position currentOuterPos = new Position(currentInnerPos.getRow() + edge.getNextRowOffset(), currentInnerPos.getCol() + edge.getNextColOffset());
+			currentOuterPos.setRow(currentInnerPos.getRow() + edge.getNextRowOffset());
+			currentOuterPos.setColumn(currentInnerPos.getCol() + edge.getNextColOffset());
 			
-			Tile innerTile = c.getSurface().getEntryAt(currentInnerPos);
-			Tile outerTile = c.getSurface().getEntryAt(currentOuterPos);
+			innerTile = s.getEntryAt(currentInnerPos);
+			outerTile = s.getEntryAt(currentOuterPos);
 			if (!s.isInsideSurface(currentOuterPos) || innerTile == null && outerTile == null || innerTile != null && outerTile != null && 
 					innerTile == outerTile) {
 				isLine = false;
