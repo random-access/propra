@@ -16,7 +16,7 @@ import java.util.Collections;
 public class Composite {
 	
 	private final ArrayList<Tile> tileSorts;
-	private final ArrayList<String> surfaceTileList;
+	private ArrayList<String> surfaceTileList;
 	private Surface surface;
 	private int maxLineLength;
 
@@ -67,6 +67,10 @@ public class Composite {
 	 */
 	public ArrayList<String> getSurfaceTileList() {
 		return surfaceTileList;
+	}
+	
+	public void setSurfaceTileList(ArrayList<String> surfaceTileList) {
+		this.surfaceTileList = surfaceTileList;
 	}
 	
 	/**

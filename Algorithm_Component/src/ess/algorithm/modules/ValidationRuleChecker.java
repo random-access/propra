@@ -43,6 +43,18 @@ public class ValidationRuleChecker implements IRuleChecker{
 		return validMove;
 	}
 	
+	public boolean checkEndConditions(Composite composite, Tile tile, Position pos) {
+		boolean completed = true;
+		for (IRule rule : ruleSet.getEndRules()) {
+			boolean ok = rule.check(composite, tile, pos);
+			if (!ok) {
+				ruleSet.addError(rule.getErrorType());
+			}
+			completed &= ok;
+		}
+		return completed;
+	}
+	
 	public LinkedList<Validation> getErrorList() {
 		return ErrorMapper.mapErrors(ruleSet);
 	}

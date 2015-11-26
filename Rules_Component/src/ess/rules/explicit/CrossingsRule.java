@@ -5,8 +5,8 @@ import ess.data.Corner;
 import ess.data.Position;
 import ess.data.Surface;
 import ess.data.Tile;
+import ess.rules.ErrorType;
 import ess.rules.IRule;
-import ess.rules.sets.ErrorType;
 
 public class CrossingsRule implements IRule {
 
@@ -24,16 +24,16 @@ public class CrossingsRule implements IRule {
 			return true;
 		}
 		// only inner tiles are checked here so all positions will be inside surface
-		Tile cornerNeighbourTile = surface.getNeighbourCornerEntry(tile, pos, corner);
-		Tile sameRowTile = surface.getRowCornerNeighbourEntry(tile, pos, corner);
-		Tile sameColumnTile = surface.getColCornerNeighbourEntry(tile, pos, corner);
+		Tile diagonalNeighbourTile = surface.getDiagonalNeighbourTile(tile, pos, corner);
+		Tile horizontalNeighbourTile = surface.getHorizontalNeighbourTile(tile, pos, corner);
+		Tile verticalNeighbourTile = surface.getVerticalNeighbourTile(tile, pos, corner);
 		
 		// if the entry opposite this corner has no tile yet, there must be 1 neighbour not having a tile either
-		if (cornerNeighbourTile == null) {
-			return sameRowTile == null || sameColumnTile == null;
+		if (diagonalNeighbourTile == null) {
+			return horizontalNeighbourTile == null || verticalNeighbourTile == null;
 		} 
 		// if the entry opposite this corner is filled, it must be the same as one of its neighbours
-		return cornerNeighbourTile.equals(sameRowTile) || cornerNeighbourTile.equals(sameColumnTile);
+		return diagonalNeighbourTile.equals(horizontalNeighbourTile) || diagonalNeighbourTile.equals(verticalNeighbourTile);
 	}
 
 	@Override

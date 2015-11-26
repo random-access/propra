@@ -2,7 +2,7 @@ package User_interface_Component;
 
 import ess.algorithm.Validator;
 import ess.data.Composite;
-import ess.io.XMLDataImporter;
+import ess.io.XMLDataExchanger;
 import ess.io.exc.DataExchangeException;
 import ess.ui.ICompositeView;
 import ess.ui.MainWindow;
@@ -12,7 +12,7 @@ public class UITest {
 	
 	public static void main(String[] args) throws DataExchangeException, PropertyException {
 		// Act (on the object or method under test.)
-		final Composite c = new XMLDataImporter().importComposite("instances/validationInstances/test1.xml");
+		final Composite c = new XMLDataExchanger().readFromSource("instances/validationInstances/test1.xml");
 		Validator v = new Validator(c, 120);
 		v.validateSolution();
 		ICompositeView view = new MainWindow(c);

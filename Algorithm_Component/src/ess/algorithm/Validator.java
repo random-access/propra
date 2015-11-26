@@ -48,5 +48,7 @@ public class Validator {
 				return;
 			}
 		}
+		pos = posFinder.findNextFreePosition(c, pos);
+		ruleChecker.checkEndConditions(c,tile, pos);
 	}
 }

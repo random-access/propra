@@ -24,5 +24,9 @@ public class CustomErrorMessages {
 	
 	public static final String ERROR_INVALID_PARAM = "Ung\u00fcltiger Parameter oder falsche Parameterreihenfolge.\n\n" + CustomInfoMessages.INFO_EXEC_CALL;
 	public static final String ERRO_INVALID_PARAM_COUNT = "Ung\u00fcltige Parameteranzahl. \n\n" + CustomInfoMessages.INFO_EXEC_CALL;
+	
+	// xml parsing
+	public static final String ERROR_INVALID_DATATYPE_TILE_LENGTH = "Ung\u00fcltiger Wert für Fliesenl\u00e4nge! Alle Fliesenl\u00e4ngen m\u00fcssen positive "
+			+ "Ganzzahlen und ein Vielfaches von 20 sein.";
 
 }

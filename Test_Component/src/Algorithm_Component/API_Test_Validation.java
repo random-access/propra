@@ -142,7 +142,7 @@ public class API_Test_Validation {
 		// Assert (that the expected results have occurred.))
 		assertTrue("errorList ist null", errorList != null);
 		assertTrue("Es wurden nicht alle bzw. nicht die korrekten Fehler erkannt",
-				errorList.size() == 2);
+				errorList.size() == 1);
 		assertTrue("Max. Fugenlänge wurde nicht erkannt", errorList.contains(Validation.MAX_FUGENLAENGE));
 	}
 }

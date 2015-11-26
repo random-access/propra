@@ -2,6 +2,7 @@ package ess.algorithm;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import ess.algorithm.modules.IPositionFinder;
@@ -94,9 +95,10 @@ public class Solver implements ISolver{
 			if (pos == null) {
 				// trying to fill the next free position after successfully placing a tile
 				pos = posFinder.findNextFreePosition(c, pos);
-				if (pos == null) {
+				if (ruleChecker.checkEndConditions(c, tile, pos)) {
 					// log.info("Iterations: " + counter);
 					// log.info("Found a solution :) \n" + c);
+					setOutputTileList();
 					return true;
 				}
 				tile = null;
@@ -142,6 +144,14 @@ public class Solver implements ISolver{
 			return true;
 		}
 		return false;
+	}
+	
+	private void setOutputTileList() {
+		ArrayList<String> output = new ArrayList<>();
+		for (Position pos : posList) {
+			output.add(c.getSurface().getEntryAt(pos).getId());
+		}
+		c.setSurfaceTileList(output);
 	}
 
 }

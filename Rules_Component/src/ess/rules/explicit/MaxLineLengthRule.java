@@ -6,8 +6,8 @@ import ess.data.Edge;
 import ess.data.Position;
 import ess.data.Surface;
 import ess.data.Tile;
+import ess.rules.ErrorType;
 import ess.rules.IRule;
-import ess.rules.sets.ErrorType;
 
 public class MaxLineLengthRule implements IRule {
 			
@@ -49,22 +49,22 @@ public class MaxLineLengthRule implements IRule {
 
 	private int getLineLength(Composite c, Edge edge, Position startPos, Position step) {
 		Surface s = c.getSurface();
-		Position currentInsidePos = new Position(startPos.getRow() + step.getRow(), startPos.getCol() + step.getCol());
+		Position currentInnerPos = new Position(startPos.getRow() + step.getRow(), startPos.getCol() + step.getCol());
 		int currentLineLength = 0;
 		boolean isLine = true;
-		while (s.isInsideSurface(currentInsidePos) && isLine) {
-			Position currentOutsidePos = new Position(currentInsidePos.getRow() + edge.getNextRowOffset(), currentInsidePos.getCol() + edge.getNextColOffset());
+		while (s.isInsideSurface(currentInnerPos) && isLine) {
+			Position currentOuterPos = new Position(currentInnerPos.getRow() + edge.getNextRowOffset(), currentInnerPos.getCol() + edge.getNextColOffset());
 			
-			Tile insideTile = c.getSurface().getEntryAt(currentInsidePos);
-			Tile outsideTile = c.getSurface().getEntryAt(currentOutsidePos);
-			if (!s.isInsideSurface(currentOutsidePos) || insideTile == null && outsideTile == null || insideTile != null && outsideTile != null && 
-					insideTile == outsideTile) {
+			Tile innerTile = c.getSurface().getEntryAt(currentInnerPos);
+			Tile outerTile = c.getSurface().getEntryAt(currentOuterPos);
+			if (!s.isInsideSurface(currentOuterPos) || innerTile == null && outerTile == null || innerTile != null && outerTile != null && 
+					innerTile == outerTile) {
 				isLine = false;
 			} else {
 				currentLineLength++;
 			}
-			currentInsidePos.setRow(currentInsidePos.getRow() + step.getRow());
-			currentInsidePos.setColumn(currentInsidePos.getCol() + step.getCol());
+			currentInnerPos.setRow(currentInnerPos.getRow() + step.getRow());
+			currentInnerPos.setColumn(currentInnerPos.getCol() + step.getCol());
 		}
 		return currentLineLength;
 	}

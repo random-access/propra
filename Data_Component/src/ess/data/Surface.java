@@ -140,19 +140,19 @@ public class Surface {
 		return isInsideSurface(pos.getRow(), pos.getCol());
 	}
 	
-	public Tile getRowCornerNeighbourEntry(Tile tile, Position pos, Corner c) {
+	public Tile getHorizontalNeighbourTile(Tile tile, Position pos, Corner c) {
 		Position nPos = new Position(getCornerRow(tile, pos, c), 
 				getCornerCol(tile, pos, c) + c.getNextColOffset());
 		return (isInsideSurface(nPos)) ? getEntryAt(nPos) : null;
 	}
 	
-	public Tile getColCornerNeighbourEntry(Tile tile, Position pos, Corner c) {
+	public Tile getVerticalNeighbourTile(Tile tile, Position pos, Corner c) {
 		Position nPos = new Position(getCornerRow(tile, pos, c)+c.getNextRowOffset(), 
 				getCornerCol(tile, pos, c));
 		return (isInsideSurface(nPos)) ? getEntryAt(nPos) : null;
 	}
 	
-	public Tile getNeighbourCornerEntry(Tile tile, Position pos, Corner c) {
+	public Tile getDiagonalNeighbourTile(Tile tile, Position pos, Corner c) {
 		Position nPos = new Position(getCornerRow(tile, pos, c)+c.getNextRowOffset(), 
 				getCornerCol(tile, pos, c) + c.getNextColOffset());
 		return (isInsideSurface(nPos)) ? getEntryAt(nPos) : null;

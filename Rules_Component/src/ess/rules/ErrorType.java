@@ -1,4 +1,4 @@
-package ess.rules.sets;
+package ess.rules;
 
 public enum ErrorType {
 	

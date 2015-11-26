@@ -4,8 +4,8 @@ import ess.data.Composite;
 import ess.data.Edge;
 import ess.data.Position;
 import ess.data.Tile;
+import ess.rules.ErrorType;
 import ess.rules.IRule;
-import ess.rules.sets.ErrorType;
 
 public class SameTileRule implements IRule {
 

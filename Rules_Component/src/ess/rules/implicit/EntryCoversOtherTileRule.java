@@ -3,8 +3,8 @@ package ess.rules.implicit;
 import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Tile;
+import ess.rules.ErrorType;
 import ess.rules.IRule;
-import ess.rules.sets.ErrorType;
 
 public class EntryCoversOtherTileRule implements IRule{
 

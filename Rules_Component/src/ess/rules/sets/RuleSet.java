@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.logging.Logger;
 
+import ess.rules.ErrorType;
 import ess.rules.IRule;
+import ess.rules.end.SurfaceIsFilledCompletelyRule;
 import ess.rules.implicit.EntryCoversOtherTileRule;
 import ess.rules.implicit.EntryExceedsSurfaceRule;
 import ess.utils.ProPraProperties;
@@ -17,14 +19,17 @@ public class RuleSet implements IRuleSet {
 	private LinkedList<ErrorType> errorList;
 	private LinkedList<IRule> explicitRuleSet;
 	private LinkedList<IRule> implicitRuleSet;
+	private LinkedList<IRule> endRuleSet;
 
 	public RuleSet() throws PropertyException {
 		errorList = new LinkedList<>();
 		explicitRuleSet = new LinkedList<>();
 		implicitRuleSet = new LinkedList<>();
+		endRuleSet = new LinkedList<>();
 
 		addExplicitRules();
 		addImplicitRules();
+		addEndRules();
 	}
 
 	@Override
@@ -36,6 +41,11 @@ public class RuleSet implements IRuleSet {
 	public LinkedList<IRule> getImplicitRules() {
 		return implicitRuleSet;
 	}
+	
+	public LinkedList<IRule> getEndRules() {
+		return endRuleSet;
+	}
+	
 
 	@Override
 	public void addError(ErrorType errorType) {
@@ -70,5 +80,10 @@ public class RuleSet implements IRuleSet {
 		log.info("Activated EntryExceedsSurfaceRule ...");
 		implicitRuleSet.add(new EntryCoversOtherTileRule());
 		log.info("Activated EntryCoversOtherTileRule ...");
+	}
+	
+	private void addEndRules() {
+		endRuleSet.add(new SurfaceIsFilledCompletelyRule());
+		log.info("Activated SurfaceIsFilledCompletelyRule ...");
 	}
 }
