@@ -35,4 +35,13 @@ private IRuleSet ruleSet;
 		}
 		return true;
 	}
+	
+	public boolean checkEndConditions(Composite composite, Tile tile, Position pos) {
+		for (IRule rule : ruleSet.getEndConditions()) {
+			 if (!rule.check(composite, tile, pos)){
+				 return false;
+			 }
+		}
+		return true;
+	}
 }

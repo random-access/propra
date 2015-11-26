@@ -9,4 +9,6 @@ public interface IRuleChecker {
 	public boolean checkExplicitRules(Composite c, Tile tile, Position pos);
 	
 	public boolean checkImplicitRules(Composite c, Tile tile, Position pos);
+	
+	public boolean checkEndConditions(Composite c, Tile tile, Position pos);
 }

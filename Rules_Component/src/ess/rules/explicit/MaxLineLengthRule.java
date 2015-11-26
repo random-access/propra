@@ -1,33 +1,23 @@
 package ess.rules.explicit;
 
-import java.util.logging.Logger;
-
 import ess.data.Composite;
 import ess.data.Corner;
 import ess.data.Edge;
 import ess.data.Position;
 import ess.data.Surface;
 import ess.data.Tile;
+import ess.rules.ErrorType;
 import ess.rules.IRule;
-import ess.rules.sets.ErrorType;
 
 public class MaxLineLengthRule implements IRule {
-	
-	private static final Logger log = Logger.getGlobal();
 			
 	@Override
 	public boolean check(Composite c, Tile tile, Position pos) {
-		// System.out.println("Testing insertion of tile " + tile + " at " + pos);
 		for (Edge edge : Edge.values()) {
-			// System.out.println("Testing edge " + edge);
-			int lineLength = calculateLineLength(c, tile, pos, edge);
-			// System.out.println("Line length " + lineLength);
-			if (lineLength > c.getMaxLineLength()) {
-				log.fine("Max. line length exceeded, value is " + lineLength);
+			if (calculateLineLength(c, tile, pos, edge) > c.getMaxLineLength()) {
 				return false;
 			}
 		}
-		
 		return true;
 	}
 
@@ -41,7 +31,7 @@ public class MaxLineLengthRule implements IRule {
 		Position p1 = c.getSurface().getCornerPos(tile,  pos, c1);
 		Position p2 = c.getSurface().getCornerPos(tile,  pos, c2);
 
-		return getLineLength(c,edge,p1,backStep) + getLineLength(c,edge,p2,fwdStep) + getEntryLength(edge, tile);
+		return getLineLength(c.getSurface(),edge,p1,backStep) + getLineLength(c.getSurface(),edge,p2,fwdStep) + getEntryLength(edge, tile);
 	}
 	
 	private int getEntryLength(Edge edge, Tile t) {
@@ -57,24 +47,27 @@ public class MaxLineLengthRule implements IRule {
 		}
 	}
 
-	private int getLineLength(Composite c, Edge edge, Position startPos, Position step) {
-		Surface s = c.getSurface();
-		Position currentInsidePos = new Position(startPos.getRow() + step.getRow(), startPos.getCol() + step.getCol());
+	private int getLineLength(Surface s, Edge edge, Position startPos, Position step) {
+		Position currentInnerPos = new Position(startPos.getRow() + step.getRow(), startPos.getCol() + step.getCol());
+		Position currentOuterPos = new Position(0,0);
 		int currentLineLength = 0;
 		boolean isLine = true;
-		while (s.isInsideSurface(currentInsidePos) && isLine) {
-			Position currentOutsidePos = new Position(currentInsidePos.getRow() + edge.getNextRowOffset(), currentInsidePos.getCol() + edge.getNextColOffset());
+		Tile innerTile = null;
+		Tile outerTile = null;
+		while (s.isInsideSurface(currentInnerPos) && isLine) {
+			currentOuterPos.setRow(currentInnerPos.getRow() + edge.getNextRowOffset());
+			currentOuterPos.setColumn(currentInnerPos.getCol() + edge.getNextColOffset());
 			
-			Tile insideTile = c.getSurface().getEntryAt(currentInsidePos);
-			Tile outsideTile = c.getSurface().getEntryAt(currentOutsidePos);
-			if (!s.isInsideSurface(currentOutsidePos) || insideTile == null && outsideTile == null || insideTile != null && outsideTile != null && 
-					insideTile == outsideTile) {
+			innerTile = s.getEntryAt(currentInnerPos);
+			outerTile = s.getEntryAt(currentOuterPos);
+			if (!s.isInsideSurface(currentOuterPos) || innerTile == null && outerTile == null || innerTile != null && outerTile != null && 
+					innerTile == outerTile) {
 				isLine = false;
 			} else {
 				currentLineLength++;
 			}
-			currentInsidePos.setRow(currentInsidePos.getRow() + step.getRow());
-			currentInsidePos.setColumn(currentInsidePos.getCol() + step.getCol());
+			currentInnerPos.setRow(currentInnerPos.getRow() + step.getRow());
+			currentInnerPos.setColumn(currentInnerPos.getCol() + step.getCol());
 		}
 		return currentLineLength;
 	}

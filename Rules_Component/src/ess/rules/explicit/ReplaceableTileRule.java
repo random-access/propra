@@ -1,36 +1,31 @@
 package ess.rules.explicit;
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 import ess.data.Composite;
 import ess.data.Corner;
 import ess.data.Edge;
 import ess.data.Position;
 import ess.data.Tile;
+import ess.rules.ErrorType;
 import ess.rules.IRule;
-import ess.rules.sets.ErrorType;
 
 public class ReplaceableTileRule implements IRule {
-	
-	private static final Logger log = Logger.getGlobal();
 
 	@Override
 	public boolean check(Composite c, Tile tile, Position pos) {
 		ArrayList<Tile> tiles = c.getTilesLargerThan(tile.getRows(), tile.getCols(), tile.getNumberOfFields());
 		for (Tile rTile : tiles) {
 			if (tileIsReplacement(c, tile, pos, rTile)) {
-				log.fine("replacement found for " + tile + " at " + pos);
 				return false;
 			}
 		}
-		// log.info("No larger tile replacing smaller tiles found.");
 		return true;
 	}
 
 	/**
-	 * Tests if tile can replace an area filled with smaller tiles fitted in any
-	 * of the 4 corners of the surface entry e that was inserted last in the
+	 * Tests if tile can replace an area filled with smaller tiles if aligned with any
+	 * of the 4 corners of the tile that will be inserted into the
 	 * surface of Composite c.
 	 * 
 	 * @param c
@@ -97,16 +92,19 @@ public class ReplaceableTileRule implements IRule {
 	private boolean isTileBorder(Composite c, Tile rTile, Position rPos, Edge edge, Tile tile, Position pos) {
 		Position corner1 = c.getSurface().getCornerPos(rTile, rPos, edge.getFirstCorner());
 		Position corner2 = c.getSurface().getCornerPos(rTile, rPos, edge.getSecondCorner());
+		Tile inside = null;
+		Tile outside = null;
 		for (int i = corner1.getRow(); i <= corner2.getRow(); i++) {
 			for (int j = corner1.getCol(); j <= corner2.getCol(); j++) {
+				
 				// testing positions of new tile -> skip test, because replacement is possible anyway
 				if (i >= pos.getRow() && i < pos.getRow() + tile.getRows()
 						&& j >= pos.getCol() && j < pos.getCol() + tile.getCols()) {
 					continue;
 				}
-				log.finest("Examining position " + i + "," + j + "...");
-				Tile inside = c.getSurface().getEntryAt(i, j);
-				Tile outside = c.getSurface().getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());
+				inside = c.getSurface().getEntryAt(i, j);
+				outside = c.getSurface().getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());
+				
 				// no replacement, if there is no tile inside or inside & outside are the same
 				if (outside != null) {
 					if (inside == null || outside.equals(inside)) {

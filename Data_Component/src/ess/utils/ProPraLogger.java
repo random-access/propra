@@ -57,11 +57,12 @@ public class ProPraLogger {
 		if (!isInitialized) {
 			ProPraProperties properties = ProPraProperties.getInstance();
 
-			// Get the global logger object & set log level
+			// Get the global logger object
 			logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+			
+			// set log level
 			setLogLevel(properties.getValue(ProPraProperties.KEY_LOG_LEVEL));
 			
-
 			// Configure log output
 			handleLoggingToConsole(properties.getValue(ProPraProperties.KEY_LOG_CONSOLE));
 			handleLoggingToFile(properties.getValue(ProPraProperties.KEY_LOG_FILE));
@@ -119,6 +120,7 @@ public class ProPraLogger {
 	 *             if the string is neither "true" nor "false".
 	 */
 	private static void handleLoggingToConsole(String consoleOutput) throws PropertyException {
+
 		// do not accept invalid input, just in case
 		if (!consoleOutput.equalsIgnoreCase("true") && !(consoleOutput.equalsIgnoreCase("false"))) {
 			throw new PropertyException(CustomErrorMessages.ERROR_INVALID_KEY_LOG_CONSOLE);
@@ -153,7 +155,7 @@ public class ProPraLogger {
 	private static void setLogLevel(String logLevelName) throws PropertyException {
 		try {
 			Level logLevel = Level.parse(logLevelName.toUpperCase());
-			logger.setLevel(logLevel);
+			//logger.setLevel(logLevel);
 			Logger rootLog = Logger.getLogger("");
 			rootLog.setLevel( logLevel);
 			rootLog.getHandlers()[0].setLevel( logLevel );

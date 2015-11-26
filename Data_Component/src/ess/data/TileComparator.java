@@ -2,6 +2,7 @@ package ess.data;
 
 import java.util.Comparator;
 
+//TODO Javadoc
 public enum TileComparator implements Comparator<Tile>{
 	
 	ROWS_ASC {

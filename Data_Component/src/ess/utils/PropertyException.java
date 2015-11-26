@@ -1,4 +1,5 @@
 package ess.utils;
+// TODO Javadoc
 
 public class PropertyException extends Exception {
 

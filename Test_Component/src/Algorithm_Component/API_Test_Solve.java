@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,8 +26,6 @@ import ess.algorithm.RoemischerVerbund;
  * (http://c2.com/cgi/wiki?ArrangeActAssert).
  */
 public class API_Test_Solve {
-	
-	Logger log = Logger.getGlobal();
 
 	@Rule
 	public TemporaryFolder folder = new TemporaryFolder();
@@ -67,8 +64,6 @@ public class API_Test_Solve {
 
 	@Test
 	public void solveParameterHasToBeValid() {
-
-		System.out.println("***********  Test 0 ********************");
 		
 		// Arrange (set all necessary preconditions and inputs.)
 		IRoemischerVerbund api = new RoemischerVerbund();
@@ -83,8 +78,6 @@ public class API_Test_Solve {
 	@Test
 	public void solveInstance1() throws IOException {
 
-		System.out.println("******** ***  Test 1 ********************");
-
 		// Arrange (set all necessary preconditions and inputs.)
 		IRoemischerVerbund api = new RoemischerVerbund();
 		String filePath = WriteFileToTempDirectory("instances/solveInstances/test1.xml");
@@ -98,8 +91,6 @@ public class API_Test_Solve {
 
 	@Test
 	public void solveInstance2() throws IOException {
-		
-		System.out.println("***********  Test 2 ********************");
 
 		// Arrange (set all necessary preconditions and inputs.)
 		IRoemischerVerbund api = new RoemischerVerbund();
@@ -115,8 +106,6 @@ public class API_Test_Solve {
 	@Test
 	public void solveInstance3() throws IOException {
 
-		System.out.println("***********  Test 3 ********************");
-
 		// Arrange (set all necessary preconditions and inputs.)
 		IRoemischerVerbund api = new RoemischerVerbund();
 		String filePath = WriteFileToTempDirectory("instances/solveInstances/test2.xml");
@@ -130,8 +119,6 @@ public class API_Test_Solve {
 
 	@Test
 	public void solveInstance4() throws IOException {
-
-		System.out.println("***********  Test 4 ********************");
 
 		// Arrange (set all necessary preconditions and inputs.)
 		IRoemischerVerbund api = new RoemischerVerbund();
@@ -147,8 +134,6 @@ public class API_Test_Solve {
 	@Test
 	public void solveInstance5() throws IOException {
 
-		System.out.println("***********  Test 5 ********************");
-
 		// Arrange (set all necessary preconditions and inputs.)
 		IRoemischerVerbund api = new RoemischerVerbund();
 		String filePath = WriteFileToTempDirectory("instances/solveInstances/test5.xml");
@@ -163,8 +148,6 @@ public class API_Test_Solve {
 	@Test
 	public void solveInstance6() throws IOException {
 
-		System.out.println("***********  Test 6 ********************");
-
 		// Arrange (set all necessary preconditions and inputs.)
 		IRoemischerVerbund api = new RoemischerVerbund();
 		String filePath = WriteFileToTempDirectory("instances/solveInstances/test6.xml");
@@ -174,5 +157,33 @@ public class API_Test_Solve {
 
 		// Assert (that the expected results have occurred.))
 		assertFalse("Für diese Instanz existiert keine zulässige Lösung", valid);
+	}
+	
+	@Test
+	public void solveInstance7() throws IOException {
+
+		// Arrange (set all necessary preconditions and inputs.)
+		IRoemischerVerbund api = new RoemischerVerbund();
+		String filePath = WriteFileToTempDirectory("instances/solveInstances/florian-test1.xml");
+
+		// Act (on the object or method under test.)
+		Boolean valid = api.solve(filePath, 140);
+
+		// Assert (that the expected results have occurred.))
+		assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+	}
+	
+	@Test
+	public void solveInstance8() throws IOException {
+
+		// Arrange (set all necessary preconditions and inputs.)
+		IRoemischerVerbund api = new RoemischerVerbund();
+		String filePath = WriteFileToTempDirectory("instances/solveInstances/florian-test2.xml");
+
+		// Act (on the object or method under test.)
+		Boolean valid = api.solve(filePath, 140);
+
+		// Assert (that the expected results have occurred.))
+		assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
 	}
 }

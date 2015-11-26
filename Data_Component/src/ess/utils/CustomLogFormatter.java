@@ -29,7 +29,6 @@ public class CustomLogFormatter extends Formatter {
 				throwable.printStackTrace(pw);
 				sb.append(sw.toString());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

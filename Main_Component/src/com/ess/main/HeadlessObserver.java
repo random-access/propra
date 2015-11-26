@@ -5,28 +5,24 @@ import java.util.Observer;
 import java.util.logging.Logger;
 
 import ess.algorithm.OutputObservable;
-import ess.data.Composite;
-import ess.ui.ICompositeView;
-import ess.ui.MainWindow;
 
-public class DisplayObserver implements Observer{
-	
+public class HeadlessObserver implements Observer{
+
 	Logger log = Logger.getGlobal();
 	
 	public void observe(OutputObservable obs) {
 		obs.addObserver(this);
-		log.info("Added display observer ...");
+		log.info("Added headless observer ...");
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		log.info("Got display request...");
+		log.info("Got headless request...");
 		if (o instanceof OutputObservable) {
 			OutputObservable obs = (OutputObservable) o;
-			Composite c = obs.getComposite();
-			ICompositeView view = new MainWindow(c);
-			view.display(obs.getErrors());
+			for (String s : obs.getErrors()) {
+				System.out.println(s);
+			}
 		}
 	}
-
 }

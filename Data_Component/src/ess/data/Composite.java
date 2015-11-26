@@ -2,34 +2,35 @@ package ess.data;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
-// TODO: Auto-generated Javadoc
 /**
- * A composite contains an area to be filled with tiles according to the given rules 
- * or to be validated against those rules. This area is realised as a 2-dimensional String array
- * holding the ident attribute of a tile. Initially, the array is filled with null values.<br>
- * <br>
- * The tiles to be used are stored in an ArrayList, this list can be re-sorted using the different Comparators 
- * in TileUtils as input for {@link ess.data.Composite#sortTileSorts(Comparator) sortTiles()}<br>
- * <br>
- * Given an ident value, the corresponding tile can be found using 
- * {@link ess.algorithm.utils.TileUtils#findTileByIdent(ArrayList, String) TileUtils.findTileByIdent()}.
+ * A composite contains all data a solver or a validator need for executing its algorithm. It consists of 
+ * <ul>
+ * <li>A surface, a 2-dimensional array of tiles which gets filled with tiles during solving or validation a composite</li>
+ * <li>An arraylist of tiles containing all possible tiles that can be used to build the composite</li>
+ * <li>An arraylist of Strings holding the output of a composite </li>
+ * <li>An integer holding the maximum length of straight lines that is allowed in this composite</li>
+ * </ul> 
+ * @author Monika Schrenk
  */
 public class Composite {
 	
 	private final ArrayList<Tile> tileSorts;
-	private final ArrayList<String> surfaceTileList;
+	private ArrayList<String> surfaceTileList;
 	private Surface surface;
 	private int maxLineLength;
 
+	// TODO remove ArrayList<String> cause this is not needed for solver, only for validator, or subclass Composite
+	// TODO check if 2 tilesort w same ID exist
+	// TODO check if 2 tilesorts w same size exist
+	// TODO check if ID of tiles in composite (ValidationInstance) exists in tilesort section
 	/**
 	 * Instantiates a new composite.
 	 *
-	 * @param rows the rows
-	 * @param cols the cols
-	 * @param surfaceTileList the surface
-	 * @param tileSorts the tiles
+	 * @param rows Number of rows for surface.
+	 * @param cols Number of columns for surface.
+	 * @param surfaceTileList Tiles that fill the surface from top left to bottom right.
+	 * @param tileSorts List of tiles that can be used for filling the surface, this value gets converted into internal measurements during import.
 	 */
 	public Composite(int rows, int cols, ArrayList<String> surfaceTileList, ArrayList<Tile> tileSorts) {
 		this.tileSorts = tileSorts;
@@ -39,50 +40,78 @@ public class Composite {
 
 
 	/**
-	 * Gets the tiles.
+	 * Get the tile sorts that can be used for filling the surface.
 	 *
-	 * @return the tiles
+	 * @return the tile sorts
 	 */
 	public ArrayList<Tile> getTileSorts() {
 		return tileSorts;
 	}
 	
 	/**
-	 * Sort tiles.
+	 * Sorts the tile sorts according to the logic of a given tile comparator.
+	 * 
+	 * @see TileComparator
 	 *
-	 * @param comparator the comparator
+	 * @param comparator a tile comparator
 	 */
-	public void sortTileSorts(Comparator<Tile> comparator) {
+	public void sortTileSorts(TileComparator comparator) {
 		Collections.sort(tileSorts, comparator);
 	}
 
 	/**
-	 * Gets the surface tile list
+	 * Get a list of the IDs of tiles being placed inside the surface, ordered
+	 * from top left to bottom right.
 	 *
-	 * @return the surface
+	 * @return list of tile-IDs
 	 */
 	public ArrayList<String> getSurfaceTileList() {
 		return surfaceTileList;
 	}
 	
+	public void setSurfaceTileList(ArrayList<String> surfaceTileList) {
+		this.surfaceTileList = surfaceTileList;
+	}
+	
 	/**
-	 * Gets the surface.
+	 * Get the surface of a composite. During solving or validating a composite, 
+	 * the surface gets filled with tiles.
 	 *
-	 * @return the surface
+	 * @return surface of a composite
 	 */
 	public Surface getSurface() {
 		return surface;
 	}
 	
+	/**
+	 * Set the maximum length of a straight line between 2 tiles that is allowed to
+	 * occur in a surface.
+	 * The maximum line length is a positive integer.
+	 * @param maxLineLength maximum length of a straight line in a surface
+	 */
 	public void setMaxLineLength(int maxLineLength) {
+		// TODO make sure that maxLineLength is a positive integer
 		this.maxLineLength = maxLineLength;
 	}
 	
+	/**
+	 * Set the maximum length of a straight line between 2 tiles that is allowed to
+	 * occur in a surface.
+	 * @return maximum length of a straight line in a surface
+	 */
 	public int getMaxLineLength() {
 		return maxLineLength;
 	}
 	
+	/**
+	 * Returns the first tile in the list of tile sorts with identificator id. 
+	 * The list of tile sorts must therefore only hold tiles with different id's, this should
+	 * be tested before filling the list of tile sorts.
+	 * @param id The identificator of a tile.
+	 * @return The first tile in the list of tile sorts with identificator id.
+	 */
 	public Tile findTileById(String id) {
+		// TODO make sure each tile in tileSorts has a different ID
 		for (Tile t : tileSorts) {
 			if (id.equals(t.getId())) {
 				return t;
@@ -91,6 +120,19 @@ public class Composite {
 		return null;
 	}
 	
+	/**
+	 * Get a list of tiles being larger than the given measurements.
+	 * A tile is larger than the given parameters if it meets the following criteria:
+	 * <ul>
+	 * <li>Number of rows is greater or equal to rows AND</li>
+	 * <li>Number of columns is greater or equal to cols AND</li>
+	 * <li>Number of fields is greater or equal to numberOfFields</li>
+	 * </ul>
+	 * @param rows The number of rows.
+	 * @param cols The number of columns.
+	 * @param numberOfFields The number of fields.
+	 * @return A list of tiles holding all tiles from tileSorts in this composite that are larger than the given measurements.
+	 */
 	public ArrayList<Tile> getTilesLargerThan(int rows, int cols, int numberOfFields) {
 		ArrayList<Tile> filteredTiles = new ArrayList<>();
 		for (Tile t : tileSorts) {
@@ -103,9 +145,9 @@ public class Composite {
 	}
 
 	/**
-	 * To string.
+	 * A human readable, textual representation of a composite, containing all attributes.
 	 *
-	 * @return the string
+	 * @return A string holding the data of a composite.
 	 */
 	@Override
 	public String toString() {
@@ -116,12 +158,7 @@ public class Composite {
 				+ "SurfaceTileList:\n " + surfaceTileList.toString() + "\n";
 	}
 	
-	/**
-	 * Gets the tile list as string.
-	 *
-	 * @param tiles the tiles
-	 * @return the tile list as string
-	 */
+	// Format the list of tile sorts to a String
 	private String getTileListAsString() {
 		StringBuilder sb = new StringBuilder();
 		for (Tile t : tileSorts) {

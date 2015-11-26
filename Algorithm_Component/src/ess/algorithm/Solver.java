@@ -2,8 +2,9 @@ package ess.algorithm;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
-import java.util.logging.Logger;
 
 import ess.algorithm.modules.IPositionFinder;
 import ess.algorithm.modules.IRuleChecker;
@@ -16,18 +17,40 @@ import ess.utils.ProPraLogger;
 import ess.utils.ProPraProperties;
 import ess.utils.PropertyException;
 
-public class Solver {
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Solver.
+ */
+public class Solver implements ISolver{
 	
-	private static final Logger log = Logger.getGlobal();
+	/** The Constant log. */
+	// private static final Logger log = Logger.getGlobal();
 
+	/** The pos finder. */
 	private IPositionFinder posFinder;
+	
+	/** The rule checker. */
 	private IRuleChecker ruleChecker;
+	
+	/** The tile chooser. */
 	private ITileChooser tileChooser;
 
+	/** The pos list. */
 	private LinkedList<Position> posList;
-	private long counter;
+	
+	/** The counter. */
+	// private long counter;
+	
+	/** The c. */
 	private Composite c;
-
+	
+	/**
+	 * Instantiates a new solver.
+	 *
+	 * @param c the c
+	 * @param maxLineLength the max line length
+	 * @throws PropertyException the property exception
+	 */
 	public Solver(Composite c, int maxLineLength) throws PropertyException {
 		ProPraLogger.setup();
 		this.c = c;
@@ -35,7 +58,7 @@ public class Solver {
 		posList = new LinkedList<>();
 		loadModules();
 	}
-	
+
 	private void loadModules() throws PropertyException {
 		try {
 			// load properties from file
@@ -60,57 +83,78 @@ public class Solver {
 		}
 	}
 	
-	
+	/* (non-Javadoc)
+	 * @see ess.algorithm.ISolver#solve()
+	 */
+	@Override
 	public boolean solve() {
 		Position pos = null;
-		Tile tile= null;
+		Tile tile = null;
+		boolean foundTileThatFits;
+		
+		// try to place tiles using backtracking as long as there are any possibilities
 		do {
 			if (pos == null) {
 				// trying to fill the next free position after successfully placing a tile
 				pos = posFinder.findNextFreePosition(c, pos);
-				if (pos == null) {
-					log.info("Iterations: " + counter);
-					log.info("Found a solution :) \n" + c);
+				if (ruleChecker.checkEndConditions(c, tile, pos)) {
+					// log.info("Iterations: " + counter);
+					// log.info("Found a solution :) \n" + c);
+					prepareCompositeForDataOutput();
 					return true;
 				}
 				tile = null;
 			} else {
-				// after not finding any possible tile we have to remove one tile
+				// after not finding any possible tile, the last tile has to be removed from surface
+				// remember this tile to be able to choose the next one below
 				tile = c.getSurface().getEntryAt(pos);
 				c.getSurface().removeEntry(tile, pos);
 			}
 			tile = tileChooser.getNextTile(pos, tile);
-			boolean foundTileThatFits = false;
+			foundTileThatFits = false;
+			
+			// try out all possible tiles at the current position
 			while (tile != null && !foundTileThatFits) {
-				log.fine("Trying tile " + tile.getId() + " at " + pos + "...");
 				if (placeNextTile(tile, pos)) {
 					posList.add(pos);
-					// log.fine(c.toString());
 					foundTileThatFits = true;
 					pos = null;
 				} else {
 					tile = tileChooser.getNextTile(pos, tile);
 				}
 			}
+			
+			// retrieve last position from posList, if no possible tile 
+			// could be found at the current position
 			if (!foundTileThatFits) {
-				if (!posList.isEmpty()) {
-					pos = posList.pollLast();
-					log.fine("Return to pos " + pos + "...");
-				} 
+				pos = posList.pollLast();
 			}
 		} while (!posList.isEmpty());
-		log.info("Iterations: " + counter);
-		log.info("Found no solution :(.");
+		// log.info("Iterations: " + counter);
+		// log.info("Found no solution :(.");
 		return false;
 	}
-
+	
+	// try to insert tile at pos
+	// check all rules, return true if tile could be placed, else false
 	private boolean placeNextTile(Tile tile, Position pos) {
 		if (ruleChecker.checkImplicitRules(c, tile, pos) && ruleChecker.checkExplicitRules(c, tile, pos)) {
 			c.getSurface().insertEntry(tile, pos);
-			counter++;
+			// counter++;
 			return true;
 		}
 		return false;
+	}
+	
+	private void prepareCompositeForDataOutput() {
+		// In case TileChooser doesn't choose positions in order, they must get sorted now
+		Collections.sort(posList); 
+		
+		ArrayList<String> output = new ArrayList<>();
+		for (Position pos : posList) {
+			output.add(c.getSurface().getEntryAt(pos).getId());
+		}
+		c.setSurfaceTileList(output);
 	}
 
 }

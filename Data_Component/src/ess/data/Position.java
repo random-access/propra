@@ -1,6 +1,7 @@
 package ess.data;
 
-public class Position {
+//TODO Javadoc
+public class Position implements Comparable<Position>{
 	
 	private int row, column;
 
@@ -52,10 +53,43 @@ public class Position {
 			return false;
 		return true;
 	}
+	
+	
 
 	@Override
 	public String toString() {
 		return "row: " + row + ", col: " + column;
+	}
+
+	@Override
+	public int compareTo(Position otherPos) {
+		
+		// any object is greater than null
+		if (otherPos == null) {
+			return 1;
+		}
+		
+		// same object has same values
+		if (otherPos == this) {
+			return 0;
+		}
+		if (otherPos.getRow() < this.getRow()) {
+			return 1;
+		} 
+		if (otherPos.getRow() > this.getRow()) {
+			return -1;
+		}
+		
+		// rows must be equal
+		if (otherPos.getCol() < this.getCol()) {
+			return 1;
+		}
+		if (otherPos.getCol() > this.getCol()) {
+			return -1;
+		}
+		
+		// rows & cols must be equel
+		return 0;
 	}
 	
 	

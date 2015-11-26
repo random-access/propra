@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import ess.algorithm.RoemischerVerbund.Validation;
-import ess.rules.sets.ErrorType;
+import ess.rules.ErrorType;
 import ess.rules.sets.IRuleSet;
 
 public class ErrorMapper {
