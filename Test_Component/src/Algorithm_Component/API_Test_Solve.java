@@ -159,7 +159,7 @@ public class API_Test_Solve {
 		assertFalse("Für diese Instanz existiert keine zulässige Lösung", valid);
 	}
 	
-	@Test
+	/* @Test
 	public void solveInstance7() throws IOException {
 
 		// Arrange (set all necessary preconditions and inputs.)
@@ -171,7 +171,7 @@ public class API_Test_Solve {
 
 		// Assert (that the expected results have occurred.))
 		assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
-	}
+	} */
 	
 	@Test
 	public void solveInstance8() throws IOException {
@@ -186,4 +186,4 @@ public class API_Test_Solve {
 		// Assert (that the expected results have occurred.))
 		assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
 	}
-}
+} 

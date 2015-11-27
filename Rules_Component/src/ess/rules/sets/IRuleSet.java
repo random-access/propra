@@ -13,7 +13,7 @@ public interface IRuleSet {
 	
 	public LinkedList<IRule> getEndConditions();
 	
-	public LinkedList<ErrorType> getErrorList ();
+	public LinkedList<ErrorType> getErrorList();
 
 	public void addError(ErrorType errorType);
 

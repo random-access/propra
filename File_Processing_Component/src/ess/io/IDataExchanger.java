@@ -6,7 +6,8 @@ import ess.io.exc.DataExchangeException;
 /**
  * The Interface IDataExchanger provides methods for reading from an input source and writing to an output target. 
  * Override this interface to implement new input and output methods.
- * {@link #readFromSource(String)} and {@link #writeToTarget(Composite, String)} should also handle conversion between external data and the corresponding
+ * {@link #readFromSource(String)} and {@link #writeToTarget(Composite, String)} should also handle conversion between 
+ * external data and the corresponding
  * internal representation.
  * Source and target are identified by their paths, which could be paths on the local file system but also network or database
  * paths.

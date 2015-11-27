@@ -22,7 +22,7 @@ public class CustomLogFormatter extends Formatter {
 	@Override
 	public String format(LogRecord record) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(formatMessage(record)).append(System.getProperty("line.separator"));;
+		sb.append(formatMessage(record)).append(System.getProperty("line.separator"));
 		Throwable throwable = record.getThrown();
 		if (throwable != null) {
 			try (Writer sw = new StringWriter(); PrintWriter pw = new PrintWriter(sw)) {

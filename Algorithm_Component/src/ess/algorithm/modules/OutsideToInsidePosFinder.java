@@ -10,21 +10,21 @@ public class OutsideToInsidePosFinder implements IPositionFinder {
 		
 		int rows = composite.getSurface().getRows();
 		int cols = composite.getSurface().getCols();
-		for (int k = 0; k < rows/2; k++) {
+		for (int k = 0; k < rows / 2; k++) {
 			for (int j = 0; j < cols; j++) {
 				System.out.print(k + "," + j + "; ");
 			}
 			
 			for (int j = 0; j < rows; j++) {
-				System.out.println((rows-k) + ", " + j);
+				System.out.println((rows - k) + ", " + j);
 			}
 		}
-		for (int l = 0; l < cols/2; l++) {
+		for (int l = 0; l < cols / 2; l++) {
 			for (int i = 0; i < rows; i++) {
 				System.out.println(i + "," + l + "; ");
 			}
 			for (int i = 0; i < rows; i++) {
-				System.out.println(i + ", " + (cols-l) + "; ");
+				System.out.println(i + ", " + (cols - l) + "; ");
 			}
 		}
 		
@@ -52,24 +52,24 @@ public class OutsideToInsidePosFinder implements IPositionFinder {
 	public static void main(String[] args) {
 		int rows = 8;
 		int cols = 10;
-		for (int k = 0; k < rows/2; k++) {
+		for (int k = 0; k < rows / 2; k++) {
 			for (int j = 0; j < cols; j++) {
 				System.out.print(k + "," + j + "; ");
 			}
 			System.out.println();
 			for (int j = 0; j < cols; j++) {
-				System.out.print((rows-k-1) + "," + j + "; ");
+				System.out.print((rows - k - 1) + "," + j + "; ");
 			}
 			System.out.println();
 		}
 		System.out.println("***************************");
-		for (int l = 0; l < cols/2; l++) {
+		for (int l = 0; l < cols / 2; l++) {
 			for (int i = 0; i < rows; i++) {
 				System.out.print(i + "," + l + "; ");
 			}
 			System.out.println();
 			for (int i = 0; i < rows; i++) {
-				System.out.print(i + "," + (cols-l-1) + "; ");
+				System.out.print(i + "," + (cols - l - 1) + "; ");
 			}
 			System.out.println();
 		}

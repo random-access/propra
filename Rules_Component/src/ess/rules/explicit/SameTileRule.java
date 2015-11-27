@@ -26,7 +26,7 @@ public class SameTileRule implements IRule {
 		for (int i = corner1.getRow(); i <= corner2.getRow(); i++) {
 			for (int j = corner1.getCol(); j <= corner2.getCol(); j++) { 
 				outsideTile = c.getSurface().getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());
-				if (outsideTile == null || !tile.equals(outsideTile)){
+				if (outsideTile == null || !tile.equals(outsideTile)) {
 					return false;
 				}
 			}

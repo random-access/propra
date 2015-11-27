@@ -20,7 +20,7 @@ import ess.strings.CustomErrorMessages;
  * @author Monika Schrenk
  *
  */
-public class ProPraLogger {
+public final class ProPraLogger {
 	
 	// constant for log file names
 	private static final String LOGFILE_NAME = "log_%g.txt";
@@ -39,7 +39,7 @@ public class ProPraLogger {
 	private static volatile boolean isInitialized = false;
 
 	// prevents instatiation
-	private ProPraLogger() {}
+	private ProPraLogger() { }
 	
 	/**
 	 * Configures the global logger by configuring:
@@ -157,8 +157,8 @@ public class ProPraLogger {
 			Level logLevel = Level.parse(logLevelName.toUpperCase());
 			//logger.setLevel(logLevel);
 			Logger rootLog = Logger.getLogger("");
-			rootLog.setLevel( logLevel);
-			rootLog.getHandlers()[0].setLevel( logLevel );
+			rootLog.setLevel(logLevel);
+			rootLog.getHandlers()[0].setLevel(logLevel);
 		} catch (IllegalArgumentException e) {
 			throw new PropertyException(CustomErrorMessages.ERROR_INVALID_KEY_LOG_LEVEL, e);
 		}

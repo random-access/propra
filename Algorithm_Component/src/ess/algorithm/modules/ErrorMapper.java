@@ -7,10 +7,10 @@ import ess.algorithm.RoemischerVerbund.Validation;
 import ess.rules.ErrorType;
 import ess.rules.sets.IRuleSet;
 
-public class ErrorMapper {
+public final class ErrorMapper {
 
 	// prevents instantiation
-	private ErrorMapper() {}
+	private ErrorMapper() { }
 	
 	private static HashMap<ErrorType, Validation> errorMap = new HashMap<>();
 	

@@ -10,19 +10,11 @@ public class DataExchangeException extends Exception {
 
 	/**
 	 * Instantiates a new data exchange exception.
-	 */
-	public DataExchangeException() {
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * Instantiates a new data exchange exception.
 	 *
 	 * @param message the message
 	 */
 	public DataExchangeException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -32,7 +24,6 @@ public class DataExchangeException extends Exception {
 	 */
 	public DataExchangeException(Throwable cause) {
 		super(cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -43,7 +34,6 @@ public class DataExchangeException extends Exception {
 	 */
 	public DataExchangeException(String message, Throwable cause) {
 		super(message, cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -57,7 +47,6 @@ public class DataExchangeException extends Exception {
 	public DataExchangeException(String message, Throwable cause,
 			boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
 	}
 
 }

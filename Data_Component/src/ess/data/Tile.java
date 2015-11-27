@@ -9,7 +9,7 @@ package ess.data;
  * converted into internal measurements during import.<br>
  * <br>
  * The attribute ident holds an identification String which can be used for identifying a tile, because it is 
- * unique in a composite. //TODO override equals method
+ * unique in a composite.
  *
  * @author Monika Schrenk
  */
@@ -82,22 +82,29 @@ public class Tile {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) {
+            return true;
+        }
+		if (obj == null) {
+            return false;
+        }
+		if (getClass() != obj.getClass()) {
+            return false;
+        }
 		Tile other = (Tile) obj;
-		if (cols != other.cols)
-			return false;
+		if (cols != other.cols) {
+            return false;
+        }
 		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (rows != other.rows)
-			return false;
+			if (other.id != null) {
+                return false;
+            }
+		} else if (!id.equals(other.id)) {
+            return false;
+        }
+		if (rows != other.rows) {
+            return false;
+        }
 		return true;
 	}
 
@@ -106,7 +113,7 @@ public class Tile {
 	 */
 	@Override
 	public String toString() {
-		return "Tile [ident=" + id + ", rows=" + rows+ ", cols=" + cols
+		return "Tile [ident=" + id + ", rows=" + rows + ", cols=" + cols
 				+ "]";
 	}
 

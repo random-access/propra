@@ -11,7 +11,7 @@ import ess.rules.sets.IRuleSet;
 import ess.rules.sets.RuleSet;
 import ess.utils.PropertyException;
 
-public class ValidationRuleChecker implements IRuleChecker{
+public class ValidationRuleChecker implements IRuleChecker {
 
 	private IRuleSet ruleSet;
 	
@@ -19,6 +19,7 @@ public class ValidationRuleChecker implements IRuleChecker{
 		ruleSet = new RuleSet();
 	}
 	
+	@Override
 	public boolean checkImplicitRules(Composite composite, Tile tile, Position pos) {
 		boolean validMove = true;
 		for (IRule rule : ruleSet.getImplicitRules()) {
@@ -31,6 +32,7 @@ public class ValidationRuleChecker implements IRuleChecker{
 		return validMove;
 	}
 	
+	@Override
 	public boolean checkExplicitRules(Composite composite, Tile tile, Position pos) {
 		boolean validMove = true;
 		for (IRule rule : ruleSet.getExplicitRules()) {
@@ -43,6 +45,7 @@ public class ValidationRuleChecker implements IRuleChecker{
 		return validMove;
 	}
 	
+	@Override
 	public boolean checkEndConditions(Composite composite, Tile tile, Position pos) {
 		boolean completed = true;
 		for (IRule rule : ruleSet.getEndConditions()) {

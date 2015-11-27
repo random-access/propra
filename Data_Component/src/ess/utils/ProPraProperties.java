@@ -17,7 +17,7 @@ import ess.strings.CustomErrorMessages;
  * @author Monika Schrenk
  *
  */
-public class ProPraProperties {
+public final class ProPraProperties {
 
 	/********************** logging keys **********************************/
 
@@ -106,9 +106,9 @@ public class ProPraProperties {
 	 */
 	private Properties loadProperties() throws FileNotFoundException,
 			IOException {
-		Properties properties = new Properties();
-		properties.load(getClass().getResourceAsStream(PATH_TO_PROPERTIES));
-		return properties;
+		Properties p = new Properties();
+		p.load(getClass().getResourceAsStream(PATH_TO_PROPERTIES));
+		return p;
 	}
 
 	/**

@@ -20,88 +20,95 @@ import ess.data.Composite;
 
 public class MainWindow extends JFrame implements ICompositeView {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private JPanel pnlTop, pnlInfo, pnlCenter, pnlBottom;
-	private JButton btnClose;
+    private static final int COMPONENT_PADDING = 20;
+    private static final int TEXT_PADDING = 3;
+    private static final int DEFAULT_FONT_SIZE = 14;
 
-	private Composite composite;
+    private JPanel pnlTop, pnlInfo, pnlCenter, pnlBottom;
+    private JButton btnClose;
 
-	public MainWindow(Composite composite) {
-		this.composite = composite;
-	}
-	
-	@Override
-	public void display(String[] errorList) {
+    private Composite composite;
 
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle("Roemischer Verbund");
-		getContentPane().setBackground(Color.WHITE);
+    public MainWindow(Composite composite) {
+        this.composite = composite;
+    }
 
-		createAndAddWidgets(errorList);
-		addListeners();
-		
-		pack();
-		setLocationRelativeTo(null);
-		setVisible(true);
-	}
+    @Override
+    public void display(String[] errorList) {
 
-	private void createAndAddWidgets(String[] errorList) {
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setTitle("Roemischer Verbund");
+        getContentPane().setBackground(Color.WHITE);
 
-		pnlTop = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		pnlTop.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		pnlTop.setBackground(new Color(0, 0, 102));
-		getContentPane().add(pnlTop, BorderLayout.BEFORE_FIRST_LINE);
+        createAndAddWidgets(errorList);
+        addListeners();
 
-		pnlInfo = new JPanel(new GridLayout(0, 1, 3, 3));
-		pnlInfo.setOpaque(false);
-		pnlTop.add(pnlInfo);
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
 
-		if (errorList.length == 0) {
-			JLabel label = new JLabel("Dies ist ein gültiger Römischer Verbund :)");
-			customizeFont(label);
-			pnlInfo.add(label);
-		} else {
-			for (int i = 0; i < errorList.length; i++) {
-				JLabel label = new JLabel(errorList[i]);
-				customizeFont(label);
-				pnlInfo.add(label);
-			}
-		}
+    private void createAndAddWidgets(String[] errorList) {
 
-		pnlCenter = new JPanel();
-		pnlCenter.setLayout(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		pnlCenter.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		pnlCenter.setOpaque(false);
-		getContentPane().add(pnlCenter, BorderLayout.CENTER);
+        pnlTop = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        pnlTop.setBorder(BorderFactory.createEmptyBorder(COMPONENT_PADDING, COMPONENT_PADDING, COMPONENT_PADDING,
+                COMPONENT_PADDING));
+        pnlTop.setBackground(new Color(0, 0, 102));
+        getContentPane().add(pnlTop, BorderLayout.BEFORE_FIRST_LINE);
 
-		CompositePanel cPanel = new CompositePanel(composite.getSurface());
-		pnlCenter.add(cPanel, gbc);
-		
-		pnlBottom = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		pnlBottom.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		pnlBottom.setBackground(new Color(0, 0, 102));
-		getContentPane().add(pnlBottom, BorderLayout.AFTER_LAST_LINE);
-		
-		btnClose = new JButton("Schließen");
-		pnlBottom.add(btnClose);
-	}
-	
-	private void customizeFont(JLabel label) {
-		label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
-		label.setOpaque(false);
-		label.setForeground(Color.LIGHT_GRAY);
-	}
+        pnlInfo = new JPanel(new GridLayout(0, 1, TEXT_PADDING, TEXT_PADDING));
+        pnlInfo.setOpaque(false);
+        pnlTop.add(pnlInfo);
 
-	private void addListeners() {
-		btnClose.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-	}
+        if (errorList.length == 0) {
+            JLabel label = new JLabel("Dies ist ein gültiger Römischer Verbund :)");
+            customizeFont(label);
+            pnlInfo.add(label);
+        } else {
+            for (int i = 0; i < errorList.length; i++) {
+                JLabel label = new JLabel(errorList[i]);
+                customizeFont(label);
+                pnlInfo.add(label);
+            }
+        }
+
+        pnlCenter = new JPanel();
+        pnlCenter.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        pnlCenter.setBorder(BorderFactory.createEmptyBorder(COMPONENT_PADDING, COMPONENT_PADDING, COMPONENT_PADDING,
+                COMPONENT_PADDING));
+        pnlCenter.setOpaque(false);
+        getContentPane().add(pnlCenter, BorderLayout.CENTER);
+
+        CompositePanel cPanel = new CompositePanel(composite.getSurface());
+        pnlCenter.add(cPanel, gbc);
+
+        pnlBottom = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        pnlBottom.setBorder(BorderFactory.createEmptyBorder(COMPONENT_PADDING, COMPONENT_PADDING, COMPONENT_PADDING,
+                COMPONENT_PADDING));
+        pnlBottom.setBackground(new Color(0, 0, 102));
+        getContentPane().add(pnlBottom, BorderLayout.AFTER_LAST_LINE);
+
+        btnClose = new JButton("Schließen");
+        pnlBottom.add(btnClose);
+    }
+
+    private void customizeFont(JLabel label) {
+        label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, DEFAULT_FONT_SIZE));
+        label.setOpaque(false);
+        label.setForeground(Color.LIGHT_GRAY);
+    }
+
+    private void addListeners() {
+        btnClose.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+    }
 
 }

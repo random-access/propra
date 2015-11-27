@@ -6,7 +6,7 @@ public enum ExecMode {
 	
 	SOLVE, SOLVE_DISPLAY, VALIDATE, VALIDATE_DISPLAY, DISPLAY;
 	
-	public static ExecMode getExecModeByShortcut (String shortcut) throws InvalidInputException {
+	public static ExecMode getExecModeByShortcut(String shortcut) throws InvalidInputException {
 		switch (shortcut) {
 		case "s":
 			return SOLVE;

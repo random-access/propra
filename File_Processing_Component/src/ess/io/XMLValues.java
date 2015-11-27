@@ -6,10 +6,10 @@ package ess.io;
  * @author Monika Schrenk
  *
  */
-public class XMLValues {
+public final class XMLValues {
 	
 	// prevents instantiation
-	private XMLValues() {}
+	private XMLValues() { }
 	
 	/**
 	 * Path to the DTD file for XML validation, this path works in the whole project

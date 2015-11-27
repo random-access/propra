@@ -10,19 +10,11 @@ public class InvalidSizeValueException extends Exception {
 
 	/**
 	 * Instantiates a new invalid tile size exception.
-	 */
-	public InvalidSizeValueException() {
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * Instantiates a new invalid tile size exception.
 	 *
 	 * @param message the message
 	 */
 	public InvalidSizeValueException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -32,7 +24,6 @@ public class InvalidSizeValueException extends Exception {
 	 */
 	public InvalidSizeValueException(Throwable cause) {
 		super(cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -43,7 +34,6 @@ public class InvalidSizeValueException extends Exception {
 	 */
 	public InvalidSizeValueException(String message, Throwable cause) {
 		super(message, cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -57,7 +47,6 @@ public class InvalidSizeValueException extends Exception {
 	public InvalidSizeValueException(String message, Throwable cause,
 			boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
 	}
 
 }

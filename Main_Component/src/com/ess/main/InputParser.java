@@ -50,8 +50,8 @@ public class InputParser {
 	
 	private ExecMode parseMode(String modeArg) throws InvalidInputException {
 		if (modeArg.startsWith("r=")) {
-			String mode = modeArg.replace("r=", "");
-			return ExecMode.getExecModeByShortcut(mode);
+			String m = modeArg.replace("r=", "");
+			return ExecMode.getExecModeByShortcut(m);
 		} else {
 			throw new InvalidInputException(CustomErrorMessages.ERROR_INVALID_PARAM);
 		}

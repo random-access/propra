@@ -4,13 +4,13 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Logger;
 
-import ess.algorithm.OutputObservable;
+import ess.algorithm.AbstractOutputObservable;
 
-public class HeadlessObserver implements Observer{
+public class HeadlessObserver implements Observer {
 
-	Logger log = Logger.getGlobal();
+	private Logger log = Logger.getGlobal();
 	
-	public void observe(OutputObservable obs) {
+	public void observe(AbstractOutputObservable obs) {
 		obs.addObserver(this);
 		log.info("Added headless observer ...");
 	}
@@ -18,8 +18,8 @@ public class HeadlessObserver implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		log.info("Got headless request...");
-		if (o instanceof OutputObservable) {
-			OutputObservable obs = (OutputObservable) o;
+		if (o instanceof AbstractOutputObservable) {
+			AbstractOutputObservable obs = (AbstractOutputObservable) o;
 			for (String s : obs.getErrors()) {
 				System.out.println(s);
 			}

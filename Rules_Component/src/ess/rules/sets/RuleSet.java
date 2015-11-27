@@ -14,14 +14,14 @@ import ess.utils.PropertyException;
 
 public class RuleSet implements IRuleSet {
 	
-	private static final Logger log = Logger.getGlobal();
+	private static final Logger LOG = Logger.getGlobal();
 
 	private LinkedList<ErrorType> errorList;
 	private LinkedList<IRule> explicitRuleSet;
 	private LinkedList<IRule> implicitRuleSet;
 	private LinkedList<IRule> endConditionSet;
 
-	public RuleSet() throws PropertyException {
+    public RuleSet() throws PropertyException {
 		errorList = new LinkedList<>();
 		explicitRuleSet = new LinkedList<>();
 		implicitRuleSet = new LinkedList<>();
@@ -42,6 +42,7 @@ public class RuleSet implements IRuleSet {
 		return implicitRuleSet;
 	}
 	
+	@Override
 	public LinkedList<IRule> getEndConditions() {
 		return endConditionSet;
 	}
@@ -66,7 +67,7 @@ public class RuleSet implements IRuleSet {
 			for (String ruleName : rules) {
 				IRule rule = (IRule) Class.forName(ruleName).newInstance();
 				explicitRuleSet.add(rule);
-				log.info("Activated " + rule.getClass().getSimpleName() + " ...");
+				LOG.info("Activated " + rule.getClass().getSimpleName() + " ...");
 			}
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SecurityException
 				| IllegalArgumentException e) {
@@ -77,13 +78,13 @@ public class RuleSet implements IRuleSet {
 	
 	private void addImplicitRules() {
 		implicitRuleSet.add(new EntryExceedsSurfaceRule());
-		log.info("Activated EntryExceedsSurfaceRule ...");
+		LOG.info("Activated EntryExceedsSurfaceRule ...");
 		implicitRuleSet.add(new EntryCoversOtherTileRule());
-		log.info("Activated EntryCoversOtherTileRule ...");
+		LOG.info("Activated EntryCoversOtherTileRule ...");
 	}
 	
 	private void addEndConditions() {
 		endConditionSet.add(new SurfaceIsFilledCompletelyRule());
-		log.info("Activated SurfaceIsFilledCompletelyRule ...");
+		LOG.info("Activated SurfaceIsFilledCompletelyRule ...");
 	}
 }

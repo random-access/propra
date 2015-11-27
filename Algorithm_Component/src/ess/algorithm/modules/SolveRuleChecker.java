@@ -19,7 +19,7 @@ private IRuleSet ruleSet;
 	@Override
 	public boolean checkExplicitRules(Composite composite, Tile tile, Position pos) {
 		for (IRule rule : ruleSet.getExplicitRules()) {
-			 if (!rule.check(composite, tile, pos)){
+			 if (!rule.check(composite, tile, pos)) {
 				 return false;
 			 }
 		}
@@ -29,7 +29,7 @@ private IRuleSet ruleSet;
 	@Override
 	public boolean checkImplicitRules(Composite composite, Tile tile, Position pos) {
 		for (IRule rule : ruleSet.getImplicitRules()) {
-			 if (!rule.check(composite, tile, pos)){
+			 if (!rule.check(composite, tile, pos)) {
 				 return false;
 			 }
 		}
@@ -38,7 +38,7 @@ private IRuleSet ruleSet;
 	
 	public boolean checkEndConditions(Composite composite, Tile tile, Position pos) {
 		for (IRule rule : ruleSet.getEndConditions()) {
-			 if (!rule.check(composite, tile, pos)){
+			 if (!rule.check(composite, tile, pos)) {
 				 return false;
 			 }
 		}

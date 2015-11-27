@@ -2,10 +2,10 @@ package ess.data;
 
 // TODO Javadoc
 public enum Edge {
-	TOP(-1,0, Corner.TOP_LEFT, Corner.TOP_RIGHT), 
-	LEFT(0,-1, Corner.TOP_LEFT, Corner.BOTTOM_LEFT), 
-	BOTTOM(1,0, Corner.BOTTOM_LEFT, Corner.BOTTOM_RIGHT), 
-	RIGHT(0,1, Corner.TOP_RIGHT, Corner.BOTTOM_RIGHT);
+	TOP(-1, 0, Corner.TOP_LEFT, Corner.TOP_RIGHT), 
+	LEFT(0, -1, Corner.TOP_LEFT, Corner.BOTTOM_LEFT), 
+	BOTTOM(1, 0, Corner.BOTTOM_LEFT, Corner.BOTTOM_RIGHT), 
+	RIGHT(0, 1, Corner.TOP_RIGHT, Corner.BOTTOM_RIGHT);
 	
 	private int nextRowOffset, nextColOffset;
 	private Corner firstCorner, secondCorner;

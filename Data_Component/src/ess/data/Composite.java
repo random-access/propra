@@ -20,7 +20,6 @@ public class Composite {
 	private Surface surface;
 	private int maxLineLength;
 
-	// TODO remove ArrayList<String> cause this is not needed for solver, only for validator, or subclass Composite
 	// TODO check if 2 tilesort w same ID exist
 	// TODO check if 2 tilesorts w same size exist
 	// TODO check if ID of tiles in composite (ValidationInstance) exists in tilesort section
@@ -30,7 +29,8 @@ public class Composite {
 	 * @param rows Number of rows for surface.
 	 * @param cols Number of columns for surface.
 	 * @param surfaceTileList Tiles that fill the surface from top left to bottom right.
-	 * @param tileSorts List of tiles that can be used for filling the surface, this value gets converted into internal measurements during import.
+	 * @param tileSorts List of tiles that can be used for filling the surface, this value gets converted into internal 
+	 * measurements during import.
 	 */
 	public Composite(int rows, int cols, ArrayList<String> surfaceTileList, ArrayList<Tile> tileSorts) {
 		this.tileSorts = tileSorts;
