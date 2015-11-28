@@ -1,15 +1,13 @@
 package ess.data;
 
-
-// TODO: Javadoc
 /**
  * Tiles are rectangular areas filling the surface of a composite.
  * 
- * They are read from an input source (e.g. XML-files),the measurements get 
+ * They are read from an input source (e.g. XML-files), external measurements get 
  * converted into internal measurements during import.<br>
  * <br>
- * The attribute ident holds an identification String which can be used for identifying a tile, because it is 
- * unique in a composite.
+ * The attribute id holds an identification String which can be used for identifying a tile, 
+ * because it is unique in a composite.
  *
  * @author Monika Schrenk
  */
@@ -34,9 +32,9 @@ public class Tile {
 	}
 	
 	/**
-	 * Gets the ident of this tile, an identification string unique in a composite.
+	 * Gets the id of this tile, an identification string unique in a composite.
 	 *
-	 * @return the ident of this tile.
+	 * @return the id of this tile.
 	 */
 	public String getId() {
 		return id;
@@ -70,6 +68,10 @@ public class Tile {
 	}
 	
 
+	/**
+     * Overridden by tile to be consistent with {@link #equals()}.
+     * Two positions have the same Hashcode if their rows and columns are the same.
+     */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -79,7 +81,16 @@ public class Tile {
 		result = prime * result + rows;
 		return result;
 	}
-
+	
+	/**
+     * Two tiles t1 and t2 are equal under the following conditions:
+     * <ul>
+     *     <li>t1 != null && t2 != null AND</li>
+     *     <li>t1.getId() == t2.getId() AND</li>
+     *     <li>t1.getRows() == t2.getRows() AND</li>
+     *     <li>t1.getCols() == t2.getCols().</li>
+     * </ul>
+     */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -108,9 +119,10 @@ public class Tile {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+	/**
+     * human-readable, textual representation of this tile,
+     * showing the values of its id, row and column.
+     */
 	@Override
 	public String toString() {
 		return "Tile [ident=" + id + ", rows=" + rows + ", cols=" + cols

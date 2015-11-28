@@ -2,9 +2,18 @@ package ess.data;
 
 import java.util.Comparator;
 
-//TODO Javadoc
+/**
+ * This utility enum provides a set of useful comparators 
+ * for sorting tile lists by different criteria.
+ * 
+ * @author Monika Schrenk
+ *
+ */
 public enum TileComparator implements Comparator<Tile> {
 	
+    /**
+     * Sorts two tiles by their row number, in ascending order.
+     */
 	ROWS_ASC {
 		@Override
 		public int compare(Tile t1, Tile t2) {
@@ -14,6 +23,10 @@ public enum TileComparator implements Comparator<Tile> {
 			return Integer.valueOf(t1.getRows()).compareTo(Integer.valueOf(t2.getRows()));
 		}	
 	},
+	
+	/**
+	 * Sorts two tiles by their row number, in descending order.
+	 */
 	ROWS_DESC {
 
 		@Override
@@ -25,6 +38,10 @@ public enum TileComparator implements Comparator<Tile> {
 		}
 		
 	},
+	
+	 /**
+     * Sorts two tiles by their column number, in ascending order.
+     */
 	COLS_ASC {
 		@Override
 		public int compare(Tile t1, Tile t2) {
@@ -34,6 +51,10 @@ public enum TileComparator implements Comparator<Tile> {
 			return Integer.valueOf(t1.getCols()).compareTo(Integer.valueOf(t2.getCols()));
 		}
 	},
+	
+	 /**
+     * Sorts two tiles by their column number, in descending order.
+     */
 	COLS_DESC {
 
 		@Override
@@ -45,6 +66,10 @@ public enum TileComparator implements Comparator<Tile> {
 		}
 		
 	},
+	
+	 /**
+     * Sorts two tiles by their number of fields (rows x cols), in ascending order.
+     */
 	FIELDS_ASC {
 		@Override
 		public int compare(Tile t1, Tile t2) {
@@ -54,6 +79,10 @@ public enum TileComparator implements Comparator<Tile> {
 			return Integer.valueOf(t1.getNumberOfFields()).compareTo(Integer.valueOf(t2.getNumberOfFields()));
 		}
 	}, 
+	
+	/**
+     * Sorts two tiles by their number of fields (rows x cols), in descending order.
+     */
 	FIELDS_DESC {
 
 		@Override
@@ -66,6 +95,7 @@ public enum TileComparator implements Comparator<Tile> {
 		
 	};
 	
+	// handles tiles that are null
 	private static int compareWithNulls(Tile t1, Tile t2) {
 		if (t1 == null && t2 == null) {
 			return 0;

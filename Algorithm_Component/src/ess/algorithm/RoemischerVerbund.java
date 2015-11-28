@@ -155,8 +155,8 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
                     errors[i] = CustomInfoMessages.INFO_SAME_TILE;
                     break;
                 default:
-                    throw new UnsupportedOperationException(String.format
-                            (CustomErrorMessages.ERROR_INVALID_ENUM, errorList.get(i)));
+                    throw new UnsupportedOperationException(String.format(
+                            CustomErrorMessages.ERROR_INVALID_ENUM, errorList.get(i)));
             }
         }
         return errors;
