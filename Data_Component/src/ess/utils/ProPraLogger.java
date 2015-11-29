@@ -123,7 +123,7 @@ public final class ProPraLogger {
 
 		// do not accept invalid input, just in case
 		if (!consoleOutput.equalsIgnoreCase("true") && !(consoleOutput.equalsIgnoreCase("false"))) {
-			throw new PropertyException(CustomErrorMessages.ERROR_INVALID_KEY_LOG_CONSOLE);
+			throw new PropertyException(CustomErrorMessages.ERROR_INVALID_VALUE_LOG_CONSOLE);
 		}
 		
 		// if there should be console output, there is nothing to do
@@ -160,7 +160,7 @@ public final class ProPraLogger {
 			rootLog.setLevel(logLevel);
 			rootLog.getHandlers()[0].setLevel(logLevel);
 		} catch (IllegalArgumentException e) {
-			throw new PropertyException(CustomErrorMessages.ERROR_INVALID_KEY_LOG_LEVEL, e);
+			throw new PropertyException(CustomErrorMessages.ERROR_INVALID_VALUE_LOG_LEVEL, e);
 		}
 	}
 
