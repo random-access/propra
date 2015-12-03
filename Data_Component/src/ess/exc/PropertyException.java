@@ -1,4 +1,4 @@
-package ess.utils;
+package ess.exc;
 
 /**
  * This exception is thrown when a problem occurs in the context of the property

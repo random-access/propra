@@ -29,10 +29,10 @@ import org.jdom2.output.XMLOutputter;
 
 import ess.data.Composite;
 import ess.data.Tile;
+import ess.exc.PropertyException;
 import ess.io.exc.DataExchangeException;
 import ess.io.exc.InvalidSizeValueException;
 import ess.strings.CustomErrorMessages;
-import ess.utils.PropertyException;
 
 // TODO: Auto-generated Javadoc
 /**

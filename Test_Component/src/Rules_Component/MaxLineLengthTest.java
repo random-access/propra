@@ -10,7 +10,7 @@ import ess.data.Surface;
 import ess.io.XMLDataExchanger;
 import ess.io.exc.DataExchangeException;
 import ess.rules.IRule;
-import ess.rules.explicit.MaxLineLengthRule;
+import ess.rules.explicit.MaxLineLengthRule_old;
 
 public class MaxLineLengthTest {
 
@@ -24,7 +24,7 @@ public class MaxLineLengthTest {
 		s.insertEntry(c.findTileById("_2"), new Position(0,2));
 		s.insertEntry(c.findTileById("_1"), new Position(0,3));
 		
-		IRule rule = new MaxLineLengthRule();
+		IRule rule = new MaxLineLengthRule_old();
 		boolean validMove = rule.check(c, c.findTileById("_4"), new Position(2,2));
 		s.insertEntry(c.findTileById("_4"), new Position(2,2));
 		
@@ -43,7 +43,7 @@ public class MaxLineLengthTest {
 		s.insertEntry(c.findTileById("_1"), new Position(0,3));
 		
 		
-		IRule rule = new MaxLineLengthRule();
+		IRule rule = new MaxLineLengthRule_old();
 		boolean validMove = rule.check(c, c.findTileById("_2"), new Position(2,2));
 		s.insertEntry(c.findTileById("_4"), new Position(2,2));
 		
@@ -62,7 +62,7 @@ public class MaxLineLengthTest {
 		s.insertEntry(c.findTileById("_4"), new Position(0,4));
 		s.insertEntry(c.findTileById("_4"), new Position(1,2));
 		
-		IRule rule = new MaxLineLengthRule();
+		IRule rule = new MaxLineLengthRule_old();
 		boolean validMove = rule.check(c, c.findTileById("_3"), new Position(0,2));
 		s.insertEntry(c.findTileById("_3"), new Position(0,2));
 		
@@ -82,7 +82,7 @@ public class MaxLineLengthTest {
 		s.insertEntry(c.findTileById("_4"), new Position(1,2));
 		s.insertEntry(c.findTileById("_3"), new Position(2,4));
 		
-		IRule rule = new MaxLineLengthRule();
+		IRule rule = new MaxLineLengthRule_old();
 		boolean validMove = rule.check(c, c.findTileById("_3"), new Position(2,4));
 		s.insertEntry(c.findTileById("_3"), new Position(2,4));
 		

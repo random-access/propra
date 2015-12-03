@@ -4,6 +4,8 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Logger;
 
+import javax.swing.SwingUtilities;
+
 import ess.algorithm.AbstractOutputObservable;
 import ess.data.Composite;
 import ess.ui.ICompositeView;
@@ -22,10 +24,17 @@ public class DisplayObserver implements Observer {
 	public void update(Observable o, Object arg) {
 		log.info("Got display request...");
 		if (o instanceof AbstractOutputObservable) {
-			AbstractOutputObservable obs = (AbstractOutputObservable) o;
+			final AbstractOutputObservable obs = (AbstractOutputObservable) o;
 			Composite c = obs.getComposite();
-			ICompositeView view = new MainWindow(c);
-			view.display(obs.getErrors());
+			final ICompositeView view = new MainWindow(c);
+			SwingUtilities.invokeLater(new Runnable() {
+                
+                @Override
+                public void run() {
+                    view.display(obs.getErrors());
+                }
+            });
+			
 		}
 	}
 

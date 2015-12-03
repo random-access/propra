@@ -1,7 +1,5 @@
 package ess.algorithm;
 
-import java.util.EnumSet;
-import java.util.LinkedList;
 import java.util.List;
 
 import ess.algorithm.RoemischerVerbund.Validation;
@@ -11,53 +9,75 @@ import ess.algorithm.modules.ValidationRuleChecker;
 import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Tile;
+import ess.exc.PropertyException;
 import ess.utils.ProPraLogger;
-import ess.utils.PropertyException;
 
+/**
+ * This class is responsible for validating a composite with a given installation plan against a set
+ * of rules activated via configuration file.
+ * 
+ * @author Monika Schrenk
+ */
 public class Validator { 
 
     private Composite composite;
     private IPositionFinder posFinder;
     private ValidationRuleChecker ruleChecker;
-    private LinkedList<Validation> errorList = new LinkedList<>();
+    // private LinkedList<Validation> errorList = new LinkedList<>();
     
     /**
+     * Instantiates a new validator and sets up the validator-optimized modules, therefore using
      * 
-     * @param composite adfasdf
-     * @param maxLineLength asdf fa
-     * @throws PropertyException asddasf
+     * <ul>
+     *      <li>A TopToBottom position finder, because the installation plan provides the tiles from top left to bottom right</li>
+     *      <li>No TileChooser, because the tiles must not be chosen for validation</li>
+     *      <li>A ValidationRuleChecker which checks every rule, regardless of the rule before was broken or not, because the
+     *      information is needed for building the error list</li>
+     * </ul>
+     * 
+     * @param composite holding the data the validator needs for building a solution
+     * @throws PropertyException if any module was not defined properly in the configuration file or the configuration file 
+     * cannot be read
      */
-    public Validator(Composite composite, int maxLineLength) throws PropertyException {
+    public Validator(Composite composite) throws PropertyException {
         ProPraLogger.setup();
-        errorList.addAll(EnumSet.allOf(Validation.class));
+       //  errorList.addAll(EnumSet.allOf(Validation.class));
         posFinder = new TopToBottomPosFinder();
         ruleChecker = new ValidationRuleChecker();
         this.composite = composite;
-        composite.setMaxLineLength(maxLineLength / 20);
-        // TODO check if valid
     }
     /**
-     * 
-     * @return errorlist
+     * Validates the given composite against the rules activated in the configuration file. 
+     * @return a list of rules that were broken at least once. If this list is empty, the composite is valid.
      */
     public List<Validation> validateSolution() {
         fillSurface(composite);
         return ruleChecker.getErrorList();
     }
 
+    // fills the surface with tiles in tileList, checking all rules before placing a tile.
     private void fillSurface(Composite c) {
         Position pos = null;
         Tile tile = null;
+        
+        // try to place all tiles in the composite's tile list in the surface
         for (String ident : c.getSurfaceTileList()) {
             pos = posFinder.findNextFreePosition(c, pos);
             tile = c.findTileById(ident);
             if (ruleChecker.checkImplicitRules(c, tile, pos)) {
                 ruleChecker.checkExplicitRules(c, tile, pos);
+                // if an explicit rule gets broken, continue to validate to maybe find other broken rules
                 c.getSurface().insertEntry(tile, pos);
             } else {
+                // if an implicit rule gets broken (tiles overlapping the surface or other tiles
+                // or too many / not enough tiles in construction plan)
+                // it doesn't make sense to continue to place tiles
+                // as there might be exceptions.
                 return;
             }
         }
+        
+        // this currently only test if the surface is filled completely
         pos = posFinder.findNextFreePosition(c, pos);
         ruleChecker.checkEndConditions(c, tile, pos);
     }

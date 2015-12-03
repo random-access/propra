@@ -140,11 +140,11 @@ public class Composite {
 	public ArrayList<Tile> getTilesLargerThan(int rows, int cols, int numberOfFields) {
 		ArrayList<Tile> filteredTiles = new ArrayList<>();
 		for (Tile t : tileSorts) {
-			if (t.getRows() >= rows && t.getCols() >= cols && t.getNumberOfFields() > numberOfFields) {
+			if (t.getNumberOfFields() > numberOfFields && t.getRows() >= rows && t.getCols() >= cols) {
 				filteredTiles.add(t);
 			}
 		}
-		Collections.sort(filteredTiles, TileComparator.FIELDS_DESC);
+		// Collections.sort(filteredTiles, TileComparator.FIELDS_DESC);
 		return filteredTiles;
 	}
 

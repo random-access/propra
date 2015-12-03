@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.logging.Logger;
 
+import ess.exc.PropertyException;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
 import ess.rules.endconditions.SurfaceIsFilledCompletelyRule;
 import ess.rules.implicit.EntryCoversOtherTileRule;
 import ess.rules.implicit.EntryExceedsSurfaceRule;
 import ess.utils.ProPraProperties;
-import ess.utils.PropertyException;
 
 public class RuleSet implements IRuleSet {
 	

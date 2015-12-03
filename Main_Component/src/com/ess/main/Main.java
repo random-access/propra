@@ -3,11 +3,11 @@ package com.ess.main;
 import java.util.logging.Logger;
 
 import ess.algorithm.RoemischerVerbund;
+import ess.exc.PropertyException;
 import ess.strings.CustomErrorMessages;
 import ess.utils.ProPraLogger;
-import ess.utils.PropertyException;
 
-/*
+/**
  * Haupteinstiegspunkt der Anwendung.
  * 
  * In der Main-Komponente müssen unter anderem die Eingabeparameter verarbeitet werden

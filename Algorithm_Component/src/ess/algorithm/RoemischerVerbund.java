@@ -5,13 +5,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import ess.algorithm.modules.ErrorMapper;
 import ess.data.Composite;
+import ess.exc.InvalidLengthValueException;
+import ess.exc.PropertyException;
 import ess.io.IDataExchanger;
 import ess.io.XMLDataExchanger;
 import ess.io.exc.DataExchangeException;
 import ess.strings.CustomErrorMessages;
-import ess.strings.CustomInfoMessages;
-import ess.utils.PropertyException;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -29,6 +30,8 @@ import ess.utils.PropertyException;
 public class RoemischerVerbund extends AbstractOutputObservable implements IRoemischerVerbund {
 
     private Logger log = Logger.getGlobal();
+    
+    private static final int CONVERSION_UNIT = 20; // TODO put together with XMLValues.CONVERSION_UNIT
 
     private List<Validation> errorList;
     private Composite composite;
@@ -77,11 +80,12 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
         try {
             IDataExchanger dataExchanger = new XMLDataExchanger();
             composite = dataExchanger.readFromSource(xmlFile);
-            Validator validator = new Validator(composite, maxLineLength);
+            convertGapLength(maxLineLength, composite);
+            Validator validator = new Validator(composite);
             errorList = validator.validateSolution();
             sendNotificationToOutputObservers();
             return errorList;
-        } catch (DataExchangeException | PropertyException e) {
+        } catch (DataExchangeException | PropertyException | InvalidLengthValueException e) {
             System.out.println(e.getCause().getMessage());
             return addAllErrorsToErrorList();
         }
@@ -101,14 +105,15 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
         try {
             IDataExchanger dataExchanger = new XMLDataExchanger();
             composite = dataExchanger.readFromSource(xmlFile);
-            ISolver solver = new Solver(composite, maxLineLength);
+            convertGapLength(maxLineLength, composite);
+            ISolver solver = new Solver(composite);
             boolean solved = solver.solve();
             if (solved) {
                 dataExchanger.writeToTarget(composite, xmlFile);
                 sendNotificationToOutputObservers();
             }
             return solved;
-        } catch (DataExchangeException | PropertyException e) {
+        } catch (DataExchangeException | PropertyException | InvalidLengthValueException e) {
             System.out.println(e.getCause().getMessage());
             return false;
         }
@@ -132,33 +137,17 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
     }
 
     @Override
-    public String[] getErrors() {
+    public List<String> getErrors() {
         if (errorList == null) {
-            return new String[0];
+            return new LinkedList<String>();
         }
-        String[] errors = new String[errorList.size()];
-        for (int i = 0; i < errorList.size(); i++) {
-            switch (errorList.get(i)) {
-                case MAX_FUGENLAENGE:
-                    errors[i] = CustomInfoMessages.INFO_MAX_LINELENGTH;
-                    break;
-                case FLIESE_UNPASSEND:
-                    errors[i] = CustomInfoMessages.INFO_OTHER;
-                    break;
-                case FLIESEN_AUSTAUSCHBAR:
-                    errors[i] = CustomInfoMessages.INFO_REPLACEABLE_TILE;
-                    break;
-                case FUGENKREUZE:
-                    errors[i] = CustomInfoMessages.INFO_CROSSING;
-                    break;
-                case GLEICHE_FLIESEN:
-                    errors[i] = CustomInfoMessages.INFO_SAME_TILE;
-                    break;
-                default:
-                    throw new UnsupportedOperationException(String.format(
-                            CustomErrorMessages.ERROR_INVALID_ENUM, errorList.get(i)));
-            }
+        return ErrorMapper.mapErrorsForUi(errorList);
+    }
+    
+    private void convertGapLength(int maxGapLength, Composite c) throws InvalidLengthValueException {
+        if (maxGapLength < 0) {
+            throw new InvalidLengthValueException(CustomErrorMessages.ERROR_INVALID_LENGTH);
         }
-        return errors;
+        c.setMaxLineLength(maxGapLength / CONVERSION_UNIT);
     }
 }
