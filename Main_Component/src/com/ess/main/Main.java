@@ -57,7 +57,7 @@ public final class Main {
                     v.solve(inputParser.getPath(), inputParser.getMaxTileLength());
                     break;
                 case SOLVE_DISPLAY:
-                    new DisplayObserver().observe(v);
+                    new DisplayObserver().observe(v, true);
                     v.solve(inputParser.getPath(), inputParser.getMaxTileLength());
                     break;
                 case VALIDATE:
@@ -65,9 +65,11 @@ public final class Main {
                     v.validateSolution(inputParser.getPath(), inputParser.getMaxTileLength());
                     break;
                 case VALIDATE_DISPLAY:
+                    new DisplayObserver().observe(v, true);
+                    v.validateSolution(inputParser.getPath(), inputParser.getMaxTileLength());
+                    break;
                 case DISPLAY:
-                    // TODO distinguish between DISPLAY & VALIDATE_DISPLAY
-                    new DisplayObserver().observe(v);
+                    new DisplayObserver().observe(v, false);
                     v.validateSolution(inputParser.getPath(), inputParser.getMaxTileLength());
                     break;
                 default:

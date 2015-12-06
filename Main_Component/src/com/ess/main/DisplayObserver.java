@@ -12,30 +12,36 @@ import ess.ui.ICompositeView;
 import ess.ui.MainWindow;
 
 public class DisplayObserver implements Observer {
-	
-	private Logger log = Logger.getGlobal();
-	
-	public void observe(AbstractOutputObservable obs) {
-		obs.addObserver(this);
-		log.info("Added display observer ...");
-	}
 
-	@Override
-	public void update(Observable o, Object arg) {
-		log.info("Got display request...");
-		if (o instanceof AbstractOutputObservable) {
-			final AbstractOutputObservable obs = (AbstractOutputObservable) o;
-			Composite c = obs.getComposite();
-			final ICompositeView view = new MainWindow(c);
-			SwingUtilities.invokeLater(new Runnable() {
-                
+    private Logger log = Logger.getGlobal();
+    private boolean showErrors;
+
+    public void observe(AbstractOutputObservable obs, boolean showErrors) {
+        obs.addObserver(this);
+        this.showErrors = showErrors;
+        log.info("Added display observer ...");
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        log.info("Got display request...");
+        if (o instanceof AbstractOutputObservable) {
+            final AbstractOutputObservable obs = (AbstractOutputObservable) o;
+            Composite c = obs.getComposite();
+            final ICompositeView view = new MainWindow(c);
+            SwingUtilities.invokeLater(new Runnable() {
+
                 @Override
                 public void run() {
-                    view.display(obs.getErrors());
+                    if (showErrors) {
+                        view.display(obs.getErrors(), obs.getPathToSource());
+                    } else {
+                        view.display(obs.getPathToSource());
+                    }
                 }
             });
-			
-		}
-	}
+
+        }
+    }
 
 }

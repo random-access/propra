@@ -32,21 +32,19 @@ public class CompositePanel extends JComponent {
 
     @Override
     public Dimension getPreferredSize() {
-        int contentWidth = currentFieldSize * surface.getCols() + 2 * STROKE_CORRECTION + MINOR_STROKE_CORR;
-        int contentHeight = currentFieldSize * surface.getRows() + 2 * STROKE_CORRECTION + MINOR_STROKE_CORR;
+        int contentWidth = currentFieldSize * surface.getCols() + 2 * (STROKE_CORRECTION + MINOR_STROKE_CORR);
+        int contentHeight = currentFieldSize * surface.getRows() + 2 * (STROKE_CORRECTION + MINOR_STROKE_CORR);
         return new Dimension(contentWidth, contentHeight);
     }
 
     @Override
     public Dimension getMinimumSize() {
-        return new Dimension(currentFieldSize * surface.getCols() + 2 * STROKE_CORRECTION + MINOR_STROKE_CORR, currentFieldSize
-                * surface.getRows() + 2 * STROKE_CORRECTION + MINOR_STROKE_CORR);
+        return getPreferredSize();
     }
 
     @Override
     public Dimension getMaximumSize() {
-        return new Dimension(currentFieldSize * surface.getCols() + 2 * STROKE_CORRECTION + MINOR_STROKE_CORR, currentFieldSize
-                * surface.getRows() + 2 * STROKE_CORRECTION + MINOR_STROKE_CORR);
+        return getPreferredSize();
     }
 
     @Override

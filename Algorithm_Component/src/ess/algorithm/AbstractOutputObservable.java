@@ -32,5 +32,11 @@ public abstract class AbstractOutputObservable extends Observable {
 	 * during Validation.
 	 */
 	public abstract List<String> getErrors();
+	
+	/**
+	 * Get the file path to the file which holds the data.
+	 * @return the file path
+	 */
+	public abstract String getPathToSource();
 
 }

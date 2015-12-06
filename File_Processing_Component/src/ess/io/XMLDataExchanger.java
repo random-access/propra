@@ -34,9 +34,10 @@ import ess.io.exc.DataExchangeException;
 import ess.io.exc.InvalidSizeValueException;
 import ess.strings.CustomErrorMessages;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class XMLDataExchanger.
+ * This class represents an XML implementation of IDataExchanger. It is 
+ * responsible for reading input data from XML and writing the output to
+ * XML, if a solution for a Composite could be found.
  */
 public class XMLDataExchanger implements IDataExchanger {
 

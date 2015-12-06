@@ -13,45 +13,32 @@ public class InvalidLengthValueException extends Exception {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Instantiates a new InvalidLengthValueException.
+     * Instantiates a new InvalidLengthValueException, passing an error message.
      *
-     * @param message the message
+     * @param message an error message with additional information.
      */
     public InvalidLengthValueException(String message) {
         super(message);
     }
 
     /**
-     * Instantiates a new InvalidLengthValueException.
+     * Instantiates a new InvalidLengthValueException, passing its cause.
      *
-     * @param cause the cause
+     * @param cause a Throwable that caused this exception.
      */
     public InvalidLengthValueException(Throwable cause) {
         super(cause);
     }
 
     /**
-     * Instantiates a new InvalidLengthValueException.
+     * Instantiates a new InvalidLengthValueException, passing an error message
+     * and its cause.
      *
-     * @param message the message
-     * @param cause the cause
+     * @param message an error message with additional information.
+     * @param cause a Throwable that caused this exception.
      */
     public InvalidLengthValueException(String message, Throwable cause) {
         super(message, cause);
     }
-
-    /**
-     * Instantiates a new InvalidLengthValueException.
-     *
-     * @param message the message
-     * @param cause the cause
-     * @param enableSuppression the enable suppression
-     * @param writableStackTrace the writable stack trace
-     */
-    public InvalidLengthValueException(String message, Throwable cause,
-            boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
-
 
 }

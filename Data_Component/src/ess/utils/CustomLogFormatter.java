@@ -17,7 +17,7 @@ public class CustomLogFormatter extends Formatter {
 	/**
 	 * Formats the LogRecord object. 
 	 * This formatter minimizes the log data.
-	 * Only the message itself and uncatched throwables (if any) get logged.
+	 * Only the message itself and non catched Throwable (if any) get logged.
 	 */
 	@Override
 	public String format(LogRecord record) {

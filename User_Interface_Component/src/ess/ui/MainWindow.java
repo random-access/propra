@@ -14,25 +14,31 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 import ess.data.Composite;
+import ess.strings.CustomErrorMessages;
+import ess.strings.CustomInfoMessages;
 
 public class MainWindow extends JFrame implements ICompositeView {
 
     private static final long serialVersionUID = 1L;
-    
+
     private static final double MAX_INITIAL_WINDOW_WIDTH = 0.5;
     private static final double MAX_INITIAL_WINDOW_HEIGHT = 0.75;
     private static final Dimension MIN_WINDOW_SIZE = new Dimension(100, 100);
-    
+
     private static final Color BLUE = new Color(0, 0, 102);
 
     private static final int COMPONENT_PADDING = 20;
@@ -41,22 +47,29 @@ public class MainWindow extends JFrame implements ICompositeView {
 
     private JPanel pnlTop, pnlInfo, pnlCenter, pnlBottom;
     private JScrollPane scpCenter;
-    private CompositePanel cPanel;
+    private CompositePanel pnlComposite;
     private JButton btnClose;
 
     private Composite composite;
 
     public MainWindow(Composite composite) {
         this.composite = composite;
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        getContentPane().setBackground(Color.WHITE);
+        try {
+            setIconImage(ImageIO.read(getClass().getResourceAsStream("/resources/ic_starter.png")));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        // TODO open with best possible zoom
+        // TODO view file path & different modes (d, v, s)
     }
 
     @Override
-    public void display(List<String> errorList) {
-
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setTitle("Roemischer Verbund");
-        getContentPane().setBackground(Color.WHITE);
-
+    public void display(List<String> errorList, String pathToSource) {
+        setTitle(pathToSource);
+        
         createAndAddWidgets(errorList);
         addListeners();
 
@@ -66,9 +79,14 @@ public class MainWindow extends JFrame implements ICompositeView {
         scpCenter.requestFocusInWindow();
         setVisible(true);
     }
+    
+    @Override
+    public void display(String pathToSource) {
+        display(null, pathToSource);
+    }
 
     private void createAndAddWidgets(List<String> errorList) {
-
+        // TODO split in smaller parts
         pnlTop = new JPanel(new FlowLayout(FlowLayout.CENTER));
         pnlTop.setBorder(BorderFactory.createEmptyBorder(COMPONENT_PADDING, COMPONENT_PADDING, COMPONENT_PADDING,
                 COMPONENT_PADDING));
@@ -79,33 +97,35 @@ public class MainWindow extends JFrame implements ICompositeView {
         pnlInfo.setOpaque(false);
         pnlTop.add(pnlInfo);
 
-        if (errorList.size() == 0) {
-            JLabel label = new JLabel("Dies ist ein gültiger Römischer Verbund :)");
-            customizeFont(label);
-            pnlInfo.add(label);
-        } else {
-            for (int i = 0; i < errorList.size(); i++) {
-                JLabel label = new JLabel(errorList.get(i));
+        if (errorList != null) {
+            if (errorList.size() == 0) {
+                JLabel label = new JLabel(CustomInfoMessages.INFO_VALID_COMPOSITE);
                 customizeFont(label);
                 pnlInfo.add(label);
+            } else {
+                for (int i = 0; i < errorList.size(); i++) {
+                    JLabel label = new JLabel(errorList.get(i));
+                    customizeFont(label);
+                    pnlInfo.add(label);
+                }
             }
         }
 
-        cPanel = new CompositePanel(composite.getSurface());
+        pnlComposite = new CompositePanel(composite.getSurface());
         pnlCenter = new JPanel();
         pnlCenter.setBorder(BorderFactory.createEmptyBorder(COMPONENT_PADDING, COMPONENT_PADDING, COMPONENT_PADDING,
                 COMPONENT_PADDING));
         pnlCenter.setOpaque(false);
         pnlCenter.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        pnlCenter.add(cPanel, gbc);
+        pnlCenter.add(pnlComposite, gbc);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
         scpCenter = new JScrollPane(pnlCenter);
-        scpCenter.setPreferredSize(new Dimension((int) Math.min(screenSize.getWidth() * MAX_INITIAL_WINDOW_WIDTH, 
-                pnlCenter.getPreferredSize().getWidth()), (int) Math.min(screenSize.getHeight() * MAX_INITIAL_WINDOW_HEIGHT, 
-                        pnlCenter.getPreferredSize().getHeight())));
+        scpCenter.setPreferredSize(new Dimension((int) Math.min(screenSize.getWidth() * MAX_INITIAL_WINDOW_WIDTH, pnlCenter
+                .getPreferredSize().getWidth() + COMPONENT_PADDING), (int) Math.min(screenSize.getHeight() * MAX_INITIAL_WINDOW_HEIGHT, pnlCenter
+                .getPreferredSize().getHeight() + COMPONENT_PADDING)));
         getContentPane().add(scpCenter, BorderLayout.CENTER);
 
         pnlBottom = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -136,12 +156,12 @@ public class MainWindow extends JFrame implements ICompositeView {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                switch (e.getKeyChar()) {
+                switch(e.getKeyChar()) {
                     case '+':
-                        cPanel.increaseFieldSize();
+                        pnlComposite.increaseFieldSize();
                         break;
                     case '-':
-                        cPanel.decreaseFieldSize();
+                        pnlComposite.decreaseFieldSize();
                         break;
                     default:
                         // do nothing
@@ -149,4 +169,6 @@ public class MainWindow extends JFrame implements ICompositeView {
             }
         });
     }
+
+
 }

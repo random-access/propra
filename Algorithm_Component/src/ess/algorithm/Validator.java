@@ -23,7 +23,6 @@ public class Validator {
     private Composite composite;
     private IPositionFinder posFinder;
     private ValidationRuleChecker ruleChecker;
-    // private LinkedList<Validation> errorList = new LinkedList<>();
     
     /**
      * Instantiates a new validator and sets up the validator-optimized modules, therefore using
@@ -41,14 +40,14 @@ public class Validator {
      */
     public Validator(Composite composite) throws PropertyException {
         ProPraLogger.setup();
-       //  errorList.addAll(EnumSet.allOf(Validation.class));
         posFinder = new TopToBottomPosFinder();
         ruleChecker = new ValidationRuleChecker();
         this.composite = composite;
     }
     /**
      * Validates the given composite against the rules activated in the configuration file. 
-     * @return a list of rules that were broken at least once. If this list is empty, the composite is valid.
+     * @return a list of rules that were broken at least once, or an empty list if no error occurred 
+     * during construction.
      */
     public List<Validation> validateSolution() {
         fillSurface(composite);

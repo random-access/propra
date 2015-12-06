@@ -30,11 +30,14 @@ import ess.strings.CustomErrorMessages;
 public class RoemischerVerbund extends AbstractOutputObservable implements IRoemischerVerbund {
 
     private Logger log = Logger.getGlobal();
-    
-    private static final int CONVERSION_UNIT = 20; // TODO put together with XMLValues.CONVERSION_UNIT
+
+    private static final int CONVERSION_UNIT = 20; // TODO put together with
+                                                   // XMLValues.CONVERSION_UNIT
 
     private List<Validation> errorList;
     private Composite composite;
+    
+    private String pathToXml;
 
     /**
      * Fehlertypen, die bei der Validierung auftreten koennen.
@@ -43,23 +46,23 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
         /**
          * Flieskombination kann durch eine größere Fliese ersetzt werden.
          */
-        FLIESEN_AUSTAUSCHBAR, 
-        
+        FLIESEN_AUSTAUSCHBAR,
+
         /**
          * Zwei gleiche Fliesen liegen nebeneinander.
          */
-        GLEICHE_FLIESEN, 
-        
+        GLEICHE_FLIESEN,
+
         /**
          * Die maximale Fugenlänge wurde überschritten.
          */
-        MAX_FUGENLAENGE, 
-        
+        MAX_FUGENLAENGE,
+
         /**
          * Es bilden sich Fugenkreuze.
          */
         FUGENKREUZE,
-        
+
         /**
          * Sonstige Fehler sind aufgetreten.
          */
@@ -77,6 +80,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
      */
     @Override
     public List<Validation> validateSolution(String xmlFile, int maxLineLength) {
+        this.pathToXml = xmlFile;
         try {
             IDataExchanger dataExchanger = new XMLDataExchanger();
             composite = dataExchanger.readFromSource(xmlFile);
@@ -102,6 +106,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
      */
     @Override
     public boolean solve(String xmlFile, int maxLineLength) {
+        this.pathToXml = xmlFile;
         try {
             IDataExchanger dataExchanger = new XMLDataExchanger();
             composite = dataExchanger.readFromSource(xmlFile);
@@ -143,11 +148,17 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
         }
         return ErrorMapper.mapErrorsForUi(errorList);
     }
-    
+
     private void convertGapLength(int maxGapLength, Composite c) throws InvalidLengthValueException {
         if (maxGapLength < 0) {
             throw new InvalidLengthValueException(CustomErrorMessages.ERROR_INVALID_LENGTH);
         }
         c.setMaxLineLength(maxGapLength / CONVERSION_UNIT);
+    }
+
+    @Override
+    public String getPathToSource() {
+        // TODO Auto-generated method stub
+        return pathToXml;
     }
 }

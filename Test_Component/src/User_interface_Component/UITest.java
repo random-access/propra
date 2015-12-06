@@ -24,7 +24,7 @@ public class UITest {
 		errorList.add("Fehler 1");
 		errorList.add("Fehler 2");
 		errorList.add("Fehler 3");
-        view.display(errorList);
+        view.display(errorList, "instances/validationInstances/test1.xml");
         // System.out.println(c);
 	}
 	

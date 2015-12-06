@@ -39,7 +39,7 @@ public final class ProPraLogger {
 	// in the main method
 	private static volatile boolean isInitialized = false;
 
-	// prevents instatiation
+	// prevents instantiation
 	private ProPraLogger() { }
 	
 	/**

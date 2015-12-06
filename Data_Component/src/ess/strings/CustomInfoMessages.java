@@ -47,6 +47,10 @@ public final class CustomInfoMessages {
 	 */
 	public static final String INFO_OTHER = "Diese L\u00f6sung enth\u00e4lt sonstige Fehler.";
 	
+	/**
+	 * Info that the composite is valid.
+	 */
+	public static final String INFO_VALID_COMPOSITE = "Dies ist ein gültiger Römischer Verbund.";
 	
 	/******************************************* Info about application usage *****************************************/
 	
