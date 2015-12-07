@@ -2,7 +2,10 @@ package com.ess.main;
 
 import java.util.logging.Logger;
 
+import ess.algorithm.AbstractOutputObservable;
+import ess.algorithm.IRoemischerVerbund;
 import ess.algorithm.RoemischerVerbund;
+import ess.exc.InvalidInputException;
 import ess.exc.PropertyException;
 import ess.strings.CustomErrorMessages;
 import ess.utils.ProPraLogger;
@@ -40,44 +43,68 @@ public final class Main {
     private Main() {
     }
 
-    /*
-     * Haupteinstiegsfunktion
+    /**
+     * This is the main method that starts the application.
+     * 
+     * @param args A String array of length = 3
      */
     public static void main(String[] args) {
         try {
             ProPraLogger.setup();
             InputParser inputParser = new InputParser(args);
-            RoemischerVerbund v = new RoemischerVerbund();
+            IRoemischerVerbund v = new RoemischerVerbund();
+            
             log.info("Setting path to " + inputParser.getPath() + "...");
             log.info("Setting max. tile length to " + inputParser.getMaxTileLength() + "...");
             log.info("Setting mode to " + inputParser.getMode() + "...");
-            switch(inputParser.getMode()) {
-                case SOLVE:
-                    new HeadlessObserver().observe(v);
-                    v.solve(inputParser.getPath(), inputParser.getMaxTileLength());
-                    break;
-                case SOLVE_DISPLAY:
-                    new DisplayObserver().observe(v, true);
-                    v.solve(inputParser.getPath(), inputParser.getMaxTileLength());
-                    break;
-                case VALIDATE:
-                    new HeadlessObserver().observe(v);
-                    v.validateSolution(inputParser.getPath(), inputParser.getMaxTileLength());
-                    break;
-                case VALIDATE_DISPLAY:
-                    new DisplayObserver().observe(v, true);
-                    v.validateSolution(inputParser.getPath(), inputParser.getMaxTileLength());
-                    break;
-                case DISPLAY:
-                    new DisplayObserver().observe(v, false);
-                    v.validateSolution(inputParser.getPath(), inputParser.getMaxTileLength());
-                    break;
-                default:
-                    System.out.println(CustomErrorMessages.UNSUPPORTED_MODE);
+            
+            if (v instanceof AbstractOutputObservable) {
+                initDisplay(inputParser.getMode(), (AbstractOutputObservable) v);
             }
+            
+            executeAlgorithm(v, inputParser);
+            
+        // output all expected Exceptions in a human-readable, textual representation
+        // other Exceptions will be thrown as-is TODO before submission, catch general Exception as well
         } catch (InvalidInputException | PropertyException e) {
             System.out.println(e.getMessage());
             System.exit(0);
+        }
+    }
+    
+    // this method initializes the observers that later get calls to display the output
+    private static void initDisplay(ExecMode mode, AbstractOutputObservable obs) {
+        switch(mode) {
+            case SOLVE:
+            case VALIDATE:
+                new HeadlessObserver().observe(obs, mode);
+                break;
+            case SOLVE_DISPLAY:
+            case VALIDATE_DISPLAY:
+            case DISPLAY:
+                new DisplayObserver().observe(obs, mode);
+                break;
+            default:
+                System.out.println(CustomErrorMessages.UNSUPPORTED_MODE);
+        }
+    }
+    
+    // this method decides which method call is necessary to execute the requested algorithm
+    private static void executeAlgorithm(IRoemischerVerbund v, InputParser inputParser) {
+        switch(inputParser.getMode()) {
+            case SOLVE:
+            case SOLVE_DISPLAY:
+                v.solve(inputParser.getPath(), inputParser.getMaxTileLength());
+                break;
+            case VALIDATE:
+            case VALIDATE_DISPLAY:
+                v.validateSolution(inputParser.getPath(), inputParser.getMaxTileLength());
+                break;
+            case DISPLAY:
+                v.validateSolution(inputParser.getPath(), inputParser.getMaxTileLength());
+                break;
+            default:
+                System.out.println(CustomErrorMessages.UNSUPPORTED_MODE);
         }
     }
 

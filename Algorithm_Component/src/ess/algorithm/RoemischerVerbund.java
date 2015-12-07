@@ -13,6 +13,7 @@ import ess.io.IDataExchanger;
 import ess.io.XMLDataExchanger;
 import ess.io.exc.DataExchangeException;
 import ess.strings.CustomErrorMessages;
+import ess.strings.CustomInfoMessages;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -116,6 +117,8 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
             if (solved) {
                 dataExchanger.writeToTarget(composite, xmlFile);
                 sendNotificationToOutputObservers();
+            } else {
+                System.out.println(CustomInfoMessages.INFO_NOT_SOLVED);
             }
             return solved;
         } catch (DataExchangeException | PropertyException | InvalidLengthValueException e) {

@@ -9,6 +9,17 @@ import ess.data.Tile;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
 
+/**
+ * This implementation of IRule checks if a tile that is about to be placed at pos 
+ * exceeds the maximum line length (causes a border in the composite's surface having 
+ * a straight line longer than composite's maxTileLenght. It does so by checking if the
+ * sum of the edge of the tile that will be placed, the left extension of this line
+ * and the right extension of this line is larger than maxTileLength. It checks all
+ * 4 edges. If all of these values are shorter than maxLineLength, the rule is 
+ * not broken.
+ * 
+ * @author Monika Schrenk
+ */
 public class MaxLineLengthRule implements IRule {
     
     @Override
@@ -24,9 +35,6 @@ public class MaxLineLengthRule implements IRule {
     private int calculateLineLength(Composite c, Tile tile, Position pos, Edge edge) {
         Corner c1 = edge.getFirstCorner();
         Corner c2 = edge.getSecondCorner();
-
-//        Position p1 = c.getSurface().getCornerPos(tile, pos, c1);
-//        Position p2 = c.getSurface().getCornerPos(tile, pos, c2);
         
         int row1 = c.getSurface().getCornerRow(tile, pos, c1);
         int col1 = c.getSurface().getCornerCol(tile, pos, c1);

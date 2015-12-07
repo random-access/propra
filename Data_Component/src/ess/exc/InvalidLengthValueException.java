@@ -10,7 +10,7 @@ package ess.exc;
  */
 public class InvalidLengthValueException extends Exception {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 116985996975984454L;
 
     /**
      * Instantiates a new InvalidLengthValueException, passing an error message.

@@ -7,6 +7,14 @@ import ess.data.Tile;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
 
+/** 
+ * This implementation of IRule checks if a tile that is about to be placed at pos 
+ * is placed exactly beneath a tile with the same ID. It does so by checking if every
+ * edge has at least 1 outer neighbor entry with a different tile id or null. 
+ * If this is the case, the rule is not broken.
+ * 
+ * @author Monika Schrenk
+ */
 public class SameTileRule implements IRule {
 
 	@Override

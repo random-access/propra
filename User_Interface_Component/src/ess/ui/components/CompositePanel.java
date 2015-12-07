@@ -1,10 +1,11 @@
-package ess.ui;
+package ess.ui.components;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import javax.swing.JComponent;
 
@@ -27,6 +28,7 @@ public class CompositePanel extends JComponent {
     private Surface surface;
 
     public CompositePanel(Surface surface) {
+        super();
         this.surface = surface;
     }
 
@@ -51,8 +53,14 @@ public class CompositePanel extends JComponent {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
+        drawBackground(g2D);
         drawGrid(g2D);
         drawTiles(g2D);
+    }
+    
+    private void drawBackground(Graphics2D g2d) {
+        g2d.setColor(new Color(225,225,255));
+        g2d.fill(new Rectangle(0, 0, getWidth(), getHeight()));
     }
 
     private void drawTiles(Graphics2D g2d) {

@@ -9,7 +9,18 @@ import ess.data.Tile;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
 
-public class MaxLineLengthRule_old implements IRule {
+/**
+ * This implementation of IRule checks if a tile that is about to be placed at pos 
+ * exceeds the maximum line length (causes a border in the composite's surface having 
+ * a straight line longer than composite's maxTileLenght. It does so by checking if the
+ * sum of the edge of the tile that will be placed, the left extension of this line
+ * and the right extension of this line is larger than maxTileLength. It checks all
+ * 4 edges. If all of these values are shorter than maxLineLength, the rule is 
+ * not broken.
+ * 
+ * @author Monika Schrenk
+ */
+public class MaxLineLengthRuleOld implements IRule {
 
     @Override
     public boolean check(Composite c, Tile tile, Position pos) {

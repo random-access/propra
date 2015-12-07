@@ -7,8 +7,8 @@ import ess.data.Composite;
 
 /**
  * This class should be extended by any class that wants to display a composite, if a valid solution exists. 
- * The observer pattern is used because the main component cannot know if the Solver finds a solution or not 
- * and the Solver or Validator don't know if the user started the application with one of the display modes. 
+ * The observer pattern is used because the main component doesn't know if the Solver finds a solution or not 
+ * and the Solver / Validator doesn't know if the user started the application with the option "display" or not. 
  * 
  * @author monika
  *

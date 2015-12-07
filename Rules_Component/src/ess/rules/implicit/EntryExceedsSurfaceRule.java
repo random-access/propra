@@ -6,6 +6,14 @@ import ess.data.Tile;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
 
+/**
+ * This implementation of IRule checks if a tile that is about to be placed at pos 
+ * exceeds the surface of composite. It does so by checking if every
+ * field that should contain the new tile is inside the bounds of composite's surface. 
+ * If this is the case, the rule is not broken.
+ * 
+ * @author Monika Schrenk
+ */
 public class EntryExceedsSurfaceRule implements IRule {
 
 	@Override

@@ -10,7 +10,7 @@ package ess.exc;
  */
 public class PropertyException extends Exception {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -2784930798602311808L;
 
     /**
      * Constructs a new PropertyException, passing an error message.

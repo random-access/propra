@@ -117,5 +117,8 @@ public final class CustomErrorMessages {
      * Error message for invalid paths in file system.
      */
     public static final String ERROR_PATH_NOT_FOUND = "%s existiert nicht oder ist ein Verzeichnis.";
-
+    
+    
+    /***************************************************** UI ERRORS ********************************************************/
+    public static final String ERROR_APP_ICON = "Anwendungs-Icon konnte nicht geladen werden.";
 }
