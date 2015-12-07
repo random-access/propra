@@ -29,14 +29,15 @@ import org.jdom2.output.XMLOutputter;
 
 import ess.data.Composite;
 import ess.data.Tile;
+import ess.exc.PropertyException;
 import ess.io.exc.DataExchangeException;
 import ess.io.exc.InvalidSizeValueException;
 import ess.strings.CustomErrorMessages;
-import ess.utils.PropertyException;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class XMLDataExchanger.
+ * This class represents an XML implementation of IDataExchanger. It is 
+ * responsible for reading input data from XML and writing the output to
+ * XML, if a solution for a Composite could be found.
  */
 public class XMLDataExchanger implements IDataExchanger {
 

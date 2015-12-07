@@ -3,10 +3,10 @@ package ess.algorithm.modules;
 import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Tile;
+import ess.exc.PropertyException;
 import ess.rules.IRule;
 import ess.rules.sets.IRuleSet;
 import ess.rules.sets.RuleSet;
-import ess.utils.PropertyException;
 
 public class SolveRuleChecker implements IRuleChecker {
 

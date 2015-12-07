@@ -8,6 +8,15 @@ import ess.data.Tile;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
 
+/**
+ * This implementation of IRule checks if a tile that is about to be placed at pos 
+ * creates a cross of tiles. It does so by checking every position a corner of tile will be
+ * inserted, comparing the column neighbor tile, row neighbor tile and diagonal neighbor tile.
+ *  If at least two of the neighbor tiles with a common edge are the same, the rule is 
+ * not broken.
+ * 
+ * @author Monika Schrenk
+ */
 public class CrossingsRule implements IRule {
 
 	@Override

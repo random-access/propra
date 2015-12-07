@@ -13,7 +13,7 @@ package ess.algorithm;
 public interface ISolver {
 
     /**
-     * Tries to calculate a solution for the given restrictions.
+     * Calculates a solution for a given composite.
      *
      * @return true, if a solution could be calculated, else false.
      */

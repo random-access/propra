@@ -7,8 +7,8 @@ import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Tile;
 import ess.data.TileComparator;
+import ess.exc.PropertyException;
 import ess.utils.ProPraProperties;
-import ess.utils.PropertyException;
 
 public class SortedTileChooser implements ITileChooser {
 
@@ -35,7 +35,11 @@ public class SortedTileChooser implements ITileChooser {
 	
 	private void applySortingStrategy() throws PropertyException {
 		ProPraProperties properties = ProPraProperties.getInstance();
-		String[] sortingValues = properties.getValue(ProPraProperties.KEY_TILE_CHOOSER_STRATEGY).split(",");
+		String sortings = properties.getValue(ProPraProperties.KEY_TILE_CHOOSER_STRATEGY);
+		if (sortings.length() == 0) {
+            return;
+        }
+		String[] sortingValues = sortings.split(",");
 		for (String v : sortingValues) {
 			TileComparator c = TileComparator.valueOf(v.toUpperCase().trim());
 			Collections.sort(tileSorts, c);

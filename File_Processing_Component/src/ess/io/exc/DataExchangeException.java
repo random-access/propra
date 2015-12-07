@@ -1,52 +1,43 @@
 package ess.io.exc;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class DataExchangeException.
+ * This Exception is thrown when a problem occurs during XML input or output.
  */
 public class DataExchangeException extends Exception {
-	
-	private static final long serialVersionUID = -951095821705704361L;
 
-	/**
-	 * Instantiates a new data exchange exception.
-	 *
-	 * @param message the message
-	 */
-	public DataExchangeException(String message) {
-		super(message);
-	}
+    private static final long serialVersionUID = -951095821705704361L;
 
-	/**
-	 * Instantiates a new data exchange exception.
-	 *
-	 * @param cause the cause
-	 */
-	public DataExchangeException(Throwable cause) {
-		super(cause);
-	}
+    /**
+     * Instantiates a new DataExchangeException, passing a message.
+     *
+     * @param message
+     *            an error message holding additional information.
+     */
+    public DataExchangeException(String message) {
+        super(message);
+    }
 
-	/**
-	 * Instantiates a new data exchange exception.
-	 *
-	 * @param message the message
-	 * @param cause the cause
-	 */
-	public DataExchangeException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * Instantiates a new DataExchangeException, passing its cause.
+     *
+     * @param cause
+     *            a Throwable that caused this exception.
+     */
+    public DataExchangeException(Throwable cause) {
+        super(cause);
+    }
 
-	/**
-	 * Instantiates a new data exchange exception.
-	 *
-	 * @param message the message
-	 * @param cause the cause
-	 * @param enableSuppression the enable suppression
-	 * @param writableStackTrace the writable stack trace
-	 */
-	public DataExchangeException(String message, Throwable cause,
-			boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
+    /**
+     * Constructs a new DataExchangeException, passing an error message and its
+     * cause.
+     * 
+     * @param message
+     *            an error message holding additional information.
+     * @param cause
+     *            a Throwable that caused this exception.
+     */
+    public DataExchangeException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

@@ -1,14 +1,30 @@
 package com.ess.main;
 
+import ess.exc.InvalidInputException;
 import ess.strings.CustomErrorMessages;
 import ess.strings.CustomInfoMessages;
 
+/**
+ * This class is responsible for parsing the parameters the user 
+ * entered when starting the application via terminal.
+ * 
+ * @author monika
+ *
+ */
 public class InputParser {
 	
 	private ExecMode mode;
 	private String path;
 	private int maxTileLength;
+	
+	// number of parameters
+	private static final int NO_OF_PARAMS = 3;
 
+	/**
+	 * Constructs an InputParser, passing in the parameters.
+	 * @param args Parameters the user entered.
+	 * @throws InvalidInputException if a parameter is considered invalid.
+	 */
 	public InputParser(String[] args) throws InvalidInputException {
 		checkParamSize(args);
 		mode = parseMode(args[0]);
@@ -16,18 +32,32 @@ public class InputParser {
 		maxTileLength = parseLineLength(args[2]);
 	}
 	
+	/**
+	 * Returns the execution mode entered by the user.
+	 * @return Execution mode.
+	 */
 	public ExecMode getMode() {
 		return mode;
 	}
 	
+	/**
+	 * Returns the path to a source holding infos about a composite.
+	 * @return ?ath to a source of a composite.
+	 */
 	public String getPath() {
 		return path;
 	}
 
+	/**
+	 * Returns the maximum allowed length of a straight line in the composite
+	 * entered by the user. This length is still in external measurements.
+	 * @return Maximum tile length.
+	 */
 	public int getMaxTileLength() {
 		return maxTileLength;
 	}
 
+	// removes the execution key and converts the remaining String to an int.
 	private int parseLineLength(String lineArg) throws InvalidInputException {
 		if (lineArg.startsWith("l=")) {
 			try {
@@ -40,6 +70,7 @@ public class InputParser {
 		}
 	}
 
+	// removes the path key and returns the remaining String.
 	private String parsePath(String pathArg) throws InvalidInputException {
 		if (pathArg.startsWith("if=")) {
 			return pathArg.replace("if=", "");
@@ -48,6 +79,7 @@ public class InputParser {
 		}
 	}
 	
+	// removes the execution key and maps the remaining String to an ExecMode
 	private ExecMode parseMode(String modeArg) throws InvalidInputException {
 		if (modeArg.startsWith("r=")) {
 			String m = modeArg.replace("r=", "");
@@ -57,11 +89,14 @@ public class InputParser {
 		}
 	}
 	
+	// Checks if the user entered exactly 3 parameters.
+	// Assumes that if no parameters were entered, the user needs more detailed information
+	// about usage than in other cases.
 	private void checkParamSize(String[] args) throws InvalidInputException {
 		if (args.length == 0) {
 			throw new InvalidInputException(CustomInfoMessages.INFO_USAGE);
 		}
-		if (args.length != 3) {
+		if (args.length != NO_OF_PARAMS) {
 			throw new InvalidInputException(CustomErrorMessages.ERRO_INVALID_PARAM_COUNT);
 		}
 	}

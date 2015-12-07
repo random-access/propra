@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import ess.exc.PropertyException;
 import ess.strings.CustomErrorMessages;
 
 /**

@@ -1,32 +1,67 @@
 package com.ess.main;
 
 import java.util.Observable;
-import java.util.Observer;
 import java.util.logging.Logger;
+
+import javax.swing.SwingUtilities;
 
 import ess.algorithm.AbstractOutputObservable;
 import ess.data.Composite;
+import ess.strings.CustomErrorMessages;
+import ess.strings.CustomInfoMessages;
 import ess.ui.ICompositeView;
 import ess.ui.MainWindow;
 
-public class DisplayObserver implements Observer {
-	
-	private Logger log = Logger.getGlobal();
-	
-	public void observe(AbstractOutputObservable obs) {
-		obs.addObserver(this);
-		log.info("Added display observer ...");
-	}
+/**
+ * An implementation of CompositeObserver that shows a graphical
+ * representation of a composite. It gets notified by 
+ * an AbstractOutputObservable if there is a valid composite
+ * to be displayed.
+ */
+public class DisplayObserver implements CompositeObserver {
 
-	@Override
-	public void update(Observable o, Object arg) {
-		log.info("Got display request...");
-		if (o instanceof AbstractOutputObservable) {
-			AbstractOutputObservable obs = (AbstractOutputObservable) o;
-			Composite c = obs.getComposite();
-			ICompositeView view = new MainWindow(c);
-			view.display(obs.getErrors());
-		}
-	}
+    private Logger log = Logger.getGlobal();
+    private ExecMode mode;
+
+    /* (non-Javadoc)
+     * @see com.ess.main.CompositeObserver#observe(ess.algorithm.AbstractOutputObservable, com.ess.main.ExecMode)
+     */
+    @Override
+    public void observe(AbstractOutputObservable obs, ExecMode execMode) {
+        obs.addObserver(this);
+        this.mode = execMode;
+        log.info("Added display observer ...");
+    }
+
+    /* (non-Javadoc)
+     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+        log.info("Got display request...");
+        final AbstractOutputObservable obs = (AbstractOutputObservable) o;
+        Composite c = obs.getComposite();
+        final ICompositeView view = new MainWindow(c);
+        SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                switch(mode) {
+                    case SOLVE_DISPLAY:
+                        // TODO change signatures, add mode to UI
+                        view.display(null, obs.getPathToSource(), CustomInfoMessages.INFO_SOLVE);
+                        break;
+                    case VALIDATE_DISPLAY:
+                        view.display(obs.getErrors(), obs.getPathToSource(), CustomInfoMessages.INFO_VALIDATE);
+                        break;
+                    case DISPLAY:
+                        view.display(null, obs.getPathToSource(), CustomInfoMessages.INFO_DISPLAY);
+                        break;
+                    default:
+                        throw new UnsupportedOperationException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, mode));
+                }
+            }
+        });
+    }
 
 }

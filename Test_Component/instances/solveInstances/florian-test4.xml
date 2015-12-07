@@ -1,0 +1,48 @@
+<RoemischerVerbund length2="58000" length1="50000">
+  <Fliesentypen>
+    <Fliesentyp ident="_0">
+      <length1>4000</length1>
+      <length2>6000</length2>
+    </Fliesentyp>
+    <Fliesentyp ident="_1">
+      <length1>6000</length1>
+      <length2>4000</length2>
+    </Fliesentyp>
+    <Fliesentyp ident="_2">
+      <length1>2000</length1>
+      <length2>4000</length2>
+    </Fliesentyp>
+    <Fliesentyp ident="_3">
+      <length1>4000</length1>
+      <length2>2000</length2>
+    </Fliesentyp>
+    <Fliesentyp ident="_4">
+      <length1>4000</length1>
+      <length2>4000</length2>
+    </Fliesentyp>
+    <Fliesentyp ident="_5">
+      <length1>8000</length1>
+      <length2>8000</length2>
+    </Fliesentyp>
+    <Fliesentyp ident="_6">
+      <length1>2000</length1>
+      <length2>2000</length2>
+    </Fliesentyp>
+    <Fliesentyp ident="_7">
+      <length1>2000</length1>
+      <length2>6000</length2>
+    </Fliesentyp>
+    <Fliesentyp ident="_8">
+      <length1>6000</length1>
+      <length2>2000</length2>
+    </Fliesentyp>
+    <Fliesentyp ident="_9">
+      <length1>2000</length1>
+      <length2>8000</length2>
+    </Fliesentyp>
+    <Fliesentyp ident="_10">
+      <length1>8000</length1>
+      <length2>2000</length2>
+    </Fliesentyp>
+  </Fliesentypen>
+</RoemischerVerbund>

@@ -10,6 +10,16 @@ import ess.data.Tile;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
 
+/**
+ * This implementation of IRule checks if a tile that is about to be placed at pos 
+ * forms a combination with other tiles that can be replaced by a larger tile. 
+ * It does so by checking if every tile larger than the tile that is about to be placed
+ * inside the composite's surface, aligned with any of the 4 corners, is either overlapping the 
+ * surface or doesn't exactly align with edges of tiles. 
+ * If this is the case, the rule is not broken.
+ * 
+ * @author Monika Schrenk
+ */
 public class ReplaceableTileRule implements IRule {
 
     @Override

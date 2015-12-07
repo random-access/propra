@@ -268,7 +268,7 @@ public class Surface {
      * @param c the corner of the given position.
      * @return the row of the given corner of this tile.
      */
-    private int getCornerRow(Tile t, Position p, Corner c) {
+    public int getCornerRow(Tile t, Position p, Corner c) {
         switch(c) {
             case TOP_LEFT:
             case TOP_RIGHT:
@@ -288,7 +288,7 @@ public class Surface {
      * @param c the corner of the given position.
      * @return the column of the given corner of this tile.
      */
-    private int getCornerCol(Tile t, Position p, Corner c) {
+    public int getCornerCol(Tile t, Position p, Corner c) {
         switch(c) {
             case TOP_LEFT:
             case BOTTOM_LEFT:

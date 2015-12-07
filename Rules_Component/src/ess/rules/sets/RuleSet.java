@@ -4,14 +4,23 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.logging.Logger;
 
+import ess.exc.PropertyException;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
 import ess.rules.endconditions.SurfaceIsFilledCompletelyRule;
 import ess.rules.implicit.EntryCoversOtherTileRule;
 import ess.rules.implicit.EntryExceedsSurfaceRule;
 import ess.utils.ProPraProperties;
-import ess.utils.PropertyException;
 
+/**
+ * This class is an implementation of IRuleSet that loads the explicit
+ * rules that were activated in config.properties. <br>
+ * Implicit rules and end conditions are loaded
+ * by default.
+ * 
+ * @author Monika Schrenk
+ *
+ */
 public class RuleSet implements IRuleSet {
 	
 	private static final Logger LOG = Logger.getGlobal();
@@ -21,6 +30,11 @@ public class RuleSet implements IRuleSet {
 	private LinkedList<IRule> implicitRuleSet;
 	private LinkedList<IRule> endConditionSet;
 
+	/**
+	 * Instantiates a RuleSet.
+	 * @throws PropertyException if config.properties could not be read
+	 * or if it contains invalid parameters.
+	 */
     public RuleSet() throws PropertyException {
 		errorList = new LinkedList<>();
 		explicitRuleSet = new LinkedList<>();

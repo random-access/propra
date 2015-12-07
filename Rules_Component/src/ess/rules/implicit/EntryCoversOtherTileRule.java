@@ -6,6 +6,14 @@ import ess.data.Tile;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
 
+/**
+ * This implementation of IRule checks if a tile that is about to be placed at pos 
+ * covers any other tile. It does so by checking if every
+ * field that should contain the new tile is still empty. If this is the case, the rule is 
+ * not broken.
+ * 
+ * @author Monika Schrenk
+ */
 public class EntryCoversOtherTileRule implements IRule {
 
 	@Override

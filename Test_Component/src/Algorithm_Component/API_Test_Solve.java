@@ -27,163 +27,191 @@ import ess.algorithm.RoemischerVerbund;
  */
 public class API_Test_Solve {
 
-	@Rule
-	public TemporaryFolder folder = new TemporaryFolder();
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
-	/**
-	 * Die Probleminstanzen müssen zwischengespeichert werden, da das
-	 * XML-Dokument durch die API modifiziert wird. Das ist nötig, damit beim
-	 * erneuten Durchführen (erneuter Test) die Instanzen unmodifiziert sind.
-	 * 
-	 * @param fileName
-	 *            Dateiname, der temporär zwischengespeichert werden soll
-	 * @return temporärer Pfad
-	 * @throws IOException
-	 */
-	private String WriteFileToTempDirectory(String fileName) throws IOException {
-		// In Unit-Tests braucht kein fortgeschrittenes Exceptionhandling
-		// integriert werden.
-		// Der Grund dafuer ist, dass der Test genau ein Szenario abbildet.
-		byte[] bytes = Files.readAllBytes(Paths.get(fileName));
-		String xmlAsString = new String(bytes, "UTF8");
-		String tempFileName = String.format("%s.xml", UUID.randomUUID().toString());
-		File testFile = folder.newFile(tempFileName);
-		
-		FileWriter fw = null;
-		try {
-			fw = new FileWriter(testFile);
-			fw.write(xmlAsString);
-		} finally {
-			if (fw != null) {
-				fw.close();
-			}
-		}
+    /**
+     * Die Probleminstanzen müssen zwischengespeichert werden, da das
+     * XML-Dokument durch die API modifiziert wird. Das ist nötig, damit beim
+     * erneuten Durchführen (erneuter Test) die Instanzen unmodifiziert sind.
+     * 
+     * @param fileName
+     *            Dateiname, der temporär zwischengespeichert werden soll
+     * @return temporärer Pfad
+     * @throws IOException
+     */
+    private String WriteFileToTempDirectory(String fileName) throws IOException {
+        // In Unit-Tests braucht kein fortgeschrittenes Exceptionhandling
+        // integriert werden.
+        // Der Grund dafuer ist, dass der Test genau ein Szenario abbildet.
+        byte[] bytes = Files.readAllBytes(Paths.get(fileName));
+        String xmlAsString = new String(bytes, "UTF8");
+        String tempFileName = String.format("%s.xml", UUID.randomUUID().toString());
+        File testFile = folder.newFile(tempFileName);
 
-		return testFile.getPath();
-	}
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter(testFile);
+            fw.write(xmlAsString);
+        } finally {
+            if (fw != null) {
+                fw.close();
+            }
+        }
 
-	@Test
-	public void solveParameterHasToBeValid() {
-		
-		// Arrange (set all necessary preconditions and inputs.)
-		IRoemischerVerbund api = new RoemischerVerbund();
+        return testFile.getPath();
+    }
 
-		// Act (on the object or method under test.)
-		Boolean valid = api.solve("", -1);
+    @Test
+    public void solveParameterHasToBeValid() {
 
-		// Assert (that the expected results have occurred.))
-		assertFalse("Lösung müsste ungültig sein", valid);
-	}
+        // Arrange (set all necessary preconditions and inputs.)
+        IRoemischerVerbund api = new RoemischerVerbund();
 
-	@Test
-	public void solveInstance1() throws IOException {
+        // Act (on the object or method under test.)
+        Boolean valid = api.solve("", -1);
 
-		// Arrange (set all necessary preconditions and inputs.)
-		IRoemischerVerbund api = new RoemischerVerbund();
-		String filePath = WriteFileToTempDirectory("instances/solveInstances/test1.xml");
+        // Assert (that the expected results have occurred.))
+        assertFalse("Lösung müsste ungültig sein", valid);
+    }
 
-		// Act (on the object or method under test.)
-		Boolean valid = api.solve(filePath, 140);
+    @Test
+    public void solveInstance1() throws IOException {
 
-		// Assert (that the expected results have occurred.))
-		assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
-	}
+        // Arrange (set all necessary preconditions and inputs.)
+        IRoemischerVerbund api = new RoemischerVerbund();
+        String filePath = WriteFileToTempDirectory("instances/solveInstances/test1.xml");
 
-	@Test
-	public void solveInstance2() throws IOException {
+        // Act (on the object or method under test.)
+        Boolean valid = api.solve(filePath, 140);
 
-		// Arrange (set all necessary preconditions and inputs.)
-		IRoemischerVerbund api = new RoemischerVerbund();
-		String filePath = WriteFileToTempDirectory("instances/solveInstances/test1.xml");
+        // Assert (that the expected results have occurred.))
+        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+    }
 
-		// Act (on the object or method under test.)
-		Boolean valid = api.solve(filePath, 200);
+    @Test
+    public void solveInstance2() throws IOException {
 
-		// Assert (that the expected results have occurred.))
-		assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
-	}
+        // Arrange (set all necessary preconditions and inputs.)
+        IRoemischerVerbund api = new RoemischerVerbund();
+        String filePath = WriteFileToTempDirectory("instances/solveInstances/test1.xml");
 
-	@Test
-	public void solveInstance3() throws IOException {
+        // Act (on the object or method under test.)
+        Boolean valid = api.solve(filePath, 200);
 
-		// Arrange (set all necessary preconditions and inputs.)
-		IRoemischerVerbund api = new RoemischerVerbund();
-		String filePath = WriteFileToTempDirectory("instances/solveInstances/test2.xml");
+        // Assert (that the expected results have occurred.))
+        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+    }
 
-		// Act (on the object or method under test.)
-		Boolean valid = api.solve(filePath, 120);
+    @Test
+    public void solveInstance3() throws IOException {
 
-		// Assert (that the expected results have occurred.))
-		assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
-	}
+        // Arrange (set all necessary preconditions and inputs.)
+        IRoemischerVerbund api = new RoemischerVerbund();
+        String filePath = WriteFileToTempDirectory("instances/solveInstances/test2.xml");
 
-	@Test
-	public void solveInstance4() throws IOException {
+        // Act (on the object or method under test.)
+        Boolean valid = api.solve(filePath, 120);
 
-		// Arrange (set all necessary preconditions and inputs.)
-		IRoemischerVerbund api = new RoemischerVerbund();
-		String filePath = WriteFileToTempDirectory("instances/solveInstances/test4.xml");
+        // Assert (that the expected results have occurred.))
+        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+    }
 
-		// Act (on the object or method under test.)
-		Boolean valid = api.solve(filePath, 80);
+    @Test
+    public void solveInstance4() throws IOException {
 
-		// Assert (that the expected results have occurred.))
-		assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
-	}
+        // Arrange (set all necessary preconditions and inputs.)
+        IRoemischerVerbund api = new RoemischerVerbund();
+        String filePath = WriteFileToTempDirectory("instances/solveInstances/test4.xml");
 
-	@Test
-	public void solveInstance5() throws IOException {
+        // Act (on the object or method under test.)
+        Boolean valid = api.solve(filePath, 80);
 
-		// Arrange (set all necessary preconditions and inputs.)
-		IRoemischerVerbund api = new RoemischerVerbund();
-		String filePath = WriteFileToTempDirectory("instances/solveInstances/test5.xml");
+        // Assert (that the expected results have occurred.))
+        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+    }
 
-		// Act (on the object or method under test.)
-		Boolean valid = api.solve(filePath, 100);
+    @Test
+    public void solveInstance5() throws IOException {
 
-		// Assert (that the expected results have occurred.))
-		assertFalse("Für diese Instanz existiert keine zulässige Lösung", valid);
-	}
-	
-	@Test
-	public void solveInstance6() throws IOException {
+        // Arrange (set all necessary preconditions and inputs.)
+        IRoemischerVerbund api = new RoemischerVerbund();
+        String filePath = WriteFileToTempDirectory("instances/solveInstances/test5.xml");
 
-		// Arrange (set all necessary preconditions and inputs.)
-		IRoemischerVerbund api = new RoemischerVerbund();
-		String filePath = WriteFileToTempDirectory("instances/solveInstances/test6.xml");
+        // Act (on the object or method under test.)
+        Boolean valid = api.solve(filePath, 100);
 
-		// Act (on the object or method under test.)
-		Boolean valid = api.solve(filePath, 140);
+        // Assert (that the expected results have occurred.))
+        assertFalse("Für diese Instanz existiert keine zulässige Lösung", valid);
+    }
 
-		// Assert (that the expected results have occurred.))
-		assertFalse("Für diese Instanz existiert keine zulässige Lösung", valid);
-	}
-	
-	/* @Test
-	public void solveInstance7() throws IOException {
+    @Test
+    public void solveInstance6() throws IOException {
 
-		// Arrange (set all necessary preconditions and inputs.)
-		IRoemischerVerbund api = new RoemischerVerbund();
-		String filePath = WriteFileToTempDirectory("instances/solveInstances/florian-test1.xml");
+        // Arrange (set all necessary preconditions and inputs.)
+        IRoemischerVerbund api = new RoemischerVerbund();
+        String filePath = WriteFileToTempDirectory("instances/solveInstances/test6.xml");
 
-		// Act (on the object or method under test.)
-		Boolean valid = api.solve(filePath, 140);
+        // Act (on the object or method under test.)
+        Boolean valid = api.solve(filePath, 140);
 
-		// Assert (that the expected results have occurred.))
-		assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
-	} */
-	
-	@Test
-	public void solveInstance8() throws IOException {
+        // Assert (that the expected results have occurred.))
+        assertFalse("Für diese Instanz existiert keine zulässige Lösung", valid);
+    }
 
-		// Arrange (set all necessary preconditions and inputs.)
-		IRoemischerVerbund api = new RoemischerVerbund();
-		String filePath = WriteFileToTempDirectory("instances/solveInstances/florian-test2.xml");
+    @Test
+    public void solveInstance7() throws IOException {
 
-		// Act (on the object or method under test.)
-		Boolean valid = api.solve(filePath, 140);
+        // Arrange (set all necessary preconditions and inputs.)
+        IRoemischerVerbund api = new RoemischerVerbund();
+        String filePath = WriteFileToTempDirectory("instances/solveInstances/florian-test1.xml");
 
-		// Assert (that the expected results have occurred.))
-		assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
-	}
-} 
+        // Act (on the object or method under test.) Boolean valid =
+        Boolean valid = api.solve(filePath, 140);
+
+        // Assert (that the expected results have occurred.))
+        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+    }
+
+    // @Test
+    public void solveInstance8() throws IOException {
+
+        // Arrange (set all necessary preconditions and inputs.)
+        IRoemischerVerbund api = new RoemischerVerbund();
+        String filePath = WriteFileToTempDirectory("instances/solveInstances/florian-test2.xml");
+
+        // Act (on the object or method under test.)
+        Boolean valid = api.solve(filePath, 140);
+
+        // Assert (that the expected results have occurred.))
+        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+    }
+
+    // @Test
+    public void solveInstance9() throws IOException {
+
+        // Arrange (set all necessary preconditions and inputs.)
+        IRoemischerVerbund api = new RoemischerVerbund();
+        String filePath = WriteFileToTempDirectory("instances/solveInstances/florian-test3.xml");
+
+        // Act (on the object or method under test.)
+        Boolean valid = api.solve(filePath, 140);
+
+        // Assert (that the expected results have occurred.))
+        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+    }
+    
+    @Test
+    public void solveInstance10() throws IOException {
+
+        // Arrange (set all necessary preconditions and inputs.)
+        IRoemischerVerbund api = new RoemischerVerbund();
+        String filePath = WriteFileToTempDirectory("instances/solveInstances/florian-test4.xml");
+
+        // Act (on the object or method under test.)
+        Boolean valid = api.solve(filePath, 34000);
+
+        // Assert (that the expected results have occurred.))
+        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+    }
+}
