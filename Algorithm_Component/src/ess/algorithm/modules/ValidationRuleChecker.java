@@ -11,14 +11,32 @@ import ess.rules.IRule;
 import ess.rules.sets.IRuleSet;
 import ess.rules.sets.RuleSet;
 
+/**
+ * This class is an implementation of IRuleChecker for checking rules during a validation 
+ * algorithm. If any explicit rule gets broken, the check continues because the validator must 
+ * return a list of all explicit rules that were broken.<br>
+ * If an implicit rule gets broken, the validator returns immediately because validation 
+ * cannot be continued in this case. <br>
+ * This class provides an additional method for retrieving the list of broken rules.
+ * 
+ * @author Monika Schrenk
+ */
 public class ValidationRuleChecker implements IRuleChecker {
 
 	private IRuleSet ruleSet;
 	
+	/**
+     * Instantiates a ValidationRuleChecker.
+     * @throws PropertyException if the config.properties file cannot be read or if it contains
+     * invalid parameters
+     */
 	public ValidationRuleChecker() throws PropertyException {
 		ruleSet = new RuleSet();
 	}
 	
+	/* (non-Javadoc)
+	 * @see ess.algorithm.modules.IRuleChecker#checkImplicitRules(ess.data.Composite, ess.data.Tile, ess.data.Position)
+	 */
 	@Override
 	public boolean checkImplicitRules(Composite composite, Tile tile, Position pos) {
 		boolean validMove = true;
@@ -29,6 +47,7 @@ public class ValidationRuleChecker implements IRuleChecker {
             }
             validMove &= !isEnd;
         }
+		// TODO stop checking if any implicit rule gets broken
 		for (IRule rule : ruleSet.getImplicitRules()) {
 			boolean ok = rule.check(composite, tile, pos);
 			if (!ok) {
@@ -39,6 +58,9 @@ public class ValidationRuleChecker implements IRuleChecker {
 		return validMove;
 	}
 	
+	/* (non-Javadoc)
+	 * @see ess.algorithm.modules.IRuleChecker#checkExplicitRules(ess.data.Composite, ess.data.Tile, ess.data.Position)
+	 */
 	@Override
 	public boolean checkExplicitRules(Composite composite, Tile tile, Position pos) {
 		boolean validMove = true;
@@ -52,6 +74,9 @@ public class ValidationRuleChecker implements IRuleChecker {
 		return validMove;
 	}
 	
+	/* (non-Javadoc)
+	 * @see ess.algorithm.modules.IRuleChecker#checkEndConditions(ess.data.Composite, ess.data.Tile, ess.data.Position)
+	 */
 	@Override
 	public boolean checkEndConditions(Composite composite, Tile tile, Position pos) {
 		boolean completed = true;
@@ -65,6 +90,12 @@ public class ValidationRuleChecker implements IRuleChecker {
 		return completed;
 	}
 	
+	/**
+	 * Returns a list of all explicit rules that were broken during validation and additionally
+	 * Validation.OTHER if any implicit rule or end condition got broken.
+	 * 
+	 * @return A list with broken rules.
+	 */
 	public LinkedList<Validation> getErrorList() {
 		return ErrorMapper.mapErrorsForAlgoComponent(ruleSet);
 	}
