@@ -55,7 +55,7 @@ public class MainWindow extends JFrame implements ICompositeView {
     private static final int TEXT_PADDING = 3;
     private static final int DEFAULT_FONT_SIZE = 14;
     
-    // TODO replace with calculation
+    // constant for initial size of a single field in the surface
     private static final int INITIAL_FIELD_SIZE = 20;
 
     // window components

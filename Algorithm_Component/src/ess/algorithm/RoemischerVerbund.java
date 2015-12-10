@@ -15,7 +15,6 @@ import ess.io.exc.DataExchangeException;
 import ess.strings.CustomErrorMessages;
 import ess.strings.CustomInfoMessages;
 
-// TODO: Auto-generated Javadoc
 /**
  * Diese Klasse wird als API (Application Programming Interface) verwendet. Das
  * bedeutet, dass diese Klasse als Bibliothek für andere Applikationen verwendet
@@ -25,19 +24,16 @@ import ess.strings.CustomInfoMessages;
  * Package, Methodensignaturen) !!KEINE!! Veränderungen vorzunehmen.
  * Selbstverständlich können und müssen Sie innerhalb einer Methode Änderungen
  * vornehmen.
- * 
- * @author Monika Schrenk
  */
 public class RoemischerVerbund extends AbstractOutputObservable implements IRoemischerVerbund {
 
-    private Logger log = Logger.getGlobal();
-
-    private static final int CONVERSION_UNIT = 20; // TODO put together with
-                                                   // XMLValues.CONVERSION_UNIT
-
+    private static final Logger LOG = Logger.getGlobal();
+    
+    // TODO put together with XMLValues.CONVERSION_UNIT
+    private static final int CONVERSION_UNIT = 20; 
+    
     private List<Validation> errorList;
     private Composite composite;
-    
     private String pathToXml;
 
     /**
@@ -73,19 +69,17 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
     /**
      * Überprüft die eingegebene Lösung auf Korrektheit.
      *
-     * @param xmlFile
-     *            Dokument, das validiert werden soll.
-     * @param maxFugenLaenge
-     *            maximale Fugenlänge der zu berechnenden Lösung.
+     * @param xmlFile Dokument, das validiert werden soll.
+     * @param maxFugenlaenge Die maximale Fugenlänge.
      * @return Liste von Fehlern, die fehlgeschlagen sind.
      */
     @Override
-    public List<Validation> validateSolution(String xmlFile, int maxLineLength) {
+    public List<Validation> validateSolution(String xmlFile, int maxFugenlaenge) {
         this.pathToXml = xmlFile;
         try {
             IDataExchanger dataExchanger = new XMLDataExchanger();
             composite = dataExchanger.readFromSource(xmlFile);
-            convertGapLength(maxLineLength, composite);
+            convertGapLength(maxFugenlaenge, composite);
             Validator validator = new Validator(composite);
             errorList = validator.validateSolution();
             sendNotificationToOutputObservers();
@@ -127,23 +121,17 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
         }
     }
 
-    private List<Validation> addAllErrorsToErrorList() {
-        List<Validation> listWithAllErrors = new LinkedList<>();
-        listWithAllErrors.addAll(EnumSet.allOf(Validation.class));
-        return listWithAllErrors;
-    }
-
-    private void sendNotificationToOutputObservers() {
-        log.info("Sending output request...");
-        setChanged();
-        notifyObservers();
-    }
-
+    /* (non-Javadoc)
+     * @see ess.algorithm.AbstractOutputObservable#getComposite()
+     */
     @Override
     public Composite getComposite() {
         return composite;
     }
 
+    /* (non-Javadoc)
+     * @see ess.algorithm.AbstractOutputObservable#getErrors()
+     */
     @Override
     public List<String> getErrors() {
         if (errorList == null) {
@@ -152,16 +140,37 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
         return ErrorMapper.mapErrorsForUi(errorList);
     }
 
+    /* (non-Javadoc)
+     * @see ess.algorithm.AbstractOutputObservable#getPathToSource()
+     */
+    @Override
+    public String getPathToSource() {
+        return pathToXml;
+    }
+    
+    // adds all errors to a list and returns that list
+    // necessary if validation could not even be started - in this
+    // case, all errors must be returned
+    private List<Validation> addAllErrorsToErrorList() {
+        List<Validation> listWithAllErrors = new LinkedList<>();
+        listWithAllErrors.addAll(EnumSet.allOf(Validation.class));
+        return listWithAllErrors;
+    }
+
+    // notify all registered observers that the algorithm has
+    // finished and the output can be displayed
+    private void sendNotificationToOutputObservers() {
+        LOG.info("Sending output request...");
+        setChanged();
+        notifyObservers();
+    }
+    
+    // converts the gap lenght into internal measurments
+    // throws InvalidLengthValueException if maxGapLength is negative
     private void convertGapLength(int maxGapLength, Composite c) throws InvalidLengthValueException {
         if (maxGapLength < 0) {
             throw new InvalidLengthValueException(CustomErrorMessages.ERROR_INVALID_LENGTH);
         }
         c.setMaxLineLength(maxGapLength / CONVERSION_UNIT);
-    }
-
-    @Override
-    public String getPathToSource() {
-        // TODO Auto-generated method stub
-        return pathToXml;
     }
 }
