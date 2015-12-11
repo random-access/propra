@@ -24,22 +24,24 @@ public class RandomTileChooser implements ITileChooser {
     public Tile getNextTile(Position pos, Tile tile) {
         if (!tileSorts.isEmpty()) {
             if (tile == null) {
-               // System.out.println("New boolean[] for pos " + pos);
+                System.out.println("New boolean[] for pos " + pos);
                 testedTiles.add(new boolean[tileSorts.size()]);
             }
             int nextIndex = getNextTileIndex();
+            System.out.println("Next index: " + nextIndex);
             boolean[] currentTestedTiles = testedTiles.getLast();
+            
             for (int i = 0; i < currentTestedTiles.length; i++) {
                 int curr = (nextIndex + i) % currentTestedTiles.length;
-                // System.out.println("Curr: " + curr);
+                System.out.println("Curr: " + curr);
                 if (!currentTestedTiles[curr]) {
-                   // System.out.println("Get tile at " + curr);
+                    System.out.println("Get tile at " + curr);
                     currentTestedTiles[curr] = true;
                     return tileSorts.get(curr);
                 }
             }
             //System.out.println("No tile anymore for pos " + pos + testedTiles.getLast());
-            testedTiles.removeLast();
+            testedTiles.removeLast(); 
         }
         return null;
     }

@@ -20,6 +20,6 @@ public interface ITileChooser {
      * @return The next tile to be place into the surface , or null
      * if ITileChooser has no suggestions anymore.
      */
-	public Tile getNextTile(Position pos, Tile currentTile);
+	public Tile getNextTile(Position pos, Tile currentTile);;
 
 }
