@@ -85,7 +85,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
             sendNotificationToOutputObservers();
             return errorList;
         } catch (DataExchangeException | PropertyException | InvalidLengthValueException e) {
-            System.out.println(e.getCause().getMessage());
+            System.out.println(e.getMessage());
             return addAllErrorsToErrorList();
         }
     }

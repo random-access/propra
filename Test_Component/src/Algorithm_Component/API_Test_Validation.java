@@ -91,7 +91,7 @@ public class API_Test_Validation {
 		assertTrue(
 				"Es wurden nicht alle bzw. nicht die korrekten Fehler erkannt",
 				errorList.size() == 2);
-		assertTrue("Fugenkreuze nicht erkannt",
+		assertTrue("Fliese austauschbar nicht erkannt",
 				errorList.contains(Validation.FLIESEN_AUSTAUSCHBAR));
 		assertTrue("Maximale Fugenlänge nicht erkannt",
 				errorList.contains(Validation.MAX_FUGENLAENGE));
@@ -110,8 +110,22 @@ public class API_Test_Validation {
 		// Assert (that the expected results have occurred.))
 		assertTrue("errorList ist null", errorList != null);
 		assertTrue(errorList.size() == 0);
-		System.out.println(errorList.size());
 	}
+	
+	   @Test
+	    public void validateSolutionTestFlorian2() {
+
+	        // Arrange (set all necessary preconditions and inputs.)
+	        IRoemischerVerbund api = new RoemischerVerbund();
+
+	        // Act (on the object or method under test.)
+	        List<Validation> errorList = api.validateSolution(
+	                "instances/validationInstances/test2_florian.xml", 560);
+
+	        // Assert (that the expected results have occurred.))
+	        assertTrue("errorList ist null", errorList != null);
+	        assertTrue("Dies ist ein gültiger Römischer Verbund!", errorList.size() == 0);
+	    }
 
 	@Test
 	public void validateSolutionNonsenseInFile() {
@@ -145,4 +159,20 @@ public class API_Test_Validation {
 				errorList.size() == 1);
 		assertTrue("Max. Fugenlänge wurde nicht erkannt", errorList.contains(Validation.MAX_FUGENLAENGE));
 	}
+	
+	   @Test
+	    public void validateSolutionKlaus2() {
+
+	        // Arrange (set all necessary preconditions and inputs.)
+	        IRoemischerVerbund api = new RoemischerVerbund();
+
+	        // Act (on the object or method under test.)
+	        List<Validation> errorList = api.validateSolution(
+	                "instances/validationInstances/klaus-validation2.xml", 100);
+
+	        // Assert (that the expected results have occurred.))
+	        assertTrue("errorList ist null", errorList != null);
+	        assertTrue("Es wurden nicht alle bzw. nicht die korrekten Fehler erkannt",
+	                errorList.size() == 5);
+	    }
 }

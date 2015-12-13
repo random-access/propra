@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -78,10 +79,9 @@ public class MainWindow extends JFrame implements ICompositeView {
         try {
             setIconImage(ImageIO.read(getClass().getResourceAsStream("/resources/ic_starter.png")));
         } catch (IOException e) {
-            // if application icon is missing, just inform the user, but continue everything else
+            // if application icon is missing, just inform the user, but continue running the application
             System.out.println(CustomErrorMessages.ERROR_APP_ICON);
         }
-        // TODO open with best possible zoom
         // TODO view file path & different modes (d, v, s)
     }
 
@@ -167,7 +167,9 @@ public class MainWindow extends JFrame implements ICompositeView {
 
     // create labels that hold info messages, depending on application mode
     private void createAndAddInfoLabels(List<String> errorList, String execMode) {
-        pnlInfo.add(new CustomLabel(execMode, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY));
+        JLabel lblMode = new CustomLabel(execMode, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
+        lblMode.setFont(lblMode.getFont().deriveFont(Font.BOLD));
+        pnlInfo.add(lblMode);
         if (errorList == null) {
             return;
         }
@@ -176,7 +178,7 @@ public class MainWindow extends JFrame implements ICompositeView {
             pnlInfo.add(label);
         } else {
             for (int i = 0; i < errorList.size(); i++) {
-                JLabel label = new CustomLabel(errorList.get(i), DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
+                JLabel label = new CustomLabel("\u2022 " + errorList.get(i), DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
                 pnlInfo.add(label);
             }
         }

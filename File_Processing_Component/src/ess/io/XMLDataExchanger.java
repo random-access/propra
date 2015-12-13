@@ -22,6 +22,7 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.input.sax.XMLReaders;
 import org.jdom2.output.Format;
@@ -64,8 +65,15 @@ public class XMLDataExchanger implements IDataExchanger {
 			ArrayList<Tile> tileSorts = readTileSorts(rootElement);
 			ArrayList<String> surfaceTiles = readSurfaceTiles(rootElement);
 			return new Composite(rows, cols, surfaceTiles, tileSorts);
-		} catch (Exception e) {
-			throw new DataExchangeException(e);
+		} catch (InvalidSizeValueException | PropertyException exc) {
+		    // take error messages from exceptions, otherwise add error message
+		    throw new DataExchangeException(exc.getMessage());
+		} catch (IOException exc) {
+		    throw new DataExchangeException(String.format(CustomErrorMessages.ERROR_READING_XML, 
+		            Paths.get(pathToSource).getFileName()));
+		} catch (JDOMException exc) {
+		    throw new DataExchangeException(String.format(CustomErrorMessages.ERROR_XML_CONTENT, 
+		            Paths.get(pathToSource).getFileName(), exc.getMessage()));
 		}
 	}
 
@@ -92,7 +100,7 @@ public class XMLDataExchanger implements IDataExchanger {
 			outputter.setFormat(Format.getPrettyFormat());
 			outputter.output(doc, os);
 		} catch (IOException e) {
-			throw new DataExchangeException(e);
+			throw new DataExchangeException(CustomErrorMessages.ERROR_WRITING_XML);
 		}
 	}
 	
@@ -133,7 +141,6 @@ public class XMLDataExchanger implements IDataExchanger {
 			String dtdLocation = this.getClass().getResource(pathToDTD)
 					.toString();
 			locateFile(xmlSrc);
-			// TODO check paths elsewhere && output appropriate exceptions
 			TransformerFactory tf = TransformerFactory.newInstance();
 			Transformer tr = tf.newTransformer();
 			tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, dtdLocation);
@@ -146,7 +153,7 @@ public class XMLDataExchanger implements IDataExchanger {
 					CustomErrorMessages.ERROR_VALIDATING_XML);
 		} catch (TransformerException e) {
 			throw new PropertyException(String.format(
-					CustomErrorMessages.ERROR_INVALID_CONTENT, xmlSrc));
+					CustomErrorMessages.ERROR_INVALID_CONTENT, Paths.get(xmlSrc).getFileName()));
 		}
 	}
 	

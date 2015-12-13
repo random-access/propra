@@ -45,7 +45,7 @@ public final class CustomErrorMessages {
     public static final String ERROR_PROPERTY_READ = "Property-Datei existiert nicht oder kann nicht gelesen werden.";
     
 
-    /********************************************* XML PARSING *************************************************************/
+    /********************************************* XML I / O *************************************************************/
     
     /**
      * Error message for invalid value for lengths.
@@ -62,6 +62,21 @@ public final class CustomErrorMessages {
             + "entspricht.";
     
     /**
+     * Error message for problems reading XML from source.
+     */
+    public static final String ERROR_READING_XML = "Fehler beim Lesen der Datei %s";
+    
+    /**
+     * Error message for invalid XML content.
+     */
+    public static final String ERROR_XML_CONTENT = "Die Datei %s enthält ungültige XML-Inhalte: \n--> %s";
+    
+    /**
+     * Error message for problems writing XML to target.
+     */
+    public static final String ERROR_WRITING_XML = "Fehler beim Schreiben in Datei %s";
+    
+    /**
      * Error message for missing or inaccessible DTD
      */
     public static final String ERROR_DTD_NOT_FOUND = "DTD Validierungs-Datei %s existiert nicht oder kann nicht gelesen "
@@ -72,6 +87,7 @@ public final class CustomErrorMessages {
      */
     public static final String ERROR_VALIDATING_XML = "Ein interner Fehler ist aufgetreten, die DTD-Validierung konnte "
             + "nicht initialisiert werden.";
+
     
 
     /********************************************* INPUT PARSING *******************************************************/
