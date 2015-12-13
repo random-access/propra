@@ -101,8 +101,6 @@ public class Solver implements ISolver {
         // try to place tiles using backtracking as long as there are any
         // possibilities
         do {
-            // System.out.println("****** Solver -> getting next tile for pos "
-            // + pos + "...");
             tile = tileChooser.getNextTile(pos, tile);
             foundTileThatFits = false;
 
@@ -110,7 +108,6 @@ public class Solver implements ISolver {
             while (tile != null && !foundTileThatFits) {
                 if (placeNextTile(tile, pos)) {
                     posList.add(pos);
-                    // System.out.println(composite);
                     foundTileThatFits = true;
                     pos = posFinder.findNextFreePosition(composite, pos);
                     if (ruleChecker.checkEndConditions(composite, tile, pos)) {
@@ -129,13 +126,12 @@ public class Solver implements ISolver {
             // could be found at the current position
             if (!foundTileThatFits) {
                 pos = posList.pollLast();
+                
+                // pos is null if tile list is empty
                 if (pos != null) {
                     tile = composite.getSurface().getEntryAt(pos);
                     composite.getSurface().removeEntry(tile, pos);
                 }
-            }
-            if (posList.isEmpty()) {
-                System.out.println("Emptied posList!");
             }
         } while (pos != null);
         // log.info("Iterations: " + counter);
@@ -148,7 +144,6 @@ public class Solver implements ISolver {
     private boolean placeNextTile(Tile tile, Position pos) {
         if (ruleChecker.checkImplicitRules(composite, tile, pos) && ruleChecker.checkExplicitRules(composite, tile, pos)) {
             composite.getSurface().insertEntry(tile, pos);
-            // System.out.println(c);
             // counter++;
             return true;
         }
