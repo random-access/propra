@@ -1,6 +1,7 @@
 package ess.algorithm.modules;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -22,40 +23,31 @@ public class RandomTileChooser implements ITileChooser {
 
     @Override
     public Tile getNextTile(Position pos, Tile tile) {
-        if (!tileSorts.isEmpty()) {
-            if (tile == null) {
-                System.out.println("New boolean[] for pos " + pos);
-                testedTiles.add(new boolean[tileSorts.size()]);
-            }
-            int nextIndex = getNextTileIndex();
-            System.out.println("Next index: " + nextIndex);
-            boolean[] currentTestedTiles = testedTiles.getLast();
-            
-            for (int i = 0; i < currentTestedTiles.length; i++) {
-                int curr = (nextIndex + i) % currentTestedTiles.length;
-                System.out.println("Curr: " + curr);
-                if (!currentTestedTiles[curr]) {
-                    System.out.println("Get tile at " + curr);
-                    currentTestedTiles[curr] = true;
-                    return tileSorts.get(curr);
-                }
-            }
-            //System.out.println("No tile anymore for pos " + pos + testedTiles.getLast());
-            testedTiles.removeLast(); 
+        if (tile == null) {
+           //  System.out.println("New boolean[] for pos " + pos);
+            testedTiles.add(new boolean[tileSorts.size()]);
+        } else {
+           //  System.out.println("Retrieving boolean[] for pos " + pos);
         }
+        int nextIndex = getNextTileIndex();
+        // System.out.println("Next index: " + nextIndex);
+        boolean[] currentTestedTiles = testedTiles.peekLast();
+        // System.out.println("Tested tiles at current pos: " + Arrays.toString(currentTestedTiles));
+        for (int i = 0; i < tileSorts.size(); i++) {
+            int curr = (nextIndex + i) % tileSorts.size();
+            if (!currentTestedTiles[curr]) {
+                // System.out.println("Get tile at " + curr);
+                currentTestedTiles[curr] = true;
+                return tileSorts.get(curr);
+            }
+        }
+        // System.out.println("All tiles tried out at pos " + pos);
+        testedTiles.removeLast();
         return null;
     }
 
     private int getNextTileIndex() {
         return random.nextInt(tileSorts.size());
     }
-    
-//    public static void main(String[] args) {
-//        int a = 5;
-//        int b = new Random().nextInt(5);
-//        for (int i = 0; i < 5; i++) {
-//            System.out.println((b+i) % a);
-//        }
-//    }
 
 }

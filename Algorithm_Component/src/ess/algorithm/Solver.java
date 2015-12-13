@@ -18,8 +18,9 @@ import ess.utils.ProPraLogger;
 import ess.utils.ProPraProperties;
 
 /**
- * This class implements a single-threaded Solver, which finds a solution for a given surface size and a given maximum tile length
- * which respects the rules activated in the configuration file if a solution exists.
+ * This class implements a single-threaded Solver, which finds a solution for a
+ * given surface size and a given maximum tile length which respects the rules
+ * activated in the configuration file if a solution exists.
  * 
  * @see ISolver
  * 
@@ -34,22 +35,28 @@ public class Solver implements ISolver {
     private ITileChooser tileChooser;
     private LinkedList<Position> posList;
     private Composite composite;
-    
+
     // private long counter;
 
     /**
-     * Instantiates a new Solver and loads the modules. Modules are parts of the algorithm that can 
-     * be configured via configuration file to optimize the algorithm. The algorithm can be influenced by:
+     * Instantiates a new Solver and loads the modules. Modules are parts of the
+     * algorithm that can be configured via configuration file to optimize the
+     * algorithm. The algorithm can be influenced by:
      * 
      * <ul>
-     *      <li>Use of different TileChoosers (how the next tile from tile sorts gets chosen)</li>
-     *      <li>Use of different PositionFinders (which return the next position in the surface to place a tile)</li>
-     *      <li>Use of different RuleCheckers (currently there is only 1 RuleChecker optimized for solving)</li>
+     * <li>Use of different TileChoosers (how the next tile from tile sorts gets
+     * chosen)</li>
+     * <li>Use of different PositionFinders (which return the next position in
+     * the surface to place a tile)</li>
+     * <li>Use of different RuleCheckers (currently there is only 1 RuleChecker
+     * optimized for solving)</li>
      * </ul>
      *
-     * @param composite holding the data the solver needs for building a solution
-     * @throws PropertyException if any module was not defined properly in the configuration file or the 
-     * configuration file cannot be read
+     * @param composite
+     *            holding the data the solver needs for building a solution
+     * @throws PropertyException
+     *             if any module was not defined properly in the configuration
+     *             file or the configuration file cannot be read
      */
     public Solver(Composite composite) throws PropertyException {
         ProPraLogger.setup();
@@ -72,8 +79,7 @@ public class Solver implements ISolver {
             ruleChecker = new SolveRuleChecker();
 
             // initialize selected implementation of ITileChooser
-            String tileChooserName = ProPraProperties.HEURISTICS_PACKAGE
-                    + properties.getValue(ProPraProperties.KEY_TILE_CHOOSER);
+            String tileChooserName = ProPraProperties.HEURISTICS_PACKAGE + properties.getValue(ProPraProperties.KEY_TILE_CHOOSER);
             Constructor<?> constructor = Class.forName(tileChooserName).getConstructor(Composite.class);
             tileChooser = (ITileChooser) constructor.newInstance(composite);
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException
@@ -95,6 +101,8 @@ public class Solver implements ISolver {
         // try to place tiles using backtracking as long as there are any
         // possibilities
         do {
+            // System.out.println("****** Solver -> getting next tile for pos "
+            // + pos + "...");
             tile = tileChooser.getNextTile(pos, tile);
             foundTileThatFits = false;
 
@@ -102,6 +110,7 @@ public class Solver implements ISolver {
             while (tile != null && !foundTileThatFits) {
                 if (placeNextTile(tile, pos)) {
                     posList.add(pos);
+                    // System.out.println(composite);
                     foundTileThatFits = true;
                     pos = posFinder.findNextFreePosition(composite, pos);
                     if (ruleChecker.checkEndConditions(composite, tile, pos)) {
@@ -120,10 +129,15 @@ public class Solver implements ISolver {
             // could be found at the current position
             if (!foundTileThatFits) {
                 pos = posList.pollLast();
-                tile = composite.getSurface().getEntryAt(pos);
-                composite.getSurface().removeEntry(tile, pos);
+                if (pos != null) {
+                    tile = composite.getSurface().getEntryAt(pos);
+                    composite.getSurface().removeEntry(tile, pos);
+                }
             }
-        } while (!posList.isEmpty());
+            if (posList.isEmpty()) {
+                System.out.println("Emptied posList!");
+            }
+        } while (pos != null);
         // log.info("Iterations: " + counter);
         // log.info("Found no solution :(.");
         return false;
@@ -140,8 +154,9 @@ public class Solver implements ISolver {
         }
         return false;
     }
-    
-    // Construct array list of tiles which are in the surface, ordered from top left to bottom right
+
+    // Construct array list of tiles which are in the surface, ordered from top
+    // left to bottom right
     // to be able to hand this directly over to the writer for the data output
     private void prepareCompositeForDataOutput() {
         // In case TileChooser doesn't choose positions in order, they must get
