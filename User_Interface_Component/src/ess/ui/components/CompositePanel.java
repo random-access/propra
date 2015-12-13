@@ -11,24 +11,49 @@ import javax.swing.JComponent;
 
 import ess.data.Surface;
 
+/**
+ * This class is a subclass of JComponent that can display 
+ * a composite's surface.
+ * 
+ * It provides methods for dynamically increasing and decreasing the 
+ * field size in order to make zooming possible.
+ * 
+ * @author Monika Schrenk
+ *
+ */
 public class CompositePanel extends JComponent {
 
     private static final long serialVersionUID = 1L;
-
-    private int currentFieldSize = 20;
     
+    // bounds for the size of a single field in pixels
     private static final int MAX_FIELD_SIZE = 50;
     private static final int MIN_FIELD_SIZE = 2;
     
+    // custom background color
+    private static final Color LIGHT_BLUE = new Color(225, 225, 255);
+    
+    // measurements for line width
     private static final int STROKE_WIDTH_BG = 1;
     private static final int STROKE_WIDTH_FG = 2 * STROKE_WIDTH_BG;
+    
+    // correction factors for component size and drawing
     private static final int MINOR_STROKE_CORR = STROKE_WIDTH_FG / 2;
     private static final int STROKE_CORRECTION = (int) Math.ceil(STROKE_WIDTH_FG / (double) 2);
+    
+    // current size of a single field in pixel
+    private int currentFieldSize;
 
+    // data to be displayed
     private Surface surface;
 
-    public CompositePanel(Surface surface) {
+    /**
+     * Instantiates a new CompositePanel.
+     * @param surface Data to be displayed.
+     * @param initialFieldSize Initial size of a single field in pixel.
+     */
+    public CompositePanel(Surface surface, int initialFieldSize) {
         super();
+        this.currentFieldSize = initialFieldSize;
         this.surface = surface;
     }
 
@@ -59,7 +84,7 @@ public class CompositePanel extends JComponent {
     }
     
     private void drawBackground(Graphics2D g2d) {
-        g2d.setColor(new Color(225,225,255));
+        g2d.setColor(LIGHT_BLUE);
         g2d.fill(new Rectangle(0, 0, getWidth(), getHeight()));
     }
 
@@ -103,6 +128,9 @@ public class CompositePanel extends JComponent {
         }
     }
     
+    /**
+     * Increase the size of a single field by 1 pixel and refresh the view.
+     */
     public void increaseFieldSize() {
         if (currentFieldSize < MAX_FIELD_SIZE) {
             currentFieldSize++;
@@ -110,15 +138,14 @@ public class CompositePanel extends JComponent {
         this.revalidate();
     }
     
+    /**
+     * Decrease the size of a single field by 1 pixel and refresh the view.
+     */
     public void decreaseFieldSize() {
         if (currentFieldSize > MIN_FIELD_SIZE) {
             currentFieldSize--;
         }
         this.revalidate();
-    }
-    
-    public int getFieldSize() {
-        return currentFieldSize;
     }
 
 }

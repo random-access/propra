@@ -10,7 +10,7 @@ import ess.data.Composite;
  * The observer pattern is used because the main component doesn't know if the Solver finds a solution or not 
  * and the Solver / Validator doesn't know if the user started the application with the option "display" or not. 
  * 
- * @author monika
+ * @author Monika Schrenk
  *
  */
 public abstract class AbstractOutputObservable extends Observable {

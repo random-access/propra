@@ -45,10 +45,8 @@ public class MainWindow extends JFrame implements ICompositeView {
     private static final double MAX_INITIAL_WINDOW_HEIGHT = SCREEN_SIZE.getHeight() * 0.75;
     private static final Dimension MIN_WINDOW_SIZE = new Dimension(100, 100);
 
-    // custom colors
+    // custom background color for top and bottom area
     private static final Color DARK_BACKGROUND = new Color(0, 0, 102);
-    private static final Color LIGHT_FONT = Color.LIGHT_GRAY;
-    private static final Color DARK_FONT = Color.BLACK;
 
     // custom padding width
     private static final int COMPONENT_PADDING = 20;
@@ -56,6 +54,9 @@ public class MainWindow extends JFrame implements ICompositeView {
     // constants for customizing font
     private static final int TEXT_PADDING = 3;
     private static final int DEFAULT_FONT_SIZE = 14;
+    
+    // constant for initial size of a single field in the surface
+    private static final int INITIAL_FIELD_SIZE = 20;
 
     // window components
     private JPanel pnlTop, pnlInfo, pnlCenter, pnlBottom;
@@ -115,10 +116,10 @@ public class MainWindow extends JFrame implements ICompositeView {
 
     // construct center area of window (data)
     private void createAndAddCenterArea() {
-        pnlComposite = new CompositePanel(composite.getSurface());
+        pnlComposite = new CompositePanel(composite.getSurface(), INITIAL_FIELD_SIZE);
         pnlCenter = new CustomPanel(COMPONENT_PADDING);
         pnlCenter.setLayout(new GridBagLayout());
-        JLabel lblZoomInfo = new CustomLabel("Zum Zoomen + und - verwenden.", DEFAULT_FONT_SIZE, DARK_FONT);
+        JLabel lblZoomInfo = new CustomLabel("Zum Zoomen + und - verwenden.", DEFAULT_FONT_SIZE, Color.BLACK);
         
         // use GridBagLayout to easily center content of pnlCenter horizontally & vertically
         // add lblZoomInfo on top of center area
@@ -166,16 +167,16 @@ public class MainWindow extends JFrame implements ICompositeView {
 
     // create labels that hold info messages, depending on application mode
     private void createAndAddInfoLabels(List<String> errorList, String execMode) {
-        pnlInfo.add(new CustomLabel(execMode, DEFAULT_FONT_SIZE, LIGHT_FONT));
+        pnlInfo.add(new CustomLabel(execMode, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY));
         if (errorList == null) {
             return;
         }
         if (errorList.size() == 0) {
-            JLabel label = new CustomLabel(CustomInfoMessages.INFO_VALID_COMPOSITE, DEFAULT_FONT_SIZE, LIGHT_FONT);
+            JLabel label = new CustomLabel(CustomInfoMessages.INFO_VALID_COMPOSITE, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
             pnlInfo.add(label);
         } else {
             for (int i = 0; i < errorList.size(); i++) {
-                JLabel label = new CustomLabel(errorList.get(i), DEFAULT_FONT_SIZE, LIGHT_FONT);
+                JLabel label = new CustomLabel(errorList.get(i), DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
                 pnlInfo.add(label);
             }
         }

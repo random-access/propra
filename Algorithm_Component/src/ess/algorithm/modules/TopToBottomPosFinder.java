@@ -4,9 +4,14 @@ import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Surface;
 
+/**
+ * This class is an implementation IPositionFinder that returns positions
+ * from top to bottom, iterating through the columns from left to right.
+ */
 public class TopToBottomPosFinder implements IPositionFinder {
 
     /**
+     * TODO remove
      * Returns the next free position in the given surface, that means the next
      * position from top left to bottom right with value != -1.<br>
      * <br>
@@ -30,6 +35,8 @@ public class TopToBottomPosFinder implements IPositionFinder {
      * _ _ _ _ _ _</li><br>
      * </ul>
      *
+     * @param composite the composite
+     * @param pos the pos
      * @return a point with the next free position in the given surface or null
      *         if no free position is available anymore
      */

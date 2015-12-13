@@ -6,8 +6,6 @@ import ess.algorithm.RoemischerVerbund.Validation;
 
 /**
  * The Interface IRoemischerVerbund.
- * 
- * @author Monika Schrenk
  */
 public interface IRoemischerVerbund {
 
