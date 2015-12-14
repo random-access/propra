@@ -48,11 +48,17 @@ public final class CustomErrorMessages {
     /********************************************* XML I / O *************************************************************/
     
     /**
-     * Error message for invalid value for lengths.
+     * Error message for invalid value for tile length.
      */
     public static final String ERROR_INVALID_DATATYPE_TILE_LENGTH = "Ung\u00fcltiger Wert für Fliesenl\u00e4nge! Alle "
-            + "Fliesenl\u00e4ngen m\u00fcssen positive "
-            + "Ganzzahlen und ein Vielfaches von 20 sein.";
+            + "Fliesenl\u00e4ngen m\u00fcssen positive Ganzzahlen und ein Vielfaches von 20 sein.";
+    
+    
+    /**
+     * Error message for invalid value for surface length.
+     */
+    public static final String ERROR_INVALID_DATATYPE_SURFACE_LENGTH = "Ung\u00fcltiger Wert für Ma\u00dfe des Verlegungsplans! "
+            + "H\u00f6he und Breite m\u00fcssen positive Ganzzahlen und ein Vielfaches von 20 sein.";
     
     /**
      * Error message for file with invalid XML content

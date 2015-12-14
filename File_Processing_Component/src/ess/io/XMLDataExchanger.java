@@ -14,7 +14,6 @@ import java.util.List;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
@@ -58,9 +57,9 @@ public class XMLDataExchanger implements IDataExchanger {
 			SAXBuilder sb = new SAXBuilder(XMLReaders.DTDVALIDATING);
 			doc = sb.build(is);
 			Element rootElement = doc.getRootElement();
-			int cols = convertSize(rootElement
+			int cols = convertSurfaceSize(rootElement
 					.getAttributeValue(XMLValues.LENGTH_1));
-			int rows = convertSize(rootElement
+			int rows = convertSurfaceSize(rootElement
 					.getAttributeValue(XMLValues.LENGTH_2));
 			ArrayList<Tile> tileSorts = readTileSorts(rootElement);
 			ArrayList<String> surfaceTiles = readSurfaceTiles(rootElement);
@@ -148,9 +147,6 @@ public class XMLDataExchanger implements IDataExchanger {
 			Result res = new StreamResult(baos);
 			tr.transform(new StreamSource(xmlSrc), res);
 			return new ByteArrayInputStream(baos.toByteArray());
-		} catch (TransformerConfigurationException e) {
-			throw new PropertyException(
-					CustomErrorMessages.ERROR_VALIDATING_XML);
 		} catch (TransformerException e) {
 			throw new PropertyException(String.format(
 					CustomErrorMessages.ERROR_INVALID_CONTENT, Paths.get(xmlSrc).getFileName()));
@@ -168,12 +164,12 @@ public class XMLDataExchanger implements IDataExchanger {
 	}
 
 	private ArrayList<String> readSurfaceTiles(Element rootElement) {
-		Element verlegungsplan = rootElement.getChild(XMLValues.VERLEGUNGSPLAN);
+		Element plan = rootElement.getChild(XMLValues.VERLEGUNGSPLAN);
 		ArrayList<String> tiles = new ArrayList<>();
-		if (verlegungsplan == null) {
+		if (plan == null) {
 			return tiles;
 		}
-		List<Element> fliesen = verlegungsplan.getChildren();
+		List<Element> fliesen = plan.getChildren();
 		for (Element elem : fliesen) {
 			tiles.add(elem.getAttributeValue(XMLValues.FLIESEN_ID));
 		}
@@ -188,17 +184,17 @@ public class XMLDataExchanger implements IDataExchanger {
 		ArrayList<Tile> tiles = new ArrayList<>();
 		for (Element elem : fliesen) {
 			String id = elem.getAttributeValue(XMLValues.IDENT);
-			int cols = convertSize(elem.getChildText(XMLValues.LENGTH_1));
-			int rows = convertSize(elem.getChildText(XMLValues.LENGTH_2));
+			int cols = convertTileSize(elem.getChildText(XMLValues.LENGTH_1));
+			int rows = convertTileSize(elem.getChildText(XMLValues.LENGTH_2));
 			tiles.add(new Tile(id, rows, cols));
 		}
 		return tiles;
 	}
 	
-	// Converts a length value into the internal data model
+	// Converts a tile length value into the internal data model
 	// Throws an InvalidSizeValueException if valueToConvert is not a positive integer 
 	// or if valueToConvert can not be exactly divided by 20.
-	private int convertSize(String valueToConvert)
+	private int convertTileSize(String valueToConvert)
 			throws InvalidSizeValueException {
 		try {
 			int externalSize = Integer.parseInt(valueToConvert);
@@ -209,7 +205,22 @@ public class XMLDataExchanger implements IDataExchanger {
 		} catch (NumberFormatException e) {
 			throw new InvalidSizeValueException(CustomErrorMessages.ERROR_INVALID_DATATYPE_TILE_LENGTH);
 		}
-		
 	}
+	
+	// Converts a surface length value into the internal data model
+    // Throws an InvalidSizeValueException if valueToConvert is not a positive integer 
+    // or if valueToConvert can not be exactly divided by 20.
+    private int convertSurfaceSize(String valueToConvert)
+            throws InvalidSizeValueException {
+        try {
+            int externalSize = Integer.parseInt(valueToConvert);
+            if (externalSize <= 0 || externalSize % XMLValues.CONVERSION_UNIT != 0) {
+                throw new InvalidSizeValueException(CustomErrorMessages.ERROR_INVALID_DATATYPE_SURFACE_LENGTH);
+            }
+            return externalSize / XMLValues.CONVERSION_UNIT;
+        } catch (NumberFormatException e) {
+            throw new InvalidSizeValueException(CustomErrorMessages.ERROR_INVALID_DATATYPE_SURFACE_LENGTH);
+        }
+    }
 
 }
