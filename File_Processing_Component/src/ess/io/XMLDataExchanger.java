@@ -31,6 +31,7 @@ import ess.data.Composite;
 import ess.data.Tile;
 import ess.exc.PropertyException;
 import ess.io.exc.DataExchangeException;
+import ess.io.exc.TileSortException;
 import ess.io.exc.InvalidSizeValueException;
 import ess.strings.CustomErrorMessages;
 
@@ -42,8 +43,6 @@ import ess.strings.CustomErrorMessages;
 public class XMLDataExchanger implements IDataExchanger {
 
 	private Document doc;
-	
-	// TODO check same tile ID
 
 	/*
 	 * (non-Javadoc)
@@ -64,8 +63,7 @@ public class XMLDataExchanger implements IDataExchanger {
 			ArrayList<Tile> tileSorts = readTileSorts(rootElement);
 			ArrayList<String> surfaceTiles = readSurfaceTiles(rootElement);
 			return new Composite(rows, cols, surfaceTiles, tileSorts);
-		} catch (InvalidSizeValueException | PropertyException exc) {
-		    // take error messages from exceptions, otherwise add error message
+		} catch (InvalidSizeValueException | PropertyException | TileSortException exc) {
 		    throw new DataExchangeException(exc.getMessage());
 		} catch (IOException exc) {
 		    throw new DataExchangeException(String.format(CustomErrorMessages.ERROR_READING_XML, 
@@ -158,7 +156,7 @@ public class XMLDataExchanger implements IDataExchanger {
 	private void locateFile(String xmlSrc) throws PropertyException {
 		if (!Files.isRegularFile(Paths.get(xmlSrc))) {
 			throw new PropertyException(String.format(
-					CustomErrorMessages.ERROR_PATH_NOT_FOUND, "\"" + xmlSrc
+					CustomErrorMessages.ERROR_INVALID_PATH, "\"" + xmlSrc
 							+ "\""));
 		}
 	}
@@ -178,12 +176,12 @@ public class XMLDataExchanger implements IDataExchanger {
 
 	// Converts tile sorts from XML into internal data model.
 	// Throws an InvalidSizeValueException if a length element holds an invalid value
-	private ArrayList<Tile> readTileSorts(Element rootElement) throws InvalidSizeValueException {
+	private ArrayList<Tile> readTileSorts(Element rootElement) throws InvalidSizeValueException, TileSortException {
 		Element fliesentypen = rootElement.getChild(XMLValues.FLIESENTYPEN);
 		List<Element> fliesen = fliesentypen.getChildren();
 		ArrayList<Tile> tiles = new ArrayList<>();
 		for (Element elem : fliesen) {
-			String id = elem.getAttributeValue(XMLValues.IDENT);
+		    String id = elem.getAttributeValue(XMLValues.IDENT);
 			int cols = convertTileSize(elem.getChildText(XMLValues.LENGTH_1));
 			int rows = convertTileSize(elem.getChildText(XMLValues.LENGTH_2));
 			tiles.add(new Tile(id, rows, cols));

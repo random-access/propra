@@ -42,7 +42,7 @@ public class XML_Import_Test {
     }
 
     @Test
-    public void importValidationTestInvalidSurfaceLength() throws DataExchangeException {
+    public void importInvalidSurfaceLength() throws DataExchangeException {
         XMLDataExchanger xmlExchanger = new XMLDataExchanger();
         exception.expect(DataExchangeException.class);
         exception.expectMessage(CustomErrorMessages.ERROR_INVALID_DATATYPE_SURFACE_LENGTH);
@@ -50,7 +50,7 @@ public class XML_Import_Test {
     }
 
     @Test
-    public void importValidationTestNegativeSurfaceLength() throws DataExchangeException {
+    public void importNegativeSurfaceLength() throws DataExchangeException {
         XMLDataExchanger xmlExchanger = new XMLDataExchanger();
         exception.expect(DataExchangeException.class);
         exception.expectMessage(CustomErrorMessages.ERROR_INVALID_DATATYPE_SURFACE_LENGTH);
@@ -58,7 +58,7 @@ public class XML_Import_Test {
     }
     
     @Test
-    public void importValidationTestNanSurfaceLength() throws DataExchangeException {
+    public void importNanSurfaceLength() throws DataExchangeException {
         XMLDataExchanger xmlExchanger = new XMLDataExchanger();
         exception.expect(DataExchangeException.class);
         exception.expectMessage(CustomErrorMessages.ERROR_INVALID_DATATYPE_SURFACE_LENGTH);
@@ -66,7 +66,7 @@ public class XML_Import_Test {
     }
 
     @Test
-    public void importValidationTestInvalidTileLength() throws DataExchangeException {
+    public void importInvalidTileLength() throws DataExchangeException {
         XMLDataExchanger xmlExchanger = new XMLDataExchanger();
         exception.expect(DataExchangeException.class);
         exception.expectMessage(CustomErrorMessages.ERROR_INVALID_DATATYPE_TILE_LENGTH);
@@ -74,7 +74,7 @@ public class XML_Import_Test {
     }
 
     @Test
-    public void importValidationTestNegativeTileLength() throws DataExchangeException {
+    public void importNegativeTileLength() throws DataExchangeException {
         XMLDataExchanger xmlExchanger = new XMLDataExchanger();
         exception.expect(DataExchangeException.class);
         exception.expectMessage(CustomErrorMessages.ERROR_INVALID_DATATYPE_TILE_LENGTH);
@@ -82,11 +82,29 @@ public class XML_Import_Test {
     }
     
     @Test
-    public void importValidationTestNanTileLength() throws DataExchangeException {
+    public void importNanTileLength() throws DataExchangeException {
         XMLDataExchanger xmlExchanger = new XMLDataExchanger();
         exception.expect(DataExchangeException.class);
         exception.expectMessage(CustomErrorMessages.ERROR_INVALID_DATATYPE_TILE_LENGTH);
         xmlExchanger.readFromSource("instances/validationInstances/nan-tile-length.xml");
+    }
+    
+    @Test
+    public void importDuplicateTileSort() throws DataExchangeException {
+        XMLDataExchanger xmlExchanger = new XMLDataExchanger();
+        exception.expect(DataExchangeException.class);
+        // last parameter in String.format "" is for any message from DTD validation
+        exception.expectMessage(String.format(CustomErrorMessages.ERROR_XML_CONTENT, "duplicate-tile-sort.xml", ""));
+        xmlExchanger.readFromSource("instances/validationInstances/duplicate-tile-sort.xml");
+    }
+    
+    @Test
+    public void importUnknownTileSort() throws DataExchangeException {
+        XMLDataExchanger xmlExchanger = new XMLDataExchanger();
+        exception.expect(DataExchangeException.class);
+        // last parameter in String.format "" is for any message from DTD validation
+        exception.expectMessage(String.format(CustomErrorMessages.ERROR_XML_CONTENT, "unknown-tile-sort.xml", ""));
+        xmlExchanger.readFromSource("instances/validationInstances/unknown-tile-sort.xml");
     }
     
     @Test
@@ -101,15 +119,29 @@ public class XML_Import_Test {
     public void importNotAFile() throws DataExchangeException {
         XMLDataExchanger xmlExchanger = new XMLDataExchanger();
         exception.expect(DataExchangeException.class);
-        exception.expectMessage(String.format(CustomErrorMessages.ERROR_PATH_NOT_FOUND, "\"blubb\""));
+        exception.expectMessage(String.format(CustomErrorMessages.ERROR_INVALID_PATH, "\"blubb\""));
         xmlExchanger.readFromSource("blubb");
     }
+    
+    /*
+     * Might not work on another computer because permissions might be different.
+     *  Please disown file-without-permissions.xml, remove  read & write permissions of group 
+     *  and others (or Windows equivalents) before uncommenting this test.
+     *  
+     * @Test
+    public void importFileWithoutPermissions() throws DataExchangeException {
+        XMLDataExchanger xmlExchanger = new XMLDataExchanger();
+        exception.expect(DataExchangeException.class);
+        exception.expectMessage(String.format(CustomErrorMessages.ERROR_INVALID_PATH, 
+                "\"/instances/validationInstances/file-without-permissions.xml\""));
+        xmlExchanger.readFromSource("/instances/validationInstances/file-without-permissions.xml");
+    } */
     
     @Test
     public void importInvalidXmlTag() throws DataExchangeException {
         XMLDataExchanger xmlExchanger = new XMLDataExchanger();
         exception.expect(DataExchangeException.class);
-        exception.expectMessage(String.format(CustomErrorMessages.ERROR_PATH_NOT_FOUND, 
+        exception.expectMessage(String.format(CustomErrorMessages.ERROR_INVALID_PATH, 
                 "\"/instances/validationInstances/invalid-xml-tag.xml\""));
         xmlExchanger.readFromSource("/instances/validationInstances/invalid-xml-tag.xml");
     }

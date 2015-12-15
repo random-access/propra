@@ -48,7 +48,6 @@ public class DisplayObserver implements CompositeObserver {
             public void run() {
                 switch(mode) {
                     case SOLVE_DISPLAY:
-                        // TODO change signatures, add mode to UI
                         view.display(null, obs.getPathToSource(), CustomInfoMessages.INFO_SOLVE);
                         break;
                     case VALIDATE_DISPLAY:

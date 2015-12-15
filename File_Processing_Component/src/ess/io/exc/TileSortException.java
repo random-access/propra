@@ -4,7 +4,7 @@ package ess.io.exc;
  * This Exception is thrown when duplicates of already existing tile IDs are
  * discovered.
  */
-public class DoubleTileSortException extends Exception {
+public class TileSortException extends Exception {
 
     private static final long serialVersionUID = 7632309294138737085L;
 
@@ -14,7 +14,7 @@ public class DoubleTileSortException extends Exception {
      * @param message
      *            an error message holding additional information.
      */
-    public DoubleTileSortException(String message) {
+    public TileSortException(String message) {
         super(message);
     }
 
@@ -24,7 +24,7 @@ public class DoubleTileSortException extends Exception {
      * @param cause
      *            a Throwable that caused this exception.
      */
-    public DoubleTileSortException(Throwable cause) {
+    public TileSortException(Throwable cause) {
         super(cause);
     }
 
@@ -37,7 +37,7 @@ public class DoubleTileSortException extends Exception {
      * @param cause
      *            a Throwable that caused this exception.
      */
-    public DoubleTileSortException(String message, Throwable cause) {
+    public TileSortException(String message, Throwable cause) {
         super(message, cause);
     }
 

@@ -24,7 +24,6 @@ public class Tile {
 	 * @param cols an integer greater than zero.
 	 */
 	public Tile(String id, int rows, int cols) {
-		// TODO check that row and col values are greater than zero
 		this.id = id;
 		this.rows = rows;
 		this.cols = cols;

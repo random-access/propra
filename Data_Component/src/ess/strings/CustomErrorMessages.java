@@ -53,6 +53,10 @@ public final class CustomErrorMessages {
     public static final String ERROR_INVALID_DATATYPE_TILE_LENGTH = "Ung\u00fcltiger Wert für Fliesenl\u00e4nge! Alle "
             + "Fliesenl\u00e4ngen m\u00fcssen positive Ganzzahlen und ein Vielfaches von 20 sein.";
     
+    /**
+     * Error message for duplicate tiles
+     */
+    public static final String ERROR_DUPLICATE_TILE = "Duplikate bei Fliesensorten sind nicht erlaubt.";
     
     /**
      * Error message for invalid value for surface length.
@@ -93,10 +97,9 @@ public final class CustomErrorMessages {
      */
     public static final String ERROR_VALIDATING_XML = "Ein interner Fehler ist aufgetreten, die DTD-Validierung konnte "
             + "nicht initialisiert werden.";
+   
 
-    
-
-    /********************************************* INPUT PARSING *******************************************************/
+    /********************************************* PARAMETER PARSING *******************************************************/
     
     /**
      * Error message for invalid value for parameter execution mode
@@ -138,9 +141,12 @@ public final class CustomErrorMessages {
     /**
      * Error message for invalid paths in file system.
      */
-    public static final String ERROR_PATH_NOT_FOUND = "%s existiert nicht oder ist ein Verzeichnis.";
+    public static final String ERROR_INVALID_PATH = "%s existiert nicht, ist ein Verzeichnis oder kann aufgrund fehlender "
+            + "Berechtigungen nicht gelesen werden.";
     
     
     /***************************************************** UI ERRORS ********************************************************/
     public static final String ERROR_APP_ICON = "Anwendungs-Icon konnte nicht geladen werden.";
+
+
 }
