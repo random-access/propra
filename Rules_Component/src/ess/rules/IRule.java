@@ -20,7 +20,7 @@ public interface IRule {
      * validation.
      * @return this rule's ErrorType.
      */
-	public ErrorType getErrorType();
+	ErrorType getErrorType();
 	
 	/**
 	 * Checks if this rule is broken when tile will be placed into composite's surface.
@@ -31,6 +31,6 @@ public interface IRule {
 	 * @param pos The left upper corner where tile should be placed.
 	 * @return True, if the this rule doesn't get broken when placing tile at pos, else false.
 	 */
-	public boolean check(Composite composite, Tile tile, Position pos);
+	boolean check(Composite composite, Tile tile, Position pos);
 	
 }

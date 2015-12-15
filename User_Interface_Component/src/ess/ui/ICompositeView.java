@@ -18,6 +18,6 @@ public interface ICompositeView {
      * @param pathToSource The path to the file the composite's data was read from.
      * @param execMode A message explaining the execution mode that lead to displaying a composite.
      */
-	public void display(List<String> errorList, String pathToSource, String execMode);
+	void display(List<String> errorList, String pathToSource, String execMode);
 	
 }

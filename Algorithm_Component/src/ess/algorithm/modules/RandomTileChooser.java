@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import ess.data.Composite;
-import ess.data.Position;
 import ess.data.Tile;
 
 /**
@@ -41,7 +40,7 @@ public class RandomTileChooser implements ITileChooser {
      * @see ess.algorithm.modules.ITileChooser#getNextTile(ess.data.Position, ess.data.Tile)
      */
     @Override
-    public Tile getNextTile(Position pos, Tile tile) {
+    public Tile getNextTile(Tile tile) {
         
         // if trying to fetch a tile at pos for the first time, create a new array to store informations
         if (tile == null) {

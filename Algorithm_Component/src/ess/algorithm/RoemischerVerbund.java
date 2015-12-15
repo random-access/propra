@@ -63,7 +63,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
         /**
          * Sonstige Fehler sind aufgetreten.
          */
-        FLIESE_UNPASSEND;
+        FLIESE_UNPASSEND
     }
 
     /**

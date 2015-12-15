@@ -101,7 +101,7 @@ public class Solver implements ISolver {
         // try to place tiles using backtracking as long as there are any
         // possibilities
         do {
-            tile = tileChooser.getNextTile(pos, tile);
+            tile = tileChooser.getNextTile(tile);
             foundTileThatFits = false;
 
             // try out all possible tiles at the current position
@@ -118,7 +118,7 @@ public class Solver implements ISolver {
                     }
                     tile = null;
                 } else {
-                    tile = tileChooser.getNextTile(pos, tile);
+                    tile = tileChooser.getNextTile(tile);
                 }
             }
 

@@ -23,7 +23,7 @@ public interface IDataExchanger {
 	 * @return a composite, holding the internal data
 	 * @throws DataExchangeException if an error occurred while reading from the given source
 	 */
-	public Composite readFromSource(String pathToSource) throws DataExchangeException; 
+	Composite readFromSource(String pathToSource) throws DataExchangeException; 
 	
 	/**
 	 * This method converts a composite to its external data representation and appends it to a target identified by its path.
@@ -33,6 +33,6 @@ public interface IDataExchanger {
 	 * @param pathToTarget the path to target
 	 * @throws DataExchangeException if an error occurred while writing to the target
 	 */
-	public void writeToTarget(Composite composite, String pathToTarget) throws DataExchangeException;
+	void writeToTarget(Composite composite, String pathToTarget) throws DataExchangeException;
 	
 }

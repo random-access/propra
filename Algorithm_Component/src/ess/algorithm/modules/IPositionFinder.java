@@ -19,6 +19,6 @@ public interface IPositionFinder {
      * @param pos The position where the last tile was placed.
      * @return A free position for placing the next tile.
      */
-	public Position findNextFreePosition(Composite composite, Position pos);
+	Position findNextFreePosition(Composite composite, Position pos);
 	
 }

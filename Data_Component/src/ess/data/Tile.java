@@ -68,7 +68,7 @@ public class Tile {
 	
 
 	/**
-     * Overridden by tile to be consistent with {@link #equals()}.
+     * Overridden by tile to be consistent with {@link #equals(Object obj)}.
      * Two positions have the same Hashcode if their rows and columns are the same.
      */
 	@Override
@@ -112,10 +112,7 @@ public class Tile {
 		} else if (!id.equals(other.id)) {
             return false;
         }
-		if (rows != other.rows) {
-            return false;
-        }
-		return true;
+		return (rows == other.rows);
 	}
 
 	/**

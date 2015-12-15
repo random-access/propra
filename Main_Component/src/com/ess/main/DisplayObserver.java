@@ -18,7 +18,7 @@ import ess.ui.MainWindow;
  * an AbstractOutputObservable if there is a valid composite
  * to be displayed.
  */
-public class DisplayObserver implements CompositeObserver {
+public class DisplayObserver implements ICompositeObserver {
 
     private Logger log = Logger.getGlobal();
     private ExecMode mode;

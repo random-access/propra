@@ -12,7 +12,7 @@ import ess.strings.CustomErrorMessages;
  * an AbstractOutputObservable if there is a valid composite
  * to be displayed.
  */
-public class HeadlessObserver implements CompositeObserver {
+public class HeadlessObserver implements ICompositeObserver {
 
     private Logger log = Logger.getGlobal();
     private ExecMode mode;

@@ -24,30 +24,30 @@ public interface IRuleSet {
      * Returns a set of rules to check the conditions B1-B4
      * @return A list of explicit rules to be checked.
      */
-	public LinkedList<IRule> getExplicitRules();
+	LinkedList<IRule> getExplicitRules();
 	
     /**
      * Returns a set of rules to check if a tile can be placed at a certain position without invalidating the whole composite.
      * @return A list of implicit rules to be checked.
      */
-	public LinkedList<IRule> getImplicitRules();
+	LinkedList<IRule> getImplicitRules();
 	
     /**
      * Returns a set rules to check if the surface is filled completely with tiles.
      * @return A list of end conditions to be checked.
      */
-	public LinkedList<IRule> getEndConditions();
+	LinkedList<IRule> getEndConditions();
 	
 	/**
 	 * Returns a list of errors that occurred during validation.
 	 * @return List of rules that were broken.
 	 */
-	public LinkedList<ErrorType> getErrorList();
+	LinkedList<ErrorType> getErrorList();
 
 	/**
 	 * Add an error to this RuleSet's errorList
 	 * @param errorType The ErrorType belonging to the rule that was broken.
 	 */
-	public void addError(ErrorType errorType);
+	void addError(ErrorType errorType);
 
 }

@@ -17,6 +17,6 @@ public interface ISolver {
      *
      * @return true, if a solution could be calculated, else false.
      */
-    public boolean solve();
+    boolean solve();
 
 }

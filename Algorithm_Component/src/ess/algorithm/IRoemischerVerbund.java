@@ -18,7 +18,7 @@ public interface IRoemischerVerbund {
      *            maximale Fugenlänge der zu berechnenden Lösung.
      * @return Liste von Fehlern, die fehlgeschlagen sind.
      */
-    public List<Validation> validateSolution(String xmlFile, int maxFugenLaenge);
+    List<Validation> validateSolution(String xmlFile, int maxFugenLaenge);
 
     /**
      * Ermittelt eine Lösung zu den eingegebenen Daten.
@@ -29,5 +29,5 @@ public interface IRoemischerVerbund {
      *            maximale Fugenlänge der zu berechnenden Lösung.
      * @return konnte eine Lösung gefunden werden? true = ja, false = nein.
      */
-    public boolean solve(String xmlFile, int maxFugenLaenge);
+    boolean solve(String xmlFile, int maxFugenLaenge);
 }

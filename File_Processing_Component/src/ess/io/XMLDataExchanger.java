@@ -63,7 +63,7 @@ public class XMLDataExchanger implements IDataExchanger {
 			ArrayList<Tile> tileSorts = readTileSorts(rootElement);
 			ArrayList<String> surfaceTiles = readSurfaceTiles(rootElement);
 			return new Composite(rows, cols, surfaceTiles, tileSorts);
-		} catch (InvalidSizeValueException | PropertyException | TileSortException exc) {
+		} catch (InvalidSizeValueException | PropertyException exc) {
 		    throw new DataExchangeException(exc.getMessage());
 		} catch (IOException exc) {
 		    throw new DataExchangeException(String.format(CustomErrorMessages.ERROR_READING_XML, 
@@ -176,7 +176,7 @@ public class XMLDataExchanger implements IDataExchanger {
 
 	// Converts tile sorts from XML into internal data model.
 	// Throws an InvalidSizeValueException if a length element holds an invalid value
-	private ArrayList<Tile> readTileSorts(Element rootElement) throws InvalidSizeValueException, TileSortException {
+	private ArrayList<Tile> readTileSorts(Element rootElement) throws InvalidSizeValueException {
 		Element fliesentypen = rootElement.getChild(XMLValues.FLIESENTYPEN);
 		List<Element> fliesen = fliesentypen.getChildren();
 		ArrayList<Tile> tiles = new ArrayList<>();

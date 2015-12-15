@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import ess.data.Composite;
-import ess.data.Position;
 import ess.data.Tile;
 import ess.data.TileComparator;
 import ess.exc.PropertyException;
@@ -35,7 +34,7 @@ public class SortedTileChooser implements ITileChooser {
 	 * @see ess.algorithm.modules.ITileChooser#getNextTile(ess.data.Position, ess.data.Tile)
 	 */
 	@Override
-	public Tile getNextTile(Position pos, Tile tile) {
+	public Tile getNextTile(Tile tile) {
 		if (!tileSorts.isEmpty()) {
 			if (tile == null) {
 				return tileSorts.get(0);

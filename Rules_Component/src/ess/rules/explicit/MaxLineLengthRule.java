@@ -66,11 +66,10 @@ public class MaxLineLengthRule implements IRule {
         switch(edge) {
             case TOP:
             case BOTTOM:
-                int innerRow = startRow;
-                int outerRow = innerRow + edge.getNextRowOffset();
+                int outerRow = startRow + edge.getNextRowOffset();
                 int currentCol = startCol + step;
-                while (s.isInsideSurface(innerRow,  currentCol) && isLine) {
-                    innerTile = s.getEntryAt(innerRow, currentCol);
+                while (s.isInsideSurface(startRow,  currentCol) && isLine) {
+                    innerTile = s.getEntryAt(startRow, currentCol);
                     outerTile = s.getEntryAt(outerRow, currentCol);
                     if (!s.isInsideSurface(outerRow, currentCol) || innerTile == null && outerTile == null || innerTile != null
                             && outerTile != null && innerTile == outerTile) {
@@ -83,11 +82,10 @@ public class MaxLineLengthRule implements IRule {
                 break;
             case LEFT:
             case RIGHT:
-                int innerCol = startCol;
-                int outerCol = innerCol + edge.getNextColOffset();
+                int outerCol = startCol + edge.getNextColOffset();
                 int currentRow = startRow + step;
-                while (s.isInsideSurface(currentRow,  innerCol) && isLine) {
-                    innerTile = s.getEntryAt(currentRow, innerCol);
+                while (s.isInsideSurface(currentRow,  startCol) && isLine) {
+                    innerTile = s.getEntryAt(currentRow, startCol);
                     outerTile = s.getEntryAt(currentRow, outerCol);
                     if (!s.isInsideSurface(currentRow, outerCol) || innerTile == null && outerTile == null || innerTile != null
                             && outerTile != null && innerTile == outerTile) {
