@@ -105,7 +105,7 @@ public class Solver implements ISolver {
             foundTileThatFits = false;
 
             // try out all possible tiles at the current position
-            while (tile != null && !foundTileThatFits) {
+            while (tile != null) {
                 if (placeNextTile(tile, pos)) {
                     posList.add(pos);
                     foundTileThatFits = true;

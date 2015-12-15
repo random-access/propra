@@ -135,7 +135,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
     @Override
     public List<String> getErrors() {
         if (errorList == null) {
-            return new LinkedList<String>();
+            return new LinkedList<>();
         }
         return ErrorMapper.mapErrorsForUi(errorList);
     }

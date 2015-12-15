@@ -57,10 +57,8 @@ public final class Main {
             log.info("Setting path to " + inputParser.getPath() + "...");
             log.info("Setting max. tile length to " + inputParser.getMaxTileLength() + "...");
             log.info("Setting mode to " + inputParser.getMode() + "...");
-            
-            if (v instanceof AbstractOutputObservable) {
-                initDisplay(inputParser.getMode(), (AbstractOutputObservable) v);
-            }
+
+            initDisplay(inputParser.getMode(), (AbstractOutputObservable) v);
             
             executeAlgorithm(v, inputParser);
             

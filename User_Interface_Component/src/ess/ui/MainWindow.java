@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.WindowConstants;
 
 import ess.data.Composite;
 import ess.strings.CustomErrorMessages;
@@ -75,7 +76,7 @@ public class MainWindow extends JFrame implements ICompositeView {
      */
     public MainWindow(Composite composite) {
         this.composite = composite;
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         try {
             setIconImage(ImageIO.read(getClass().getResourceAsStream("/resources/ic_starter.png")));
         } catch (IOException e) {
@@ -177,8 +178,8 @@ public class MainWindow extends JFrame implements ICompositeView {
             JLabel label = new CustomLabel(CustomInfoMessages.INFO_VALID_COMPOSITE, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
             pnlInfo.add(label);
         } else {
-            for (int i = 0; i < errorList.size(); i++) {
-                JLabel label = new CustomLabel("\u2022 " + errorList.get(i), DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
+            for (String error : errorList) {
+                JLabel label = new CustomLabel("\u2022 " + error, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
                 pnlInfo.add(label);
             }
         }

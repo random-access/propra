@@ -21,6 +21,7 @@ public class PropertyException extends Exception {
         super(message);
     }
     
+    // TODO evaluate if constructors below are necessary
 
     /**
      * Instantiates a new PropertyException, passing its cause.

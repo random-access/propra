@@ -149,7 +149,7 @@ public class Surface {
      * @param pos a position.
      * @return true, if the position's column is an edge column,
      * otherwise false.
-     * @see {@link #isEdgeCol(int)}
+     * @see {@link #isEdgeCol(int col)}
      */
     public boolean isEdgeCol(Position pos) {
         return isEdgeCol(pos.getCol());
@@ -186,7 +186,7 @@ public class Surface {
      * Returns true if the position's row and col are inside the surface, else false.
      * @param pos a position.
      * @return true if row and column of the given position are inside this surface, otherwise false.
-     * @see {@link #isInsideSurface(row, col)}
+     * @see {@link #isInsideSurface(int row, int col)}
      */
     public boolean isInsideSurface(Position pos) {
         return isInsideSurface(pos.getRow(), pos.getCol());
@@ -331,6 +331,7 @@ public class Surface {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("rows: ").append(fields.length).append(", cols: ").append(fields[0].length).append("\n");
+        // TODO can somehow be replaced by foreach loop
         for (int i = 0; i < fields.length; i++) {
             for (int j = 0; j < fields[0].length; j++) {
                 Tile t = fields[i][j];

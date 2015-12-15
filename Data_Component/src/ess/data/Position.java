@@ -61,7 +61,7 @@ public class Position implements Comparable<Position> {
 	}
 	
 	/**
-	 * Overridden by position to be consistent with {@link #equals()}.
+	 * Overridden by position to be consistent with {@link #equals(Object object)}.
 	 * Two positions have the same Hashcode if their rows and columns are the same.
 	 */
 	@Override
@@ -93,13 +93,7 @@ public class Position implements Comparable<Position> {
 			return false;
 		}
 		Position other = (Position) obj;
-		if (col != other.col) {
-			return false;
-		}
-		if (row != other.row) {
-			return false;
-		}
-		return true;
+		return col == other.col && row == other.row;
 	}
 	
 	

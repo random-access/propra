@@ -102,11 +102,10 @@ public final class ProPraProperties {
 	 * Load properties from config.properties.
 	 * 
 	 * @return a Properties object holding the values from the config file.
-	 * @throws PropertyException
+	 * @throws IOException
 	 *             if the file is not existing or cannot be read.
 	 */
-	private Properties loadProperties() throws FileNotFoundException,
-			IOException {
+	private Properties loadProperties() throws IOException {
 		Properties p = new Properties();
 		p.load(getClass().getResourceAsStream(PATH_TO_PROPERTIES));
 		return p;
