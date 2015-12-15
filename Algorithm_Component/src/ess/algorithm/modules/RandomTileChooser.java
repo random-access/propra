@@ -31,7 +31,7 @@ public class RandomTileChooser implements ITileChooser {
      * @param composite The composite that stores the surface where the next tile should be inserted.
      */
     public RandomTileChooser(Composite composite) {
-        tileSorts = new ArrayList<Tile>(composite.getTileSorts());
+        tileSorts = new ArrayList<>(composite.getTileSorts());
         testedTiles = new LinkedList<>();
         random = new Random();
     }

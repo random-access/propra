@@ -101,6 +101,8 @@ public class MaxLineLengthRule implements IRule {
         }
         return currentLineLength;
     }
+    
+    
 
     @Override
     public ErrorType getErrorType() {

@@ -153,7 +153,7 @@ public class XML_Import_Test {
 
     private void testSolveIntegrity(String pathToSource) {
         XMLDataExchanger xmlExchanger = new XMLDataExchanger();
-        Composite c = null;
+        Composite c;
 
         try {
             c = xmlExchanger.readFromSource(pathToSource);
@@ -168,7 +168,7 @@ public class XML_Import_Test {
 
     private void testValidationIntegrity(String pathToSource) {
         XMLDataExchanger xmlExchanger = new XMLDataExchanger();
-        Composite c = null;
+        Composite c;
 
         try {
             c = xmlExchanger.readFromSource(pathToSource);

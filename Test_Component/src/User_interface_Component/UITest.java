@@ -20,7 +20,7 @@ public class UITest {
 		Validator v = new Validator(c);
 		v.validateSolution();
 		ICompositeView view = new MainWindow(c);
-		List<String> errorList= new LinkedList<String>();
+		List<String> errorList= new LinkedList<>();
 		errorList.add("Fehler 1");
 		errorList.add("Fehler 2");
 		errorList.add("Fehler 3");

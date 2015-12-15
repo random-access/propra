@@ -26,7 +26,7 @@ public class SortedTileChooser implements ITileChooser {
 	 * @throws PropertyException if config.properties cannot be read or if it stores invalid values.
 	 */
 	public SortedTileChooser(Composite composite) throws PropertyException {
-		tileSorts = new ArrayList<Tile>(composite.getTileSorts());
+		tileSorts = new ArrayList<>(composite.getTileSorts());
 		applySortingStrategy();
 	}
 

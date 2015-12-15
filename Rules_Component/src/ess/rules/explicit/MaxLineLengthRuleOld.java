@@ -66,8 +66,8 @@ public class MaxLineLengthRuleOld implements IRule {
         Position currentOuterPos = new Position(0, 0);
         int currentLineLength = 0;
         boolean isLine = true;
-        Tile innerTile = null;
-        Tile outerTile = null;
+        Tile innerTile;
+        Tile outerTile;
         while (s.isInsideSurface(currentInnerPos) && isLine) {
             currentOuterPos.setRow(currentInnerPos.getRow() + edge.getNextRowOffset());
             currentOuterPos.setColumn(currentInnerPos.getCol() + edge.getNextColOffset());

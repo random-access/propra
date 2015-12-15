@@ -40,10 +40,10 @@ public class ReplaceableTileRule implements IRule {
      * 
      * @param c
      *            the composite with the surface to test
-     * @param e
-     *            the SurfaceEntry that was inserted last
      * @param tile
      *            the Tile that should be tested as a replacement
+     * @param pos the position where tile should get inserted
+     * @param rTile the tile that is tested as a replacement
      * @return true, if this tile replaces an area filled with smaller tiles,
      *         else false
      */
@@ -64,10 +64,10 @@ public class ReplaceableTileRule implements IRule {
      * 
      * @param c
      *            the composite with the surface to test
-     * @param e
-     *            the SurfaceEntry that was inserted last
      * @param tile
      *            the Tile that should be tested as a replacement
+     * @param pos the position where tile should get inserted
+     * @param rTile the tile that is tested as a replacement
      * @param corner
      *            the Corner where the tile should be inserted
      * @return true, if tile replaces an area filled with smaller tiles when
@@ -93,17 +93,19 @@ public class ReplaceableTileRule implements IRule {
      * 
      * @param c
      *            the composite with the surface to test
-     * @param coverEntry
-     *            the virtual entry holding the positions of the tile
+     * @param rTile the tile that is tested as a replacement
+     * @param rPos the left upper corner where the replacement tile would be placed
      * @param edge
      *            the edge to be tested
+     * @param tile the Tile that should be tested as a replacement     
+     * @param pos the position where tile should get inserted
      * @return true, if this edge is a tile border, else false
      */
     private boolean isTileBorder(Composite c, Tile rTile, Position rPos, Edge edge, Tile tile, Position pos) {
         Position corner1 = c.getSurface().getCornerPos(rTile, rPos, edge.getFirstCorner());
         Position corner2 = c.getSurface().getCornerPos(rTile, rPos, edge.getSecondCorner());
-        Tile inside = null;
-        Tile outside = null;
+        Tile inside;
+        Tile outside;
         for (int i = corner1.getRow(); i <= corner2.getRow(); i++) {
             for (int j = corner1.getCol(); j <= corner2.getCol(); j++) {
 
@@ -141,10 +143,10 @@ public class ReplaceableTileRule implements IRule {
      * 
      * @param c
      *            the composite with the surface to test
-     * @param e
-     *            the SurfaceEntry that was inserted last
      * @param tile
      *            the Tile that should be tested as a replacement
+     * @param pos the position where tile should get inserted
+     * @param rTile the tile that is tested as a replacement
      * @param corner
      *            the Corner where the tile should be inserted
      * @return a SurfaceEntry with the positions of tile placed in corner, null

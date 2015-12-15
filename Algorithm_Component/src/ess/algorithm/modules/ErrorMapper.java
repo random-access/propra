@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import ess.algorithm.RoemischerVerbund;
 import ess.algorithm.RoemischerVerbund.Validation;
 import ess.rules.ErrorType;
 import ess.rules.sets.IRuleSet;
@@ -43,7 +44,7 @@ public final class ErrorMapper {
 	/**
 	 * Converts the error types of an IRuleSet that are returned from RulesComponent after validation
 	 * to a List with validation entries, which are needed as return type of 
-	 * {@link RoemischerVerbund#validateSolution(String, int)}
+	 * {@link ess.algorithm.RoemischerVerbund#validateSolution(String xmlFile, int maxFugenlaenge)}
 	 * @param ruleSet a set of IRules
 	 * @return a list of Validation entries
 	 */

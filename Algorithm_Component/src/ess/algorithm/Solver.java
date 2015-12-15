@@ -96,7 +96,7 @@ public class Solver implements ISolver {
     public boolean solve() {
         Position pos = posFinder.findNextFreePosition(composite, null);
         Tile tile = null;
-        boolean foundTileThatFits = true;
+        boolean foundTileThatFits;
 
         // try to place tiles using backtracking as long as there are any
         // possibilities

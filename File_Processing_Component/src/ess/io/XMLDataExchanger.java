@@ -31,7 +31,6 @@ import ess.data.Composite;
 import ess.data.Tile;
 import ess.exc.PropertyException;
 import ess.io.exc.DataExchangeException;
-import ess.io.exc.TileSortException;
 import ess.io.exc.InvalidSizeValueException;
 import ess.strings.CustomErrorMessages;
 

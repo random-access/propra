@@ -331,10 +331,9 @@ public class Surface {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("rows: ").append(fields.length).append(", cols: ").append(fields[0].length).append("\n");
-        // TODO can somehow be replaced by foreach loop
-        for (int i = 0; i < fields.length; i++) {
+        for (Tile[] field : fields) {
             for (int j = 0; j < fields[0].length; j++) {
-                Tile t = fields[i][j];
+                Tile t = field[j];
                 if (t == null) {
                     sb.append("__ ");
                 } else {

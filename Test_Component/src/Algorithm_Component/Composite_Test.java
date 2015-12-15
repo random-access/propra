@@ -20,7 +20,7 @@ public class Composite_Test {
 
 	@Before
 	public void buildTestComposite1() {
-		ArrayList<Tile> tileSorts = new ArrayList<Tile>();
+		ArrayList<Tile> tileSorts = new ArrayList<>();
 		tileSorts.add(new Tile("_0", 40, 20));
 		tileSorts.add(new Tile("_1", 20, 20));
 		tileSorts.add(new Tile("_2", 40, 60));
@@ -28,14 +28,14 @@ public class Composite_Test {
 		tileSorts.add(new Tile("_4", 40, 40));
 		tileSorts.add(new Tile("_5", 60, 40));
 		
-		ArrayList<String> surface = new ArrayList<String>();
+		ArrayList<String> surface = new ArrayList<>();
 		
 		composite1 = new Composite(rows1, cols1, surface, tileSorts);
 	}
 	
 	@Before
 	public void buildTestComposite2() {
-		ArrayList<Tile> tileSorts = new ArrayList<Tile>();
+		ArrayList<Tile> tileSorts = new ArrayList<>();
 		tileSorts.add(new Tile("_0", 40, 20));
 		tileSorts.add(new Tile("_4", 20, 20));
 		tileSorts.add(new Tile("_1", 40, 60));
@@ -43,7 +43,7 @@ public class Composite_Test {
 		tileSorts.add(new Tile("_3", 40, 40));
 		tileSorts.add(new Tile("_5", 60, 40));
 		
-		ArrayList<String> surface = new ArrayList<String>();
+		ArrayList<String> surface = new ArrayList<>();
 		
 		composite2 = new Composite(rows2, cols2, surface, tileSorts);
 	}
