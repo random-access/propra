@@ -29,7 +29,7 @@ public class CrossingsRule implements IRule {
 	
 	private boolean checkCorner(Corner corner, Surface surface, Tile tile, Position pos) {
 		Position cornerPos = surface.getCornerPos(tile, pos, corner);
-		if (surface.isEdgePosition(cornerPos)) {
+		if (surface.isBorderPosition(cornerPos)) {
 			return true;
 		}
 		// only inner tiles are checked here so all positions will be inside surface

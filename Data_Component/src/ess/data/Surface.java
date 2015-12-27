@@ -109,6 +109,11 @@ public class Surface {
             }
         }
     }
+    
+    public boolean isBorderEdge(Position pos, Tile t, Edge e) {
+        Position corner = getCornerPos(t, pos, e.getFirstCorner());
+        return !isInsideSurface(corner.getRow() + e.getNextRowOffset(), corner.getCol() + e.getNextColOffset());
+    }
 
     /**
      * Returns true, if the given position is an edge position of the surface, otherwise false<br>
@@ -116,10 +121,10 @@ public class Surface {
      * @param pos a position.
      * @return true, if the position's row is an edge row or the positions's column is an edge column,
      * otherwise false.
-     * @see {@link #isEdgeRow(int)} and {@link #isEdgeCol(int)}
+     * @see {@link #isBorderRow(int)} and {@link #isBorderCol(int)}
      */
-    public boolean isEdgePosition(Position pos) {
-        return isEdgeRow(pos) || isEdgeCol(pos);
+    public boolean isBorderPosition(Position pos) {
+        return isBorderRow(pos) || isBorderCol(pos);
     }
 
     /**
@@ -127,10 +132,10 @@ public class Surface {
      * @param pos a position.
      * @return true, if the position's row is an edge row,
      * otherwise false.
-     * @see {@link #isEdgeRow(int)}
+     * @see {@link #isBorderRow(int)}
      */
-    public boolean isEdgeRow(Position pos) {
-        return isEdgeRow(pos.getRow());
+    public boolean isBorderRow(Position pos) {
+        return isBorderRow(pos.getRow());
     }
 
     /**
@@ -140,7 +145,7 @@ public class Surface {
      * @return true, if the position's row is an edge row,
      * otherwise false.
      */
-    public boolean isEdgeRow(int row) {
+    public boolean isBorderRow(int row) {
         return row == 0 || row == this.getRows() - 1;
     }
 
@@ -149,10 +154,10 @@ public class Surface {
      * @param pos a position.
      * @return true, if the position's column is an edge column,
      * otherwise false.
-     * @see {@link #isEdgeCol(int col)}
+     * @see {@link #isBorderCol(int col)}
      */
-    public boolean isEdgeCol(Position pos) {
-        return isEdgeCol(pos.getCol());
+    public boolean isBorderCol(Position pos) {
+        return isBorderCol(pos.getCol());
     }
     
     /**
@@ -162,7 +167,7 @@ public class Surface {
      * @return true, if the position's column is an edge column,
      * otherwise false.
      */
-    public boolean isEdgeCol(int col) {
+    public boolean isBorderCol(int col) {
         return col == 0 || col == this.getCols() - 1;
     }
 
@@ -246,6 +251,13 @@ public class Surface {
         Position nPos = new Position(getCornerRow(tile, pos, c) + c.getNextRowOffset(), getCornerCol(tile, pos, c)
                 + c.getNextColOffset());
         return (isInsideSurface(nPos)) ? getEntryAt(nPos) : null;
+    }
+    
+    
+    public Position getDiagonalNeighbourPos(Tile tile, Position pos, Corner c) {
+        Position nPos = new Position(getCornerRow(tile, pos, c) + c.getNextRowOffset(), getCornerCol(tile, pos, c)
+                + c.getNextColOffset());
+        return (isInsideSurface(nPos)) ? nPos : null;
     }
 
     /**

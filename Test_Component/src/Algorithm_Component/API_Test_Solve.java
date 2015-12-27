@@ -62,6 +62,7 @@ public class API_Test_Solve {
         return testFile.getPath();
     }
 
+    /*
     @Test
     public void solveParameterHasToBeValid() {
 
@@ -210,6 +211,20 @@ public class API_Test_Solve {
 
         // Act (on the object or method under test.)
         Boolean valid = api.solve(filePath, 34000);
+
+        // Assert (that the expected results have occurred.))
+        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+    } */
+    
+    @Test
+    public void solveInstance11() throws IOException {
+
+        // Arrange (set all necessary preconditions and inputs.)
+        IRoemischerVerbund api = new RoemischerVerbund();
+        String filePath = WriteFileToTempDirectory("instances/solveInstances/test1.xml");
+
+        // Act (on the object or method under test.)
+        Boolean valid = api.solve(filePath, 100);
 
         // Assert (that the expected results have occurred.))
         assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);

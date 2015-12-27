@@ -23,7 +23,7 @@ import ess.data.Surface;
  */
 public class CompositePanel extends JComponent {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -4131400974188958938L;
     
     // bounds for the size of a single field in pixels
     private static final int MAX_FIELD_SIZE = 50;

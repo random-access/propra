@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import ess.algorithm.RoemischerVerbund;
 import ess.algorithm.RoemischerVerbund.Validation;
 import ess.rules.ErrorType;
 import ess.rules.sets.IRuleSet;

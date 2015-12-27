@@ -131,6 +131,8 @@ public class Solver implements ISolver {
                 if (pos != null) {
                     tile = composite.getSurface().getEntryAt(pos);
                     composite.getSurface().removeEntry(tile, pos);
+                } else {
+                    System.out.println("Choose another tile as first...");
                 }
             }
         } while (pos != null);
@@ -144,6 +146,7 @@ public class Solver implements ISolver {
     private boolean placeNextTile(Tile tile, Position pos) {
         if (ruleChecker.checkImplicitRules(composite, tile, pos) && ruleChecker.checkExplicitRules(composite, tile, pos)) {
             composite.getSurface().insertEntry(tile, pos);
+            System.out.println(composite);
             // counter++;
             return true;
         }
