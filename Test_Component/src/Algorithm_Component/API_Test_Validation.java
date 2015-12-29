@@ -64,7 +64,7 @@ public class API_Test_Validation {
 		// Act (on the object or method under test.)
 		List<Validation> errorList = api.validateSolution(
 				"instances/validationInstances/test2.xml", 80);
-
+		System.out.println(errorList);
 		// Assert (that the expected results have occurred.))
 		assertTrue("errorList ist null", errorList != null);
 		assertTrue(

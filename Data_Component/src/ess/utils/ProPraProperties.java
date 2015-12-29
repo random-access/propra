@@ -21,13 +21,13 @@ public final class ProPraProperties {
 
 	/********************** logging keys **********************************/
 
-	/** Property key for the log level. */
+	/** Property key for log level. */
 	public static final String KEY_LOG_LEVEL = "log_level";
 
-	/** Property key for the log file. */
+	/** Property key for log file location. */
 	public static final String KEY_LOG_FILE = "log_file";
 
-	/** Property key for the console logging. */
+	/** Property key for console logging output. */
 	public static final String KEY_LOG_CONSOLE = "log_console";
 
 	/********************** rules keys ***********************************/
@@ -35,30 +35,33 @@ public final class ProPraProperties {
 	/** Name of the explicit rules package. */
 	public static final String EXPLICIT_RULES_PKG = "ess.rules.explicit.";
 
-	/** Property key for the max line length rule. */
+	/** Property key for MaxLineLengthRule. */
 	public static final String KEY_MAX_LINE_LENGTH = "MaxLineLengthRule";
 
-	/** Property key for the crossings rule. */
+	/** Property key for CrossingsRule. */
 	public static final String KEY_CROSSINGS = "CrossingsRule";
 
-	/** Property key for the replaceable tile rule. */
+	/** Property key for ReplaceableTileRule. */
 	public static final String KEY_REPLACEABLE_TILE = "ReplaceableTileRule";
 
-	/** Property key for the same tile rule. */
+	/** Property key for SameTileRule. */
 	public static final String KEY_SAME_TILE = "SameTileRule";
+	
+	/** Property key for MinimalTileRule. */
+	public static final String KEY_MINIMAL_TILE = "MinimalTileRule";
 
 	/********************** heuristics keys *******************************/
 
-	/** Name of the heuristics package. */
+	/** Name of heuristics package. */
 	public static final String HEURISTICS_PACKAGE = "ess.algorithm.modules.";
 
-	/** Property key for the position finder */
+	/** Property key for position finder */
 	public static final String KEY_POSITION_FINDER = "position_finder";
 
-	/** Property key for the tile chooser */
+	/** Property key for tile chooser */
 	public static final String KEY_TILE_CHOOSER = "tile_chooser";
 
-	/** Property key for the tile chooser strategy */
+	/** Property key for tile chooser strategy */
 	public static final String KEY_TILE_CHOOSER_STRATEGY = "tile_chooser_strategy";
 
 	// ProPraProperties singleton
@@ -133,6 +136,9 @@ public final class ProPraProperties {
 		if (parseBoolean(KEY_SAME_TILE)) {
 			rules.add(EXPLICIT_RULES_PKG + KEY_SAME_TILE);
 		}
+		if (parseBoolean(KEY_MINIMAL_TILE)) {
+            rules.add(EXPLICIT_RULES_PKG + KEY_MINIMAL_TILE);
+        }
 		return rules;
 	}
 

@@ -1,6 +1,7 @@
 package ess.rules.explicit;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import ess.data.Composite;
 import ess.data.Corner;
@@ -21,16 +22,32 @@ import ess.rules.IRule;
  * @author Monika Schrenk
  */
 public class ReplaceableTileRule implements IRule {
+    
+    private boolean initialized;
+    private HashMap<String, ArrayList<Tile>> tilesLargerThan;
 
     @Override
     public boolean check(Composite c, Tile tile, Position pos) {
-        ArrayList<Tile> tiles = c.getTilesLargerThan(tile.getRows(), tile.getCols(), tile.getNumberOfFields());
+        if (!initialized) {
+            init(c);
+        }
+        // ArrayList<Tile> tiles = c.getTilesLargerThan(tile.getRows(), tile.getCols(), tile.getNumberOfFields());
+        ArrayList<Tile> tiles = tilesLargerThan.get(tile.getId());
         for (Tile rTile : tiles) {
             if (tileIsReplacement(c, tile, pos, rTile)) {
                 return false;
             }
         }
         return true;
+    }
+    
+    private void init(Composite c) {
+        tilesLargerThan = new HashMap<>();
+        for (Tile t : c.getTileSorts()) {
+            ArrayList<Tile> largerTiles = c.getTilesLargerThan(t.getRows(), t.getCols(), t.getNumberOfFields());
+            tilesLargerThan.put(t.getId(), largerTiles);
+        }
+        initialized = true;
     }
 
     /**

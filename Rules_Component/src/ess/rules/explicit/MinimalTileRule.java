@@ -1,7 +1,6 @@
 package ess.rules.explicit;
 
 import ess.data.Composite;
-import ess.data.Corner;
 import ess.data.Edge;
 import ess.data.Position;
 import ess.data.Surface;
@@ -29,54 +28,62 @@ public class MinimalTileRule implements IRule {
         if (!initialized) {
             init(composite);
         }
-        System.out.println("tile w min cols " + tileWithMinCols);
-        System.out.println("tile w min rows " + tileWithMinRows);
-        if (tileWithMinCols != null && tile.equals(tileWithMinCols) 
-                && (invalidEdge(Edge.TOP, composite.getSurface(), tile, pos) 
-                        || invalidEdge(Edge.BOTTOM, composite.getSurface(), tile, pos))) {
-            return false;
-        }
-        if (tileWithMinRows != null && tile.equals(tileWithMinRows) 
-                && (invalidEdge(Edge.LEFT, composite.getSurface(), tile, pos) 
-                        || invalidEdge(Edge.RIGHT, composite.getSurface(), tile, pos))) {
-            return false;
+        for (Edge e : Edge.values()) {
+            if (invalidEdge(e, composite, tile, pos)) {
+                return false;
+            }
         }
         return true;
     }
-
-    private boolean invalidEdge(Edge edge, Surface s, Tile tile, Position pos) {
-        return (cornerIsOccupied(edge.getFirstCorner(), s, tile, pos) && cornerIsOccupied(edge.getSecondCorner(), s, tile, pos) 
-                && hasSpaceAtEdge(edge, s, tile, pos));
-    }
-
-    private boolean cornerIsOccupied(Corner c, Surface s, Tile t, Position pos) {
-        boolean result =  s.getDiagonalNeighbourPos(t, pos, c) == null || s.getDiagonalNeighbourTile(t, pos, c) != null;
-        System.out.println("corner is occupied " + c + " ? " + result);
-        return result;
+    
+    private boolean invalidEdge(Edge e, Composite c, Tile t, Position p) {
+        switch (e) {
+            case TOP: 
+            case BOTTOM:
+                if (tileWithMinRows == null) {
+                    return false;
+                }
+                return hasMinDistanceToBorder(tileWithMinRows.getRows(), e, c.getSurface(), t, p) 
+                        && (t.getCols() > tileWithMinRows.getCols() || t.equals(tileWithMinRows));
+            case LEFT:
+            case RIGHT:
+                if (tileWithMinCols == null) {
+                    return false;
+                }
+                return hasMinDistanceToBorder(tileWithMinCols.getCols(), e, c.getSurface(), t, p) 
+                        && (t.getRows() > tileWithMinCols.getRows() || t.equals(tileWithMinCols));
+            default: 
+                throw new IllegalArgumentException(e + " is not a valid edge!");
+        }
+        
     }
     
-    private boolean hasSpaceAtEdge(Edge e, Surface s, Tile t, Position pos) {
-        boolean result = !s.isBorderEdge(pos, t, e) 
-                && s.getEntryAt(s.getCornerRow(t, pos, e.getFirstCorner()) + e.getNextRowOffset(), 
-                s.getCornerCol(t, pos, e.getFirstCorner()) + e.getNextColOffset()) == null;
-        System.out.println("has space at edge " + e + " ? " + result);
-        return result;
-                
+    private boolean hasMinDistanceToBorder(int minDistance, Edge edge, Surface s, Tile tile, Position pos) {
+        int currentRow = s.getCornerRow(tile, pos, edge.getFirstCorner());
+        int currentCol = s.getCornerCol(tile, pos, edge.getFirstCorner());
+        int distance = -1;
+        while (s.isInsideSurface(currentRow, currentCol) && distance <= minDistance) {
+            currentRow += edge.getNextRowOffset();
+            currentCol += edge.getNextColOffset();
+            distance++;
+        } 
+        return distance == minDistance;
     }
    
     private void init(Composite composite) {
         tileWithMinCols = initMinTile(composite, Measurement.COLS);
         tileWithMinRows = initMinTile(composite, Measurement.ROWS);
+        initialized = true;
     }
     
     private Tile initMinTile(Composite c, Measurement m) {
         Tile minTile = null;
         boolean uniqueLength = false;
         for (Tile t : c.getTileSorts()) {
-            if (minTile == null || getMeasurement(t, m) < getMeasurement(minTile, m)) {
+            if (minTile == null || getLength(t, m) < getLength(minTile, m)) {
                 minTile = t;
                 uniqueLength = true;
-            } else if (getMeasurement(t, m) == getMeasurement(minTile, m)) {
+            } else if (getLength(t, m) == getLength(minTile, m)) {
                 uniqueLength = false; 
             }
         }
@@ -86,7 +93,8 @@ public class MinimalTileRule implements IRule {
         return minTile;
     }
 
-    private int getMeasurement(Tile tile, Measurement m) {
+
+    private int getLength(Tile tile, Measurement m) {
         if (m == Measurement.COLS) {
             return tile == null ? 0 : tile.getCols();
         } else {

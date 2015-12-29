@@ -20,11 +20,11 @@ public class MinimalTileTest {
         Composite c = xmlExchanger.readFromSource("instances/solveInstances/test4.xml");
         c.setMaxLineLength(4);
         Surface s = c.getSurface();
-        s.insertEntry(c.findTileById("_0"), new Position(0,1));
+        s.insertEntry(c.findTileById("_2"), new Position(0,0));
         
         IRule rule = new MinimalTileRule();
-        boolean validMove = rule.check(c, c.findTileById("_2"), new Position(0,0));
-        s.insertEntry(c.findTileById("_2"), new Position(0,0));
+        boolean validMove = rule.check(c, c.findTileById("_0"), new Position(0,1));
+        s.insertEntry(c.findTileById("_0"), new Position(0,1));
         
         System.out.println(c);
         assertFalse(validMove);
@@ -44,7 +44,7 @@ public class MinimalTileTest {
         
         System.out.println(c);
         // TODO recognize if neighbourTile is caged
-        assertTrue(validMove);
+        assertFalse(validMove);
     }
 
     @Test
@@ -53,11 +53,11 @@ public class MinimalTileTest {
         Composite c = xmlExchanger.readFromSource("instances/solveInstances/test4.xml");
         c.setMaxLineLength(4);
         Surface s = c.getSurface();
-        s.insertEntry(c.findTileById("_1"), new Position(3,3));
+        s.insertEntry(c.findTileById("_3"), new Position(5,4));
         
         IRule rule = new MinimalTileRule();
-        boolean validMove = rule.check(c, c.findTileById("_3"), new Position(5,4));
-        s.insertEntry(c.findTileById("_3"), new Position(5,4));
+        boolean validMove = rule.check(c, c.findTileById("_1"), new Position(3,3));
+        s.insertEntry(c.findTileById("_1"), new Position(3,3));
         
         System.out.println(c);
         assertFalse(validMove);
@@ -69,11 +69,11 @@ public class MinimalTileTest {
         Composite c = xmlExchanger.readFromSource("instances/solveInstances/test4.xml");
         c.setMaxLineLength(4);
         Surface s = c.getSurface();
-        s.insertEntry(c.findTileById("_1"), new Position(3,3));
+        s.insertEntry(c.findTileById("_3"), new Position(5,3));
         
         IRule rule = new MinimalTileRule();
-        boolean validMove = rule.check(c, c.findTileById("_3"), new Position(5,3));
-        s.insertEntry(c.findTileById("_3"), new Position(5,3));
+        boolean validMove = rule.check(c, c.findTileById("_1"), new Position(3,3));
+        s.insertEntry(c.findTileById("_1"), new Position(3,3));
         
         System.out.println(c);
         assertFalse(validMove);

@@ -81,7 +81,8 @@ public class RuleSet implements IRuleSet {
 			for (String ruleName : rules) {
 				IRule rule = (IRule) Class.forName(ruleName).newInstance();
 				explicitRuleSet.add(rule);
-				LOG.info("Activated " + rule.getClass().getSimpleName() + " ...");
+				// LOG.info("Activated " + rule.getClass().getSimpleName() + " ...");
+				System.out.println("Activated " + rule.getClass().getSimpleName() + " ...");
 			}
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SecurityException
 				| IllegalArgumentException e) {
