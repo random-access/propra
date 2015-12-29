@@ -29,7 +29,7 @@ private IRuleSet ruleSet;
 	}
 
 	/* (non-Javadoc)
-	 * @see ess.algorithm.modules.IRuleChecker#checkRules(ess.data.Composite, ess.data.Tile, ess.data.Position)
+	 * @see ess.algorithm.modules.IRuleChecker#checkExplicitRules(ess.data.Composite, ess.data.Tile, ess.data.Position)
 	 */
 	@Override
 	public boolean checkExplicitRules(Composite composite, Tile tile, Position pos) {

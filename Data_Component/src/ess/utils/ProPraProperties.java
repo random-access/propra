@@ -142,6 +142,15 @@ public final class ProPraProperties {
 		return rules;
 	}
 	
+	/**
+     * Returns a list with the full-qualified class names of all additional rules
+     * that are activated in config.properties.
+     * 
+     * @return a list of all active explicit rules
+     * @throws PropertyException
+     *             when parsing an invalid value for a rule (neither true nor
+     *             false)
+     */
 	public ArrayList<String> getAdditionalRuleNames() throws PropertyException {
 	    ArrayList<String> rules = new ArrayList<>();
 	    if (parseBoolean(KEY_MIN_DISTANCE_BORDER)) {

@@ -110,10 +110,10 @@ public class Surface {
         }
     }
     
-    public boolean isBorderEdge(Position pos, Tile t, Edge e) {
+    /*public boolean isBorderEdge(Position pos, Tile t, Edge e) {
         Position corner = getCornerPos(t, pos, e.getFirstCorner());
         return !isInsideSurface(corner.getRow() + e.getNextRowOffset(), corner.getCol() + e.getNextColOffset());
-    }
+    } */
 
     /**
      * Returns true, if the given position is an edge position of the surface, otherwise false<br>
@@ -254,11 +254,11 @@ public class Surface {
     }
     
     
-    public Position getDiagonalNeighbourPos(Tile tile, Position pos, Corner c) {
+    /* public Position getDiagonalNeighbourPos(Tile tile, Position pos, Corner c) {
         Position nPos = new Position(getCornerRow(tile, pos, c) + c.getNextRowOffset(), getCornerCol(tile, pos, c)
                 + c.getNextColOffset());
         return (isInsideSurface(nPos)) ? nPos : null;
-    }
+    } */
 
     /**
      * Returns the position of the top left corner of a tile at a given position in this surface,

@@ -8,6 +8,19 @@ import ess.data.Tile;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
 
+/**
+ * This implementation of IRule uses the fact that if there is a single tile with smallest width w, all
+ * higher tiles must be placed at least w+1 away from the sides (left and right) of the surface. The narrowest tile itself
+ * must be placed w+1 away from the sides as well. Otherwise it would be necessary to place 2 of the narrowest 
+ * tiles above each other which is not allowed, if SameTileRule is active.
+ * Same fact is true for the height of tiles, if there is a single tile with a smaller height the the others.
+ * 
+ * This is an additional rule, which means that it will only be activated if all explicit rules are active to avoid 
+ * conflicting rule checks.
+ * 
+ * @author Monika Schrenk
+ *
+ */
 public class MinDistanceToBorderRule implements IRule {
     
     private boolean initialized;

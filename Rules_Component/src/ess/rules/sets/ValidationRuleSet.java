@@ -15,8 +15,7 @@ import ess.utils.ProPraProperties;
 /**
  * This class is an implementation of IRuleSet that loads the explicit
  * rules that were activated in config.properties. <br>
- * Implicit rules and end conditions are loaded
- * by default.
+ * Additionally, it activates all implicit rules and all end conditions.
  * 
  * @author Monika Schrenk
  *
@@ -31,7 +30,7 @@ public class ValidationRuleSet implements IRuleSet {
 	private LinkedList<IRule> endConditionSet;
 
 	/**
-	 * Instantiates a RuleSet.
+	 * Instantiates a ValidationRuleSet.
 	 * @throws PropertyException if config.properties could not be read
 	 * or if it contains invalid parameters.
 	 */
