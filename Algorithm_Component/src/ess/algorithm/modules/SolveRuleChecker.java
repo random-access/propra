@@ -6,7 +6,7 @@ import ess.data.Tile;
 import ess.exc.PropertyException;
 import ess.rules.IRule;
 import ess.rules.sets.IRuleSet;
-import ess.rules.sets.RuleSet;
+import ess.rules.sets.SolveRuleSet;
 
 /**
  * This class is an implementation of IRuleChecker that is optimized for
@@ -25,11 +25,11 @@ private IRuleSet ruleSet;
      * invalid parameters
      */
 	public SolveRuleChecker() throws PropertyException {
-		ruleSet = new RuleSet();
+		ruleSet = new SolveRuleSet();
 	}
 
 	/* (non-Javadoc)
-	 * @see ess.algorithm.modules.IRuleChecker#checkExplicitRules(ess.data.Composite, ess.data.Tile, ess.data.Position)
+	 * @see ess.algorithm.modules.IRuleChecker#checkRules(ess.data.Composite, ess.data.Tile, ess.data.Position)
 	 */
 	@Override
 	public boolean checkExplicitRules(Composite composite, Tile tile, Position pos) {

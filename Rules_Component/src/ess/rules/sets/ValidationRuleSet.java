@@ -21,7 +21,7 @@ import ess.utils.ProPraProperties;
  * @author Monika Schrenk
  *
  */
-public class RuleSet implements IRuleSet {
+public class ValidationRuleSet implements IRuleSet {
 	
 	private static final Logger LOG = Logger.getGlobal();
 
@@ -35,7 +35,7 @@ public class RuleSet implements IRuleSet {
 	 * @throws PropertyException if config.properties could not be read
 	 * or if it contains invalid parameters.
 	 */
-    public RuleSet() throws PropertyException {
+    public ValidationRuleSet() throws PropertyException {
 		errorList = new LinkedList<>();
 		explicitRuleSet = new LinkedList<>();
 		implicitRuleSet = new LinkedList<>();
@@ -75,20 +75,22 @@ public class RuleSet implements IRuleSet {
 	}
 
 	private void addExplicitRules() throws PropertyException {
-		ProPraProperties properties = ProPraProperties.getInstance();
-		ArrayList<String> rules = properties.getActiveRuleNames();
-		try {
-			for (String ruleName : rules) {
-				IRule rule = (IRule) Class.forName(ruleName).newInstance();
-				explicitRuleSet.add(rule);
-				// LOG.info("Activated " + rule.getClass().getSimpleName() + " ...");
-				System.out.println("Activated " + rule.getClass().getSimpleName() + " ...");
-			}
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SecurityException
-				| IllegalArgumentException e) {
-			throw new PropertyException(
-					"Invalid parameter in properties file in heuristics. Please check if your properties file is valid.", e);
-		}
+	    addRules(ProPraProperties.getInstance().getExplicitRuleNames());
+	}
+	
+	protected void addRules(ArrayList<String> ruleNames) throws PropertyException {
+	    try {
+            for (String ruleName : ruleNames) {
+                IRule rule = (IRule) Class.forName(ruleName).newInstance();
+                explicitRuleSet.add(rule);
+                // LOG.info("Activated " + rule.getClass().getSimpleName() + " ...");
+                System.out.println("Activated " + rule.getClass().getSimpleName() + " ...");
+            }
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SecurityException
+                | IllegalArgumentException e) {
+            throw new PropertyException(
+                    "Invalid parameter in properties file in heuristics. Please check if your properties file is valid.", e);
+        }
 	}
 	
 	private void addImplicitRules() {

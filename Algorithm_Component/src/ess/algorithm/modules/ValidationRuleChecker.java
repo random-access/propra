@@ -9,7 +9,7 @@ import ess.data.Tile;
 import ess.exc.PropertyException;
 import ess.rules.IRule;
 import ess.rules.sets.IRuleSet;
-import ess.rules.sets.RuleSet;
+import ess.rules.sets.ValidationRuleSet;
 
 /**
  * This class is an implementation of IRuleChecker for checking rules during a validation 
@@ -31,7 +31,7 @@ public class ValidationRuleChecker implements IRuleChecker {
      * invalid parameters
      */
 	public ValidationRuleChecker() throws PropertyException {
-		ruleSet = new RuleSet();
+		ruleSet = new ValidationRuleSet();
 	}
 	
 	/* (non-Javadoc)

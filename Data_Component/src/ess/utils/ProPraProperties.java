@@ -34,6 +34,9 @@ public final class ProPraProperties {
 
 	/** Name of the explicit rules package. */
 	public static final String EXPLICIT_RULES_PKG = "ess.rules.explicit.";
+	
+	/** Name of the explicit rules package. */
+    public static final String ADDITIONAL_RULES_PKG = "ess.rules.additional.";
 
 	/** Property key for MaxLineLengthRule. */
 	public static final String KEY_MAX_LINE_LENGTH = "MaxLineLengthRule";
@@ -47,8 +50,8 @@ public final class ProPraProperties {
 	/** Property key for SameTileRule. */
 	public static final String KEY_SAME_TILE = "SameTileRule";
 	
-	/** Property key for MinimalTileRule. */
-	public static final String KEY_MINIMAL_TILE = "MinimalTileRule";
+	/** Property key for MinDistanceToBorderRule. */
+	public static final String KEY_MIN_DISTANCE_BORDER = "MinDistanceToBorderRule";
 
 	/********************** heuristics keys *******************************/
 
@@ -86,7 +89,7 @@ public final class ProPraProperties {
 	/**
 	 * Returns a singleton of ProPraProperties. This method is synchronized to
 	 * make sure that every caller receives the same data, synchronization is not 
-	 * yet needed because the config file only gets read.
+	 * yet needed because the configuration file only gets read.
 	 * 
 	 * @return an instance of ProPraProperties
 	 * @throws PropertyException
@@ -103,7 +106,7 @@ public final class ProPraProperties {
 	/**
 	 * Load properties from config.properties.
 	 * 
-	 * @return a Properties object holding the values from the config file.
+	 * @return a Properties object holding the values from the configuration file.
 	 * @throws IOException
 	 *             if the file is not existing or cannot be read.
 	 */
@@ -122,7 +125,7 @@ public final class ProPraProperties {
 	 *             when parsing an invalid value for a rule (neither true nor
 	 *             false)
 	 */
-	public ArrayList<String> getActiveRuleNames() throws PropertyException {
+	public ArrayList<String> getExplicitRuleNames() throws PropertyException {
 		ArrayList<String> rules = new ArrayList<>();
 		if (parseBoolean(KEY_MAX_LINE_LENGTH)) {
 			rules.add(EXPLICIT_RULES_PKG + KEY_MAX_LINE_LENGTH);
@@ -136,10 +139,15 @@ public final class ProPraProperties {
 		if (parseBoolean(KEY_SAME_TILE)) {
 			rules.add(EXPLICIT_RULES_PKG + KEY_SAME_TILE);
 		}
-		if (parseBoolean(KEY_MINIMAL_TILE)) {
-            rules.add(EXPLICIT_RULES_PKG + KEY_MINIMAL_TILE);
-        }
 		return rules;
+	}
+	
+	public ArrayList<String> getAdditionalRuleNames() throws PropertyException {
+	    ArrayList<String> rules = new ArrayList<>();
+	    if (parseBoolean(KEY_MIN_DISTANCE_BORDER)) {
+            rules.add(ADDITIONAL_RULES_PKG + KEY_MIN_DISTANCE_BORDER);
+        }
+	    return rules;
 	}
 
 	/**

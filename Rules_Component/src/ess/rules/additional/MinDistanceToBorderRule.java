@@ -1,4 +1,4 @@
-package ess.rules.explicit;
+package ess.rules.additional;
 
 import ess.data.Composite;
 import ess.data.Edge;
@@ -8,7 +8,7 @@ import ess.data.Tile;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
 
-public class MinimalTileRule implements IRule {
+public class MinDistanceToBorderRule implements IRule {
     
     private boolean initialized;
     private Tile tileWithMinCols;

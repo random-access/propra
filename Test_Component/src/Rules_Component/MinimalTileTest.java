@@ -10,7 +10,7 @@ import ess.data.Surface;
 import ess.io.XMLDataExchanger;
 import ess.io.exc.DataExchangeException;
 import ess.rules.IRule;
-import ess.rules.explicit.MinimalTileRule;
+import ess.rules.additional.MinDistanceToBorderRule;
 
 public class MinimalTileTest {
 
@@ -22,7 +22,7 @@ public class MinimalTileTest {
         Surface s = c.getSurface();
         s.insertEntry(c.findTileById("_2"), new Position(0,0));
         
-        IRule rule = new MinimalTileRule();
+        IRule rule = new MinDistanceToBorderRule();
         boolean validMove = rule.check(c, c.findTileById("_0"), new Position(0,1));
         s.insertEntry(c.findTileById("_0"), new Position(0,1));
         
@@ -38,7 +38,7 @@ public class MinimalTileTest {
         Surface s = c.getSurface();
         s.insertEntry(c.findTileById("_2"), new Position(0,0));
         
-        IRule rule = new MinimalTileRule();
+        IRule rule = new MinDistanceToBorderRule();
         boolean validMove = rule.check(c, c.findTileById("_0"), new Position(0,1));
         s.insertEntry(c.findTileById("_0"), new Position(0,1));
         
@@ -55,7 +55,7 @@ public class MinimalTileTest {
         Surface s = c.getSurface();
         s.insertEntry(c.findTileById("_3"), new Position(5,4));
         
-        IRule rule = new MinimalTileRule();
+        IRule rule = new MinDistanceToBorderRule();
         boolean validMove = rule.check(c, c.findTileById("_1"), new Position(3,3));
         s.insertEntry(c.findTileById("_1"), new Position(3,3));
         
@@ -71,7 +71,7 @@ public class MinimalTileTest {
         Surface s = c.getSurface();
         s.insertEntry(c.findTileById("_3"), new Position(5,3));
         
-        IRule rule = new MinimalTileRule();
+        IRule rule = new MinDistanceToBorderRule();
         boolean validMove = rule.check(c, c.findTileById("_1"), new Position(3,3));
         s.insertEntry(c.findTileById("_1"), new Position(3,3));
         
