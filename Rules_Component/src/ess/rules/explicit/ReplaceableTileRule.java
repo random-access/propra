@@ -160,7 +160,7 @@ public class ReplaceableTileRule implements IRule {
      * 
      * @param c
      *            the composite with the surface to test
-     * @param tile
+     * @param t
      *            the Tile that should be tested as a replacement
      * @param pos the position where tile should get inserted
      * @param rTile the tile that is tested as a replacement

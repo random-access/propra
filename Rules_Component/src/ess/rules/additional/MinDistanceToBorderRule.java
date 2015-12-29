@@ -53,18 +53,14 @@ public class MinDistanceToBorderRule implements IRule {
         switch (e) {
             case TOP: 
             case BOTTOM:
-                if (tileWithMinRows == null) {
-                    return false;
-                }
-                return hasMinDistanceToBorder(tileWithMinRows.getRows(), e, c.getSurface(), t, p) 
-                        && (t.getCols() > tileWithMinRows.getCols() || t.equals(tileWithMinRows));
+                return tileWithMinRows != null
+                    && hasMinDistanceToBorder(tileWithMinRows.getRows(), e, c.getSurface(), t, p)
+                    && (t.getCols() > tileWithMinRows.getCols() || t.equals(tileWithMinRows));
             case LEFT:
             case RIGHT:
-                if (tileWithMinCols == null) {
-                    return false;
-                }
-                return hasMinDistanceToBorder(tileWithMinCols.getCols(), e, c.getSurface(), t, p) 
-                        && (t.getRows() > tileWithMinCols.getRows() || t.equals(tileWithMinCols));
+                return tileWithMinCols != null
+                    && hasMinDistanceToBorder(tileWithMinCols.getCols(), e, c.getSurface(), t, p)
+                    && (t.getRows() > tileWithMinCols.getRows() || t.equals(tileWithMinCols));
             default: 
                 throw new IllegalArgumentException(e + " is not a valid edge!");
         }
