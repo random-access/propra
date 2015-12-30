@@ -18,6 +18,8 @@ import ess.strings.CustomErrorMessages;
  *
  */
 public final class ProPraProperties {
+    
+    // TODO JUnit Tests
 
 	/********************** logging keys **********************************/
 
@@ -82,7 +84,7 @@ public final class ProPraProperties {
 			properties = loadProperties();
 		} catch (IOException e) {
 			throw new PropertyException(
-					CustomErrorMessages.ERROR_PROPERTY_READ, e);
+					CustomErrorMessages.ERROR_PROPERTY_READ);
 		}
 	}
 

@@ -106,7 +106,7 @@ public class Composite {
 	/**
 	 * Returns the first tile in the list of tile sorts with identifier ID, assuming
 	 * that each tile in tileSorts has a different ID. For XML input, this is checked 
-	 * by DTD validation.
+	 * during DTD validation.
 	 * @param id The identifier of a tile.
 	 * @return The first tile in the list of tile sorts with identifier id.
 	 */
@@ -139,7 +139,6 @@ public class Composite {
 				filteredTiles.add(t);
 			}
 		}
-		// Collections.sort(filteredTiles, TileComparator.FIELDS_DESC);
 		return filteredTiles;
 	}
 

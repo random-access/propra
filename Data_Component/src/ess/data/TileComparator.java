@@ -10,6 +10,8 @@ import java.util.Comparator;
  *
  */
 public enum TileComparator implements Comparator<Tile> {
+    
+    // TODO JUnit Tests
 
     /**
      * Sorts two tiles by their row number, in ascending order.

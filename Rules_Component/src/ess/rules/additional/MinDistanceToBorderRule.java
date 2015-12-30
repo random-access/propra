@@ -28,7 +28,7 @@ public class MinDistanceToBorderRule implements IRule {
     private Tile tileWithMinRows;
     
     private enum Measurement {
-        COLS, ROWS;
+        COLS, ROWS
     }
 
     @Override

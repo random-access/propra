@@ -33,6 +33,7 @@ public class Solver implements ISolver {
     private IPositionFinder posFinder;
     private IRuleChecker ruleChecker;
     private ITileChooser tileChooser;
+    
     private LinkedList<Position> posList;
     private Composite composite;
 
@@ -85,7 +86,7 @@ public class Solver implements ISolver {
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException
                 | SecurityException | IllegalArgumentException | InvocationTargetException e) {
             throw new PropertyException(
-                    "Invalid parameter in properties file in heuristics. Please check if your properties file is valid.", e);
+                    "Invalid parameter in properties file in heuristics. Please check if your properties file is valid.");
         }
     }
 

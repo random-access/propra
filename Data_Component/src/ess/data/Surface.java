@@ -14,6 +14,8 @@ import ess.strings.CustomErrorMessages;
  *
  */
 public class Surface {
+    
+    // TODO JUnit Tests
 
     private Tile[][] fields;
 
@@ -57,7 +59,7 @@ public class Surface {
      * @return tile at pos or null, if pos is outside of the surface.
      */
     public Tile getEntryAt(Position pos) {
-        return (isInsideSurface(pos)) ? fields[pos.getRow()][pos.getCol()] : null;
+        return getEntryAt(pos.getRow(), pos.getCol());
     }
 
     /**
@@ -109,11 +111,6 @@ public class Surface {
             }
         }
     }
-    
-    /*public boolean isBorderEdge(Position pos, Tile t, Edge e) {
-        Position corner = getCornerPos(t, pos, e.getFirstCorner());
-        return !isInsideSurface(corner.getRow() + e.getNextRowOffset(), corner.getCol() + e.getNextColOffset());
-    } */
 
     /**
      * Returns true, if the given position is an edge position of the surface, otherwise false<br>
@@ -261,9 +258,8 @@ public class Surface {
     } */
 
     /**
-     * Returns the position of the top left corner of a tile at a given position in this surface,
-     * when given any of the tile's corners.
-      * @param t the tile sort.
+     * Returns the position of a corner of tile at a given position in this surface.
+     * @param t the tile sort.
      * @param p the position of the tile inside the surface.
      * @param c the corner of the given position.
      * @return the top left position of the given tile.
@@ -274,7 +270,7 @@ public class Surface {
     }
 
     /**
-     * Get the row of the given corner of a tile at the given position in this surface.
+     * Get the row of a corner of a tile at the given position in this surface.
      * @param t the tile sort.
      * @param p the position of the tile inside the surface.
      * @param c the corner of the given position.
@@ -294,7 +290,7 @@ public class Surface {
     }
 
     /**
-     * Get the column of the given corner of a tile at the given position in this surface.
+     * Get the column of a corner of a tile at the given position in this surface.
      * @param t the tile sort.
      * @param p the position of the tile inside the surface.
      * @param c the corner of the given position.

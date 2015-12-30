@@ -88,7 +88,7 @@ public class ValidationRuleSet implements IRuleSet {
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SecurityException
                 | IllegalArgumentException e) {
             throw new PropertyException(
-                    "Invalid parameter in properties file in heuristics. Please check if your properties file is valid.", e);
+                    "Invalid parameter in properties file in heuristics. Please check if your properties file is valid.");
         }
 	}
 	

@@ -40,10 +40,10 @@ public class RandomTileChooser implements ITileChooser {
      * @see ess.algorithm.modules.ITileChooser#getNextTile(ess.data.Position, ess.data.Tile)
      */
     @Override
-    public Tile getNextTile(Tile tile) {
+    public Tile getNextTile(Tile lastTile) {
         
         // if trying to fetch a tile at pos for the first time, create a new array to store informations
-        if (tile == null) {
+        if (lastTile == null) {
             testedTiles.add(new boolean[tileSorts.size()]);
         } 
         

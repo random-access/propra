@@ -12,6 +12,8 @@ package ess.data;
  * @author Monika Schrenk
  */
 public class Tile {
+    
+    // TODO JUnit Tests
 	
 	private String id;
 	private int rows, cols;

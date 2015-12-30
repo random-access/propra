@@ -18,5 +18,7 @@ public interface ITileChooser {
      * if ITileChooser has no suggestions anymore.
      */
 	Tile getNextTile(Tile currentTile);
+	
+	// TODO work with tile indices, store a list of tile <-> index in Solver ?
 
 }

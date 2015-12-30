@@ -34,12 +34,12 @@ public class SortedTileChooser implements ITileChooser {
 	 * @see ess.algorithm.modules.ITileChooser#getNextTile(ess.data.Position, ess.data.Tile)
 	 */
 	@Override
-	public Tile getNextTile(Tile tile) {
+	public Tile getNextTile(Tile lastTile) {
 		if (!tileSorts.isEmpty()) {
-			if (tile == null) {
+			if (lastTile == null) {
 				return tileSorts.get(0);
 			}
-			int nextIndex = tileSorts.indexOf(tile) + 1;
+			int nextIndex = tileSorts.indexOf(lastTile) + 1;
 			if (nextIndex < tileSorts.size()) {
 				return tileSorts.get(nextIndex);
 			}

@@ -22,6 +22,8 @@ import ess.strings.CustomErrorMessages;
  *
  */
 public final class ProPraLogger {
+    
+    // TODO JUnit Tests
 	
 	// constant for log file names
 	private static final String LOGFILE_NAME = "log_%g.txt";
@@ -105,7 +107,7 @@ public final class ProPraLogger {
 			fileHandler.setFormatter(new SimpleFormatter());
 			logger.addHandler(fileHandler);
 		} catch (SecurityException | IOException e) {
-			throw new PropertyException(CustomErrorMessages.ERROR_LOG_CREATE, e);
+			throw new PropertyException(CustomErrorMessages.ERROR_LOG_CREATE);
 		}
 
 	}
@@ -161,7 +163,7 @@ public final class ProPraLogger {
 			rootLog.setLevel(logLevel);
 			rootLog.getHandlers()[0].setLevel(logLevel);
 		} catch (IllegalArgumentException e) {
-			throw new PropertyException(CustomErrorMessages.ERROR_INVALID_VALUE_LOG_LEVEL, e);
+			throw new PropertyException(CustomErrorMessages.ERROR_INVALID_VALUE_LOG_LEVEL);
 		}
 	}
 
