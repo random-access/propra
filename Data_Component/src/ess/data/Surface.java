@@ -83,6 +83,9 @@ public class Surface {
      * <br>
      * <b>Hint</b>: All fields that get filled with a tile refer to the same tile object, 
      * so testing if the next field belongs to this tile as well can be performed via == operator.
+     * To speed up calculation, this method only handles correct parameters, 
+     * it must be made sure that pos is inside the surface's bounds, otherwise an
+     * IndexOutOfBoundsException will be thrown.
      *
      * @param tile
      *            the tile that should be inserted
@@ -101,6 +104,9 @@ public class Surface {
 
     /**
      * Removes a given tile in this surface at the specified position.
+     * To speed up calculation, this method only handles correct parameters, 
+     * it must be made sure that pos is inside the surface's bounds and
+     * the correct tile gets removed, otherwise an IndexOutOfBoundsException will be thrown.
      * @param tile the tile sort to be removed
      * @param pos the top left position of the tile
      */
@@ -208,8 +214,7 @@ public class Surface {
      * @return tile at the same row as the position at the given corner.
      */
     public Tile getHorizontalNeighbourTile(Tile tile, Position pos, Corner c) {
-        Position nPos = new Position(getCornerRow(tile, pos, c), getCornerCol(tile, pos, c) + c.getNextColOffset());
-        return (isInsideSurface(nPos)) ? getEntryAt(nPos) : null;
+        return getEntryAt(getCornerRow(tile, pos, c), getCornerCol(tile, pos, c) + c.getNextColOffset());
     }
 
     /**
@@ -226,8 +231,7 @@ public class Surface {
      * @return tile at the same column as the position at the given corner.
      */
     public Tile getVerticalNeighbourTile(Tile tile, Position pos, Corner c) {
-        Position nPos = new Position(getCornerRow(tile, pos, c) + c.getNextRowOffset(), getCornerCol(tile, pos, c));
-        return (isInsideSurface(nPos)) ? getEntryAt(nPos) : null;
+        return getEntryAt(getCornerRow(tile, pos, c) + c.getNextRowOffset(), getCornerCol(tile, pos, c));
     }
 
     /**
@@ -245,17 +249,9 @@ public class Surface {
      * @return tile at the same diagonal as the position at the given corner.
      */
     public Tile getDiagonalNeighbourTile(Tile tile, Position pos, Corner c) {
-        Position nPos = new Position(getCornerRow(tile, pos, c) + c.getNextRowOffset(), getCornerCol(tile, pos, c)
+        return getEntryAt(getCornerRow(tile, pos, c) + c.getNextRowOffset(), getCornerCol(tile, pos, c)
                 + c.getNextColOffset());
-        return (isInsideSurface(nPos)) ? getEntryAt(nPos) : null;
     }
-    
-    
-    /* public Position getDiagonalNeighbourPos(Tile tile, Position pos, Corner c) {
-        Position nPos = new Position(getCornerRow(tile, pos, c) + c.getNextRowOffset(), getCornerCol(tile, pos, c)
-                + c.getNextColOffset());
-        return (isInsideSurface(nPos)) ? nPos : null;
-    } */
 
     /**
      * Returns the position of a corner of tile at a given position in this surface.

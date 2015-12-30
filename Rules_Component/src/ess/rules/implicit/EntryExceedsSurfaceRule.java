@@ -1,15 +1,17 @@
 package ess.rules.implicit;
 
 import ess.data.Composite;
+import ess.data.Corner;
 import ess.data.Position;
+import ess.data.Surface;
 import ess.data.Tile;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
 
 /**
  * This implementation of IRule checks if a tile that is about to be placed at pos 
- * exceeds the surface of composite. It does so by checking if every
- * field that should contain the new tile is inside the bounds of composite's surface. 
+ * exceeds the surface of composite. It does so by checking if the top left edge and the bottom
+ * right edge of the tile are both inside the surface, when placed at pos. 
  * If this is the case, the rule is not broken.
  * 
  * @author Monika Schrenk
@@ -18,14 +20,9 @@ public class EntryExceedsSurfaceRule implements IRule {
 
 	@Override
 	public boolean check(Composite c, Tile tile, Position pos) {
-		for (int i = pos.getRow(); i <= pos.getRow() + tile.getRows() - 1; i++) {
-			for (int j = pos.getCol(); j <= pos.getCol() + tile.getCols() - 1; j++) {
-				if (i < 0 || j < 0 || i >= c.getSurface().getRows() || j >= c.getSurface().getCols()) {
-					return false;
-				}
-			}
-		}
-		return true;
+	    Surface s = c.getSurface();
+	    Position bottomRight = s.getCornerPos(tile, pos, Corner.BOTTOM_RIGHT);
+	    return (s.isInsideSurface(pos) && s.isInsideSurface(bottomRight));
 	}
 
 	@Override
