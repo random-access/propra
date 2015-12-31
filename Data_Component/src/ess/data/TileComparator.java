@@ -10,8 +10,6 @@ import java.util.Comparator;
  *
  */
 public enum TileComparator implements Comparator<Tile> {
-    
-    // TODO JUnit Tests
 
     /**
      * Sorts two tiles by their row number, in ascending order.
@@ -34,7 +32,7 @@ public enum TileComparator implements Comparator<Tile> {
         @Override
         public int compare(Tile t1, Tile t2) {
             if (t1 == null || t2 == null) {
-                return compareWithNulls(t1, t2);
+                return (-1) * compareWithNulls(t1, t2);
             }
             return (-1) * Integer.valueOf(t1.getRows()).compareTo(t2.getRows());
         }
@@ -62,7 +60,7 @@ public enum TileComparator implements Comparator<Tile> {
         @Override
         public int compare(Tile t1, Tile t2) {
             if (t1 == null || t2 == null) {
-                return compareWithNulls(t1, t2);
+                return (-1) * compareWithNulls(t1, t2);
             }
             return (-1) * Integer.valueOf(t1.getCols()).compareTo(t2.getCols());
         }
@@ -92,7 +90,7 @@ public enum TileComparator implements Comparator<Tile> {
         @Override
         public int compare(Tile t1, Tile t2) {
             if (t1 == null || t2 == null) {
-                return compareWithNulls(t1, t2);
+                return (-1) * compareWithNulls(t1, t2);
             }
             return (-1) * Integer.valueOf(t1.getNumberOfFields()).compareTo(t2.getNumberOfFields());
         }
@@ -104,7 +102,7 @@ public enum TileComparator implements Comparator<Tile> {
         if (t1 == null && t2 == null) {
             return 0;
         }
-        return t1 == null ? 1 : -1;
+        return t1 == null ? -1 : 1;
     }
 
 }

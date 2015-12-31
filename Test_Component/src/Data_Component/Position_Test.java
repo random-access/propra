@@ -8,9 +8,9 @@ import ess.data.Position;
 
 public class Position_Test {
 	
-	// 	1 = this tile is larger than other tile
-	// 	0 : this tile is equal to other tile
-	// -1 : this tile is smaller than other tile
+	// 	1 = this position is larger than other position
+	// 	0 : this position is equal to other position
+	// -1 : this position is smaller than other position
 
 	@Test
 	public void testComparePositionsWithLargerRowAndCol() {

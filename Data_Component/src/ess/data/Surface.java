@@ -14,8 +14,6 @@ import ess.strings.CustomErrorMessages;
  *
  */
 public class Surface {
-    
-    // TODO JUnit Tests
 
     private Tile[][] fields;
 
@@ -279,10 +277,10 @@ public class Surface {
                 return p.getRow();
             case BOTTOM_LEFT:
             case BOTTOM_RIGHT:
-                return p.getRow() + t.getRows() - 1;
-            default:
-                throw new InvalidParameterException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, c));
+                return p.getRow() + t.getRows() - 1; 
         }
+        // for enum values added in the future that are not included above by accident
+        throw new InvalidParameterException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, c));
     }
 
     /**
@@ -300,9 +298,9 @@ public class Surface {
             case TOP_RIGHT:
             case BOTTOM_RIGHT:
                 return p.getCol() + t.getCols() - 1;
-            default:
-                throw new InvalidParameterException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, c));
         }
+        // for enum values added in the future that are not included above by accident
+        throw new InvalidParameterException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, c));
     }
     
     /**
@@ -322,10 +320,10 @@ public class Surface {
             case BOTTOM_LEFT:
                 return new Position(p.getRow() - t.getRows() + 1, p.getCol());
             case BOTTOM_RIGHT:
-                return new Position(p.getRow() - t.getRows() + 1, p.getCol() - t.getCols() + 1);
-            default:
-                throw new InvalidParameterException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, c));
+                return new Position(p.getRow() - t.getRows() + 1, p.getCol() - t.getCols() + 1);    
         }
+        // for enum values added in the future that are not included above by accident
+        throw new InvalidParameterException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, c));
     }
 
     /**
