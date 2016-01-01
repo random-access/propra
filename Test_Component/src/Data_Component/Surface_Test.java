@@ -166,18 +166,34 @@ public class Surface_Test {
         assertEquals(surface.getCornerPos(t4, p4, Corner.BOTTOM_LEFT), bottomLeftCorner);
         assertEquals(surface.getCornerPos(t4, p4, Corner.BOTTOM_RIGHT), bottomRightCorner);
     }
+    
+    @Test
+    public void testGetCornerPosAllEnumsCovered() {
+        for (Corner c : Corner.values()) {
+            assertNotNull(surface.getCornerPos(t2, p2, c));
+        }
+    }
 
     @Test
     public void testGetTopLeft () {
+        System.out.println(surface);
         Position topRightCorner = new Position (1, 3);
         Position bottomLeftCorner = new Position (3, 2);
         Position bottomRightCorner = new Position (3, 3);
         surface.insertEntry(t4, p4);
+        System.out.println(surface);
         
         assertEquals(surface.getTopLeft(t4, p4, Corner.TOP_LEFT), p4);
         assertEquals(surface.getTopLeft(t4, topRightCorner, Corner.TOP_RIGHT), p4);
         assertEquals(surface.getTopLeft(t4, bottomLeftCorner, Corner.BOTTOM_LEFT), p4);
         assertEquals(surface.getTopLeft(t4, bottomRightCorner, Corner.BOTTOM_RIGHT), p4);
+    }
+    
+    @Test
+    public void testGetTopLeftAllEnumsCovered() {
+        for (Corner c : Corner.values()) {
+            assertNotNull(surface.getTopLeft(t2, p2, c));
+        }
     }
     
 

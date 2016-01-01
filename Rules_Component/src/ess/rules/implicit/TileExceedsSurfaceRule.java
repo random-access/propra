@@ -16,7 +16,7 @@ import ess.rules.IRule;
  * 
  * @author Monika Schrenk
  */
-public class EntryExceedsSurfaceRule implements IRule {
+public class TileExceedsSurfaceRule implements IRule {
 
 	@Override
 	public boolean check(Composite c, Tile tile, Position pos) {

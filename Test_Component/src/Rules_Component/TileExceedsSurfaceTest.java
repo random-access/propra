@@ -8,7 +8,7 @@ import org.junit.Test;
 import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Tile;
-import ess.rules.implicit.EntryExceedsSurfaceRule;
+import ess.rules.implicit.TileExceedsSurfaceRule;
 
 public class TileExceedsSurfaceTest {
 
@@ -20,7 +20,7 @@ public class TileExceedsSurfaceTest {
 		Position pos = new Position(0,0);
 
 		// Act (on the object or method under test.)
-		boolean result = new EntryExceedsSurfaceRule().check(c, tile, pos);
+		boolean result = new TileExceedsSurfaceRule().check(c, tile, pos);
 		c.getSurface().insertEntry(tile, pos);
 
 		// Assert (that the expected results have occurred.))
@@ -40,7 +40,7 @@ public class TileExceedsSurfaceTest {
 
 		// Act (on the object or method under test.)
 
-		boolean result = new EntryExceedsSurfaceRule().check(c, tile2, pos2);
+		boolean result = new TileExceedsSurfaceRule().check(c, tile2, pos2);
 		c.getSurface().insertEntry(tile2, pos2);
 
 		// Assert (that the expected results have occurred.))
@@ -55,7 +55,7 @@ public class TileExceedsSurfaceTest {
 		Position pos = new Position(1,1);
 		
 		// Act (on the object or method under test.)
-		boolean result = new EntryExceedsSurfaceRule().check(c, tile, pos);
+		boolean result = new TileExceedsSurfaceRule().check(c, tile, pos);
 		
 		// Assert (that the expected results have occurred.))
 		assertFalse("Tile exceeds right edge", result);
@@ -69,7 +69,7 @@ public class TileExceedsSurfaceTest {
 		Position pos = new Position(1,-1);
 
 		// Act (on the object or method under test.)
-		boolean result = new EntryExceedsSurfaceRule().check(c, tile, pos);
+		boolean result = new TileExceedsSurfaceRule().check(c, tile, pos);
 		
 		// Assert (that the expected results have occurred.))
 		assertFalse("Tile exceeds left edge", result);
@@ -83,7 +83,7 @@ public class TileExceedsSurfaceTest {
 		Position pos = new Position(-1,0);
 
 		// Act (on the object or method under test.)
-		boolean result = new EntryExceedsSurfaceRule().check(c, tile, pos);
+		boolean result = new TileExceedsSurfaceRule().check(c, tile, pos);
 		
 		// Assert (that the expected results have occurred.))
 		assertFalse("Tile exceeds top edge", result);
@@ -97,7 +97,7 @@ public class TileExceedsSurfaceTest {
 		Position pos = new Position(2,0);
 		
 		// Act (on the object or method under test.)
-		boolean result = new EntryExceedsSurfaceRule().check(c, tile, pos);
+		boolean result = new TileExceedsSurfaceRule().check(c, tile, pos);
 		
 		// Assert (that the expected results have occurred.))
 		assertFalse("Tile exceeds bottom edge", result);
@@ -111,7 +111,7 @@ public class TileExceedsSurfaceTest {
 		Position pos = new Position(-1,-1);
 
 		// Act (on the object or method under test.)
-		boolean result = new EntryExceedsSurfaceRule().check(c, tile, pos);
+		boolean result = new TileExceedsSurfaceRule().check(c, tile, pos);
 		
 		// Assert (that the expected results have occurred.))
 		assertFalse("Tile exceeds top left corner", result);
@@ -125,7 +125,7 @@ public class TileExceedsSurfaceTest {
 		Position pos = new Position(-1,1);
 		
 		// Act (on the object or method under test.)
-		boolean result = new EntryExceedsSurfaceRule().check(c, tile, pos);
+		boolean result = new TileExceedsSurfaceRule().check(c, tile, pos);
 		
 		// Assert (that the expected results have occurred.))
 		assertFalse("Tile exceeds top right corner", result);
@@ -139,7 +139,7 @@ public class TileExceedsSurfaceTest {
 		Position pos = new Position(2,-1);
 		
 		// Act (on the object or method under test.)
-		boolean result = new EntryExceedsSurfaceRule().check(c, tile, pos);
+		boolean result = new TileExceedsSurfaceRule().check(c, tile, pos);
 		
 		// Assert (that the expected results have occurred.))
 		assertFalse("Tile exceeds bottom left corner", result);
@@ -153,7 +153,7 @@ public class TileExceedsSurfaceTest {
 		Position pos = new Position(2,1);
 
 		// Act (on the object or method under test.)
-		boolean result = new EntryExceedsSurfaceRule().check(c, tile, pos);
+		boolean result = new TileExceedsSurfaceRule().check(c, tile, pos);
 		
 		// Assert (that the expected results have occurred.))
 		assertFalse("Tile exceeds bottom right corner", result);

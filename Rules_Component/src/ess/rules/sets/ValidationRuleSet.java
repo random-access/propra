@@ -8,8 +8,8 @@ import ess.exc.PropertyException;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
 import ess.rules.endconditions.SurfaceIsFilledCompletelyRule;
-import ess.rules.implicit.EntryCoversOtherTileRule;
-import ess.rules.implicit.EntryExceedsSurfaceRule;
+import ess.rules.implicit.TileCoversOtherTileRule;
+import ess.rules.implicit.TileExceedsSurfaceRule;
 import ess.utils.ProPraProperties;
 
 /**
@@ -93,9 +93,9 @@ public class ValidationRuleSet implements IRuleSet {
 	}
 	
 	private void addImplicitRules() {
-		implicitRuleSet.add(new EntryExceedsSurfaceRule());
+		implicitRuleSet.add(new TileExceedsSurfaceRule());
 		LOG.info("Activated EntryExceedsSurfaceRule ...");
-		implicitRuleSet.add(new EntryCoversOtherTileRule());
+		implicitRuleSet.add(new TileCoversOtherTileRule());
 		LOG.info("Activated EntryCoversOtherTileRule ...");
 	}
 	

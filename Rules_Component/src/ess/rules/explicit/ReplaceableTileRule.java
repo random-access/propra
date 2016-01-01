@@ -12,17 +12,17 @@ import ess.rules.ErrorType;
 import ess.rules.IRule;
 
 /**
- * This implementation of IRule checks if a tile that is about to be placed at pos 
- * forms a combination with other tiles that can be replaced by a larger tile. 
- * It does so by checking if every tile larger than the tile that is about to be placed
- * inside the composite's surface, aligned with any of the 4 corners, is either overlapping the 
- * surface or doesn't exactly align with edges of tiles. 
- * If this is the case, the rule is not broken.
+ * This implementation of IRule checks if a tile that is about to be placed at
+ * pos forms a combination with other tiles that can be replaced by a larger
+ * tile. It does so by checking if every tile larger than the tile that is about
+ * to be placed inside the composite's surface, aligned with any of the 4
+ * corners, is either overlapping the surface or doesn't exactly align with
+ * edges of tiles. If this is the case, the rule is not broken.
  * 
  * @author Monika Schrenk
  */
 public class ReplaceableTileRule implements IRule {
-    
+
     private boolean initialized;
     private HashMap<String, ArrayList<Tile>> tilesLargerThan;
 
@@ -31,7 +31,8 @@ public class ReplaceableTileRule implements IRule {
         if (!initialized) {
             init(c);
         }
-        // ArrayList<Tile> tiles = c.getTilesLargerThan(tile.getRows(), tile.getCols(), tile.getNumberOfFields());
+        // ArrayList<Tile> tiles = c.getTilesLargerThan(tile.getRows(),
+        // tile.getCols(), tile.getNumberOfFields());
         ArrayList<Tile> tiles = tilesLargerThan.get(tile.getId());
         for (Tile rTile : tiles) {
             if (tileIsReplacement(c, tile, pos, rTile)) {
@@ -40,7 +41,7 @@ public class ReplaceableTileRule implements IRule {
         }
         return true;
     }
-    
+
     private void init(Composite c) {
         tilesLargerThan = new HashMap<>();
         for (Tile t : c.getTileSorts()) {
@@ -59,8 +60,10 @@ public class ReplaceableTileRule implements IRule {
      *            the composite with the surface to test
      * @param tile
      *            the Tile that should be tested as a replacement
-     * @param pos the position where tile should get inserted
-     * @param rTile the tile that is tested as a replacement
+     * @param pos
+     *            the position where tile should get inserted
+     * @param rTile
+     *            the tile that is tested as a replacement
      * @return true, if this tile replaces an area filled with smaller tiles,
      *         else false
      */
@@ -83,8 +86,10 @@ public class ReplaceableTileRule implements IRule {
      *            the composite with the surface to test
      * @param tile
      *            the Tile that should be tested as a replacement
-     * @param pos the position where tile should get inserted
-     * @param rTile the tile that is tested as a replacement
+     * @param pos
+     *            the position where tile should get inserted
+     * @param rTile
+     *            the tile that is tested as a replacement
      * @param corner
      *            the Corner where the tile should be inserted
      * @return true, if tile replaces an area filled with smaller tiles when
@@ -110,12 +115,17 @@ public class ReplaceableTileRule implements IRule {
      * 
      * @param c
      *            the composite with the surface to test
-     * @param rTile the tile that is tested as a replacement
-     * @param rPos the left upper corner where the replacement tile would be placed
+     * @param rTile
+     *            the tile that is tested as a replacement
+     * @param rPos
+     *            the left upper corner where the replacement tile would be
+     *            placed
      * @param edge
      *            the edge to be tested
-     * @param tile the Tile that should be tested as a replacement     
-     * @param pos the position where tile should get inserted
+     * @param tile
+     *            the Tile that should be tested as a replacement
+     * @param pos
+     *            the position where tile should get inserted
      * @return true, if this edge is a tile border, else false
      */
     private boolean isTileBorder(Composite c, Tile rTile, Position rPos, Edge edge, Tile tile, Position pos) {
@@ -137,16 +147,8 @@ public class ReplaceableTileRule implements IRule {
 
                 // no replacement, if there is no tile inside or inside &
                 // outside are the same
-                if (outside != null) {
-                    if (inside == null || outside.equals(inside)) {
-                        return false;
-                    }
-                } else {
-                    // no replacement if neither outside nor inside position has
-                    // a tile
-                    if (inside == null) {
-                        return false;
-                    }
+                if (outside != null && (inside == null || outside.equals(inside)) || inside == null && outside == null) {
+                    return false;
                 }
             }
         }
@@ -162,8 +164,10 @@ public class ReplaceableTileRule implements IRule {
      *            the composite with the surface to test
      * @param t
      *            the Tile that should be tested as a replacement
-     * @param pos the position where tile should get inserted
-     * @param rTile the tile that is tested as a replacement
+     * @param pos
+     *            the position where tile should get inserted
+     * @param rTile
+     *            the tile that is tested as a replacement
      * @param corner
      *            the Corner where the tile should be inserted
      * @return a SurfaceEntry with the positions of tile placed in corner, null

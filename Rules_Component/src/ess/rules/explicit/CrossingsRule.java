@@ -38,12 +38,12 @@ public class CrossingsRule implements IRule {
 		Tile horizontalNeighbourTile = surface.getHorizontalNeighbourTile(tile, pos, corner);
 		Tile verticalNeighbourTile = surface.getVerticalNeighbourTile(tile, pos, corner);
 		
-		// if the entry opposite this corner has no tile yet, there must be 1 neighbour not having a tile either
+		// if the entry opposite this corner has no tile yet, there must be 1 neighbor not having a tile either
 		if (diagonalNeighbourTile == null) {
 			return horizontalNeighbourTile == null || verticalNeighbourTile == null;
 		} 
-		// if the entry opposite this corner is filled, it must be the same as one of its neighbours
-		return diagonalNeighbourTile.equals(horizontalNeighbourTile) || diagonalNeighbourTile.equals(verticalNeighbourTile);
+		// if the entry opposite this corner is filled, it must be the same as one of its neighbors
+		return diagonalNeighbourTile == horizontalNeighbourTile || diagonalNeighbourTile == verticalNeighbourTile;
 	}
 
 	@Override

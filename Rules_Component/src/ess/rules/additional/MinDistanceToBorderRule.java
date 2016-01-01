@@ -105,9 +105,9 @@ public class MinDistanceToBorderRule implements IRule {
 
     private int getLength(Tile tile, Measurement m) {
         if (m == Measurement.COLS) {
-            return tile == null ? 0 : tile.getCols();
+            return tile.getCols();
         } else {
-            return tile == null ? 0 : tile.getRows();
+            return tile.getRows();
         }
     }
 

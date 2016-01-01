@@ -8,6 +8,7 @@ import ess.data.Surface;
 import ess.data.Tile;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
+import ess.strings.CustomErrorMessages;
 
 /**
  * This implementation of IRule checks if a tile that is about to be placed at pos 
@@ -52,10 +53,9 @@ public class MaxLineLengthRule implements IRule {
                 return t.getCols();
             case LEFT:
             case RIGHT:
-                return t.getRows();
-            default:
-                throw new IllegalArgumentException("Not a valid edge!");
+                return t.getRows();  
         }
+        throw new IllegalArgumentException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, edge));
     }
 
     private int getLineLength(Surface s, Edge edge, int startRow, int startCol, int step) {
@@ -71,15 +71,16 @@ public class MaxLineLengthRule implements IRule {
                 while (s.isInsideSurface(startRow,  currentCol) && isLine) {
                     innerTile = s.getEntryAt(startRow, currentCol);
                     outerTile = s.getEntryAt(outerRow, currentCol);
-                    if (!s.isInsideSurface(outerRow, currentCol) || innerTile == null && outerTile == null || innerTile != null
-                            && outerTile != null && innerTile == outerTile) {
+                    if (!s.isInsideSurface(outerRow, currentCol)
+                           || innerTile == null && outerTile == null 
+                           || innerTile == outerTile) {
                         isLine = false;
                     } else {
                         currentLineLength++;
                     }
                     currentCol += step;
                 }
-                break;
+                return currentLineLength;
             case LEFT:
             case RIGHT:
                 int outerCol = startCol + edge.getNextColOffset();
@@ -87,22 +88,19 @@ public class MaxLineLengthRule implements IRule {
                 while (s.isInsideSurface(currentRow,  startCol) && isLine) {
                     innerTile = s.getEntryAt(currentRow, startCol);
                     outerTile = s.getEntryAt(currentRow, outerCol);
-                    if (!s.isInsideSurface(currentRow, outerCol) || innerTile == null && outerTile == null || innerTile != null
-                            && outerTile != null && innerTile == outerTile) {
+                    if (!s.isInsideSurface(currentRow, outerCol) 
+                            || innerTile == null && outerTile == null 
+                            || innerTile == outerTile) {
                         isLine = false;
                     } else {
                         currentLineLength++;
                     }
                     currentRow += step;
                 }
-                break;
-            default:
-                throw new IllegalArgumentException("Not a valid edge!");
+                return currentLineLength;
         }
-        return currentLineLength;
+        throw new IllegalArgumentException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, edge));
     }
-    
-    
 
     @Override
     public ErrorType getErrorType() {

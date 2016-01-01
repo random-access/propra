@@ -12,7 +12,7 @@ import ess.io.exc.DataExchangeException;
 import ess.rules.IRule;
 import ess.rules.additional.MinDistanceToBorderRule;
 
-public class MinimalTileTest {
+public class MinDistanceToBorderTest {
 
     @Test
     public void MinimalTileTest1() throws DataExchangeException {
