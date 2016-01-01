@@ -12,7 +12,7 @@ package ess.data;
  * @author Monika Schrenk
  */
 public class Tile {
-	
+
 	private String id;
 	private int rows, cols;
 
@@ -58,7 +58,7 @@ public class Tile {
 	}
 	
 	/**
-	 * Gets the number of fields of this tile (number of fields = rows * columns)
+	 * Gets the number of fields of this tile (number of fields = rows * columns).
 	 *
 	 * @return number of fields this tile has
 	 */
@@ -67,10 +67,11 @@ public class Tile {
 	}
 	
 
+	
 	/**
-     * Overridden by tile to be consistent with {@link #equals(Object obj)}.
-     * Two positions have the same Hashcode if their rows and columns are the same.
-     */
+	 * Two tiles have the same HashCode, if id, row and column attributes have the same value.
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -81,15 +82,11 @@ public class Tile {
 		return result;
 	}
 	
+
 	/**
-     * Two tiles t1 and t2 are equal under the following conditions:
-     * <ul>
-     *     <li>t1 != null && t2 != null AND</li>
-     *     <li>t1.getId() == t2.getId() AND</li>
-     *     <li>t1.getRows() == t2.getRows() AND</li>
-     *     <li>t1.getCols() == t2.getCols().</li>
-     * </ul>
-     */
+	 * Two tiles are equal, if id, row and column attributes have the same value.
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -116,9 +113,11 @@ public class Tile {
 	}
 
 	/**
-     * human-readable, textual representation of this tile,
-     * showing the values of its id, row and column.
-     */
+	 * Human-readable, textual representation of this tile,
+	 * showing the values of its id, row and column.
+	 *
+	 * @return a String describing this tile
+	 */
 	@Override
 	public String toString() {
 		return "Tile [ident=" + id + ", rows=" + rows + ", cols=" + cols
