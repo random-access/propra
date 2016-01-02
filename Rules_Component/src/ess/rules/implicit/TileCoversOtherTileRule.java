@@ -15,12 +15,22 @@ import ess.rules.IRule;
  * @author Monika Schrenk
  */
 public class TileCoversOtherTileRule implements IRule {
+    
+    private Composite composite;
+    
+    /**
+     * Initializes an instance of TileCoversOtherTileRule
+     * @param composite the composite
+     */
+    public TileCoversOtherTileRule(Composite composite) {
+        this.composite = composite;
+    }
 
 	@Override
-	public boolean check(Composite c, Tile tile, Position pos) {
+	public boolean check(Tile tile, Position pos) {
 		for (int i = pos.getRow(); i <= pos.getRow() + tile.getRows() - 1; i++) {
 			for (int j = pos.getCol(); j <= pos.getCol() + tile.getCols() - 1; j++) {
-				if (c.getSurface().getEntryAt(i, j) != null) {
+				if (composite.getSurface().getEntryAt(i, j) != null) {
 					return false;
 				}
 			}

@@ -23,26 +23,36 @@ import ess.strings.CustomErrorMessages;
  */
 public class MaxLineLengthRule implements IRule {
     
+    private Composite composite;
+    
+    /**
+     * Initializes an instance of MaxLineLengthRule
+     * @param composite the composite
+     */
+    public MaxLineLengthRule(Composite composite) {
+        this.composite = composite;
+    }
+    
     @Override
-    public boolean check(Composite c, Tile tile, Position pos) {
+    public boolean check(Tile tile, Position pos) {
         for (Edge edge : Edge.values()) {
-            if (calculateLineLength(c, tile, pos, edge) > c.getMaxLineLength()) {
+            if (calculateLineLength(tile, pos, edge) > composite.getMaxLineLength()) {
                 return false;
             }
         }
         return true;
     }
 
-    private int calculateLineLength(Composite c, Tile tile, Position pos, Edge edge) {
+    private int calculateLineLength(Tile tile, Position pos, Edge edge) {
         Corner c1 = edge.getFirstCorner();
         Corner c2 = edge.getSecondCorner();
         
-        int row1 = c.getSurface().getCornerRow(tile, pos, c1);
-        int col1 = c.getSurface().getCornerCol(tile, pos, c1);
-        int row2 = c.getSurface().getCornerRow(tile, pos, c2);
-        int col2 = c.getSurface().getCornerCol(tile, pos, c2);
+        int row1 = composite.getSurface().getCornerRow(tile, pos, c1);
+        int col1 = composite.getSurface().getCornerCol(tile, pos, c1);
+        int row2 = composite.getSurface().getCornerRow(tile, pos, c2);
+        int col2 = composite.getSurface().getCornerCol(tile, pos, c2);
 
-        return getLineLength(c.getSurface(), edge, row1, col1, -1) + getLineLength(c.getSurface(), edge, row2, col2, 1)
+        return getLineLength(edge, row1, col1, -1) + getLineLength(edge, row2, col2, 1)
                 + getEntryLength(edge, tile);
     }
 
@@ -58,7 +68,8 @@ public class MaxLineLengthRule implements IRule {
         throw new IllegalArgumentException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, edge));
     }
 
-    private int getLineLength(Surface s, Edge edge, int startRow, int startCol, int step) {
+    private int getLineLength(Edge edge, int startRow, int startCol, int step) {
+        Surface s = composite.getSurface();
         boolean isLine = true;
         int currentLineLength = 0;
         Tile innerTile;

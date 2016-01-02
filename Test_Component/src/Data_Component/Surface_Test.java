@@ -25,14 +25,14 @@ public class Surface_Test {
     @Before
     public void createSurfaceAndContent() {
         surface = new Surface(4, 5);
-        t1 = new Tile ("_1", 1, 1);
-        t2 = new Tile ("_2", 2, 1);
-        t3 = new Tile ("_3", 1, 2);
-        t4 = new Tile ("_4", 3, 2);
-        p1 = new Position (0,0);
-        p2 = new Position (0,1);
-        p3 = new Position (0,2);
-        p4 = new Position(1,2);
+        t1 = new Tile("_1", 1, 1);
+        t2 = new Tile("_2", 2, 1);
+        t3 = new Tile("_3", 1, 2);
+        t4 = new Tile("_4", 3, 2);
+        p1 = new Position(0, 0);
+        p2 = new Position(0, 1);
+        p3 = new Position(0, 2);
+        p4 = new Position(1, 2);
         
         
         surface.insertEntry(t1, p1);
@@ -42,9 +42,9 @@ public class Surface_Test {
 
     @Test
     public void testGetEntryAt() {
-        Position pos = new Position (1, 1);
-        Position emptyPos = new Position (0, 4);
-        Position posOutsideSurface = new Position (10, 10);
+        Position pos = new Position(1, 1);
+        Position emptyPos = new Position(0, 4);
+        Position posOutsideSurface = new Position(10, 10);
         assertEquals("Wrong entry or null was returned.", surface.getEntryAt(p1), t1);
         assertEquals("Wrong entry or null was returned.", surface.getEntryAt(p2), t2);
         assertEquals("Wrong entry or null was returned.", surface.getEntryAt(p3), t3);
@@ -55,7 +55,7 @@ public class Surface_Test {
     
     @Test
     public void testInsertingTiles() {
-        Position emptyPosition = new Position (0,4);
+        Position emptyPosition = new Position(0, 4);
         surface.insertEntry(t1, emptyPosition);
         
         assertNotNull("Entry was not inserted correctly.", surface.getEntryAt(emptyPosition));
@@ -63,7 +63,7 @@ public class Surface_Test {
     
     @Test
     public void testRemovingTiles() {
-        Position p2b = new Position (1, 1);
+        Position p2b = new Position(1, 1);
         surface.removeEntry(t2, p2);
         
         assertNull("Entry was not removed correctly", surface.getEntryAt(p2));
@@ -72,8 +72,8 @@ public class Surface_Test {
    
     @Test
     public void testIsBorderPosition() {
-        Position innerPos = new Position (1, 1);
-        Position leftColPos = new Position (2, 0);
+        Position innerPos = new Position(1, 1);
+        Position leftColPos = new Position(2, 0);
         assertTrue("Corner positions must be border positions.", surface.isBorderPosition(p1));
         assertTrue("Positions in border rows must be border positions.", surface.isBorderPosition(p2));
         assertFalse("Positions in the middle of the surfaces are not border positions.", surface.isBorderPosition(innerPos));
@@ -82,9 +82,9 @@ public class Surface_Test {
     
     @Test
     public void testIsBorderRow() {
-        Position bottomLeftCornerPos = new Position(3,0);
+        Position bottomLeftCornerPos = new Position(3, 0);
         Position innerPos = new Position(1, 1);
-        Position leftColPos = new Position (2, 0);
+        Position leftColPos = new Position(2, 0);
         
         assertTrue("Corner positions must be border rows.", surface.isBorderRow(p1));
         assertTrue("Positions in top row must be border rows.", surface.isBorderRow(p2));
@@ -96,8 +96,8 @@ public class Surface_Test {
     @Test
     public void testIsBorderCol() {
         Position innerPos = new Position(1, 1);
-        Position leftColPos = new Position (2, 0);
-        Position bottomRightCornerPos = new Position (3, 4);
+        Position leftColPos = new Position(2, 0);
+        Position bottomRightCornerPos = new Position(3, 4);
         
         assertTrue("Corner positions must be border columns.", surface.isBorderCol(p1));
         assertFalse("Positions in border rows are no border columns.", surface.isBorderCol(p2));
@@ -108,11 +108,11 @@ public class Surface_Test {
     
     @Test
     public void testIsInsideSurface() {
-        Position outsideSurfacePos = new Position (10, 10);
-        Position aboveSurfaceRow = new Position (-1, 0);
-        Position aboveSurfaceCol = new Position (0, -1);
-        Position belowSurfaceRow = new Position (4, 4);
-        Position belowSurfaceCol = new Position (3, 5);
+        Position outsideSurfacePos = new Position(10, 10);
+        Position aboveSurfaceRow = new Position(-1, 0);
+        Position aboveSurfaceCol = new Position(0, -1);
+        Position belowSurfaceRow = new Position(4, 4);
+        Position belowSurfaceCol = new Position(3, 5);
         
         assertTrue("Didn't recognize that position is inside the surface.", surface.isInsideSurface(p1));
         assertFalse("Didn't recognize that position is not inside the surface.", surface.isInsideSurface(outsideSurfacePos));
@@ -124,7 +124,7 @@ public class Surface_Test {
     
     @Test
     public void testGetHorizontalNeighbourTile() {
-        Position bottomRightCornerPos = new Position(3,4);
+        Position bottomRightCornerPos = new Position(3, 4);
         surface.insertEntry(t4, p4);
         surface.insertEntry(t1, bottomRightCornerPos);
         
@@ -155,10 +155,10 @@ public class Surface_Test {
     }
    
     @Test
-    public void testGetCornerPos () {
-        Position topRightCorner = new Position (1, 3);
-        Position bottomLeftCorner = new Position (3, 2);
-        Position bottomRightCorner = new Position (3, 3);
+    public void testGetCornerPos() {
+        Position topRightCorner = new Position(1, 3);
+        Position bottomLeftCorner = new Position(3, 2);
+        Position bottomRightCorner = new Position(3, 3);
         surface.insertEntry(t4, p4);
         
         assertEquals(surface.getCornerPos(t4, p4, Corner.TOP_LEFT), p4);
@@ -175,11 +175,11 @@ public class Surface_Test {
     }
 
     @Test
-    public void testGetTopLeft () {
+    public void testGetTopLeft() {
         System.out.println(surface);
-        Position topRightCorner = new Position (1, 3);
-        Position bottomLeftCorner = new Position (3, 2);
-        Position bottomRightCorner = new Position (3, 3);
+        Position topRightCorner = new Position(1, 3);
+        Position bottomLeftCorner = new Position(3, 2);
+        Position bottomRightCorner = new Position(3, 3);
         surface.insertEntry(t4, p4);
         System.out.println(surface);
         

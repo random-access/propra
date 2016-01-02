@@ -21,14 +21,14 @@ public class NoCrossingsTest {
 		XMLDataExchanger xmlExchanger = new XMLDataExchanger();
 		Composite c = xmlExchanger.readFromSource("instances/solveInstances/test4.xml");
 		Surface s = c.getSurface();
-		s.insertEntry(c.findTileById("_0"), new Position(0,0));
-		s.insertEntry(c.findTileById("_2"), new Position(0,2));
-		s.insertEntry(c.findTileById("_1"), new Position(0,3));
+		s.insertEntry(c.findTileById("_0"), new Position(0, 0));
+		s.insertEntry(c.findTileById("_2"), new Position(0, 2));
+		s.insertEntry(c.findTileById("_1"), new Position(0, 3));
 		
-		IRule rule = new CrossingsRule();
+		IRule rule = new CrossingsRule(c);
 		Tile tile = c.findTileById("_4");
 		Position pos = new Position(2, 2);
-		boolean validMove = rule.check(c, tile, pos);
+		boolean validMove = rule.check(tile, pos);
 		s.insertEntry(tile, pos);
 		
 		System.out.println("testInnerTileWithoutCrossing");
@@ -41,13 +41,13 @@ public class NoCrossingsTest {
 		XMLDataExchanger xmlExchanger = new XMLDataExchanger();
 		Composite c = xmlExchanger.readFromSource("instances/solveInstances/test4.xml");
 		Surface s = c.getSurface();
-		s.insertEntry(c.findTileById("_0"), new Position(0,0));
-		s.insertEntry(c.findTileById("_1"), new Position(0,3));
+		s.insertEntry(c.findTileById("_0"), new Position(0, 0));
+		s.insertEntry(c.findTileById("_1"), new Position(0, 3));
 		
-		IRule rule = new CrossingsRule();
+		IRule rule = new CrossingsRule(c);
 		Tile tile = c.findTileById("_0");
         Position pos = new Position(2, 3);
-		boolean validMove = rule.check(c, tile, pos);
+		boolean validMove = rule.check(tile, pos);
 		s.insertEntry(tile, pos);
 		
 		System.out.println("testInnerTileWithoutCrossing2");
@@ -63,10 +63,10 @@ public class NoCrossingsTest {
 	        Surface s = c.getSurface();
 	        s.insertEntry(c.findTileById("_0"), new Position(2, 4));
 	        
-	        IRule rule = new CrossingsRule();
+	        IRule rule = new CrossingsRule(c);
 	        Tile tile = c.findTileById("_1");
 	        Position pos = new Position(2, 1);
-	        boolean validMove = rule.check(c, tile, pos);
+	        boolean validMove = rule.check(tile, pos);
 	        s.insertEntry(tile, pos);
 	        
 	        System.out.println("testInnerTileWithoutCrossing3");
@@ -81,14 +81,14 @@ public class NoCrossingsTest {
 		XMLDataExchanger xmlExchanger = new XMLDataExchanger();
 		Composite c = xmlExchanger.readFromSource("instances/solveInstances/test4.xml");
 		Surface s = c.getSurface();
-		s.insertEntry(c.findTileById("_0"), new Position(0,0));
-		s.insertEntry(c.findTileById("_2"), new Position(0,2));
-		s.insertEntry(c.findTileById("_1"), new Position(0,3));
+		s.insertEntry(c.findTileById("_0"), new Position(0, 0));
+		s.insertEntry(c.findTileById("_2"), new Position(0, 2));
+		s.insertEntry(c.findTileById("_1"), new Position(0, 3));
 		
-		IRule rule = new CrossingsRule();
+		IRule rule = new CrossingsRule(c);
 		Tile tile = c.findTileById("_0");
         Position pos = new Position(2, 3);
-		boolean validMove = rule.check(c, tile, pos);
+		boolean validMove = rule.check(tile, pos);
 		s.insertEntry(tile, pos);
 		
 		System.out.println("testInnerTileWithCrossing");
@@ -103,12 +103,12 @@ public class NoCrossingsTest {
 		Composite c = xmlExchanger.readFromSource("instances/solveInstances/test3.xml");
 
 		Surface s = c.getSurface();
-		s.insertEntry(c.findTileById("_0"), new Position(21,17));
+		s.insertEntry(c.findTileById("_0"), new Position(21, 17));
 		
-		IRule rule = new CrossingsRule();
+		IRule rule = new CrossingsRule(c);
 		Tile tile = c.findTileById("_1");
         Position pos = new Position(22, 19);
-		boolean validMove = rule.check(c, tile, pos);
+		boolean validMove = rule.check(tile, pos);
 		s.insertEntry(tile, pos);
 		
 		System.out.println("testBorderTileWithoutCrossing");
@@ -123,13 +123,13 @@ public class NoCrossingsTest {
 		Composite c = xmlExchanger.readFromSource("instances/solveInstances/test4.xml");
 		
 		Surface s = c.getSurface();
-		s.insertEntry(c.findTileById("_0"), new Position(3,0));
-		s.insertEntry(c.findTileById("_2"), new Position(1,2));
+		s.insertEntry(c.findTileById("_0"), new Position(3, 0));
+		s.insertEntry(c.findTileById("_2"), new Position(1, 2));
 		
-		IRule rule = new CrossingsRule();
+		IRule rule = new CrossingsRule(c);
 		Tile tile = c.findTileById("_0");
         Position pos = new Position(0, 0);
-		boolean validMove = rule.check(c, tile, pos);
+		boolean validMove = rule.check(tile, pos);
 		s.insertEntry(tile, pos);
 		
 		System.out.println("testBorderTileWithCrossing");
@@ -144,13 +144,13 @@ public class NoCrossingsTest {
 	        Composite c = xmlExchanger.readFromSource("instances/solveInstances/test4.xml");
 	        
 	        Surface s = c.getSurface();
-	        s.insertEntry(c.findTileById("_0"), new Position(0,0));
-	        s.insertEntry(c.findTileById("_2"), new Position(1,2));
+	        s.insertEntry(c.findTileById("_0"), new Position(0, 0));
+	        s.insertEntry(c.findTileById("_2"), new Position(1, 2));
 	        
-	        IRule rule = new CrossingsRule();
+	        IRule rule = new CrossingsRule(c);
 	        Tile tile = c.findTileById("_0");
 	        Position pos = new Position(3, 0);
-	        boolean validMove = rule.check(c, tile, pos);
+	        boolean validMove = rule.check(tile, pos);
 	        s.insertEntry(tile, pos);
 	        
 	        System.out.println("testBorderTileWithCrossings2");
@@ -165,12 +165,12 @@ public class NoCrossingsTest {
 	        Composite c = xmlExchanger.readFromSource("instances/solveInstances/test4.xml");
 	        
 	        Surface s = c.getSurface();
-	        s.insertEntry(c.findTileById("_0"), new Position(3,0));
+	        s.insertEntry(c.findTileById("_0"), new Position(3, 0));
 	        
-	        IRule rule = new CrossingsRule();
+	        IRule rule = new CrossingsRule(c);
 	        Tile tile = c.findTileById("_2");
 	        Position pos = new Position(1, 2);
-	        boolean validMove = rule.check(c, tile, pos);
+	        boolean validMove = rule.check(tile, pos);
 	        s.insertEntry(tile, pos);
 	        
 	        System.out.println("testBorderTileWithCrossings3");

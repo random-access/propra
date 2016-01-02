@@ -14,6 +14,14 @@ import ess.rules.IRule;
  *
  */
 public class SurfaceIsFilledCompletelyRule implements IRule {
+    
+    /**
+     * Initializes an instance of SurfaceIsFilledCompletelyRule
+     * @param composite the composite
+     */
+    public SurfaceIsFilledCompletelyRule(Composite composite) {
+        // nothing needs to be done
+    }
 
 	@Override
 	public ErrorType getErrorType() {
@@ -21,7 +29,7 @@ public class SurfaceIsFilledCompletelyRule implements IRule {
 	}
 
 	@Override
-	public boolean check(Composite c, Tile t, Position pos) {
+	public boolean check(Tile t, Position pos) {
 		return pos == null;
 	}
 

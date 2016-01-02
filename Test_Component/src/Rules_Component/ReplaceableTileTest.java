@@ -19,12 +19,12 @@ public class ReplaceableTileTest {
 		XMLDataExchanger xmlEx = new XMLDataExchanger();
 		Composite c = xmlEx.readFromSource("instances/solveInstances/test5.xml");
 
-		c.getSurface().insertEntry(c.findTileById("_4"), new Position(1,0));
+		c.getSurface().insertEntry(c.findTileById("_4"), new Position(1, 0));
 		
-		ReplaceableTileRule rule = new ReplaceableTileRule();
-		assertFalse(rule.check(c, c.findTileById("_2"), new Position(1,2)));
+		ReplaceableTileRule rule = new ReplaceableTileRule(c);
+		assertFalse(rule.check(c.findTileById("_2"), new Position(1, 2)));
 		
-		c.getSurface().insertEntry(c.findTileById("_2"), new Position(1,2));
+		c.getSurface().insertEntry(c.findTileById("_2"), new Position(1, 2));
 		// System.out.println(c);
 	}
 	
@@ -34,12 +34,12 @@ public class ReplaceableTileTest {
 		XMLDataExchanger xmlEx = new XMLDataExchanger();
 		Composite c = xmlEx.readFromSource("instances/solveInstances/test5.xml");
 		
-		c.getSurface().insertEntry(c.findTileById("_4"), new Position(2,2));
+		c.getSurface().insertEntry(c.findTileById("_4"), new Position(2, 2));
 		
-		ReplaceableTileRule rule = new ReplaceableTileRule();
-		assertFalse(rule.check(c, c.findTileById("_3"), new Position(1,2)));
+		ReplaceableTileRule rule = new ReplaceableTileRule(c);
+		assertFalse(rule.check(c.findTileById("_3"), new Position(1, 2)));
 		
-		c.getSurface().insertEntry(c.findTileById("_3"), new Position(1,2));
+		c.getSurface().insertEntry(c.findTileById("_3"), new Position(1, 2));
 		// System.out.println(c);
 	}
 	
@@ -48,12 +48,12 @@ public class ReplaceableTileTest {
 		XMLDataExchanger xmlEx = new XMLDataExchanger();
 		Composite c = xmlEx.readFromSource("instances/solveInstances/test5.xml");
 
-		c.getSurface().insertEntry(c.findTileById("_4"), new Position(2,2));
+		c.getSurface().insertEntry(c.findTileById("_4"), new Position(2, 2));
 		
-		ReplaceableTileRule rule = new ReplaceableTileRule();
-		assertTrue(rule.check(c, c.findTileById("_3"), new Position(1,1)));
+		ReplaceableTileRule rule = new ReplaceableTileRule(c);
+		assertTrue(rule.check(c.findTileById("_3"), new Position(1, 1)));
 		
-		c.getSurface().insertEntry(c.findTileById("_3"), new Position(1,1));
+		c.getSurface().insertEntry(c.findTileById("_3"), new Position(1, 1));
 		// System.out.println(c);
 	}
 	
@@ -62,13 +62,13 @@ public class ReplaceableTileTest {
 		XMLDataExchanger xmlEx = new XMLDataExchanger();
 		Composite c = xmlEx.readFromSource("instances/solveInstances/test5.xml");
 
-		c.getSurface().insertEntry(c.findTileById("_3"), new Position(1,2));
-		c.getSurface().insertEntry(c.findTileById("_2"), new Position(2,2));
+		c.getSurface().insertEntry(c.findTileById("_3"), new Position(1, 2));
+		c.getSurface().insertEntry(c.findTileById("_2"), new Position(2, 2));
 		
-		ReplaceableTileRule rule = new ReplaceableTileRule();
-		assertFalse(rule.check(c, c.findTileById("_2"), new Position(2,3)));
+		ReplaceableTileRule rule = new ReplaceableTileRule(c);
+		assertFalse(rule.check(c.findTileById("_2"), new Position(2, 3)));
 		
-		c.getSurface().insertEntry(c.findTileById("_2"), new Position(2,3));
+		c.getSurface().insertEntry(c.findTileById("_2"), new Position(2, 3));
 		// System.out.println(c);
 	}
 }

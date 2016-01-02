@@ -40,7 +40,7 @@ public class API_Test_Solve {
      * @return temporärer Pfad
      * @throws IOException
      */
-    private String WriteFileToTempDirectory(String fileName) throws IOException {
+    private String writeFileToTempDirectory(String fileName) throws IOException {
         // In Unit-Tests braucht kein fortgeschrittenes Exceptionhandling
         // integriert werden.
         // Der Grund dafuer ist, dass der Test genau ein Szenario abbildet.
@@ -80,7 +80,7 @@ public class API_Test_Solve {
 
         // Arrange (set all necessary preconditions and inputs.)
         IRoemischerVerbund api = new RoemischerVerbund();
-        String filePath = WriteFileToTempDirectory("instances/solveInstances/test1.xml");
+        String filePath = writeFileToTempDirectory("instances/solveInstances/test1.xml");
 
         // Act (on the object or method under test.)
         Boolean valid = api.solve(filePath, 140);
@@ -94,7 +94,7 @@ public class API_Test_Solve {
 
         // Arrange (set all necessary preconditions and inputs.)
         IRoemischerVerbund api = new RoemischerVerbund();
-        String filePath = WriteFileToTempDirectory("instances/solveInstances/test1.xml");
+        String filePath = writeFileToTempDirectory("instances/solveInstances/test1.xml");
 
         // Act (on the object or method under test.)
         Boolean valid = api.solve(filePath, 200);
@@ -108,7 +108,7 @@ public class API_Test_Solve {
 
         // Arrange (set all necessary preconditions and inputs.)
         IRoemischerVerbund api = new RoemischerVerbund();
-        String filePath = WriteFileToTempDirectory("instances/solveInstances/test2.xml");
+        String filePath = writeFileToTempDirectory("instances/solveInstances/test2.xml");
 
         // Act (on the object or method under test.)
         Boolean valid = api.solve(filePath, 120);
@@ -122,7 +122,7 @@ public class API_Test_Solve {
 
         // Arrange (set all necessary preconditions and inputs.)
         IRoemischerVerbund api = new RoemischerVerbund();
-        String filePath = WriteFileToTempDirectory("instances/solveInstances/test4.xml");
+        String filePath = writeFileToTempDirectory("instances/solveInstances/test4.xml");
 
         // Act (on the object or method under test.)
         Boolean valid = api.solve(filePath, 80);
@@ -136,7 +136,7 @@ public class API_Test_Solve {
 
         // Arrange (set all necessary preconditions and inputs.)
         IRoemischerVerbund api = new RoemischerVerbund();
-        String filePath = WriteFileToTempDirectory("instances/solveInstances/test5.xml");
+        String filePath = writeFileToTempDirectory("instances/solveInstances/test5.xml");
 
         // Act (on the object or method under test.)
         Boolean valid = api.solve(filePath, 100);
@@ -150,7 +150,7 @@ public class API_Test_Solve {
 
         // Arrange (set all necessary preconditions and inputs.)
         IRoemischerVerbund api = new RoemischerVerbund();
-        String filePath = WriteFileToTempDirectory("instances/solveInstances/test6.xml");
+        String filePath = writeFileToTempDirectory("instances/solveInstances/test6.xml");
 
         // Act (on the object or method under test.)
         Boolean valid = api.solve(filePath, 140);
@@ -164,7 +164,7 @@ public class API_Test_Solve {
 
         // Arrange (set all necessary preconditions and inputs.)
         IRoemischerVerbund api = new RoemischerVerbund();
-        String filePath = WriteFileToTempDirectory("instances/solveInstances/florian-test1.xml");
+        String filePath = writeFileToTempDirectory("instances/solveInstances/florian-test1.xml");
 
         // Act (on the object or method under test.) Boolean valid =
         Boolean valid = api.solve(filePath, 140);
@@ -178,7 +178,7 @@ public class API_Test_Solve {
 
         // Arrange (set all necessary preconditions and inputs.)
         IRoemischerVerbund api = new RoemischerVerbund();
-        String filePath = WriteFileToTempDirectory("instances/solveInstances/florian-test2.xml");
+        String filePath = writeFileToTempDirectory("instances/solveInstances/florian-test2.xml");
 
         // Act (on the object or method under test.)
         Boolean valid = api.solve(filePath, 140);
@@ -192,7 +192,7 @@ public class API_Test_Solve {
 
         // Arrange (set all necessary preconditions and inputs.)
         IRoemischerVerbund api = new RoemischerVerbund();
-        String filePath = WriteFileToTempDirectory("instances/solveInstances/florian-test3.xml");
+        String filePath = writeFileToTempDirectory("instances/solveInstances/florian-test3.xml");
 
         // Act (on the object or method under test.)
         Boolean valid = api.solve(filePath, 140);
@@ -206,7 +206,7 @@ public class API_Test_Solve {
 
         // Arrange (set all necessary preconditions and inputs.)
         IRoemischerVerbund api = new RoemischerVerbund();
-        String filePath = WriteFileToTempDirectory("instances/solveInstances/florian-test4.xml");
+        String filePath = writeFileToTempDirectory("instances/solveInstances/florian-test4.xml");
 
         // Act (on the object or method under test.)
         Boolean valid = api.solve(filePath, 34000);
@@ -220,7 +220,7 @@ public class API_Test_Solve {
 
         // Arrange (set all necessary preconditions and inputs.)
         IRoemischerVerbund api = new RoemischerVerbund();
-        String filePath = WriteFileToTempDirectory("instances/solveInstances/test1.xml");
+        String filePath = writeFileToTempDirectory("instances/solveInstances/test1.xml");
 
         // Act (on the object or method under test.)
         Boolean valid = api.solve(filePath, 120);
@@ -234,7 +234,7 @@ public class API_Test_Solve {
 
         // Arrange (set all necessary preconditions and inputs.)
         IRoemischerVerbund api = new RoemischerVerbund();
-        String filePath = WriteFileToTempDirectory("instances/solveInstances/test1.xml");
+        String filePath = writeFileToTempDirectory("instances/solveInstances/test1.xml");
 
         // Act (on the object or method under test.)
         Boolean valid = api.solve(filePath, 80);
@@ -248,7 +248,7 @@ public class API_Test_Solve {
 
         // Arrange (set all necessary preconditions and inputs.)
         IRoemischerVerbund api = new RoemischerVerbund();
-        String filePath = WriteFileToTempDirectory("instances/solveInstances/test1.xml");
+        String filePath = writeFileToTempDirectory("instances/solveInstances/test1.xml");
 
         // Act (on the object or method under test.)
         Boolean valid = api.solve(filePath, 100);

@@ -27,11 +27,12 @@ public class ValidationRuleChecker implements IRuleChecker {
 	
 	/**
      * Instantiates a ValidationRuleChecker.
+     * @param composite the composite 
      * @throws PropertyException if the config.properties file cannot be read or if it contains
      * invalid parameters
      */
-	public ValidationRuleChecker() throws PropertyException {
-		ruleSet = new ValidationRuleSet();
+	public ValidationRuleChecker(Composite composite) throws PropertyException {
+		ruleSet = new ValidationRuleSet(composite);
 	}
 	
 	/* (non-Javadoc)
@@ -41,7 +42,7 @@ public class ValidationRuleChecker implements IRuleChecker {
 	public boolean checkImplicitRules(Composite composite, Tile tile, Position pos) {
 		boolean validMove = true;
 		for (IRule rule : ruleSet.getEndConditions()) {
-		    boolean isEnd = rule.check(composite, tile, pos);
+		    boolean isEnd = rule.check(tile, pos);
             if (isEnd) {
                 ruleSet.addError(rule.getErrorType());
             }
@@ -49,7 +50,7 @@ public class ValidationRuleChecker implements IRuleChecker {
         }
 		// TODO stop checking if any implicit rule gets broken
 		for (IRule rule : ruleSet.getImplicitRules()) {
-			boolean ok = rule.check(composite, tile, pos);
+			boolean ok = rule.check(tile, pos);
 			if (!ok) {
 				ruleSet.addError(rule.getErrorType());
 			}
@@ -65,7 +66,7 @@ public class ValidationRuleChecker implements IRuleChecker {
 	public boolean checkExplicitRules(Composite composite, Tile tile, Position pos) {
 		boolean validMove = true;
 		for (IRule rule : ruleSet.getExplicitRules()) {
-			boolean ok = rule.check(composite, tile, pos);
+			boolean ok = rule.check(tile, pos);
 			if (!ok) {
 				ruleSet.addError(rule.getErrorType());
 			}
@@ -81,7 +82,7 @@ public class ValidationRuleChecker implements IRuleChecker {
 	public boolean checkEndConditions(Composite composite, Tile tile, Position pos) {
 		boolean completed = true;
 		for (IRule rule : ruleSet.getEndConditions()) {
-			boolean isEnd = rule.check(composite, tile, pos);
+			boolean isEnd = rule.check(tile, pos);
 			if (!isEnd) {
 				ruleSet.addError(rule.getErrorType());
 			}

@@ -41,7 +41,7 @@ public class Validator {
     public Validator(Composite composite) throws PropertyException {
         ProPraLogger.setup();
         posFinder = new TopToBottomPosFinder();
-        ruleChecker = new ValidationRuleChecker();
+        ruleChecker = new ValidationRuleChecker(composite);
         this.composite = composite;
     }
     /**

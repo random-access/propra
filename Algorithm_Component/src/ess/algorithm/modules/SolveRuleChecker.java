@@ -21,11 +21,12 @@ private IRuleSet ruleSet;
 	
     /**
      * Instantiates a SolveRuleChecker.
+     * @param composite the composite 
      * @throws PropertyException if the config.properties file cannot be read or if it contains
      * invalid parameters
      */
-	public SolveRuleChecker() throws PropertyException {
-		ruleSet = new SolveRuleSet();
+	public SolveRuleChecker(Composite composite) throws PropertyException {
+		ruleSet = new SolveRuleSet(composite);
 	}
 
 	/* (non-Javadoc)
@@ -34,7 +35,7 @@ private IRuleSet ruleSet;
 	@Override
 	public boolean checkExplicitRules(Composite composite, Tile tile, Position pos) {
 		for (IRule rule : ruleSet.getExplicitRules()) {
-			 if (!rule.check(composite, tile, pos)) {
+			 if (!rule.check(tile, pos)) {
 				 return false;
 			 }
 		}
@@ -47,7 +48,7 @@ private IRuleSet ruleSet;
 	@Override
 	public boolean checkImplicitRules(Composite composite, Tile tile, Position pos) {
 		for (IRule rule : ruleSet.getImplicitRules()) {
-			 if (!rule.check(composite, tile, pos)) {
+			 if (!rule.check(tile, pos)) {
 				 return false;
 			 }
 		}
@@ -60,7 +61,7 @@ private IRuleSet ruleSet;
 	@Override
 	public boolean checkEndConditions(Composite composite, Tile tile, Position pos) {
 		for (IRule rule : ruleSet.getEndConditions()) {
-			 if (!rule.check(composite, tile, pos)) {
+			 if (!rule.check(tile, pos)) {
 				 return false;
 			 }
 		}

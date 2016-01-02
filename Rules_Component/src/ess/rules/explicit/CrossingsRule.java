@@ -18,16 +18,27 @@ import ess.rules.IRule;
  * @author Monika Schrenk
  */
 public class CrossingsRule implements IRule {
+    
+    private Composite composite;
+    
+    /**
+     * Initializes an instance of CrossingsRule
+     * @param composite the composite
+     */
+    public CrossingsRule(Composite composite) {
+        this.composite = composite;
+    }
 
 	@Override
-	public boolean check(Composite c, Tile tile, Position pos) {
-		return checkCorner(Corner.TOP_LEFT, c.getSurface(), tile, pos) 
-				&& checkCorner(Corner.TOP_RIGHT, c.getSurface(), tile, pos) 
-				&& checkCorner(Corner.BOTTOM_LEFT, c.getSurface(), tile, pos)
-				&& checkCorner(Corner.BOTTOM_RIGHT, c.getSurface(), tile, pos);
+	public boolean check(Tile tile, Position pos) {
+		return checkCorner(Corner.TOP_LEFT, tile, pos) 
+				&& checkCorner(Corner.TOP_RIGHT, tile, pos) 
+				&& checkCorner(Corner.BOTTOM_LEFT, tile, pos)
+				&& checkCorner(Corner.BOTTOM_RIGHT, tile, pos);
 	}
 	
-	private boolean checkCorner(Corner corner, Surface surface, Tile tile, Position pos) {
+	private boolean checkCorner(Corner corner, Tile tile, Position pos) {
+	    Surface surface = composite.getSurface();
 		Position cornerPos = surface.getCornerPos(tile, pos, corner);
 		// TODO maybe border check is not necessary?
 		if (surface.isBorderPosition(cornerPos)) {

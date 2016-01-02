@@ -34,7 +34,7 @@ public class XML_Export_Test {
 	 * @return temporärer Pfad
 	 * @throws IOException
 	 */
-	private String WriteFileToTempDirectory(String fileName) throws IOException {
+	private String writeFileToTempDirectory(String fileName) throws IOException {
 		// In Unit-Tests braucht kein fortgeschrittenes Exceptionhandling
 		// integriert werden.
 		// Der Grund dafuer ist, dass der Test genau ein Szenario abbildet.
@@ -83,7 +83,7 @@ public class XML_Export_Test {
 
 		// Arrange (set all necessary preconditions and inputs.)
 		IRoemischerVerbund api = new RoemischerVerbund();
-		String filePath = WriteFileToTempDirectory("instances/solveInstances/test1.xml");
+		String filePath = writeFileToTempDirectory("instances/solveInstances/test1.xml");
 
 		// Act (on the object or method under test.)
 		Boolean valid = api.solve(filePath, 140);
@@ -104,7 +104,7 @@ public class XML_Export_Test {
 
 		// Arrange (set all necessary preconditions and inputs.)
 		IRoemischerVerbund api = new RoemischerVerbund();
-		String filePath = WriteFileToTempDirectory("instances/validationInstances/test1.xml");
+		String filePath = writeFileToTempDirectory("instances/validationInstances/test1.xml");
 
 		// Act (on the object or method under test.)
 		Boolean valid = api.solve(filePath, 140);

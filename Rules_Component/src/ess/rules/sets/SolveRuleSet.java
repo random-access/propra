@@ -1,5 +1,6 @@
 package ess.rules.sets;
 
+import ess.data.Composite;
 import ess.exc.PropertyException;
 import ess.utils.ProPraProperties;
 
@@ -17,17 +18,18 @@ public class SolveRuleSet extends ValidationRuleSet {
 
     /**
      * Instantiates a SolveRuleSet.
-      * @throws PropertyException if config.properties could not be read
+     * @param composite the composite
+     * @throws PropertyException if config.properties could not be read
      * or if it contains invalid parameters.
      */
-    public SolveRuleSet() throws PropertyException {
-        super();
-        addAdditionalRules();
+    public SolveRuleSet(Composite composite) throws PropertyException {
+        super(composite);
+        addAdditionalRules(composite);
     }
 
-    private void addAdditionalRules() throws PropertyException {
+    private void addAdditionalRules(Composite composite) throws PropertyException {
         if (getExplicitRules().size() == BASIC_RULE_QUANTITY) {
-            addRules(ProPraProperties.getInstance().getAdditionalRuleNames());
+            addRules(composite, ProPraProperties.getInstance().getAdditionalRuleNames());
         }
     }
 

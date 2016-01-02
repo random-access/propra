@@ -21,7 +21,7 @@ public class Surface_Utils_Test {
 		for (int i = 0; i < cols * rows; i++) {
 			Tile t = new Tile("_" + i, 1, 1);
 			Position p = new Position(i / cols, i % cols);
-			surface.insertEntry(t,p);
+			surface.insertEntry(t, p);
 		}
 		
 		// Assert (that the expected results have occurred.))

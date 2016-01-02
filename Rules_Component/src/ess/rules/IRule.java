@@ -1,6 +1,5 @@
 package ess.rules;
 
-import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Tile;
 
@@ -26,11 +25,10 @@ public interface IRule {
 	 * Checks if this rule is broken when tile will be placed into composite's surface.
 	 * Rules are checked before the tile is placed, so implementations must deal with 
 	 * the tile not being placed yet. 
-	 * @param composite The composite holding the surface where tile will be placed and other data.
 	 * @param tile The tile that is considered to be placed next.
 	 * @param pos The left upper corner where tile should be placed.
 	 * @return True, if the this rule doesn't get broken when placing tile at pos, else false.
 	 */
-	boolean check(Composite composite, Tile tile, Position pos);
+	boolean check(Tile tile, Position pos);
 	
 }

@@ -17,44 +17,44 @@ public class Tile_Comparator_Test {
 
     @Test
     public void testDifferentRowSameColTiles() {
-        Tile t1 = new Tile ("_1", 1, 1);
-        Tile t2 = new Tile ("_2", 2, 1);
+        Tile t1 = new Tile("_1", 1, 1);
+        Tile t2 = new Tile("_2", 2, 1);
         
         testIntegrity(t1, t2);
-        assertEquals(TileComparator.ROWS_ASC.compare(t1,t2), FIRST_SMALLER_THAN_SECOND);
+        assertEquals(TileComparator.ROWS_ASC.compare(t1, t2), FIRST_SMALLER_THAN_SECOND);
         assertEquals(TileComparator.COLS_ASC.compare(t1, t2), FIRST_EQUALS_SECOND);
         assertEquals(TileComparator.FIELDS_ASC.compare(t1, t2), FIRST_SMALLER_THAN_SECOND);
     }
     
     @Test
     public void testDifferentColSameRowTiles() {
-        Tile t1 = new Tile ("_1", 1, 1);
-        Tile t2 = new Tile ("_2", 1, 2);
+        Tile t1 = new Tile("_1", 1, 1);
+        Tile t2 = new Tile("_2", 1, 2);
         
         testIntegrity(t1, t2);
-        assertEquals(TileComparator.ROWS_ASC.compare(t1,t2), FIRST_EQUALS_SECOND);
+        assertEquals(TileComparator.ROWS_ASC.compare(t1, t2), FIRST_EQUALS_SECOND);
         assertEquals(TileComparator.COLS_ASC.compare(t1, t2), FIRST_SMALLER_THAN_SECOND);
         assertEquals(TileComparator.FIELDS_ASC.compare(t1, t2), FIRST_SMALLER_THAN_SECOND);
     }
     
     @Test
     public void testSameRowAndColTiles() {
-        Tile t1 = new Tile ("_1", 1, 1);
-        Tile t2 = new Tile ("_2", 1, 1);
+        Tile t1 = new Tile("_1", 1, 1);
+        Tile t2 = new Tile("_2", 1, 1);
         
         testIntegrity(t1, t2);
-        assertEquals(TileComparator.ROWS_ASC.compare(t1,t2), FIRST_EQUALS_SECOND);
+        assertEquals(TileComparator.ROWS_ASC.compare(t1, t2), FIRST_EQUALS_SECOND);
         assertEquals(TileComparator.COLS_ASC.compare(t1, t2), FIRST_EQUALS_SECOND);
         assertEquals(TileComparator.FIELDS_ASC.compare(t1, t2), FIRST_EQUALS_SECOND);
     }
     
     @Test
     public void testTileAndNull() {
-        Tile t1 = new Tile ("_1", 1, 1);
+        Tile t1 = new Tile("_1", 1, 1);
         Tile t2 = null;
         
         testIntegrity(t1, t2);
-        assertEquals(TileComparator.ROWS_ASC.compare(t1,t2), FIRST_LARGER_THAN_SECOND);
+        assertEquals(TileComparator.ROWS_ASC.compare(t1, t2), FIRST_LARGER_THAN_SECOND);
         assertEquals(TileComparator.COLS_ASC.compare(t1, t2), FIRST_LARGER_THAN_SECOND);
         assertEquals(TileComparator.FIELDS_ASC.compare(t1, t2), FIRST_LARGER_THAN_SECOND);
     }
@@ -65,12 +65,12 @@ public class Tile_Comparator_Test {
         Tile t2 = null;
         
         testIntegrity(t1, t2);
-        assertEquals(TileComparator.ROWS_ASC.compare(t1,t2), FIRST_EQUALS_SECOND);
+        assertEquals(TileComparator.ROWS_ASC.compare(t1, t2), FIRST_EQUALS_SECOND);
         assertEquals(TileComparator.COLS_ASC.compare(t1, t2), FIRST_EQUALS_SECOND);
         assertEquals(TileComparator.FIELDS_ASC.compare(t1, t2), FIRST_EQUALS_SECOND);
     }
     
-    public void testIntegrity(Tile t1, Tile t2) {
+    private void testIntegrity(Tile t1, Tile t2) {
         int rowsAsc = TileComparator.ROWS_ASC.compare(t1, t2);
         int colsAsc = TileComparator.COLS_ASC.compare(t1, t2);
         int fieldsAsc = TileComparator.FIELDS_ASC.compare(t1, t2);

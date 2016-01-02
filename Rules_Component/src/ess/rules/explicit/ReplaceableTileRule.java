@@ -23,32 +23,31 @@ import ess.rules.IRule;
  */
 public class ReplaceableTileRule implements IRule {
 
-    private boolean initialized;
-    private HashMap<String, ArrayList<Tile>> tilesLargerThan;
+    private HashMap<String, ArrayList<Tile>> tilesLargerThan; 
+    private Composite composite;
+    
+    /**
+     * Initializes an instance of ReplaceableTileRule
+     * @param composite the composite
+     */
+    public ReplaceableTileRule(Composite composite) {
+        this.composite = composite;
+        tilesLargerThan = new HashMap<>();
+        for (Tile t : composite.getTileSorts()) {
+            ArrayList<Tile> largerTiles = composite.getTilesLargerThan(t.getRows(), t.getCols(), t.getNumberOfFields());
+            tilesLargerThan.put(t.getId(), largerTiles);
+        }
+    }
 
     @Override
-    public boolean check(Composite c, Tile tile, Position pos) {
-        if (!initialized) {
-            init(c);
-        }
-        // ArrayList<Tile> tiles = c.getTilesLargerThan(tile.getRows(),
-        // tile.getCols(), tile.getNumberOfFields());
+    public boolean check(Tile tile, Position pos) {
         ArrayList<Tile> tiles = tilesLargerThan.get(tile.getId());
         for (Tile rTile : tiles) {
-            if (tileIsReplacement(c, tile, pos, rTile)) {
+            if (tileIsReplacement(tile, pos, rTile)) {
                 return false;
             }
         }
         return true;
-    }
-
-    private void init(Composite c) {
-        tilesLargerThan = new HashMap<>();
-        for (Tile t : c.getTileSorts()) {
-            ArrayList<Tile> largerTiles = c.getTilesLargerThan(t.getRows(), t.getCols(), t.getNumberOfFields());
-            tilesLargerThan.put(t.getId(), largerTiles);
-        }
-        initialized = true;
     }
 
     /**
@@ -56,8 +55,6 @@ public class ReplaceableTileRule implements IRule {
      * with any of the 4 corners of the tile that will be inserted into the
      * surface of Composite c.
      * 
-     * @param c
-     *            the composite with the surface to test
      * @param tile
      *            the Tile that should be tested as a replacement
      * @param pos
@@ -67,9 +64,9 @@ public class ReplaceableTileRule implements IRule {
      * @return true, if this tile replaces an area filled with smaller tiles,
      *         else false
      */
-    private boolean tileIsReplacement(Composite c, Tile tile, Position pos, Tile rTile) {
+    private boolean tileIsReplacement(Tile tile, Position pos, Tile rTile) {
         for (Corner corner : Corner.values()) {
-            if (tileIsReplacementInCorner(c, tile, pos, rTile, corner)) {
+            if (tileIsReplacementInCorner(tile, pos, rTile, corner)) {
                 return true;
             }
         }
@@ -82,8 +79,6 @@ public class ReplaceableTileRule implements IRule {
      * examined. A tile replaces an area filled with smaller tiles if all of its
      * four edges are touching another SurfaceEntry
      * 
-     * @param c
-     *            the composite with the surface to test
      * @param tile
      *            the Tile that should be tested as a replacement
      * @param pos
@@ -95,13 +90,13 @@ public class ReplaceableTileRule implements IRule {
      * @return true, if tile replaces an area filled with smaller tiles when
      *         positioned in corner, else false
      */
-    private boolean tileIsReplacementInCorner(Composite c, Tile tile, Position pos, Tile rTile, Corner corner) {
-        Position rPos = getReplacementPos(c, tile, pos, rTile, corner);
+    private boolean tileIsReplacementInCorner(Tile tile, Position pos, Tile rTile, Corner corner) {
+        Position rPos = getReplacementPos(tile, pos, rTile, corner);
         if (rPos == null) {
             return false;
         }
         for (Edge edge : Edge.values()) {
-            if (!isTileBorder(c, rTile, rPos, edge, tile, pos)) {
+            if (!isTileBorder(rTile, rPos, edge, tile, pos)) {
                 return false;
             }
         }
@@ -113,8 +108,6 @@ public class ReplaceableTileRule implements IRule {
      * the border between 2 tiles if every position at the edge is touching a
      * different SurfaceEntry
      * 
-     * @param c
-     *            the composite with the surface to test
      * @param rTile
      *            the tile that is tested as a replacement
      * @param rPos
@@ -128,9 +121,9 @@ public class ReplaceableTileRule implements IRule {
      *            the position where tile should get inserted
      * @return true, if this edge is a tile border, else false
      */
-    private boolean isTileBorder(Composite c, Tile rTile, Position rPos, Edge edge, Tile tile, Position pos) {
-        Position corner1 = c.getSurface().getCornerPos(rTile, rPos, edge.getFirstCorner());
-        Position corner2 = c.getSurface().getCornerPos(rTile, rPos, edge.getSecondCorner());
+    private boolean isTileBorder(Tile rTile, Position rPos, Edge edge, Tile tile, Position pos) {
+        Position corner1 = composite.getSurface().getCornerPos(rTile, rPos, edge.getFirstCorner());
+        Position corner2 = composite.getSurface().getCornerPos(rTile, rPos, edge.getSecondCorner());
         Tile inside;
         Tile outside;
         for (int i = corner1.getRow(); i <= corner2.getRow(); i++) {
@@ -142,8 +135,8 @@ public class ReplaceableTileRule implements IRule {
                         && j < pos.getCol() + tile.getCols()) {
                     continue;
                 }
-                inside = c.getSurface().getEntryAt(i, j);
-                outside = c.getSurface().getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());
+                inside = composite.getSurface().getEntryAt(i, j);
+                outside = composite.getSurface().getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());
 
                 // no replacement, if there is no tile inside or inside &
                 // outside are the same
@@ -156,12 +149,9 @@ public class ReplaceableTileRule implements IRule {
     }
 
     /**
-     * Creates a virtual SurfaceEntry that stores the corner positions of the
-     * tile that is tested and returns it. If the SurfaceEntry exceeds the
-     * Surface's borders, null is returned.
+     * Creates a virtual tile that stores the corner positions to be tested. If the tile exceeds the
+     * surface's borders, null is returned.
      * 
-     * @param c
-     *            the composite with the surface to test
      * @param t
      *            the Tile that should be tested as a replacement
      * @param pos
@@ -173,9 +163,9 @@ public class ReplaceableTileRule implements IRule {
      * @return a SurfaceEntry with the positions of tile placed in corner, null
      *         if this entry exceeds the surface.
      */
-    private Position getReplacementPos(Composite c, Tile t, Position pos, Tile rTile, Corner corner) {
-        Position rPos = c.getSurface().getTopLeft(rTile, c.getSurface().getCornerPos(t, pos, corner), corner);
-        return c.getSurface().isInsideSurface(rPos) ? rPos : null;
+    private Position getReplacementPos(Tile t, Position pos, Tile rTile, Corner corner) {
+        Position rPos = composite.getSurface().getTopLeft(rTile, composite.getSurface().getCornerPos(t, pos, corner), corner);
+        return composite.getSurface().isInsideSurface(rPos) ? rPos : null;
     }
 
     @Override

@@ -21,15 +21,15 @@ public class TileCoversOtherTileTest {
    @Before
    public void initialize() {
        ArrayList<Tile> tileSorts = new ArrayList<Tile>();
-       Tile tile0 = new Tile ("_0", 1, 2);
+       Tile tile0 = new Tile("_0", 1, 2);
        tileSorts.add(tile0);
-       Tile tile1 = new Tile ("_1", 2, 1);
+       Tile tile1 = new Tile("_1", 2, 1);
        tileSorts.add(tile1);
-       Tile tile2 = new Tile ("_2", 2, 2);
+       Tile tile2 = new Tile("_2", 2, 2);
        tileSorts.add(tile2);
-       Tile tile3 = new Tile ("_3", 3, 2);
+       Tile tile3 = new Tile("_3", 3, 2);
        tileSorts.add(tile3);
-       Tile tile4 = new Tile ("_4", 2, 3);
+       Tile tile4 = new Tile("_4", 2, 3);
        tileSorts.add(tile4);
        composite = new Composite(4, 5, new ArrayList<String>(), tileSorts);
    }
@@ -40,10 +40,10 @@ public class TileCoversOtherTileTest {
        s.insertEntry(composite.findTileById("_0"), new Position(0, 0));
        s.insertEntry(composite.findTileById("_2"), new Position(0, 1));
 
-       IRule rule = new TileCoversOtherTileRule();
+       IRule rule = new TileCoversOtherTileRule(composite);
        Tile tile = composite.findTileById("_1");
        Position pos = new Position(1, 1);
-       boolean validMove = rule.check(composite, tile, pos);
+       boolean validMove = rule.check( tile, pos);
        s.insertEntry(tile, pos);
        System.out.println(composite);
        
@@ -56,10 +56,10 @@ public class TileCoversOtherTileTest {
        s.insertEntry(composite.findTileById("_0"), new Position(0, 0));
        s.insertEntry(composite.findTileById("_2"), new Position(0, 1));
 
-       IRule rule = new TileCoversOtherTileRule();
+       IRule rule = new TileCoversOtherTileRule(composite);
        Tile tile = composite.findTileById("_1");
        Position pos = new Position(2, 1);
-       boolean validMove = rule.check(composite, tile, pos);
+       boolean validMove = rule.check(tile, pos);
        s.insertEntry(tile, pos);
        System.out.println(composite);
        

@@ -74,7 +74,7 @@ public class Composite_Test {
 		c.sortTileSorts(TileComparator.ROWS_ASC);
 
 		// Assert (that the expected results have occurred.))
-		for (int i = 0; i < c.getTileSorts().size()-1; i++) {
+		for (int i = 0; i < c.getTileSorts().size() - 1; i++) {
 			Tile currentTile = c.getTileSorts().get(i);
 			Tile nextTile = c.getTileSorts().get(i + 1);
 			assertTrue(currentTile.getRows() <= nextTile.getRows());

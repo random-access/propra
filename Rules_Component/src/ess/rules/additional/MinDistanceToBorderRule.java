@@ -22,13 +22,23 @@ import ess.rules.IRule;
  *
  */
 public class MinDistanceToBorderRule implements IRule {
-    
-    private boolean initialized;
+
     private Tile tileWithMinCols;
     private Tile tileWithMinRows;
+    private Composite composite;
     
     private enum Measurement {
         COLS, ROWS
+    }
+    
+    /**
+     * Initializes an instance of MinDistanceToBorderRule
+     * @param composite the composite
+     */
+    public MinDistanceToBorderRule(Composite composite) {
+        this.composite = composite;
+        tileWithMinCols = initMinTile(Measurement.COLS);
+        tileWithMinRows = initMinTile(Measurement.ROWS);
     }
 
     @Override
@@ -37,29 +47,26 @@ public class MinDistanceToBorderRule implements IRule {
     }
 
     @Override
-    public boolean check(Composite composite, Tile tile, Position pos) {
-        if (!initialized) {
-            init(composite);
-        }
+    public boolean check(Tile tile, Position pos) {
         for (Edge e : Edge.values()) {
-            if (invalidEdge(e, composite, tile, pos)) {
+            if (invalidEdge(e, tile, pos)) {
                 return false;
             }
         }
         return true;
     }
     
-    private boolean invalidEdge(Edge e, Composite c, Tile t, Position p) {
+    private boolean invalidEdge(Edge e, Tile t, Position p) {
         switch (e) {
             case TOP: 
             case BOTTOM:
                 return tileWithMinRows != null
-                    && hasMinDistanceToBorder(tileWithMinRows.getRows(), e, c.getSurface(), t, p)
+                    && hasMinDistanceToBorder(tileWithMinRows.getRows(), e, t, p)
                     && (t.getCols() > tileWithMinRows.getCols() || t.equals(tileWithMinRows));
             case LEFT:
             case RIGHT:
                 return tileWithMinCols != null
-                    && hasMinDistanceToBorder(tileWithMinCols.getCols(), e, c.getSurface(), t, p)
+                    && hasMinDistanceToBorder(tileWithMinCols.getCols(), e, t, p)
                     && (t.getRows() > tileWithMinCols.getRows() || t.equals(tileWithMinCols));
             default: 
                 throw new IllegalArgumentException(e + " is not a valid edge!");
@@ -67,7 +74,8 @@ public class MinDistanceToBorderRule implements IRule {
         
     }
     
-    private boolean hasMinDistanceToBorder(int minDistance, Edge edge, Surface s, Tile tile, Position pos) {
+    private boolean hasMinDistanceToBorder(int minDistance, Edge edge, Tile tile, Position pos) {
+        Surface s = composite.getSurface();
         int currentRow = s.getCornerRow(tile, pos, edge.getFirstCorner());
         int currentCol = s.getCornerCol(tile, pos, edge.getFirstCorner());
         int distance = -1;
@@ -78,17 +86,11 @@ public class MinDistanceToBorderRule implements IRule {
         } 
         return distance == minDistance;
     }
-   
-    private void init(Composite composite) {
-        tileWithMinCols = initMinTile(composite, Measurement.COLS);
-        tileWithMinRows = initMinTile(composite, Measurement.ROWS);
-        initialized = true;
-    }
     
-    private Tile initMinTile(Composite c, Measurement m) {
+    private Tile initMinTile(Measurement m) {
         Tile minTile = null;
         boolean uniqueLength = false;
-        for (Tile t : c.getTileSorts()) {
+        for (Tile t : composite.getTileSorts()) {
             if (minTile == null || getLength(t, m) < getLength(minTile, m)) {
                 minTile = t;
                 uniqueLength = true;
@@ -110,6 +112,4 @@ public class MinDistanceToBorderRule implements IRule {
             return tile.getRows();
         }
     }
-
-
 }

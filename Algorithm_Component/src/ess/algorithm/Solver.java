@@ -77,7 +77,7 @@ public class Solver implements ISolver {
             posFinder = (IPositionFinder) Class.forName(posFinderName).newInstance();
 
             // initialize RuleChecker
-            ruleChecker = new SolveRuleChecker();
+            ruleChecker = new SolveRuleChecker(composite);
 
             // initialize selected implementation of ITileChooser
             String tileChooserName = ProPraProperties.HEURISTICS_PACKAGE + properties.getValue(ProPraProperties.KEY_TILE_CHOOSER);

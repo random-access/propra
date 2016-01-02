@@ -1,9 +1,12 @@
 package ess.rules.sets;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.logging.Logger;
 
+import ess.data.Composite;
 import ess.exc.PropertyException;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
@@ -31,18 +34,19 @@ public class ValidationRuleSet implements IRuleSet {
 
 	/**
 	 * Instantiates a ValidationRuleSet.
+	 * @param composite the composite
 	 * @throws PropertyException if config.properties could not be read
 	 * or if it contains invalid parameters.
 	 */
-    public ValidationRuleSet() throws PropertyException {
+    public ValidationRuleSet(Composite composite) throws PropertyException {
 		errorList = new LinkedList<>();
 		explicitRuleSet = new LinkedList<>();
 		implicitRuleSet = new LinkedList<>();
 		endConditionSet = new LinkedList<>();
 
-		addExplicitRules();
-		addImplicitRules();
-		addEndConditions();
+		addExplicitRules(composite);
+		addImplicitRules(composite);
+		addEndConditions(composite);
 	}
 
 	@Override
@@ -73,34 +77,35 @@ public class ValidationRuleSet implements IRuleSet {
 		return errorList;
 	}
 
-	private void addExplicitRules() throws PropertyException {
-	    addRules(ProPraProperties.getInstance().getExplicitRuleNames());
+	private void addExplicitRules(Composite composite) throws PropertyException {
+	    addRules(composite, ProPraProperties.getInstance().getExplicitRuleNames());
 	}
 	
-	protected void addRules(ArrayList<String> ruleNames) throws PropertyException {
+	protected void addRules(Composite composite, ArrayList<String> ruleNames) throws PropertyException {
 	    try {
             for (String ruleName : ruleNames) {
-                IRule rule = (IRule) Class.forName(ruleName).newInstance();
+                Constructor<?> constructor = Class.forName(ruleName).getConstructor(Composite.class);
+                IRule rule = (IRule) constructor.newInstance(composite);
                 explicitRuleSet.add(rule);
                 // LOG.info("Activated " + rule.getClass().getSimpleName() + " ...");
                 System.out.println("Activated " + rule.getClass().getSimpleName() + " ...");
             }
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SecurityException
-                | IllegalArgumentException e) {
+                | IllegalArgumentException | NoSuchMethodException | InvocationTargetException e) {
             throw new PropertyException(
                     "Invalid parameter in properties file in heuristics. Please check if your properties file is valid.");
         }
 	}
 	
-	private void addImplicitRules() {
-		implicitRuleSet.add(new TileExceedsSurfaceRule());
+	private void addImplicitRules(Composite composite) {
+		implicitRuleSet.add(new TileExceedsSurfaceRule(composite));
 		LOG.info("Activated EntryExceedsSurfaceRule ...");
-		implicitRuleSet.add(new TileCoversOtherTileRule());
+		implicitRuleSet.add(new TileCoversOtherTileRule(composite));
 		LOG.info("Activated EntryCoversOtherTileRule ...");
 	}
 	
-	private void addEndConditions() {
-		endConditionSet.add(new SurfaceIsFilledCompletelyRule());
+	private void addEndConditions(Composite composite) {
+		endConditionSet.add(new SurfaceIsFilledCompletelyRule(composite));
 		LOG.info("Activated SurfaceIsFilledCompletelyRule ...");
 	}
 }
