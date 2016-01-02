@@ -31,8 +31,6 @@ public class NoCrossingsTest {
 		boolean validMove = rule.check(tile, pos);
 		s.insertEntry(tile, pos);
 		
-		System.out.println("testInnerTileWithoutCrossing");
-		System.out.println(c);
 		assertTrue(validMove);
 	}
 	
@@ -50,9 +48,6 @@ public class NoCrossingsTest {
 		boolean validMove = rule.check(tile, pos);
 		s.insertEntry(tile, pos);
 		
-		System.out.println("testInnerTileWithoutCrossing2");
-		System.out.println(c);
-		
 		assertTrue(validMove);
 	}
 	
@@ -68,9 +63,6 @@ public class NoCrossingsTest {
 	        Position pos = new Position(2, 1);
 	        boolean validMove = rule.check(tile, pos);
 	        s.insertEntry(tile, pos);
-	        
-	        System.out.println("testInnerTileWithoutCrossing3");
-	        System.out.println(c);
 	        
 	        assertTrue(validMove);
 	    }
@@ -91,9 +83,6 @@ public class NoCrossingsTest {
 		boolean validMove = rule.check(tile, pos);
 		s.insertEntry(tile, pos);
 		
-		System.out.println("testInnerTileWithCrossing");
-		System.out.println(c);
-		
 		assertFalse(validMove);
 	}
 	
@@ -110,9 +99,6 @@ public class NoCrossingsTest {
         Position pos = new Position(22, 19);
 		boolean validMove = rule.check(tile, pos);
 		s.insertEntry(tile, pos);
-		
-		System.out.println("testBorderTileWithoutCrossing");
-		System.out.println(c);
 		
 		assertTrue(validMove);
 	}
@@ -132,9 +118,6 @@ public class NoCrossingsTest {
 		boolean validMove = rule.check(tile, pos);
 		s.insertEntry(tile, pos);
 		
-		System.out.println("testBorderTileWithCrossing");
-		System.out.println(c);
-		
 		assertFalse(validMove);
 	}
 	
@@ -153,9 +136,6 @@ public class NoCrossingsTest {
 	        boolean validMove = rule.check(tile, pos);
 	        s.insertEntry(tile, pos);
 	        
-	        System.out.println("testBorderTileWithCrossings2");
-	        System.out.println(c);
-	        
 	        assertFalse(validMove);
 	    }
 	   
@@ -172,9 +152,6 @@ public class NoCrossingsTest {
 	        Position pos = new Position(1, 2);
 	        boolean validMove = rule.check(tile, pos);
 	        s.insertEntry(tile, pos);
-	        
-	        System.out.println("testBorderTileWithCrossings3");
-	        System.out.println(c);
 	        
 	        assertFalse(validMove);
 	    }

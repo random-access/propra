@@ -52,9 +52,7 @@ public class Composite_Test {
 	public void testSurfaceMeasurements() {
 		// Arrange (set all necessary preconditions and inputs.)
 		Composite c1 = composite1;
-		System.out.println(composite1.toString());
 		Composite c2 = composite2;
-		System.out.println(composite2.toString());
 		
 		// Act (on the object or method under test.)
 		

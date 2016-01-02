@@ -25,8 +25,7 @@ public class MinDistanceToBorderTest {
         IRule rule = new MinDistanceToBorderRule(c);
         boolean validMove = rule.check(c.findTileById("_0"), new Position(0, 1));
         s.insertEntry(c.findTileById("_0"), new Position(0, 1));
-        
-        System.out.println(c);
+
         assertFalse(validMove);
     }
     
@@ -42,8 +41,6 @@ public class MinDistanceToBorderTest {
         boolean validMove = rule.check(c.findTileById("_0"), new Position(0, 1));
         s.insertEntry(c.findTileById("_0"), new Position(0, 1));
         
-        System.out.println(c);
-        // TODO recognize if neighbourTile is caged
         assertFalse(validMove);
     }
 
@@ -58,8 +55,7 @@ public class MinDistanceToBorderTest {
         IRule rule = new MinDistanceToBorderRule(c);
         boolean validMove = rule.check(c.findTileById("_1"), new Position(3, 3));
         s.insertEntry(c.findTileById("_1"), new Position(3, 3));
-        
-        System.out.println(c);
+
         assertFalse(validMove);
     }
     
@@ -74,8 +70,7 @@ public class MinDistanceToBorderTest {
         IRule rule = new MinDistanceToBorderRule(c);
         boolean validMove = rule.check(c.findTileById("_1"), new Position(3, 3));
         s.insertEntry(c.findTileById("_1"), new Position(3, 3));
-        
-        System.out.println(c);
+
         assertFalse(validMove);
     }
 

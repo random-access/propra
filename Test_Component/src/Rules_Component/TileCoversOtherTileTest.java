@@ -43,9 +43,8 @@ public class TileCoversOtherTileTest {
        IRule rule = new TileCoversOtherTileRule(composite);
        Tile tile = composite.findTileById("_1");
        Position pos = new Position(1, 1);
-       boolean validMove = rule.check( tile, pos);
+       boolean validMove = rule.check(tile, pos);
        s.insertEntry(tile, pos);
-       System.out.println(composite);
        
        assertFalse(validMove);
    }
@@ -61,7 +60,6 @@ public class TileCoversOtherTileTest {
        Position pos = new Position(2, 1);
        boolean validMove = rule.check(tile, pos);
        s.insertEntry(tile, pos);
-       System.out.println(composite);
        
        assertTrue(validMove);
    }

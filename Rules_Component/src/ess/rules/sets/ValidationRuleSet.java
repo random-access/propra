@@ -87,8 +87,7 @@ public class ValidationRuleSet implements IRuleSet {
                 Constructor<?> constructor = Class.forName(ruleName).getConstructor(Composite.class);
                 IRule rule = (IRule) constructor.newInstance(composite);
                 explicitRuleSet.add(rule);
-                // LOG.info("Activated " + rule.getClass().getSimpleName() + " ...");
-                System.out.println("Activated " + rule.getClass().getSimpleName() + " ...");
+                LOG.info("Activated " + rule.getClass().getSimpleName() + " ...");
             }
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SecurityException
                 | IllegalArgumentException | NoSuchMethodException | InvocationTargetException e) {

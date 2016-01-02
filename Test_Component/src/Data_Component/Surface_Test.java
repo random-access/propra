@@ -176,12 +176,10 @@ public class Surface_Test {
 
     @Test
     public void testGetTopLeft() {
-        System.out.println(surface);
         Position topRightCorner = new Position(1, 3);
         Position bottomLeftCorner = new Position(3, 2);
         Position bottomRightCorner = new Position(3, 3);
         surface.insertEntry(t4, p4);
-        System.out.println(surface);
         
         assertEquals(surface.getTopLeft(t4, p4, Corner.TOP_LEFT), p4);
         assertEquals(surface.getTopLeft(t4, topRightCorner, Corner.TOP_RIGHT), p4);

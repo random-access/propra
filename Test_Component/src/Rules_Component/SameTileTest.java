@@ -22,8 +22,7 @@ public class SameTileTest {
 			
 		SameTileRule rule = new SameTileRule(c);
 		assertFalse(rule.check(c.findTileById("_3"), new Position(1, 1)));
-		
-		// System.out.println(c);
+
 		c.getSurface().insertEntry(c.findTileById("_3"), new Position(1, 1));
 	}
 	
@@ -38,7 +37,6 @@ public class SameTileTest {
 		assertFalse(rule.check(c.findTileById("_3"), new Position(2, 0)));
 		
 		c.getSurface().insertEntry(c.findTileById("_3"), new Position(2, 0));
-		// System.out.println(c);
 	}
 	
 	@Test
@@ -52,7 +50,6 @@ public class SameTileTest {
 		assertFalse(rule.check(c.findTileById("_3"), new Position(2, 2)));
 		
 		c.getSurface().insertEntry(c.findTileById("_3"), new Position(2, 2));
-		// System.out.println(c);
 	}
 	
 	@Test
@@ -66,7 +63,6 @@ public class SameTileTest {
 		assertFalse(rule.check(c.findTileById("_3"), new Position(2, 1)));
 		
 		c.getSurface().insertEntry(c.findTileById("_3"), new Position(2, 1));
-		System.out.println(c);
 	}
 
 	@Test
@@ -80,7 +76,6 @@ public class SameTileTest {
 		assertTrue(rule.check(c.findTileById("_3"), new Position(1, 1)));
 		
 		c.getSurface().insertEntry(c.findTileById("_3"), new Position(1, 1));
-		// System.out.println(c);
 	}
 	
 	@Test
@@ -92,7 +87,6 @@ public class SameTileTest {
 		assertTrue(rule.check(c.findTileById("_3"), new Position(2, 2)));
 		
 		c.getSurface().insertEntry(c.findTileById("_3"), new Position(2, 2));
-		// System.out.println(c);
 	}
 	
 	@Test
@@ -104,7 +98,6 @@ public class SameTileTest {
 		assertTrue(rule.check(c.findTileById("_3"), new Position(0, 0)));
 		
 		c.getSurface().insertEntry(c.findTileById("_3"), new Position(0, 0));
-		System.out.println(c);
 	}
 	
 	@Test
@@ -118,6 +111,5 @@ public class SameTileTest {
 		assertFalse(rule.check(c.findTileById("_3"), new Position(1, 0)));
 		
 		c.getSurface().insertEntry(c.findTileById("_3"), new Position(1, 0));
-		System.out.println(c);
 	}
 }
