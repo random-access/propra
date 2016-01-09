@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import ess.algorithm.AbstractOutputObservable;
 import ess.strings.CustomErrorMessages;
+import ess.strings.CustomInfoMessages;
 
 /**
  * An implementation of CompositeObserver that shows info about 
@@ -34,6 +35,10 @@ public class HeadlessObserver implements ICompositeObserver {
     public void update(Observable o, Object arg) {
         log.info("Got headless request...");
         AbstractOutputObservable obs = (AbstractOutputObservable) o;
+        if (obs.getErrors().size() == 0) {
+            System.out.println(CustomInfoMessages.INFO_VALID_COMPOSITE);
+            return;
+        }
         switch (mode) {
             case VALIDATE:
                 for (String s : obs.getErrors()) {
