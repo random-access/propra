@@ -137,7 +137,7 @@ public final class ProPraLogger {
 		// remove the ConsoleHandler from the root logger to disable console output
 		Logger rootLogger = Logger.getLogger("");
 		Handler[] handlers = rootLogger.getHandlers();
-		if (handlers[0] instanceof ConsoleHandler) {
+		if (handlers.length > 0 && handlers[0] instanceof ConsoleHandler) {
 			rootLogger.removeHandler(handlers[0]);
 		}
 	}
@@ -161,7 +161,10 @@ public final class ProPraLogger {
 			//logger.setLevel(logLevel);
 			Logger rootLog = Logger.getLogger("");
 			rootLog.setLevel(logLevel);
-			rootLog.getHandlers()[0].setLevel(logLevel);
+			Handler[] handlers = rootLog.getHandlers();
+			if (handlers.length > 0) {
+			    handlers[0].setLevel(logLevel);
+			}
 		} catch (IllegalArgumentException e) {
 			throw new PropertyException(CustomErrorMessages.ERROR_INVALID_VALUE_LOG_LEVEL);
 		}
