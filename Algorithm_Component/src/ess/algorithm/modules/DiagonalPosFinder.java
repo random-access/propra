@@ -4,7 +4,34 @@ import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Surface;
 
-public class DiagonalPosFinder implements IPositionFinder{
+/**
+ * This class is an implementation IPositionFinder that returns positions
+ * from top left to bottom right, changing between iterating through rows and
+ * iterating through columns. <br>
+ * <br>
+ * Example (order of positions that are returned): <br>
+ * <br>
+ * a b c d<br>
+ * <br>
+ * a b c d<br>
+ * d <br>
+ * e <br>
+ * <br>
+ * a b c d<br>
+ * d f g h <br>
+ * e <br>
+ * <br>
+ * a b c d<br>
+ * d f g h <br>
+ * e i <br>
+ * <br>
+ * a b c d<br>
+ * d f g h <br>
+ * e i j k
+ */
+public class DiagonalPosFinder implements IPositionFinder {
+    
+    // TODO Test cases
 
     @Override
     public Position findNextFreePosition(Composite composite, Position pos) {
@@ -24,21 +51,4 @@ public class DiagonalPosFinder implements IPositionFinder{
         }
         return null;
     }
-
-//    public static void main(String[] args) {
-//        ArrayList<Tile> tileSorts = new ArrayList<>();
-//        Tile t = new Tile("_0", 1,1);
-//        tileSorts.add(t);
-//        Composite c = new Composite(3, 5, new ArrayList<String>(), tileSorts);
-//        
-//        DiagonalPosFinder f = new DiagonalPosFinder();
-//        Position pos = f.findNextFreePosition(c, null);
-//        while (pos != null) {
-//            c.getSurface().insertEntry(t, pos);
-//            System.out.println("Inserted entry at " + pos);
-//            System.out.println(c.getSurface());
-//            pos = f.findNextFreePosition(c, pos);
-//        }
-//        
-//    }
 }

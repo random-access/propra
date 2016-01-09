@@ -6,7 +6,18 @@ import ess.data.Surface;
 
 /**
  * This class is an implementation IPositionFinder that returns positions
- * from top to bottom, iterating through the columns from left to right.
+ * from top to bottom, iterating through the columns from left to right. <br>
+ * <br>
+ * Example (order of positions that are returned): <br>
+ * <br>
+ * a b c d<br>
+ * <br>
+ * a b c d <br>
+ * d e f g <br>
+ * <br>
+ * a b c d<br>
+ * d e f g <br>
+ * h i j k 
  */
 public class TopToBottomPosFinder implements IPositionFinder {
 

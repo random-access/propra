@@ -37,7 +37,7 @@ public class Solver implements ISolver {
     private LinkedList<Position> posList;
     private Composite composite;
 
-    private long counter;
+    // private long counter;
 
     /**
      * Instantiates a new Solver and loads the modules. Modules are parts of the
@@ -112,7 +112,7 @@ public class Solver implements ISolver {
                     foundTileThatFits = true;
                     pos = posFinder.findNextFreePosition(composite, pos);
                     if (ruleChecker.checkEndConditions(composite, tile, pos)) {
-                        System.out.println("Iterations: " + counter);
+                        //System.out.println("Iterations: " + counter);
                         System.out.println("Found a solution :)");
                         prepareCompositeForDataOutput();
                         return true;
@@ -138,7 +138,7 @@ public class Solver implements ISolver {
                 }
             }
         } while (pos != null);
-        System.out.println("Iterations: " + counter);
+        // System.out.println("Iterations: " + counter);
         System.out.println("Found no solution :(.");
         return false;
     }
@@ -148,10 +148,7 @@ public class Solver implements ISolver {
     private boolean placeNextTile(Tile tile, Position pos) {
         if (ruleChecker.checkImplicitRules(composite, tile, pos) && ruleChecker.checkExplicitRules(composite, tile, pos)) {
             composite.getSurface().insertEntry(tile, pos);
-            counter++;
-            if (counter % 1000000 == 0) {
-                System.out.println(counter + ", " + pos);
-            }
+            // counter++;
             return true;
         }
         return false;
