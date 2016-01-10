@@ -30,8 +30,9 @@ public class SortedTileChooser implements ITileChooser {
 		applySortingStrategy();
 	}
 
-	/* (non-Javadoc)
-	 * @see ess.algorithm.modules.ITileChooser#getNextTile(ess.data.Position, ess.data.Tile)
+	/**    
+	 * Choose the next tile to place using a tile order defined in config.properties. 
+	 * @see ITileChooser#getNextTile(ess.data.Position, ess.data.Tile)
 	 */
 	@Override
 	public Tile getNextTile(Tile lastTile) {
@@ -47,7 +48,7 @@ public class SortedTileChooser implements ITileChooser {
 		return null;
 	}
 	
-	// Loads the sorting strategy from config.properties and sorts the tiles
+	// Loads the sorting strategy (or strategies) from config.properties and sorts the tiles
 	private void applySortingStrategy() throws PropertyException {
 		ProPraProperties properties = ProPraProperties.getInstance();
 		String sortings = properties.getValue(ProPraProperties.KEY_TILE_CHOOSER_STRATEGY);

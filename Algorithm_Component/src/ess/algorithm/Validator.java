@@ -71,12 +71,12 @@ public class Validator {
                 // if an implicit rule gets broken (tiles overlapping the surface or other tiles
                 // or too many / not enough tiles in construction plan)
                 // it doesn't make sense to continue to place tiles
-                // as there might be exceptions.
+                // as they might be breaking other implicit rules.
                 return;
             }
         }
         
-        // this currently only test if the surface is filled completely
+        // test if the surface is filled completely
         pos = posFinder.findNextFreePosition(c, pos);
         ruleChecker.checkEndConditions(c, tile, pos);
     }

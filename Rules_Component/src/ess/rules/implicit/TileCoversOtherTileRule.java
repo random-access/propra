@@ -19,13 +19,17 @@ public class TileCoversOtherTileRule implements IRule {
     private Composite composite;
     
     /**
-     * Initializes an instance of TileCoversOtherTileRule
+     * Initializes an instance of TileCoversOtherTileRule.
+     *
      * @param composite the composite
      */
     public TileCoversOtherTileRule(Composite composite) {
         this.composite = composite;
     }
 
+	/* (non-Javadoc)
+	 * @see ess.rules.IRule#check(ess.data.Tile, ess.data.Position)
+	 */
 	@Override
 	public boolean check(Tile tile, Position pos) {
 		for (int i = pos.getRow(); i <= pos.getRow() + tile.getRows() - 1; i++) {
@@ -38,6 +42,9 @@ public class TileCoversOtherTileRule implements IRule {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see ess.rules.IRule#getErrorType()
+	 */
 	@Override
 	public ErrorType getErrorType() {
 		return ErrorType.OTHER;

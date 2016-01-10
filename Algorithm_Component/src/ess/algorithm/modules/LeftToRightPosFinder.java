@@ -28,7 +28,9 @@ import ess.data.Surface;
  */
 public class LeftToRightPosFinder implements IPositionFinder {
 
-	/* (non-Javadoc)
+	/**
+	 * Returns the next free position in the given surface, which is the next
+     * position in the array from left to right holding a null value.
 	 * @see ess.algorithm.modules.IPositionFinder#findNextFreePosition(ess.data.Composite, ess.data.Position)
 	 */
 	@Override

@@ -32,7 +32,8 @@ import ess.ui.components.CustomLabel;
 import ess.ui.components.CustomPanel;
 
 /**
- * This class is an implementation of IComposite view that displays a composite.
+ * This class is an implementation of IComposite view that displays a composite,
+ * using the Swing framework.
  * 
  * @author Monika Schrenk
  *
@@ -83,9 +84,11 @@ public class MainWindow extends JFrame implements ICompositeView {
             // if application icon is missing, just inform the user, but continue running the application
             System.out.println(CustomErrorMessages.ERROR_APP_ICON);
         }
-        // TODO view file path & different modes (d, v, s)
     }
 
+    /* (non-Javadoc)
+     * @see ess.ui.ICompositeView#display(java.util.List, java.lang.String, java.lang.String)
+     */
     @Override
     public void display(List<String> errorList, String pathToSource, String execMode) {
         // show file path as title
@@ -185,6 +188,7 @@ public class MainWindow extends JFrame implements ICompositeView {
         }
     }
 
+    // Method for adding all listeners to the main panel
     private void addListeners() {
         // Exit application when clicking on close button
         btnClose.addActionListener(new ActionListener() {

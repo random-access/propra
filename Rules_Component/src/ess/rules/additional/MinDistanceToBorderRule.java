@@ -9,14 +9,16 @@ import ess.rules.ErrorType;
 import ess.rules.IRule;
 
 /**
- * This implementation of IRule uses the fact that if there is a single tile with smallest width w, all
- * higher tiles must be placed at least w+1 away from the sides (left and right) of the surface. The narrowest tile itself
- * must be placed w+1 away from the sides as well. Otherwise it would be necessary to place 2 of the narrowest 
- * tiles above each other which is not allowed, if SameTileRule is active.
- * Same fact is true for the height of tiles, if there is a single tile with a smaller height the the others.
+ * This implementation of IRule uses the fact that if there is a single tile
+ * with smallest width w, all higher tiles must be placed at least w+1 away from
+ * the sides (left and right) of the surface. The narrowest tile itself must be
+ * placed w+1 away from the sides as well. Otherwise it would be necessary to
+ * place 2 of the narrowest tiles above each other which is not allowed, if
+ * SameTileRule is active. Same fact is true for the height of tiles, if there
+ * is a single tile with a smaller height the the others.
  * 
- * This is an additional rule, which means that it will only be activated if all explicit rules are active to avoid 
- * conflicting rule checks.
+ * This is an additional rule, which means that it will only be activated if all
+ * explicit rules are active to avoid conflicting rule checks.
  * 
  * @author Monika Schrenk
  *
@@ -26,14 +28,17 @@ public class MinDistanceToBorderRule implements IRule {
     private Tile tileWithMinCols;
     private Tile tileWithMinRows;
     private Composite composite;
-    
+
+    // Used as input to either work with a tile's rows or columns.
     private enum Measurement {
         COLS, ROWS
     }
-    
+
     /**
-     * Initializes an instance of MinDistanceToBorderRule
-     * @param composite the composite
+     * Initializes an instance of MinDistanceToBorderRule.
+     *
+     * @param composite
+     *            the composite
      */
     public MinDistanceToBorderRule(Composite composite) {
         this.composite = composite;
@@ -41,11 +46,21 @@ public class MinDistanceToBorderRule implements IRule {
         tileWithMinRows = initMinTile(Measurement.ROWS);
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ess.rules.IRule#getErrorType()
+     */
     @Override
     public ErrorType getErrorType() {
         return ErrorType.OTHER;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ess.rules.IRule#check(ess.data.Tile, ess.data.Position)
+     */
     @Override
     public boolean check(Tile tile, Position pos) {
         for (Edge e : Edge.values()) {
@@ -55,25 +70,27 @@ public class MinDistanceToBorderRule implements IRule {
         }
         return true;
     }
-    
+
+    // returns true, if a tile's edge is too close to the surface's borders
+    // if the tile is placed at the given position.
     private boolean invalidEdge(Edge e, Tile t, Position p) {
-        switch (e) {
-            case TOP: 
+        switch(e) {
+            case TOP:
             case BOTTOM:
-                return tileWithMinRows != null
-                    && hasMinDistanceToBorder(tileWithMinRows.getRows(), e, t, p)
-                    && (t.getCols() > tileWithMinRows.getCols() || t.equals(tileWithMinRows));
+                return tileWithMinRows != null && hasMinDistanceToBorder(tileWithMinRows.getRows(), e, t, p)
+                        && (t.getCols() > tileWithMinRows.getCols() || t.equals(tileWithMinRows));
             case LEFT:
             case RIGHT:
-                return tileWithMinCols != null
-                    && hasMinDistanceToBorder(tileWithMinCols.getCols(), e, t, p)
-                    && (t.getRows() > tileWithMinCols.getRows() || t.equals(tileWithMinCols));
-            default: 
+                return tileWithMinCols != null && hasMinDistanceToBorder(tileWithMinCols.getCols(), e, t, p)
+                        && (t.getRows() > tileWithMinCols.getRows() || t.equals(tileWithMinCols));
+            default:
                 throw new IllegalArgumentException(e + " is not a valid edge!");
         }
-        
+
     }
-    
+
+    // Tests if a tile has the same distance to the surface's borders at the
+    // given edge as the tile with minimal measurements.
     private boolean hasMinDistanceToBorder(int minDistance, Edge edge, Tile tile, Position pos) {
         Surface s = composite.getSurface();
         int currentRow = s.getCornerRow(tile, pos, edge.getFirstCorner());
@@ -83,10 +100,12 @@ public class MinDistanceToBorderRule implements IRule {
             currentRow += edge.getNextRowOffset();
             currentCol += edge.getNextColOffset();
             distance++;
-        } 
+        }
         return distance == minDistance;
     }
-    
+
+    // Returns the tile with the least columns / rows, if this value is unique.
+    // Otherwise null is returned.
     private Tile initMinTile(Measurement m) {
         Tile minTile = null;
         boolean uniqueLength = false;
@@ -95,7 +114,7 @@ public class MinDistanceToBorderRule implements IRule {
                 minTile = t;
                 uniqueLength = true;
             } else if (getLength(t, m) == getLength(minTile, m)) {
-                uniqueLength = false; 
+                uniqueLength = false;
             }
         }
         if (!uniqueLength) {
@@ -104,7 +123,8 @@ public class MinDistanceToBorderRule implements IRule {
         return minTile;
     }
 
-
+    // Returns either the number of rows or the number of columns of tile,
+    // depending on the measurement.
     private int getLength(Tile tile, Measurement m) {
         if (m == Measurement.COLS) {
             return tile.getCols();

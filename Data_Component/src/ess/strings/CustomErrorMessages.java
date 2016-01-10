@@ -33,6 +33,12 @@ public final class CustomErrorMessages {
             + "bitte ein valides Loglevel eingeben";
     
     /**
+     * Error message for invalid heuristic.
+     */
+    public static final String ERROR_INVALID_VALUE_HEURISTICS = "Ung\u00fcltiger Parameter in der Property-Datei "
+            + "bei den Heuristiken, \n bitte g\u00fcltige Bezeichner angeben.";
+    
+    /**
      * Error message for not being able to create log file.
      */
     public static final String ERROR_LOG_CREATE = "Logdateien k\u00f6nnen nicht angelegt werden. Bitte "
@@ -50,7 +56,7 @@ public final class CustomErrorMessages {
     /**
      * Error message for invalid value for tile length.
      */
-    public static final String ERROR_INVALID_DATATYPE_TILE_LENGTH = "Ung\u00fcltiger Wert für Fliesenl\u00e4nge! Alle "
+    public static final String ERROR_INVALID_DATATYPE_TILE_LENGTH = "Ung\u00fcltiger Wert f\u00fcr Fliesenl\u00e4nge! Alle "
             + "Fliesenl\u00e4ngen m\u00fcssen positive Ganzzahlen und ein Vielfaches von 20 sein.";
     
     /**
@@ -61,8 +67,8 @@ public final class CustomErrorMessages {
     /**
      * Error message for invalid value for surface length.
      */
-    public static final String ERROR_INVALID_DATATYPE_SURFACE_LENGTH = "Ung\u00fcltiger Wert für Ma\u00dfe des Verlegungsplans! "
-            + "H\u00f6he und Breite m\u00fcssen positive Ganzzahlen und ein Vielfaches von 20 sein.";
+    public static final String ERROR_INVALID_DATATYPE_SURFACE_LENGTH = "Ung\u00fcltiger Wert f\u00fcr Ma\u00dfe des "
+            + "Verlegungsplans! H\u00f6he und Breite m\u00fcssen positive Ganzzahlen und ein Vielfaches von 20 sein.";
     
     /**
      * Error message for file with invalid XML content
@@ -79,7 +85,7 @@ public final class CustomErrorMessages {
     /**
      * Error message for invalid XML content.
      */
-    public static final String ERROR_XML_CONTENT = "Die Datei %s enthält ungültige XML-Inhalte: \n--> %s";
+    public static final String ERROR_XML_CONTENT = "Die Datei %s enth\u00e4lt ung\u00fcltige XML-Inhalte: \n--> %s";
     
     /**
      * Error message for problems writing XML to target.
@@ -128,7 +134,7 @@ public final class CustomErrorMessages {
     /**
      * Error message for invalid mode // TODO duplicate of ERROR_INVALID_PARAM?
      */
-    public static final String UNSUPPORTED_MODE = "Dieser Modus wurde noch nicht vollständig implementiert.";
+    public static final String UNSUPPORTED_MODE = "Dieser Modus wurde noch nicht vollst\u00e4ndig implementiert.";
 
     
     /**************************************************** GENERAL ERRORS **************************************************/

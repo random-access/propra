@@ -36,8 +36,10 @@ public class RandomTileChooser implements ITileChooser {
         random = new Random();
     }
 
-    /* (non-Javadoc)
-     * @see ess.algorithm.modules.ITileChooser#getNextTile(ess.data.Position, ess.data.Tile)
+    /**
+     * Choose the next tile that should be placed randomly for each position.
+     * 
+     * @see ITileChooser#getNextTile(ess.data.Position, ess.data.Tile)
      */
     @Override
     public Tile getNextTile(Tile lastTile) {
@@ -51,8 +53,8 @@ public class RandomTileChooser implements ITileChooser {
         int randomIndex = getRandomTileIndex();
         boolean[] currentTestedTiles = testedTiles.peekLast();
         
-        // first try to fetch tile at a random index, then iterate through all tiles, trying to find 
-        // a tile that wasn't tried out yet
+        // first try to fetch tile at a random index, if it was already tried out, then 
+        // iterate through all tiles and try to find a tile that wasn't tried out yet
         for (int i = 0; i < tileSorts.size(); i++) {
             int curr = (randomIndex + i) % tileSorts.size();
             

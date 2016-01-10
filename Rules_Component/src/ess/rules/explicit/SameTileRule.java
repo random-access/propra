@@ -38,6 +38,8 @@ public class SameTileRule implements IRule {
 		return true;
 	}
 	
+	// Tests if a tile has a common edge with another tile with the same ID at 
+	// a given edge.
 	private boolean hasCommonEdgeWithSameTile(Tile tile, Position pos, Edge edge) {
 	    Surface s = composite.getSurface();
 		Position corner1 = s.getCornerPos(tile, pos, edge.getFirstCorner());

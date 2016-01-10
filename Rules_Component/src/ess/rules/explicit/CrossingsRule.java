@@ -22,13 +22,17 @@ public class CrossingsRule implements IRule {
     private Composite composite;
     
     /**
-     * Initializes an instance of CrossingsRule
+     * Initializes an instance of CrossingsRule.
+     *
      * @param composite the composite
      */
     public CrossingsRule(Composite composite) {
         this.composite = composite;
     }
 
+	/* (non-Javadoc)
+	 * @see ess.rules.IRule#check(ess.data.Tile, ess.data.Position)
+	 */
 	@Override
 	public boolean check(Tile tile, Position pos) {
 		return checkCorner(Corner.TOP_LEFT, tile, pos) 
@@ -37,6 +41,8 @@ public class CrossingsRule implements IRule {
 				&& checkCorner(Corner.BOTTOM_RIGHT, tile, pos);
 	}
 	
+	// Tests if there are (or will be for sure later) crossings at a given corner
+	// if the given tile is place at the given position.
 	private boolean checkCorner(Corner corner, Tile tile, Position pos) {
 	    Surface surface = composite.getSurface();
 		Position cornerPos = surface.getCornerPos(tile, pos, corner);
@@ -57,6 +63,9 @@ public class CrossingsRule implements IRule {
 		return diagonalNeighbourTile == horizontalNeighbourTile || diagonalNeighbourTile == verticalNeighbourTile;
 	}
 
+	/* (non-Javadoc)
+	 * @see ess.rules.IRule#getErrorType()
+	 */
 	@Override
 	public ErrorType getErrorType() {
 		return ErrorType.CROSSINGS;

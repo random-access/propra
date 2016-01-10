@@ -15,6 +15,7 @@ import ess.rules.implicit.TileCoversOtherTileRule;
 import ess.rules.implicit.TileExceedsSurfaceRule;
 import ess.utils.ProPraProperties;
 
+// TODO: Auto-generated Javadoc
 /**
  * This class is an implementation of IRuleSet that loads the explicit
  * rules that were activated in config.properties. <br>
@@ -49,22 +50,34 @@ public class ValidationRuleSet implements IRuleSet {
 		addEndConditions(composite);
 	}
 
+	/* (non-Javadoc)
+	 * @see ess.rules.sets.IRuleSet#getExplicitRules()
+	 */
 	@Override
 	public LinkedList<IRule> getExplicitRules() {
 		return explicitRuleSet;
 	}
 
+	/* (non-Javadoc)
+	 * @see ess.rules.sets.IRuleSet#getImplicitRules()
+	 */
 	@Override
 	public LinkedList<IRule> getImplicitRules() {
 		return implicitRuleSet;
 	}
 	
+	/* (non-Javadoc)
+	 * @see ess.rules.sets.IRuleSet#getEndConditions()
+	 */
 	@Override
 	public LinkedList<IRule> getEndConditions() {
 		return endConditionSet;
 	}
 	
 
+	/* (non-Javadoc)
+	 * @see ess.rules.sets.IRuleSet#addError(ess.rules.ErrorType)
+	 */
 	@Override
 	public void addError(ErrorType errorType) {
 		if (!errorList.contains(errorType)) {
@@ -72,15 +85,20 @@ public class ValidationRuleSet implements IRuleSet {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see ess.rules.sets.IRuleSet#getErrorList()
+	 */
 	@Override
 	public LinkedList<ErrorType> getErrorList() {
 		return errorList;
 	}
 
+	// Used for adding all explicit rules that were activated via config.properties to this RuleSet.
 	private void addExplicitRules(Composite composite) throws PropertyException {
 	    addRules(composite, ProPraProperties.getInstance().getExplicitRuleNames());
 	}
 	
+	// Method for adding rules specified by their type name in config.properties
 	protected void addRules(Composite composite, ArrayList<String> ruleNames) throws PropertyException {
 	    try {
             for (String ruleName : ruleNames) {
@@ -96,6 +114,7 @@ public class ValidationRuleSet implements IRuleSet {
         }
 	}
 	
+	// Used for adding all implicit rules to this RuleSet.
 	private void addImplicitRules(Composite composite) {
 		implicitRuleSet.add(new TileExceedsSurfaceRule(composite));
 		LOG.info("Activated EntryExceedsSurfaceRule ...");

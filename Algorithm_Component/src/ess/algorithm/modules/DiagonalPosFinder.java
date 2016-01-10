@@ -33,6 +33,12 @@ public class DiagonalPosFinder implements IPositionFinder {
     
     // TODO Test cases
 
+    /**
+     * Returns the next free position in the given surface, which is the next
+     * position in the array from the top left row to the bottom right column holding a null value.
+     * 
+     * @see ess.algorithm.modules.IPositionFinder#findNextFreePosition(ess.data.Composite, ess.data.Position)
+     */
     @Override
     public Position findNextFreePosition(Composite composite, Position pos) {
         int min = (pos == null) ? 0 : Math.min(pos.getRow(), pos.getCol());

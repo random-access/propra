@@ -23,12 +23,9 @@ public class TopToBottomPosFinder implements IPositionFinder {
 
     /**
      * Returns the next free position in the given surface, which is the next
-     * position in the array from top left to bottom right with null value.
+     * position in the array from top to bottom holding a null value.
      * 
-     * @param composite the composite
-     * @param pos the pos
-     * @return a point with the next free position in the given surface or null
-     *         if no free position is available anymore
+     * @see IPositionFinder#findNextFreePosition(Composite, Position)
      */
 	@Override
 	public Position findNextFreePosition(Composite composite, Position pos) {

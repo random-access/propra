@@ -11,6 +11,7 @@ import ess.data.Tile;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
 
+// TODO: Auto-generated Javadoc
 /**
  * This implementation of IRule checks if a tile that is about to be placed at
  * pos forms a combination with other tiles that can be replaced by a larger
@@ -27,7 +28,8 @@ public class ReplaceableTileRule implements IRule {
     private Composite composite;
     
     /**
-     * Initializes an instance of ReplaceableTileRule
+     * Initializes an instance of ReplaceableTileRule.
+     *
      * @param composite the composite
      */
     public ReplaceableTileRule(Composite composite) {
@@ -39,6 +41,9 @@ public class ReplaceableTileRule implements IRule {
         }
     }
 
+    /* (non-Javadoc)
+     * @see ess.rules.IRule#check(ess.data.Tile, ess.data.Position)
+     */
     @Override
     public boolean check(Tile tile, Position pos) {
         ArrayList<Tile> tiles = tilesLargerThan.get(tile.getId());
@@ -50,6 +55,7 @@ public class ReplaceableTileRule implements IRule {
         return true;
     }
 
+    // TODO: Either turn JavaDoc for private method into comments or add private JavaDoc
     /**
      * Tests if tile can replace an area filled with smaller tiles if aligned
      * with any of the 4 corners of the tile that will be inserted into the
@@ -168,6 +174,9 @@ public class ReplaceableTileRule implements IRule {
         return composite.getSurface().isInsideSurface(rPos) ? rPos : null;
     }
 
+    /* (non-Javadoc)
+     * @see ess.rules.IRule#getErrorType()
+     */
     @Override
     public ErrorType getErrorType() {
         return ErrorType.REPLACEABLE_TILE;

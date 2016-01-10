@@ -6,9 +6,10 @@ import java.util.Observable;
 import ess.data.Composite;
 
 /**
- * This class should be extended by any class that wants to display a composite, if a valid solution exists. 
- * The observer pattern is used because the main component doesn't know if the Solver finds a solution or not 
- * and the Solver / Validator doesn't know if the user started the application with the option "display" or not. 
+ * This class should be extended by any class that wants to display a composite or information about it (including 
+ * error messages) depending on the result of a Solver or Validator. 
+ * The observer pattern is used because the main component doesn't know if a solution could be found or is valid
+ * and the Solver or Validator doesn't know if the user started the application with the option "display" or not. 
  * 
  * @author Monika Schrenk
  *

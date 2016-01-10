@@ -27,6 +27,8 @@ public class SolveRuleSet extends ValidationRuleSet {
         addAdditionalRules(composite);
     }
 
+    // This method adds all additional rules activated via config.properties to the the
+    // RuleSet. Additional rules are only used for solving.
     private void addAdditionalRules(Composite composite) throws PropertyException {
         if (getExplicitRules().size() == BASIC_RULE_QUANTITY) {
             addRules(composite, ProPraProperties.getInstance().getAdditionalRuleNames());

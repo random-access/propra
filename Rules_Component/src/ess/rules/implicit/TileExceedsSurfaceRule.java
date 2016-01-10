@@ -21,13 +21,17 @@ public class TileExceedsSurfaceRule implements IRule {
     private Composite composite;
     
     /**
-     * Initializes an instance of TileExceedsSurfaceRule
+     * Initializes an instance of TileExceedsSurfaceRule.
+     *
      * @param composite the composite
      */
     public TileExceedsSurfaceRule(Composite composite) {
         this.composite = composite;
     }
 
+	/* (non-Javadoc)
+	 * @see ess.rules.IRule#check(ess.data.Tile, ess.data.Position)
+	 */
 	@Override
 	public boolean check(Tile tile, Position pos) {
 	    Surface s = composite.getSurface();
@@ -35,6 +39,9 @@ public class TileExceedsSurfaceRule implements IRule {
 	    return (s.isInsideSurface(pos) && s.isInsideSurface(bottomRight));
 	}
 
+	/* (non-Javadoc)
+	 * @see ess.rules.IRule#getErrorType()
+	 */
 	@Override
 	public ErrorType getErrorType() {
 		return ErrorType.OTHER;

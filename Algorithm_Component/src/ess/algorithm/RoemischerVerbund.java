@@ -11,6 +11,7 @@ import ess.exc.InvalidLengthValueException;
 import ess.exc.PropertyException;
 import ess.io.IDataExchanger;
 import ess.io.XMLDataExchanger;
+import ess.io.XMLValues;
 import ess.io.exc.DataExchangeException;
 import ess.strings.CustomErrorMessages;
 import ess.strings.CustomInfoMessages;
@@ -28,9 +29,6 @@ import ess.strings.CustomInfoMessages;
 public class RoemischerVerbund extends AbstractOutputObservable implements IRoemischerVerbund {
 
     private static final Logger LOG = Logger.getGlobal();
-    
-    // TODO put together with XMLValues.CONVERSION_UNIT
-    private static final int CONVERSION_UNIT = 20; 
     
     private List<Validation> errorList;
     private Composite composite;
@@ -171,6 +169,6 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
         if (maxGapLength < 0) {
             throw new InvalidLengthValueException(CustomErrorMessages.ERROR_INVALID_LENGTH);
         }
-        c.setMaxLineLength(maxGapLength / CONVERSION_UNIT);
+        c.setMaxLineLength(maxGapLength / XMLValues.CONVERSION_UNIT);
     }
 }

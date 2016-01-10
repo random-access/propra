@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.logging.Logger;
 
 import ess.algorithm.modules.IPositionFinder;
 import ess.algorithm.modules.IRuleChecker;
@@ -14,6 +15,7 @@ import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Tile;
 import ess.exc.PropertyException;
+import ess.strings.CustomErrorMessages;
 import ess.utils.ProPraLogger;
 import ess.utils.ProPraProperties;
 
@@ -28,7 +30,7 @@ import ess.utils.ProPraProperties;
  */
 public class Solver implements ISolver {
 
-    // private static final Logger log = Logger.getGlobal();
+    private static final Logger LOG = Logger.getGlobal();
 
     private IPositionFinder posFinder;
     private IRuleChecker ruleChecker;
@@ -86,7 +88,7 @@ public class Solver implements ISolver {
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException
                 | SecurityException | IllegalArgumentException | InvocationTargetException e) {
             throw new PropertyException(
-                    "Invalid parameter in properties file in heuristics. Please check if your properties file is valid.");
+                    CustomErrorMessages.ERROR_INVALID_VALUE_HEURISTICS);
         }
     }
 
@@ -112,8 +114,8 @@ public class Solver implements ISolver {
                     foundTileThatFits = true;
                     pos = posFinder.findNextFreePosition(composite, pos);
                     if (ruleChecker.checkEndConditions(composite, tile, pos)) {
-                        //System.out.println("Iterations: " + counter);
-                        System.out.println("Found a solution :)");
+                        // log.info("Iterations: " + counter);
+                        LOG.info("Found a solution.");
                         prepareCompositeForDataOutput();
                         return true;
                     }
@@ -134,12 +136,12 @@ public class Solver implements ISolver {
                     composite.getSurface().removeEntry(tile, pos);
                 }
                 if (posList.isEmpty()) {
-                    System.out.println("Choose another tile as first...");
+                    LOG.info("Choose another tile as first...");
                 }
             }
         } while (pos != null);
-        // System.out.println("Iterations: " + counter);
-        System.out.println("Found no solution :(.");
+        // log.info("Iterations: " + counter);
+        LOG.info("Found no solution.");
         return false;
     }
 

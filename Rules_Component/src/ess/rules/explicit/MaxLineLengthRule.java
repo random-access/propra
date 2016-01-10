@@ -26,13 +26,17 @@ public class MaxLineLengthRule implements IRule {
     private Composite composite;
     
     /**
-     * Initializes an instance of MaxLineLengthRule
+     * Initializes an instance of MaxLineLengthRule.
+     *
      * @param composite the composite
      */
     public MaxLineLengthRule(Composite composite) {
         this.composite = composite;
     }
     
+    /* (non-Javadoc)
+     * @see ess.rules.IRule#check(ess.data.Tile, ess.data.Position)
+     */
     @Override
     public boolean check(Tile tile, Position pos) {
         for (Edge edge : Edge.values()) {
@@ -43,6 +47,10 @@ public class MaxLineLengthRule implements IRule {
         return true;
     }
 
+    // Calculates the total length of a straight line in the composite which contains 
+    // the given edge of the given tile. 
+    // The total length is the length of the tile's edge in addition to the the extension
+    // of this line going "backwards" and going "forward".
     private int calculateLineLength(Tile tile, Position pos, Edge edge) {
         Corner c1 = edge.getFirstCorner();
         Corner c2 = edge.getSecondCorner();
@@ -56,6 +64,7 @@ public class MaxLineLengthRule implements IRule {
                 + getEntryLength(edge, tile);
     }
 
+    // Returns the length of a tile at the given edge.
     private int getEntryLength(Edge edge, Tile t) {
         switch(edge) {
             case TOP:
@@ -68,6 +77,7 @@ public class MaxLineLengthRule implements IRule {
         throw new IllegalArgumentException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, edge));
     }
 
+    // Returns the length of the extension of a tile's edge, either going "back" or going "forward".
     private int getLineLength(Edge edge, int startRow, int startCol, int step) {
         Surface s = composite.getSurface();
         boolean isLine = true;
@@ -113,6 +123,9 @@ public class MaxLineLengthRule implements IRule {
         throw new IllegalArgumentException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, edge));
     }
 
+    /* (non-Javadoc)
+     * @see ess.rules.IRule#getErrorType()
+     */
     @Override
     public ErrorType getErrorType() {
         return ErrorType.MAX_LINE_LENGTH;
