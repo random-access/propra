@@ -10,24 +10,24 @@ import ess.algorithm.RoemischerVerbund.Validation;
 public interface IRoemischerVerbund {
 
     /**
-     * Überprüft die eingegebene Lösung auf Korrektheit.
+     * Ueberprueft die eingegebene Loesung auf Korrektheit.
      *
      * @param xmlFile
      *            Dokument, das validiert werden soll.
      * @param maxFugenLaenge
-     *            maximale Fugenlänge der zu berechnenden Lösung.
+     *            maximale Fugenlaenge der zu berechnenden Loesung.
      * @return Liste von Fehlern, die fehlgeschlagen sind.
      */
     List<Validation> validateSolution(String xmlFile, int maxFugenLaenge);
 
     /**
-     * Ermittelt eine Lösung zu den eingegebenen Daten.
+     * Ermittelt eine Loesung zu den eingegebenen Daten.
      *
      * @param xmlFile
      *            Eingabedokument, das die Probleminstanzen enthält.
      * @param maxFugenLaenge
-     *            maximale Fugenlänge der zu berechnenden Lösung.
-     * @return konnte eine Lösung gefunden werden? true = ja, false = nein.
+     *            maximale Fugenlaenge der zu berechnenden Loesung.
+     * @return konnte eine Loesung gefunden werden? true = ja, false = nein.
      */
     boolean solve(String xmlFile, int maxFugenLaenge);
 }

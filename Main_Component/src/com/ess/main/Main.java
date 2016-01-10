@@ -13,26 +13,26 @@ import ess.utils.ProPraLogger;
 /**
  * Haupteinstiegspunkt der Anwendung.
  * 
- * In der Main-Komponente müssen unter anderem die Eingabeparameter verarbeitet werden
+ * In der Main-Komponente muessen unter anderem die Eingabeparameter verarbeitet werden
  * 
- *	Für den Ablaufparameter r wird folgende Festlegung getroffen:
- *		"s" (solve): für die durch die XML-Datei beschriebene Probleminstanz wird ein Verlegungsplan ermittelt, 
+ *	Fuer den Ablaufparameter r wird folgende Festlegung getroffen:
+ *		"s" (solve): fuer die durch die XML-Datei beschriebene Probleminstanz wird ein Verlegungsplan ermittelt, 
  *                  falls ein solcher existiert, ansonsten wird das Programm mit einer Fehlermeldung beendet. 
  *                  Falls ein Verlegungsplan ermittelt werden kann, wird dieser in der angegebenen 
  *                  XML-Datei gespeichert. Falls in der XML-Datei bereits ein Verlegungsplan vorhanden ist, so 
- *                  ist dieser zu überschreiben.
- *		"sd" (solve & display): wie "s", nur dass der ermittelte Verlegungsplan nach der Lösung der Probleminstanz 
- *                  zusätzlich in der graphischen Oberfläche angezeigt wird. 
+ *                  ist dieser zu ueberschreiben.
+ *		"sd" (solve & display): wie "s", nur dass der ermittelte Verlegungsplan nach der Loesung der Probleminstanz 
+ *                  zusaetzlich in der graphischen Oberflaeche angezeigt wird. 
  *		"v" (validate): durch diese Option wird der in der angegebenen XML-Datei enthaltene Verlegungsplan auf die 
- *                  Einhaltung der Bedingungen B1 - B4 hin überprüft. Anschließend sind diejenigen Bedingungen in 
+ *                  Einhaltung der Bedingungen B1 - B4 hin ueberprueft. Anschliessend sind diejenigen Bedingungen in 
  *                  der Kommandozeile auszugeben, die vom Verlegungsplan verletzt werden. Falls die angegebene 
- *                  XML-Datei keinen Verlegungsplan enthält, wird eine Fehlermeldung ausgegeben. 
- *		"vd" (validate & display): wie "v", nur dass der ermittelte Verlegungsplan nach der Lösung der Probleminstanz 
- *                  zusätzlich in der graphischen Oberfläche angezeigt wird. 
- *		"d" (display): der in der XML-Datei enthaltene Verlegungsplan wird in der graphischen Oberfläche angezeigt. 
- *                  Falls die angegebene XML-Datei keinen Verlegungsplan enthält, wird eine Fehlermeldung ausgegeben. 
+ *                  XML-Datei keinen Verlegungsplan enthaelt, wird eine Fehlermeldung ausgegeben. 
+ *		"vd" (validate & display): wie "v", nur dass der ermittelte Verlegungsplan nach der Loesung der Probleminstanz 
+ *                  zusaetzlich in der graphischen Oberflaeche angezeigt wird. 
+ *		"d" (display): der in der XML-Datei enthaltene Verlegungsplan wird in der graphischen Oberflaeche angezeigt. 
+ *                  Falls die angegebene XML-Datei keinen Verlegungsplan enthaelt, wird eine Fehlermeldung ausgegeben. 
  *	Der Eingabedateiparameter if (Input File) ist ein String, der den Pfad der Eingabedatei beinhaltet. Der Parameter 
- *                  für die maximale Fugenlänge l ist eine positive natürliche Zahl, welche die Fugenlänge in cm angibt. 
+ *                  fuer die maximale Fugenlaenge l ist eine positive natuerliche Zahl, welche die Fugenlaenge in cm angibt. 
  *                  Ein Beispielparameteraufruf kann demnach wie folgt aussehen: r=s if="bin\\verbund1.xml" l=1200.
  */
 public final class Main {

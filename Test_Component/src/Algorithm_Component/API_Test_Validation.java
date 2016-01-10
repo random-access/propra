@@ -9,10 +9,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /*
- * Sie können sich Informationen über das Unittesten mit Hilfe von JUnit unter
+ * Sie koennen sich Informationen ueber das Unittesten mit Hilfe von JUnit unter
  * http://www.vogella.com/tutorials/JUnit/article.html aneignen. In dem dort
- * hinterlegten sehr langen und ausführlichen Dokument, sind alle notwendigen
- * Hilfsmittel erläutert.
+ * hinterlegten sehr langen und ausfuehrlichen Dokument, sind alle notwendigen
+ * Hilfsmittel erlaeutert.
  * 
  * Designen Sie Ihre Unit-Tests nach dem Arrange-Act-Assert-Prinzip
  * (http://c2.com/cgi/wiki?ArrangeActAssert).
@@ -30,7 +30,7 @@ public class API_Test_Validation {
 
         // Assert (that the expected results have occurred.))
         assertTrue("errorList ist null", errorList != null);
-        assertTrue("Alle 5 Fehler müssen in diesem Fall ausgegeben werden", errorList.size() == 5);
+        assertTrue("Alle 5 Fehler muessen in diesem Fall ausgegeben werden", errorList.size() == 5);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class API_Test_Validation {
         assertTrue("errorList ist null", errorList != null);
         assertTrue("Es wurden nicht alle bzw. nicht die korrekten Fehler erkannt", errorList.size() == 2);
         assertTrue("Fliese austauschbar nicht erkannt", errorList.contains(Validation.FLIESEN_AUSTAUSCHBAR));
-        assertTrue("Maximale Fugenlänge nicht erkannt", errorList.contains(Validation.MAX_FUGENLAENGE));
+        assertTrue("Maximale Fugenlaenge nicht erkannt", errorList.contains(Validation.MAX_FUGENLAENGE));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class API_Test_Validation {
         assertTrue("errorList ist null", errorList != null);
         assertTrue("Es wurden nicht alle bzw. nicht die korrekten Fehler erkannt", errorList.size() == 2);
         assertTrue("Gleiche Fliese nicht erkannt", errorList.contains(Validation.GLEICHE_FLIESEN));
-        assertTrue("Maximale Fugenlänge nicht erkannt", errorList.contains(Validation.MAX_FUGENLAENGE));
+        assertTrue("Maximale Fugenlaenge nicht erkannt", errorList.contains(Validation.MAX_FUGENLAENGE));
     }
 
     @Test
@@ -78,7 +78,7 @@ public class API_Test_Validation {
         assertTrue("errorList ist null", errorList != null);
         assertTrue("Es wurden nicht alle bzw. nicht die korrekten Fehler erkannt", errorList.size() == 2);
         assertTrue("Fliese austauschbar nicht erkannt", errorList.contains(Validation.FLIESEN_AUSTAUSCHBAR));
-        assertTrue("Maximale Fugenlänge nicht erkannt", errorList.contains(Validation.MAX_FUGENLAENGE));
+        assertTrue("Maximale Fugenlaenge nicht erkannt", errorList.contains(Validation.MAX_FUGENLAENGE));
     }
 
     @Test
@@ -106,7 +106,7 @@ public class API_Test_Validation {
 
         // Assert (that the expected results have occurred.))
         assertTrue("errorList ist null", errorList != null);
-        assertTrue("Dies ist ein gültiger Römischer Verbund!", errorList.size() == 0);
+        assertTrue("Dies ist ein gueltiger Roemischer Verbund!", errorList.size() == 0);
     }
 
     @Test
@@ -120,7 +120,7 @@ public class API_Test_Validation {
 
         // Assert (that the expected results have occurred.))
         assertTrue("errorList ist null", errorList != null);
-        assertTrue("Alle 5 Fehler müssen in diesem Fall ausgegeben werden", errorList.size() == 5);
+        assertTrue("Alle 5 Fehler muessen in diesem Fall ausgegeben werden", errorList.size() == 5);
     }
 
     @Test
@@ -135,7 +135,7 @@ public class API_Test_Validation {
         // Assert (that the expected results have occurred.))
         assertTrue("errorList ist null", errorList != null);
         assertTrue("Es wurden nicht alle bzw. nicht die korrekten Fehler erkannt", errorList.size() == 1);
-        assertTrue("Max. Fugenlänge wurde nicht erkannt", errorList.contains(Validation.MAX_FUGENLAENGE));
+        assertTrue("Max. Fugenlaenge wurde nicht erkannt", errorList.contains(Validation.MAX_FUGENLAENGE));
     }
 
     @Test
@@ -177,7 +177,7 @@ public class API_Test_Validation {
 
         // Assert (that the expected results have occurred.))
         assertTrue("errorList ist null", errorList != null);
-        assertTrue("Alle 5 Fehler müssen in diesem Fall ausgegeben werden", errorList.size() == 5);
+        assertTrue("Alle 5 Fehler muessen in diesem Fall ausgegeben werden", errorList.size() == 5);
     }
     
     

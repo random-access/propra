@@ -17,10 +17,10 @@ import ess.algorithm.IRoemischerVerbund;
 import ess.algorithm.RoemischerVerbund;
 
 /*
- * Sie können sich Informationen über das Unittesten mit Hilfe von JUnit unter
+ * Sie koennen sich Informationen ueber das Unittesten mit Hilfe von JUnit unter
  * http://www.vogella.com/tutorials/JUnit/article.html aneignen. In dem dort
- * hinterlegten sehr langen und ausführlichen Dokument, sind alle notwendigen
- * Hilfsmittel erläutert.
+ * hinterlegten sehr langen und ausfuehrlichen Dokument, sind alle notwendigen
+ * Hilfsmittel erlaeutert.
  * 
  * Designen Sie Ihre Unit-Tests nach dem Arrange-Act-Assert-Prinzip
  * (http://c2.com/cgi/wiki?ArrangeActAssert).
@@ -31,13 +31,13 @@ public class API_Test_Solve {
     public TemporaryFolder folder = new TemporaryFolder();
 
     /**
-     * Die Probleminstanzen müssen zwischengespeichert werden, da das
-     * XML-Dokument durch die API modifiziert wird. Das ist nötig, damit beim
-     * erneuten Durchführen (erneuter Test) die Instanzen unmodifiziert sind.
+     * Die Probleminstanzen muessen zwischengespeichert werden, da das
+     * XML-Dokument durch die API modifiziert wird. Das ist noetig, damit beim
+     * erneuten Durchfuehren (erneuter Test) die Instanzen unmodifiziert sind.
      * 
      * @param fileName
-     *            Dateiname, der temporär zwischengespeichert werden soll
-     * @return temporärer Pfad
+     *            Dateiname, der temporaer zwischengespeichert werden soll
+     * @return temporaerer Pfad
      * @throws IOException
      */
     private String writeFileToTempDirectory(String fileName) throws IOException {
@@ -72,7 +72,7 @@ public class API_Test_Solve {
         Boolean valid = api.solve("", -1);
 
         // Assert (that the expected results have occurred.))
-        assertFalse("Lösung müsste ungültig sein", valid);
+        assertFalse("Loesung muesste ungueltig sein", valid);
     }
 
     @Test
@@ -86,7 +86,7 @@ public class API_Test_Solve {
         Boolean valid = api.solve(filePath, 140);
 
         // Assert (that the expected results have occurred.))
-        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+        assertFalse("Fuer diese Instanz existiert mindestens eine zulaessige Loesung", !valid);
     }
 
     @Test
@@ -100,7 +100,7 @@ public class API_Test_Solve {
         Boolean valid = api.solve(filePath, 200);
 
         // Assert (that the expected results have occurred.))
-        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+        assertFalse("Fuer diese Instanz existiert mindestens eine zulaessige Loesung", !valid);
     }
 
     @Test
@@ -114,7 +114,7 @@ public class API_Test_Solve {
         Boolean valid = api.solve(filePath, 120);
 
         // Assert (that the expected results have occurred.))
-        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+        assertFalse("Fuer diese Instanz existiert mindestens eine zulaessige Loesung", !valid);
     }
    
     @Test
@@ -128,7 +128,7 @@ public class API_Test_Solve {
         Boolean valid = api.solve(filePath, 80);
 
         // Assert (that the expected results have occurred.))
-        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+        assertFalse("Fuer diese Instanz existiert mindestens eine zulaessige Loesung", !valid);
     }
 
     @Test
@@ -142,7 +142,7 @@ public class API_Test_Solve {
         Boolean valid = api.solve(filePath, 100);
 
         // Assert (that the expected results have occurred.))
-        assertFalse("Für diese Instanz existiert keine zulässige Lösung", valid);
+        assertFalse("Fuer diese Instanz existiert keine zulaessige Loesung", valid);
     }
 
     @Test
@@ -156,7 +156,7 @@ public class API_Test_Solve {
         Boolean valid = api.solve(filePath, 140);
 
         // Assert (that the expected results have occurred.))
-        assertFalse("Für diese Instanz existiert keine zulässige Lösung", valid);
+        assertFalse("Fuer diese Instanz existiert keine zulaessige Loesung", valid);
     }
 
    // @Test
@@ -170,7 +170,7 @@ public class API_Test_Solve {
         Boolean valid = api.solve(filePath, 140);
 
         // Assert (that the expected results have occurred.))
-        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+        assertFalse("Fuer diese Instanz existiert mindestens eine zulaessige Loesung", !valid);
     }
 
     // @Test
@@ -184,7 +184,7 @@ public class API_Test_Solve {
         Boolean valid = api.solve(filePath, 140);
 
         // Assert (that the expected results have occurred.))
-        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+        assertFalse("Fuer diese Instanz existiert mindestens eine zulaessige Loesung", !valid);
     }
 
     // @Test
@@ -198,7 +198,7 @@ public class API_Test_Solve {
         Boolean valid = api.solve(filePath, 140);
 
         // Assert (that the expected results have occurred.))
-        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+        assertFalse("Fuer diese Instanz existiert mindestens eine zulaessige Loesung", !valid);
     }
     
     @Test
@@ -212,7 +212,7 @@ public class API_Test_Solve {
         Boolean valid = api.solve(filePath, 34000);
 
         // Assert (that the expected results have occurred.))
-        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+        assertFalse("Fuer diese Instanz existiert mindestens eine zulaessige Loesung", !valid);
     } 
     
     @Test
@@ -226,7 +226,7 @@ public class API_Test_Solve {
         Boolean valid = api.solve(filePath, 120);
 
         // Assert (that the expected results have occurred.))
-        assertFalse("Für diese Instanz existiert mindestens eine zulässige Lösung", !valid);
+        assertFalse("Fuer diese Instanz existiert mindestens eine zulaessige Loesung", !valid);
     }
     
     @Test
@@ -240,7 +240,7 @@ public class API_Test_Solve {
         Boolean valid = api.solve(filePath, 80);
 
         // Assert (that the expected results have occurred.))
-        assertFalse("Für diese Instanz existiert keine zulässige Lösung", valid);
+        assertFalse("Fuer diese Instanz existiert keine zulaessige Loesung", valid);
     }
     
     // @Test
@@ -254,6 +254,6 @@ public class API_Test_Solve {
         Boolean valid = api.solve(filePath, 100);
 
         // Assert (that the expected results have occurred.))
-        assertFalse("Für diese Instanz existiert keine zulässige Lösung", valid);
+        assertFalse("Fuer diese Instanz existiert keine zulaessige Loesung", valid);
     }
 }

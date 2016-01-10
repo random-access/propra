@@ -18,12 +18,12 @@ import ess.strings.CustomInfoMessages;
 
 /**
  * Diese Klasse wird als API (Application Programming Interface) verwendet. Das
- * bedeutet, dass diese Klasse als Bibliothek für andere Applikationen verwendet
+ * bedeutet, dass diese Klasse als Bibliothek fuer andere Applikationen verwendet
  * werden kann.
  * 
  * Bitte achten Sie darauf, am bereits implementierten Rahmen (Klassenname,
- * Package, Methodensignaturen) !!KEINE!! Veränderungen vorzunehmen.
- * Selbstverständlich können und müssen Sie innerhalb einer Methode Änderungen
+ * Package, Methodensignaturen) !!KEINE!! Veraenderungen vorzunehmen.
+ * Selbstverstaendlich koennen und muessen Sie innerhalb einer Methode Aenderungen
  * vornehmen.
  */
 public class RoemischerVerbund extends AbstractOutputObservable implements IRoemischerVerbund {
@@ -39,7 +39,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
      */
     public enum Validation {
         /**
-         * Flieskombination kann durch eine größere Fliese ersetzt werden.
+         * Fliesenkombination kann durch eine groessere Fliese ersetzt werden.
          */
         FLIESEN_AUSTAUSCHBAR,
 
@@ -49,7 +49,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
         GLEICHE_FLIESEN,
 
         /**
-         * Die maximale Fugenlänge wurde überschritten.
+         * Die maximale Fugenlaenge wurde ueberschritten.
          */
         MAX_FUGENLAENGE,
 
@@ -65,10 +65,10 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
     }
 
     /**
-     * Überprüft die eingegebene Lösung auf Korrektheit.
+     * Ueberprueft die eingegebene Loesung auf Korrektheit.
      *
      * @param xmlFile Dokument, das validiert werden soll.
-     * @param maxFugenlaenge Die maximale Fugenlänge.
+     * @param maxFugenlaenge Die maximale Fugenlaenge.
      * @return Liste von Fehlern, die fehlgeschlagen sind.
      */
     @Override
@@ -89,13 +89,13 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
     }
 
     /**
-     * Ermittelt eine Lösung zu den eingegebenen Daten.
+     * Ermittelt eine Loesung zu den eingegebenen Daten.
      *
      * @param xmlFile
-     *            Eingabedokument, das die Probleminstanzen enthält.
+     *            Eingabedokument, das die Probleminstanzen enthaelt.
      * @param maxLineLength
-     *            maximale Fugenlänge der zu berechnenden Lösung.
-     * @return konnte eine Lösung gefunden werden? true = ja, false = nein.
+     *            maximale Fugenlaenge der zu berechnenden Loesung.
+     * @return konnte eine Loesung gefunden werden? true = ja, false = nein.
      */
     @Override
     public boolean solve(String xmlFile, int maxLineLength) {
