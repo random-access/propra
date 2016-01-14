@@ -15,7 +15,6 @@ import ess.rules.implicit.TileCoversOtherTileRule;
 import ess.rules.implicit.TileExceedsSurfaceRule;
 import ess.utils.ProPraProperties;
 
-// TODO: Auto-generated Javadoc
 /**
  * This class is an implementation of IRuleSet that loads the explicit
  * rules that were activated in config.properties. <br>

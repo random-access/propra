@@ -62,8 +62,7 @@ public final class Main {
             
             executeAlgorithm(v, inputParser);
             
-        // output all expected Exceptions in a human-readable, textual representation
-        // other Exceptions will be thrown as-is TODO before submission, catch general Exception as well
+        // Output all expected Exceptions in a human-readable, textual representation.
         } catch (InvalidInputException | PropertyException e) {
             System.out.println(e.getMessage());
             System.exit(0);

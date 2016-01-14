@@ -70,23 +70,21 @@ public class ValidationRuleChecker implements IRuleChecker {
      */
     @Override
     public boolean checkImplicitRules(Composite composite, Tile tile, Position pos) {
-        boolean validMove = true;
         for (IRule rule : ruleSet.getEndConditions()) {
             boolean isEnd = rule.check(tile, pos);
             if (isEnd) {
                 ruleSet.addError(rule.getErrorType());
+                return false;
             }
-            validMove &= !isEnd;
         }
-        // TODO stop checking if any implicit rule gets broken
         for (IRule rule : ruleSet.getImplicitRules()) {
             boolean ok = rule.check(tile, pos);
             if (!ok) {
                 ruleSet.addError(rule.getErrorType());
+                return false;
             }
-            validMove &= ok;
         }
-        return validMove;
+        return true;
     }
 
     /**

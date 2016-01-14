@@ -158,7 +158,7 @@ public final class ProPraLogger {
 	private static void setLogLevel(String logLevelName) throws PropertyException {
 		try {
 			Level logLevel = Level.parse(logLevelName.toUpperCase());
-			//logger.setLevel(logLevel);
+			logger.setLevel(logLevel);
 			Logger rootLog = Logger.getLogger("");
 			rootLog.setLevel(logLevel);
 			Handler[] handlers = rootLog.getHandlers();

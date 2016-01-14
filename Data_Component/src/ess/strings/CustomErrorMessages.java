@@ -132,7 +132,7 @@ public final class CustomErrorMessages {
             + CustomInfoMessages.INFO_EXEC_CALL;
     
     /**
-     * Error message for invalid mode // TODO duplicate of ERROR_INVALID_PARAM?
+     * Error message for invalid execution mode
      */
     public static final String UNSUPPORTED_MODE = "Dieser Modus wurde noch nicht vollst\u00e4ndig implementiert.";
 

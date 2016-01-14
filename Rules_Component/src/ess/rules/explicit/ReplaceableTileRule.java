@@ -11,7 +11,6 @@ import ess.data.Tile;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
 
-// TODO: Auto-generated Javadoc
 /**
  * This implementation of IRule checks if a tile that is about to be placed at
  * pos forms a combination with other tiles that can be replaced by a larger
