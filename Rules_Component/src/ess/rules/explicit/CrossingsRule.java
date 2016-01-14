@@ -19,8 +19,6 @@ import ess.rules.IRule;
  */
 public class CrossingsRule implements IRule {
     
-    // TODO find out why there are no crossings if deactivated
-    
     private Composite composite;
     
     /**

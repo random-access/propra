@@ -23,13 +23,14 @@ import ess.rules.IRule;
  */
 public class ReplaceableTileRule implements IRule {
 
-    private HashMap<String, ArrayList<Tile>> tilesLargerThan; 
+    private HashMap<String, ArrayList<Tile>> tilesLargerThan;
     private Composite composite;
-    
+
     /**
      * Initializes an instance of ReplaceableTileRule.
      *
-     * @param composite the composite
+     * @param composite
+     *            the composite
      */
     public ReplaceableTileRule(Composite composite) {
         this.composite = composite;
@@ -40,7 +41,9 @@ public class ReplaceableTileRule implements IRule {
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ess.rules.IRule#check(ess.data.Tile, ess.data.Position)
      */
     @Override
@@ -54,21 +57,9 @@ public class ReplaceableTileRule implements IRule {
         return true;
     }
 
-    // TODO: Either turn JavaDoc for private method into comments or add private JavaDoc
-    /**
-     * Tests if tile can replace an area filled with smaller tiles if aligned
-     * with any of the 4 corners of the tile that will be inserted into the
-     * surface of Composite c.
-     * 
-     * @param tile
-     *            the Tile that should be tested as a replacement
-     * @param pos
-     *            the position where tile should get inserted
-     * @param rTile
-     *            the tile that is tested as a replacement
-     * @return true, if this tile replaces an area filled with smaller tiles,
-     *         else false
-     */
+    // Tests if tile can replace an area filled with smaller tiles if aligned
+    // with any of the 4 corners of the tile that will be inserted into the
+    // surface of Composite c.
     private boolean tileIsReplacement(Tile tile, Position pos, Tile rTile) {
         for (Corner corner : Corner.values()) {
             if (tileIsReplacementInCorner(tile, pos, rTile, corner)) {
@@ -78,23 +69,9 @@ public class ReplaceableTileRule implements IRule {
         return false;
     }
 
-    /**
-     * Tests if the given tile can replace an area filled with smaller tiles if
-     * placed in corner c of the given SurfaceEntry e. Every edge of the tile is
-     * examined. A tile replaces an area filled with smaller tiles if all of its
-     * four edges are touching another SurfaceEntry
-     * 
-     * @param tile
-     *            the Tile that should be tested as a replacement
-     * @param pos
-     *            the position where tile should get inserted
-     * @param rTile
-     *            the tile that is tested as a replacement
-     * @param corner
-     *            the Corner where the tile should be inserted
-     * @return true, if tile replaces an area filled with smaller tiles when
-     *         positioned in corner, else false
-     */
+    // Tests if the given tile can replace an area filled with smaller tiles if
+    // placed in corner c of the given SurfaceEntry e. Every edge of the tile is
+    // examined. A tile replaces an area filled with smaller tiles if all of its
     private boolean tileIsReplacementInCorner(Tile tile, Position pos, Tile rTile, Corner corner) {
         Position rPos = getReplacementPos(tile, pos, rTile, corner);
         if (rPos == null) {
@@ -108,24 +85,9 @@ public class ReplaceableTileRule implements IRule {
         return true;
     }
 
-    /**
-     * Tests if the given edge is the border between 2 tiles. The given edge is
-     * the border between 2 tiles if every position at the edge is touching a
-     * different SurfaceEntry
-     * 
-     * @param rTile
-     *            the tile that is tested as a replacement
-     * @param rPos
-     *            the left upper corner where the replacement tile would be
-     *            placed
-     * @param edge
-     *            the edge to be tested
-     * @param tile
-     *            the Tile that should be tested as a replacement
-     * @param pos
-     *            the position where tile should get inserted
-     * @return true, if this edge is a tile border, else false
-     */
+    // Tests if the given edge is the border between 2 tiles. The given edge is
+    // the border between 2 tiles if every position at the edge is touching a
+    // different SurfaceEntry
     private boolean isTileBorder(Tile rTile, Position rPos, Edge edge, Tile tile, Position pos) {
         Position corner1 = composite.getSurface().getCornerPos(rTile, rPos, edge.getFirstCorner());
         Position corner2 = composite.getSurface().getCornerPos(rTile, rPos, edge.getSecondCorner());
@@ -153,27 +115,16 @@ public class ReplaceableTileRule implements IRule {
         return true;
     }
 
-    /**
-     * Creates a virtual tile that stores the corner positions to be tested. If the tile exceeds the
-     * surface's borders, null is returned.
-     * 
-     * @param t
-     *            the Tile that should be tested as a replacement
-     * @param pos
-     *            the position where tile should get inserted
-     * @param rTile
-     *            the tile that is tested as a replacement
-     * @param corner
-     *            the Corner where the tile should be inserted
-     * @return a SurfaceEntry with the positions of tile placed in corner, null
-     *         if this entry exceeds the surface.
-     */
+    // Creates a virtual tile that stores the corner positions to be tested. If
+    // the tile exceeds the surface's borders, null is returned.
     private Position getReplacementPos(Tile t, Position pos, Tile rTile, Corner corner) {
         Position rPos = composite.getSurface().getTopLeft(rTile, composite.getSurface().getCornerPos(t, pos, corner), corner);
         return composite.getSurface().isInsideSurface(rPos) ? rPos : null;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see ess.rules.IRule#getErrorType()
      */
     @Override
