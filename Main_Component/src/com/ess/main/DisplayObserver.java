@@ -8,7 +8,6 @@ import javax.swing.SwingUtilities;
 import ess.algorithm.AbstractOutputObservable;
 import ess.data.Composite;
 import ess.strings.CustomErrorMessages;
-import ess.strings.CustomInfoMessages;
 import ess.ui.ICompositeView;
 import ess.ui.MainWindow;
 

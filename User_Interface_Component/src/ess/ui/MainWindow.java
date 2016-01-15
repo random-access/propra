@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,6 +32,8 @@ import ess.strings.CustomInfoMessages;
 import ess.ui.components.CompositePanel;
 import ess.ui.components.CustomLabel;
 import ess.ui.components.CustomPanel;
+import ess.ui.components.PlaceHolderPanel;
+import ess.ui.components.Zoomable;
 
 /**
  * This class is an implementation of IComposite view that displays a composite,
@@ -65,9 +68,8 @@ public class MainWindow extends JFrame implements ICompositeView {
     // window components
     private JPanel pnlTop, pnlInfo, pnlCenter, pnlBottom;
     private JScrollPane scpCenter;
-    private CompositePanel pnlComposite;
+    private Zoomable pnlComposite;
     private JButton btnClose;
-    private JLabel lblMode, lblStatus;
 
     // data that gets displayed
     private Composite composite;
@@ -99,7 +101,7 @@ public class MainWindow extends JFrame implements ICompositeView {
         // create window components and add them together
         createAndAddTopArea();
         createAndAddInfoLabels(hasValidComposite, errorList, execMode);
-        createAndAddCenterArea();
+        createAndAddCenterArea(hasValidComposite, execMode);
         createAndAddBottomArea();
         addListeners();
 
@@ -121,8 +123,9 @@ public class MainWindow extends JFrame implements ICompositeView {
     }
 
     // construct center area of window (data)
-    private void createAndAddCenterArea() {
-        pnlComposite = new CompositePanel(composite.getSurface(), INITIAL_FIELD_SIZE);
+    private void createAndAddCenterArea(boolean hasValidComposite, char execMode) {
+        pnlComposite = execMode != 's' || hasValidComposite
+                ? new CompositePanel(composite.getSurface(), INITIAL_FIELD_SIZE) : new PlaceHolderPanel();
         pnlCenter = new CustomPanel(COMPONENT_PADDING);
         pnlCenter.setLayout(new GridBagLayout());
         JLabel lblZoomInfo = new CustomLabel("Zum Zoomen + und - verwenden.", DEFAULT_FONT_SIZE, Color.BLACK);
@@ -139,7 +142,7 @@ public class MainWindow extends JFrame implements ICompositeView {
         gbc = new GridBagConstraints();
         gbc.gridy = 1;
         gbc.weighty = 1;
-        pnlCenter.add(pnlComposite, gbc);
+        pnlCenter.add((JComponent) pnlComposite, gbc);
 
         // make content of center scrollable to be able to display very large composites
         scpCenter = new JScrollPane(pnlCenter);
@@ -189,21 +192,25 @@ public class MainWindow extends JFrame implements ICompositeView {
     }
 
     private void createDisplayInfos(boolean hasValidComposite) {
+        // Add info about display mode
         String mode = CustomInfoMessages.INFO_DISPLAY;
-        lblMode = new CustomLabel(mode, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
+        JLabel lblMode = new CustomLabel(mode, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
         pnlInfo.add(lblMode);
     }
 
     private void createValidateInfos(boolean hasValidComposite, List<String> errorList) {
-        lblMode = new CustomLabel(CustomInfoMessages.INFO_VALIDATE, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
+        // Add info about validation mode
+        JLabel lblMode = new CustomLabel(CustomInfoMessages.INFO_VALIDATE, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
         lblMode.setFont(lblMode.getFont().deriveFont(Font.BOLD));
         pnlInfo.add(lblMode);
         
+        // Add info about success / failure when validating
         String status = hasValidComposite 
                 ? CustomInfoMessages.INFO_VALIDATION_SUCCESS : CustomInfoMessages.INFO_VALIDATION_FAILURE;
-        lblStatus = new CustomLabel(status, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
+        JLabel lblStatus = new CustomLabel(status, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
         pnlInfo.add(lblStatus);
 
+        // Add error list
         for (String error : errorList) {
             JLabel label = new CustomLabel("\u2022 " + error, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
             pnlInfo.add(label);
@@ -211,8 +218,9 @@ public class MainWindow extends JFrame implements ICompositeView {
     }
 
     private void createSolveInfos(boolean hasValidComposite) {
+        // Add info about success / failure when solving
         String status = hasValidComposite ? CustomInfoMessages.INFO_SOLVE_SUCCESS : CustomInfoMessages.INFO_SOLVE_FAILURE;
-        lblStatus = new CustomLabel(status, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
+        JLabel lblStatus = new CustomLabel(status, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
         pnlInfo.add(lblStatus);
     }
 
@@ -234,10 +242,10 @@ public class MainWindow extends JFrame implements ICompositeView {
             public void keyPressed(KeyEvent e) {
                 switch(e.getKeyChar()) {
                     case '+':
-                        pnlComposite.increaseFieldSize();
+                        pnlComposite.zoomIn();
                         break;
                     case '-':
-                        pnlComposite.decreaseFieldSize();
+                        pnlComposite.zoomOut();
                         break;
                     default:
                         // do nothing when other keys are pressed

@@ -70,9 +70,8 @@ public class Validator {
             } else {
                 // if an implicit rule gets broken (tiles overlapping the surface or other tiles
                 // or too many / not enough tiles in construction plan)
-                // it doesn't make sense to continue to place tiles
-                // as they might be breaking other implicit rules.
-                return;
+                // place tile everywhere where it is possible, don't care about overwriting other tiles
+                composite.getSurface().insertEntryWherePossible(tile, pos);
             }
         }
         

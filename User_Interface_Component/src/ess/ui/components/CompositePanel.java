@@ -21,7 +21,7 @@ import ess.data.Surface;
  * @author Monika Schrenk
  *
  */
-public class CompositePanel extends JComponent {
+public class CompositePanel extends JComponent implements Zoomable {
 
     private static final long serialVersionUID = -4131400974188958938L;
     
@@ -98,6 +98,10 @@ public class CompositePanel extends JComponent {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
+        drawComposite(g2D);
+    }
+    
+    private void drawComposite(Graphics2D g2D) {
         drawBackground(g2D);
         drawGrid(g2D);
         drawTiles(g2D);
@@ -151,10 +155,12 @@ public class CompositePanel extends JComponent {
         }
     }
     
+
+    
     /**
      * Increase the size of a single field by 1 pixel and refresh the view.
      */
-    public void increaseFieldSize() {
+    public void zoomIn() {
         if (currentFieldSize < MAX_FIELD_SIZE) {
             currentFieldSize++;
         }
@@ -164,7 +170,7 @@ public class CompositePanel extends JComponent {
     /**
      * Decrease the size of a single field by 1 pixel and refresh the view.
      */
-    public void decreaseFieldSize() {
+    public void zoomOut() {
         if (currentFieldSize > MIN_FIELD_SIZE) {
             currentFieldSize--;
         }
