@@ -72,8 +72,8 @@ public class Surface {
     }
 
     /**
-     * Inserts a given tile in the given surface at the given position, for
-     * example: called on an empty surface with 3 rows and 4 columns, for a 3x2
+     * Inserts tile in this surface at pos. 
+     * Example: called on an empty surface with 3 rows and 4 columns, for a 3x2
      * tile with insert position (0,2) will produce the following result: <br>
      * _ _ x x x _ <br>
      * _ _ x x x _ <br>
@@ -99,6 +99,29 @@ public class Surface {
             }
         }
     }
+    
+    
+    /**
+     * Inserts tile at pos. Simply leaves out all fields that are not inside the surface.
+     * This method is for display any composite no matter if valid or not.
+     * @param tile
+     *            the tile that should be inserted
+     * @param pos
+     *            the left upper corner of the position the tile should be
+     *            inserted
+     */
+    public void insertEntryWherePossible(Tile tile, Position pos) {
+        Tile newTile = new Tile(tile.getId(), tile.getRows(), tile.getCols());
+        for (int i = pos.getRow(); i <= pos.getRow() + tile.getRows() - 1; i++) {
+            for (int j = pos.getCol(); j <= pos.getCol() + tile.getCols() - 1; j++) {
+                if (isInsideSurface(i, j)) {
+                    fields[i][j] = newTile;
+                }
+            }
+        }
+    }
+    
+    
 
     /**
      * Removes a given tile in this surface at the specified position.

@@ -14,10 +14,11 @@ public interface ICompositeView {
     /**
      * This method gets called when a composite should be displayed.
      * 
+     * @param hasValidComposite true, if composite is valid, else false
      * @param errorList A list of error messages to display. 
      * @param pathToSource The path to the file the composite's data was read from.
-     * @param execMode A message explaining the execution mode that lead to displaying a composite.
+     * @param execMode 'v' for validate, 'd' for display and 's' for solve.
      */
-	void display(List<String> errorList, String pathToSource, String execMode);
+	void display(boolean hasValidComposite, List<String> errorList, String pathToSource, char execMode);
 	
 }

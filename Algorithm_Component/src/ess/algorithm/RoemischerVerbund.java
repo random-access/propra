@@ -14,7 +14,6 @@ import ess.io.XMLDataExchanger;
 import ess.io.XMLValues;
 import ess.io.exc.DataExchangeException;
 import ess.strings.CustomErrorMessages;
-import ess.strings.CustomInfoMessages;
 
 /**
  * Diese Klasse wird als API (Application Programming Interface) verwendet. Das
@@ -26,11 +25,12 @@ import ess.strings.CustomInfoMessages;
  * Selbstverstaendlich koennen und muessen Sie innerhalb einer Methode Aenderungen
  * vornehmen.
  */
-public class RoemischerVerbund extends AbstractOutputObservable implements IRoemischerVerbund {
+public class RoemischerVerbund extends AbstractOutputObservable implements IRoemischerVerbund, DisplayableWithoutCheck {
 
     private static final Logger LOG = Logger.getGlobal();
     
     private List<Validation> errorList;
+    private boolean hasValidSolution;
     private Composite composite;
     private String pathToXml;
 
@@ -80,12 +80,13 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
             convertGapLength(maxFugenlaenge, composite);
             Validator validator = new Validator(composite);
             errorList = validator.validateSolution();
+            hasValidSolution = errorList.size() == 0;
             sendNotificationToOutputObservers();
-            return errorList;
         } catch (DataExchangeException | PropertyException | InvalidLengthValueException e) {
             System.out.println(e.getMessage());
-            return addAllErrorsToErrorList();
+            errorList = addAllErrorsToErrorList();
         }
+        return errorList;
     }
 
     /**
@@ -105,17 +106,30 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
             composite = dataExchanger.readFromSource(xmlFile);
             convertGapLength(maxLineLength, composite);
             ISolver solver = new Solver(composite);
-            boolean solved = solver.solve();
-            if (solved) {
-                dataExchanger.writeToTarget(composite, xmlFile);
-                sendNotificationToOutputObservers();
-            } else {
-                System.out.println(CustomInfoMessages.INFO_NOT_SOLVED);
-            }
-            return solved;
+            hasValidSolution = solver.solve();
+            if (hasValidSolution) {
+                dataExchanger.writeToTarget(composite, xmlFile);                
+            } 
+            sendNotificationToOutputObservers();
         } catch (DataExchangeException | PropertyException | InvalidLengthValueException e) {
             System.out.println(e.getMessage());
-            return false;
+            hasValidSolution = false;
+        }
+        return hasValidSolution;
+    }
+    
+    @Override
+    public void display(String xmlFile) {
+        this.pathToXml = xmlFile;
+        try {
+            IDataExchanger dataExchanger = new XMLDataExchanger();
+            composite = dataExchanger.readFromSource(xmlFile);
+            IDisplayer displayer = new Displayer(composite);
+            displayer.constructOutput();
+            hasValidSolution = true;
+            sendNotificationToOutputObservers();
+        } catch (DataExchangeException | PropertyException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -170,5 +184,10 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
             throw new InvalidLengthValueException(CustomErrorMessages.ERROR_INVALID_LENGTH);
         }
         c.setMaxLineLength(maxGapLength / XMLValues.CONVERSION_UNIT);
+    }
+
+    @Override
+    public boolean hasValidComposite() {
+        return hasValidSolution;
     }
 }

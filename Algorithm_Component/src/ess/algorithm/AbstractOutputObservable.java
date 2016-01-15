@@ -25,14 +25,20 @@ public abstract class AbstractOutputObservable extends Observable {
 	public abstract Composite getComposite();
 	
 	/**
-	 * Get the error list to print out any errors that were found, the String array contains an info message for each 
-	 * rule that was broken. The String array doesn't contain duplicate messages. The error list gets only filled 
-	 * during validation.<br><br>
+	 * Get the error list to print out any errors that were found (validator only). 
+	 * The String array contains an info message for each rule that was broken. 
+	 * The String array doesn't contain duplicate messages. The error list gets only filled during validation.<br><br>
 	 * Please make sure to call this method after the Validator has finished validation.
 	 * @return a String list containing info messages for every rule that was discovered to be broken at least once 
 	 * during Validation.
 	 */
 	public abstract List<String> getErrors();
+	
+	/**
+	 * Indicates if a valid solution for the given data could be found (solver only). 
+	 * @return true if a valid solution could be found, else false
+	 */
+	public abstract boolean hasValidComposite();
 	
 	/**
 	 * Get the file path to the file which holds the data.

@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -66,6 +67,7 @@ public class MainWindow extends JFrame implements ICompositeView {
     private JScrollPane scpCenter;
     private CompositePanel pnlComposite;
     private JButton btnClose;
+    private JLabel lblMode, lblStatus;
 
     // data that gets displayed
     private Composite composite;
@@ -87,16 +89,16 @@ public class MainWindow extends JFrame implements ICompositeView {
     }
 
     /* (non-Javadoc)
-     * @see ess.ui.ICompositeView#display(java.util.List, java.lang.String, java.lang.String)
+     * @see ess.ui.ICompositeView#display(java.lang.boolean, java.util.List, java.lang.String, java.lang.String)
      */
     @Override
-    public void display(List<String> errorList, String pathToSource, String execMode) {
+    public void display(boolean hasValidComposite, List<String> errorList, String pathToSource, char execMode) {
         // show file path as title
         setTitle(pathToSource);
 
         // create window components and add them together
         createAndAddTopArea();
-        createAndAddInfoLabels(errorList, execMode);
+        createAndAddInfoLabels(hasValidComposite, errorList, execMode);
         createAndAddCenterArea();
         createAndAddBottomArea();
         addListeners();
@@ -170,22 +172,48 @@ public class MainWindow extends JFrame implements ICompositeView {
     }
 
     // create labels that hold info messages, depending on application mode
-    private void createAndAddInfoLabels(List<String> errorList, String execMode) {
-        JLabel lblMode = new CustomLabel(execMode, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
+    private void createAndAddInfoLabels(boolean hasValidComposite, List<String> errorList, char execMode) {
+        switch(execMode) {
+            case 's':
+                createSolveInfos(hasValidComposite);
+                break;
+            case 'v':
+                createValidateInfos(hasValidComposite, errorList);
+                break;
+            case 'd':
+                createDisplayInfos(hasValidComposite);
+                break;
+            default: 
+                throw new InvalidParameterException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, execMode));
+        }
+    }
+
+    private void createDisplayInfos(boolean hasValidComposite) {
+        String mode = CustomInfoMessages.INFO_DISPLAY;
+        lblMode = new CustomLabel(mode, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
+        pnlInfo.add(lblMode);
+    }
+
+    private void createValidateInfos(boolean hasValidComposite, List<String> errorList) {
+        lblMode = new CustomLabel(CustomInfoMessages.INFO_VALIDATE, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
         lblMode.setFont(lblMode.getFont().deriveFont(Font.BOLD));
         pnlInfo.add(lblMode);
-        if (errorList == null) {
-            return;
-        }
-        if (errorList.size() == 0) {
-            JLabel label = new CustomLabel(CustomInfoMessages.INFO_VALID_COMPOSITE, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
+        
+        String status = hasValidComposite 
+                ? CustomInfoMessages.INFO_VALIDATION_SUCCESS : CustomInfoMessages.INFO_VALIDATION_FAILURE;
+        lblStatus = new CustomLabel(status, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
+        pnlInfo.add(lblStatus);
+
+        for (String error : errorList) {
+            JLabel label = new CustomLabel("\u2022 " + error, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
             pnlInfo.add(label);
-        } else {
-            for (String error : errorList) {
-                JLabel label = new CustomLabel("\u2022 " + error, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
-                pnlInfo.add(label);
-            }
         }
+    }
+
+    private void createSolveInfos(boolean hasValidComposite) {
+        String status = hasValidComposite ? CustomInfoMessages.INFO_SOLVE_SUCCESS : CustomInfoMessages.INFO_SOLVE_FAILURE;
+        lblStatus = new CustomLabel(status, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
+        pnlInfo.add(lblStatus);
     }
 
     // Method for adding all listeners to the main panel

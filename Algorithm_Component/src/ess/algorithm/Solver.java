@@ -20,7 +20,7 @@ import ess.utils.ProPraLogger;
 import ess.utils.ProPraProperties;
 
 /**
- * This class implements a single-threaded Solver, which finds a solution for a
+ * This class implements a Solver, which finds a solution for a
  * given surface size and a given maximum tile length which respects the rules
  * activated in the configuration file if a solution exists.
  * 
@@ -58,7 +58,7 @@ public class Solver implements ISolver {
      * @param composite
      *            holding the data the solver needs for building a solution
      * @throws PropertyException
-     *             if any module was not defined properly in the configuration
+     *             if any parameter was not defined properly in the configuration
      *             file or the configuration file cannot be read
      */
     public Solver(Composite composite) throws PropertyException {

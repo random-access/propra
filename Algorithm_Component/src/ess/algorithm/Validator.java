@@ -40,9 +40,9 @@ public class Validator {
      */
     public Validator(Composite composite) throws PropertyException {
         ProPraLogger.setup();
+        this.composite = composite;
         posFinder = new TopToBottomPosFinder();
         ruleChecker = new ValidationRuleChecker(composite);
-        this.composite = composite;
     }
     /**
      * Validates the given composite against the rules activated in the configuration file. 
@@ -50,23 +50,23 @@ public class Validator {
      * during construction.
      */
     public List<Validation> validateSolution() {
-        fillSurface(composite);
+        fillSurface();
         return ruleChecker.getErrorList();
     }
 
     // fills the surface with tiles in tileList, checking all rules before placing a tile.
-    private void fillSurface(Composite c) {
+    private void fillSurface() {
         Position pos = null;
         Tile tile = null;
         
         // try to place all tiles in the composite's tile list in the surface
-        for (String ident : c.getSurfaceTileList()) {
-            pos = posFinder.findNextFreePosition(c, pos);
-            tile = c.findTileById(ident);
-            if (ruleChecker.checkImplicitRules(c, tile, pos)) {
-                ruleChecker.checkExplicitRules(c, tile, pos);
+        for (String ident : composite.getSurfaceTileList()) {
+            pos = posFinder.findNextFreePosition(composite, pos);
+            tile = composite.findTileById(ident);
+            if (ruleChecker.checkImplicitRules(composite, tile, pos)) {
+                ruleChecker.checkExplicitRules(composite, tile, pos);
                 // if an explicit rule gets broken, continue to validate to maybe find other broken rules
-                c.getSurface().insertEntry(tile, pos);
+                composite.getSurface().insertEntry(tile, pos);
             } else {
                 // if an implicit rule gets broken (tiles overlapping the surface or other tiles
                 // or too many / not enough tiles in construction plan)
@@ -77,7 +77,7 @@ public class Validator {
         }
         
         // test if the surface is filled completely
-        pos = posFinder.findNextFreePosition(c, pos);
-        ruleChecker.checkEndConditions(c, tile, pos);
+        pos = posFinder.findNextFreePosition(composite, pos);
+        ruleChecker.checkEndConditions(composite, tile, pos);
     }
 }

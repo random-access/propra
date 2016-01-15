@@ -48,13 +48,13 @@ public class DisplayObserver implements ICompositeObserver {
             public void run() {
                 switch(mode) {
                     case SOLVE_DISPLAY:
-                        view.display(null, obs.getPathToSource(), CustomInfoMessages.INFO_SOLVE);
+                        view.display(obs.hasValidComposite(), null, obs.getPathToSource(), 's');
                         break;
                     case VALIDATE_DISPLAY:
-                        view.display(obs.getErrors(), obs.getPathToSource(), CustomInfoMessages.INFO_VALIDATE);
+                        view.display(obs.hasValidComposite(), obs.getErrors(), obs.getPathToSource(), 'v');
                         break;
                     case DISPLAY:
-                        view.display(null, obs.getPathToSource(), CustomInfoMessages.INFO_DISPLAY);
+                        view.display(obs.hasValidComposite(), null, obs.getPathToSource(), 'd');
                         break;
                     default:
                         throw new UnsupportedOperationException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, mode));

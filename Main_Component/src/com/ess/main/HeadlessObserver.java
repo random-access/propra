@@ -35,17 +35,26 @@ public class HeadlessObserver implements ICompositeObserver {
     public void update(Observable o, Object arg) {
         log.info("Got headless request...");
         AbstractOutputObservable obs = (AbstractOutputObservable) o;
-        if (obs.getErrors().size() == 0) {
-            System.out.println(CustomInfoMessages.INFO_VALID_COMPOSITE);
-            return;
-        }
         switch (mode) {
-            case VALIDATE:
+            case SOLVE:
+                if (obs.hasValidComposite()) {
+                    System.out.println(CustomInfoMessages.INFO_SOLVE_SUCCESS);
+                    break;
+                } else {
+                    System.out.println(CustomInfoMessages.INFO_SOLVE_FAILURE);
+                }
                 for (String s : obs.getErrors()) {
                     System.out.println(s);
                 }
                 break;
-            default:
+            case VALIDATE:
+                if (obs.hasValidComposite()) {
+                    System.out.println(CustomInfoMessages.INFO_VALIDATION_SUCCESS);
+                } else {
+                    System.out.println(CustomInfoMessages.INFO_VALIDATION_FAILURE);
+                }
+                break;
+           default:
                 throw new UnsupportedOperationException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, mode));
         }
         

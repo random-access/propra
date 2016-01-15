@@ -3,7 +3,6 @@ package com.ess.main;
 import java.util.logging.Logger;
 
 import ess.algorithm.AbstractOutputObservable;
-import ess.algorithm.IRoemischerVerbund;
 import ess.algorithm.RoemischerVerbund;
 import ess.exc.InvalidInputException;
 import ess.exc.PropertyException;
@@ -52,7 +51,7 @@ public final class Main {
         try {
             ProPraLogger.setup();
             InputParser inputParser = new InputParser(args);
-            IRoemischerVerbund v = new RoemischerVerbund();
+            RoemischerVerbund v = new RoemischerVerbund();
             
             log.info("Setting path to " + inputParser.getPath() + "...");
             log.info("Setting max. tile length to " + inputParser.getMaxTileLength() + "...");
@@ -87,7 +86,7 @@ public final class Main {
     }
     
     // this method decides which method call is necessary to execute the requested algorithm
-    private static void executeAlgorithm(IRoemischerVerbund v, InputParser inputParser) {
+    private static void executeAlgorithm(RoemischerVerbund v, InputParser inputParser) {
         switch(inputParser.getMode()) {
             case SOLVE:
             case SOLVE_DISPLAY:
@@ -98,7 +97,7 @@ public final class Main {
                 v.validateSolution(inputParser.getPath(), inputParser.getMaxTileLength());
                 break;
             case DISPLAY:
-                v.validateSolution(inputParser.getPath(), inputParser.getMaxTileLength());
+                v.display(inputParser.getPath());
                 break;
             default:
                 System.out.println(CustomErrorMessages.UNSUPPORTED_MODE);

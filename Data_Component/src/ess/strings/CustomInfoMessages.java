@@ -50,20 +50,24 @@ public final class CustomInfoMessages {
 	/**
 	 * Info that the composite is valid.
 	 */
-	public static final String INFO_VALID_COMPOSITE = "Dies ist ein g\u00fcltiger R\u00f6mischer Verbund.";
+	public static final String INFO_VALIDATION_SUCCESS = "Dies ist ein g\u00fcltiger R\u00f6mischer Verbund.";
 	
+	/**
+     * Info that the composite is invalid.
+     */
+    public static final String INFO_VALIDATION_FAILURE = "Dies ist kein g\u00fcltiger R\u00f6mischer Verbund.";
 	
 	/******************************************* Info about execution mode ********************************************/
 	
 	/**
 	 * Info that composite was solved successfully
 	 */
-	public static final String INFO_SOLVE = "Aus den gegebenen Daten konnte ein R\u00f6mischer Verbund erzeugt werden:";
+	public static final String INFO_SOLVE_SUCCESS = "Aus den gegebenen Daten konnte ein R\u00f6mischer Verbund erzeugt werden.";
 	
 	/**
 	 * Info that there is no solution for composite
 	 */
-	public static final String INFO_NOT_SOLVED = "Aus den gegebenen Daten konnte kein R\u00f6mischer Verbund erzeugt werden.";
+	public static final String INFO_SOLVE_FAILURE = "Aus den gegebenen Daten konnte kein R\u00f6mischer Verbund erzeugt werden.";
 	
 	/**
 	 * Info about results of validation
