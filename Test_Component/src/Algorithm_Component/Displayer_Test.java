@@ -11,7 +11,7 @@ import ess.data.Composite;
 import ess.data.Tile;
 import ess.exc.PropertyException;
 
-public class Test_Displayer {
+public class Displayer_Test {
     
     @Test
     public void testDisplayValidComposite() throws PropertyException {

@@ -193,6 +193,4 @@ public class Surface_Test {
             assertNotNull(surface.getTopLeft(t2, p2, c));
         }
     }
-    
-
 }

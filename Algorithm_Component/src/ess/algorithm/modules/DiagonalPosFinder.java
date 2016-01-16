@@ -30,8 +30,6 @@ import ess.data.Surface;
  * e i j k
  */
 public class DiagonalPosFinder implements IPositionFinder {
-    
-    // TODO Test cases
 
     /**
      * Returns the next free position in the given surface, which is the next

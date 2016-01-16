@@ -1,6 +1,11 @@
 package Data_Component;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -9,8 +14,13 @@ import org.junit.Test;
 
 import ess.data.Composite;
 import ess.data.Tile;
+import ess.data.TileComparator;
 
 public class Composite_Test {
+
+    private int rows1 = 5, cols1 = 10;
+    private int rows2 = 2, cols2 = 5;
+    private Composite composite1, composite2;
 
     private Tile t1;
     private Tile t2;
@@ -23,7 +33,37 @@ public class Composite_Test {
     private Composite c;
 
     @Before
-    public void createTilesAndComposite() {
+    public void buildTestComposite1() {
+        ArrayList<Tile> tileSorts = new ArrayList<>();
+        tileSorts.add(new Tile("_0", 2, 1));
+        tileSorts.add(new Tile("_1", 1, 1));
+        tileSorts.add(new Tile("_2", 2, 3));
+        tileSorts.add(new Tile("_3", 1, 2));
+        tileSorts.add(new Tile("_4", 2, 2));
+        tileSorts.add(new Tile("_5", 3, 2));
+
+        ArrayList<String> surface = new ArrayList<>();
+
+        composite1 = new Composite(rows1, cols1, surface, tileSorts);
+    }
+
+    @Before
+    public void buildTestComposite2() {
+        ArrayList<Tile> tileSorts = new ArrayList<>();
+        tileSorts.add(new Tile("_0", 2, 1));
+        tileSorts.add(new Tile("_4", 1, 1));
+        tileSorts.add(new Tile("_1", 2, 3));
+        tileSorts.add(new Tile("_2", 1, 2));
+        tileSorts.add(new Tile("_3", 2, 2));
+        tileSorts.add(new Tile("_5", 3, 2));
+
+        ArrayList<String> surface = new ArrayList<>();
+
+        composite2 = new Composite(rows2, cols2, surface, tileSorts);
+    }
+
+    @Before
+    public void buildTestComposite3() {
         t1 = new Tile("_5", 1, 1);
         t2 = new Tile("_0", 2, 3);
         t3 = new Tile("_7", 1, 2);
@@ -44,6 +84,69 @@ public class Composite_Test {
         tileSorts.add(t8);
 
         c = new Composite(0, 0, new ArrayList<String>(), tileSorts);
+    }
+
+    @Test
+    public void testSurfaceMeasurements() {
+        // Arrange (set all necessary preconditions and inputs.)
+        Composite c1 = composite1;
+        Composite c2 = composite2;
+
+        // Act (on the object or method under test.)
+
+        // Assert (that the expected results have occurred.))
+        assertEquals(c1.getSurface().getRows(), rows1);
+        assertEquals(c1.getSurface().getCols(), cols1);
+        assertEquals(c2.getSurface().getRows(), rows2);
+        assertEquals(c2.getSurface().getCols(), cols2);
+    }
+
+    @Test
+    public void testTileSortsHeightComparator() {
+        // Arrange (set all necessary preconditions and inputs.)
+        Composite c1 = composite1;
+
+        // Act (on the object or method under test.)
+        c1.sortTileSorts(TileComparator.ROWS_ASC);
+
+        // Assert (that the expected results have occurred.))
+        for (int i = 0; i < c1.getTileSorts().size() - 1; i++) {
+            Tile currentTile = c1.getTileSorts().get(i);
+            Tile nextTile = c1.getTileSorts().get(i + 1);
+            assertTrue(currentTile.getRows() <= nextTile.getRows());
+        }
+    }
+
+    @Test
+    public void testTileSortsWidthComparator() {
+        // Arrange (set all necessary preconditions and inputs.)
+        Composite c1 = composite1;
+
+        // Act (on the object or method under test.)
+        c1.sortTileSorts(TileComparator.COLS_ASC);
+
+        // Assert (that the expected results have occurred.))
+        for (int i = 0; i < c1.getTileSorts().size() - 1; i++) {
+            Tile currentTile = c1.getTileSorts().get(i);
+            Tile nextTile = c1.getTileSorts().get(i + 1);
+            assertTrue(currentTile.getCols() <= nextTile.getCols());
+        }
+    }
+
+    @Test
+    public void testTileSortsAreaComparator() {
+        // Arrange (set all necessary preconditions and inputs.)
+        Composite c1 = composite1;
+
+        // Act (on the object or method under test.)
+        c1.sortTileSorts(TileComparator.FIELDS_ASC);
+
+        // Assert (that the expected results have occurred.))
+        for (int i = 0; i < c1.getTileSorts().size() - 1; i++) {
+            Tile currentTile = c1.getTileSorts().get(i);
+            Tile nextTile = c1.getTileSorts().get(i + 1);
+            assertTrue(currentTile.getNumberOfFields() <= nextTile.getNumberOfFields());
+        }
     }
 
     @Test
