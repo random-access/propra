@@ -21,10 +21,10 @@ public class Displayer implements IDisplayer {
     private IPositionFinder posFinder;
 
     /**
-     * Instantiates a Displayer.
-     * @param composite the composite whose surface gets filled with
+     * Instantiates a <code>Displayer</code>.
+     * @param composite the <code>Composite</code> whose <code>Surface</code> gets filled with
      * tiles.
-     * @throws PropertyException if any parameter was not defined properly in the configuration
+     * @throws PropertyException if any parameter was not defined properly in the configuration 
      * file or the configuration file cannot be read
      */
     public Displayer(Composite composite) throws PropertyException {

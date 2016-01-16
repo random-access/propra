@@ -139,12 +139,17 @@ public class XMLDataExchanger implements IDataExchanger {
 			locateFile(xmlSrc);
 			TransformerFactory tf = TransformerFactory.newInstance();
 			Transformer tr = tf.newTransformer();
+			tr.setErrorListener(new XMLTransformerErrorListener());
 			tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, dtdLocation);
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			Result res = new StreamResult(baos);
 			tr.transform(new StreamSource(xmlSrc), res);
 			return new ByteArrayInputStream(baos.toByteArray());
 		} catch (TransformerException e) {
+		    // Somehow still printing some fatal errors to System.err. This might be a JDK bug, see:
+		    // http://stackoverflow.com/questions/21208325/how-do-i-change-the-default-logging-in-java-transformer
+		    // e.printStackTrace();
+		    // As we don't have to handle invalid XML, this won't be fixed for now.
 			throw new PropertyException(String.format(
 					CustomErrorMessages.ERROR_INVALID_CONTENT, Paths.get(xmlSrc).getFileName()));
 		}
@@ -219,5 +224,4 @@ public class XMLDataExchanger implements IDataExchanger {
             throw new InvalidSizeValueException(CustomErrorMessages.ERROR_INVALID_DATATYPE_SURFACE_LENGTH);
         }
     }
-
 }

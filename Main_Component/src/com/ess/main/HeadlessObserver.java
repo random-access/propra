@@ -8,10 +8,10 @@ import ess.strings.CustomErrorMessages;
 import ess.strings.CustomInfoMessages;
 
 /**
- * An implementation of CompositeObserver that shows info about 
- * the composite in a terminal. It gets notified by 
- * an AbstractOutputObservable if there is a valid composite
- * to be displayed.
+ * An implementation of <code>CompositeObserver</code> that shows info about 
+ * the <code>Composite</code> in a terminal. It gets notified by 
+ * an <code>AbstractOutputObservable</code> if there is a valid 
+ * <code>Composite</code> to be displayed.
  */
 public class HeadlessObserver implements ICompositeObserver {
 
@@ -35,24 +35,20 @@ public class HeadlessObserver implements ICompositeObserver {
     public void update(Observable o, Object arg) {
         log.info("Got headless request...");
         AbstractOutputObservable obs = (AbstractOutputObservable) o;
+        String message;
         switch (mode) {
             case SOLVE:
-                if (obs.hasValidComposite()) {
-                    System.out.println(CustomInfoMessages.INFO_SOLVE_SUCCESS);
-                    break;
-                } else {
-                    System.out.println(CustomInfoMessages.INFO_SOLVE_FAILURE);
-                }
+                message = obs.hasValidComposite() 
+                    ? CustomInfoMessages.INFO_SOLVE_SUCCESS : CustomInfoMessages.INFO_SOLVE_FAILURE;
+                System.out.println(message);
                 for (String s : obs.getErrors()) {
                     System.out.println(s);
                 }
                 break;
             case VALIDATE:
-                if (obs.hasValidComposite()) {
-                    System.out.println(CustomInfoMessages.INFO_VALIDATION_SUCCESS);
-                } else {
-                    System.out.println(CustomInfoMessages.INFO_VALIDATION_FAILURE);
-                }
+                message = obs.hasValidComposite() 
+                    ? CustomInfoMessages.INFO_VALIDATION_SUCCESS : CustomInfoMessages.INFO_VALIDATION_FAILURE;
+                System.out.println(message);
                 break;
            default:
                 throw new UnsupportedOperationException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, mode));

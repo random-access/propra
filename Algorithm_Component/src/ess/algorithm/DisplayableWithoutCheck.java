@@ -1,9 +1,10 @@
 package ess.algorithm;
 
 /**
- * This interface adds the ability to display a composite without any check performed. 
- * Advantages: Saves time for large composites, it is also possible to show invalid
- * composites, if there is no structural problem with the input itself.
+ * This interface adds the ability to display a <code>Composite</code> without any check performed. 
+ * <br><br>
+ * <b>Advantages</b>: Saves time for a large <code>Composite</code>, it is also possible to show an invalid
+ * <code>Composite</code>, if there is no structural problem with the input itself.
  * 
  * @author monika
  *
@@ -11,8 +12,8 @@ package ess.algorithm;
 public interface DisplayableWithoutCheck {
 
     /**
-     * Method for displaying a composite, this should start a construction mechanism
-     * which assembles the data from the given source to a composite.
+     * Method for displaying a <code>Composite</code>, this should start a construction mechanism
+     * which assembles the data from the given source.
      * @param xmlFile path to input
      */
     public void display(String xmlFile);

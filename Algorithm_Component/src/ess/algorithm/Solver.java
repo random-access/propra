@@ -20,8 +20,8 @@ import ess.utils.ProPraLogger;
 import ess.utils.ProPraProperties;
 
 /**
- * This class implements a Solver, which finds a solution for a
- * given surface size and a given maximum tile length which respects the rules
+ * This implementation of <code>ISolver</code> finds a solution for a
+ * given <code>Surface</code> and a given maximum tile length which respects the rules
  * activated in the configuration file if a solution exists.
  * 
  * @see ISolver
@@ -42,21 +42,21 @@ public class Solver implements ISolver {
     // private long counter;
 
     /**
-     * Instantiates a new Solver and loads the modules. Modules are parts of the
+     * Instantiates a new <code>Solver</code> and loads the modules. Modules are parts of the
      * algorithm that can be configured via configuration file to optimize the
      * algorithm. The algorithm can be influenced by:
      * 
      * <ul>
-     * <li>Use of different TileChoosers (how the next tile from tile sorts gets
+     * <li>Switching implementation of <code>ITileChooser</code> (how the next tile from tile sorts gets
      * chosen)</li>
-     * <li>Use of different PositionFinders (which return the next position in
+     * <li>Switching implementation of <code>IPositionFinder</code> (which returns the next position in
      * the surface to place a tile)</li>
-     * <li>Use of different RuleCheckers (currently there is only 1 RuleChecker
-     * optimized for solving)</li>
+     * <li>Switching implementation of <code>IRuleChecker</code> (how <code>IRule</code>s activated
+     * via configuration file get checked)</li>
      * </ul>
      *
      * @param composite
-     *            holding the data the solver needs for building a solution
+     *            holding the data the <code>Solver</code> needs for building a solution
      * @throws PropertyException
      *             if any parameter was not defined properly in the configuration
      *             file or the configuration file cannot be read

@@ -25,13 +25,14 @@ public class Validator {
     private ValidationRuleChecker ruleChecker;
     
     /**
-     * Instantiates a new validator and sets up the validator-optimized modules, therefore using
+     * Instantiates a new <code>Validator</code> and sets up modules optimized for validation, therefore using
      * 
      * <ul>
-     *      <li>A TopToBottom position finder, because the installation plan provides the tiles from top left to bottom right</li>
-     *      <li>No TileChooser, because the tiles must not be chosen for validation</li>
-     *      <li>A ValidationRuleChecker which checks every rule, regardless of the rule before was broken or not, because the
-     *      information is needed for building the error list</li>
+     *      <li>A <code>TopToBottomPosFinder</code>, because the installation plan provides the tiles from top 
+     *      left to bottom right</li>
+     *      <li>No <code>ITileChooser</code>, because the tiles must not be selected from a list for validation</li>
+     *      <li>A <code>ValidationRuleChecker</code> which checks every <code>IRule</code> even if a previous one
+     *      was already broken, because this information is needed for returning an error list</li>
      * </ul>
      * 
      * @param composite holding the data the validator needs for building a solution

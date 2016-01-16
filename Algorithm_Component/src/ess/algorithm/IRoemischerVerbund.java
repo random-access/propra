@@ -5,7 +5,7 @@ import java.util.List;
 import ess.algorithm.RoemischerVerbund.Validation;
 
 /**
- * The Interface IRoemischerVerbund.
+ * The Interface <code>IRoemischerVerbund<code>.
  */
 public interface IRoemischerVerbund {
 
