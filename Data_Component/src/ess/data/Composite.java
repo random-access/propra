@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * This class contains all data a Solver or a Validator needs for executing the algorithm. It consists of:
+ * This class contains all data a <code>Solver</code> or a <code>Validator</code> needs for executing the algorithm. 
+ * It consists of:
  * <ul>
  * <li>a surface, which gets filled with tiles during solving or validating a composite,</li>
  * <li>an ArrayList of Tiles containing all possible tiles that can be used to build the Composite,</li>
  * <li>an ArrayList of Strings holding the output of a Composite and</li>
- * <li>an integer holding the maximum length of straight lines that is allowed in this Composite.</li>
+ * <li>an int holding the maximum length of straight lines that is allowed in this Composite.</li>
  * </ul> 
  * @author Monika Schrenk
  */
@@ -21,13 +22,13 @@ public class Composite {
 	private int maxLineLength;
 
 	/**
-	 * Instantiate a new composite.
+	 * Instantiates a new <code>Composite</code>.
 	 *
-	 * @param rows Number of rows for surface.
-	 * @param cols Number of columns for surface.
-	 * @param surfaceTileList List of tiles (represented by their IDs) that fill the surface, ordered from top left 
-	 * to bottom right. Either imported by a Validator or to be exported by a solver.
-	 * @param tileSorts List of tiles that can be used for filling the surface in application-specific measurements.
+	 * @param rows Number of rows of the surface.
+	 * @param cols Number of columns of the surface.
+	 * @param surfaceTileList List of Tiles (represented by their id's) that fill the Surface, ordered from top left 
+	 * to bottom right. Gets either imported by a <code>Validator</code> or exported by a <code>Solver</code>.
+	 * @param tileSorts List of Tiles that can be used for filling the Surface in application-specific measurements.
 	 */
 	public Composite(int rows, int cols, ArrayList<String> surfaceTileList, ArrayList<Tile> tileSorts) {
 		this.tileSorts = tileSorts;
@@ -37,7 +38,7 @@ public class Composite {
 
 
 	/**
-	 * Get the tile sorts that can be used for filling the surface.
+	 * Gets the tile sorts that can be used for filling the Surface.
 	 *
 	 * @return the tile sorts
 	 */
@@ -46,7 +47,7 @@ public class Composite {
 	}
 	
 	/**
-	 * Sort the tile sorts according to the logic of a given TileComparator.
+	 * Sorts the tileSorts according to the logic of a given <code>TileComparator</code>.
 	 * 
 	 * @see TileComparator
 	 *
@@ -57,16 +58,16 @@ public class Composite {
 	}
 
 	/**
-	 * Get list of tiles (represented by their IDs) that fill the surface, ordered from top left to bottom right.
+	 * Gets list of Tiles (represented by their id's) that fill the Surface, ordered from top left to bottom right.
 	 *
-	 * @return list of tile-IDs
+	 * @return list of tile-id's
 	 */
 	public ArrayList<String> getSurfaceTileList() {
 		return surfaceTileList;
 	}
 	
 	/**
-	 * Set list of tiles (represented by their IDs) that fill the surface, ordered from top left to bottom right.
+	 * Sets list of Tiles (represented by their id's) that fill the surface, ordered from top left to bottom right.
 	 * 
 	 * @param surfaceTileList an ArrayList with tile IDs.
 	 */
@@ -75,8 +76,8 @@ public class Composite {
 	}
 	
 	/**
-	 * Get the surface of a composite. During solving or validating a composite, 
-	 * the surface gets filled with tiles.
+	 * Gets the <code>Surface</code> of this Composite. During solving or validating a Composite, 
+	 * the Surface gets filled with Tiles.
 	 *
 	 * @return surface of a composite.
 	 */
@@ -85,7 +86,7 @@ public class Composite {
 	}
 	
 	/**
-	 * Set the maximum length of a straight line between 2 tiles that is allowed to
+	 * Sets the maximum length of a straight line between 2 tiles that is allowed to
 	 * occur in a surface.
 	 * The maximum line length is a positive integer.
 	 * @param maxLineLength maximum length of a straight line in a surface
@@ -95,7 +96,7 @@ public class Composite {
 	}
 	
 	/**
-	 * Set the maximum length of a straight line between 2 tiles that is allowed to
+	 * Sets the maximum length of a straight line between 2 tiles that is allowed to
 	 * occur in a surface.
 	 * @return maximum length of a straight line in a surface
 	 */
@@ -120,7 +121,7 @@ public class Composite {
 	}
 	
 	/**
-	 * Get a list of tiles being larger than the given measurements.
+	 * Gets a list of tiles being larger than the given measurements.
 	 * A tile is larger than the given parameters if it meets the following criteria:
 	 * <ul>
 	 * <li>Number of rows is greater or equal to rows AND</li>
@@ -143,9 +144,9 @@ public class Composite {
 	}
 
 	/**
-	 * A human readable, textual representation of a composite, containing all attributes.
+	 * A human readable, textual representation of a Composite, describing all attributes.
 	 *
-	 * @return A string holding the data of a composite.
+	 * @return A string holding the textual representation of all data from this composite.
 	 */
 	@Override
 	public String toString() {

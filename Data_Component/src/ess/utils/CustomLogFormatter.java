@@ -7,19 +7,17 @@ import java.io.Writer;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 /**
- * This class provides a custom log formatter for a Logger object.
+ * This class provides a custom log formatter for a <code>Logger</code> object.
  * 
  * @author Monika Schrenk
  *
  */
 public class CustomLogFormatter extends Formatter {
-    
-    // TODO JUnit Tests
 	
 	/**
-	 * Formats the LogRecord object. 
+	 * Formats the <code>LogRecord</code> object. 
 	 * This formatter minimizes the log data.
-	 * Only the message itself and non catched Throwable (if any) get logged.
+	 * Only the message itself and non catched <code>Throwable</code>s (if any) get logged.
 	 */
 	@Override
 	public String format(LogRecord record) {

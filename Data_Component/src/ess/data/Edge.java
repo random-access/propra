@@ -1,12 +1,13 @@
 package ess.data;
 
 /**
- * This Enum represents an edge of a tile in a surface. It holds information
+ * This Enum represents an edge of a <code>Tile</code>. It holds information
  * about the offset to the next row and the next column, helping to avoid
  * programming specific code for each corner for checking the rules.
  * For each edge is either the row offset or the column offset equal to zero.<br>
  * There are 2 corners belonging to an edge, this info is stored here as well 
- * in order to simplify iteration along an edge.<br><br>
+ * in order to simplify iteration along an edge.
+ * <br><br>
  * <b>Example</b>: The offset of the top edge is -1 for the row, because the
  * index of the neighbor row is 1 number smaller than the index of the edge
  * position and 0 for the column, because the top edge doesn't have a common
@@ -51,7 +52,7 @@ public enum Edge {
 	}
 	
 	/**
-	 * Get the offset to the neighbor row, which might hold another tile.
+	 * Gets the offset to the neighbor row, which might hold another tile.
 	 * @return the offset to the neighbor row.
 	 */
 	public int getNextRowOffset() {
@@ -59,7 +60,7 @@ public enum Edge {
 	}
 	
 	/**
-	 * Get the offset to the neighbor column, which might hold another tile.
+	 * Gets the offset to the neighbor column, which might hold another tile.
 	 * @return the offset to the neighbor column.
 	 */
 	public int getNextColOffset() {
@@ -67,7 +68,7 @@ public enum Edge {
 	}
 
 	/**
-     * Get the first corner of this edge.
+     * Gets the first corner of this edge.
      * @return the first corner of this edge.
      */
 	public Corner getFirstCorner() {
@@ -75,7 +76,7 @@ public enum Edge {
 	}
 
 	/**
-     * Get the second corner of this edge.
+     * Gets the second corner of this edge.
      * @return the second corner of this edge.
      */
 	public Corner getSecondCorner() {

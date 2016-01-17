@@ -1,6 +1,5 @@
 package ess.strings;
 
-//TODO maybe access info messages via ResourceBundle.
 /**
 * This class holds various info messages with user-friendly output for all errors that can occur in the application.
 * I collected all error messages here to avoid duplicate String constants and to have an overview about what gets displayed

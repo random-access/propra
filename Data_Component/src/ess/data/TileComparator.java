@@ -3,7 +3,7 @@ package ess.data;
 import java.util.Comparator;
 
 /**
- * This utility enum provides a set of useful comparators for sorting tile lists
+ * This utility Enum provides a set of useful comparators for sorting <code>Tile</code> lists
  * by different criteria.
  * 
  * @author Monika Schrenk
@@ -12,7 +12,7 @@ import java.util.Comparator;
 public enum TileComparator implements Comparator<Tile> {
 
     /**
-     * Sorts two tiles by their row number, in ascending order.
+     * Sorts two Tiles by their amount of rows, in ascending order.
      */
     ROWS_ASC {
         @Override
@@ -25,7 +25,7 @@ public enum TileComparator implements Comparator<Tile> {
     },
 
     /**
-     * Sorts two tiles by their row number, in descending order.
+     * Sorts two Tiles by their amount of rows, in descending order.
      */
     ROWS_DESC {
 
@@ -40,7 +40,7 @@ public enum TileComparator implements Comparator<Tile> {
     },
 
     /**
-     * Sorts two tiles by their column number, in ascending order.
+     * Sorts two Tiles by their amount of columns, in ascending order.
      */
     COLS_ASC {
         @Override
@@ -53,7 +53,7 @@ public enum TileComparator implements Comparator<Tile> {
     },
 
     /**
-     * Sorts two tiles by their column number, in descending order.
+     * Sorts two Tiles by their amount of columns, in descending order.
      */
     COLS_DESC {
 
@@ -68,7 +68,7 @@ public enum TileComparator implements Comparator<Tile> {
     },
 
     /**
-     * Sorts two tiles by their number of fields (rows x cols), in ascending
+     * Sorts two Tiles by their amount of fields (rows x cols), in ascending
      * order.
      */
     FIELDS_ASC {
@@ -82,7 +82,7 @@ public enum TileComparator implements Comparator<Tile> {
     },
 
     /**
-     * Sorts two tiles by their number of fields (rows x cols), in descending
+     * Sorts two Tiles by their amount of fields (rows x cols), in descending
      * order.
      */
     FIELDS_DESC {

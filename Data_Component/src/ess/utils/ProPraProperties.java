@@ -8,7 +8,7 @@ import ess.exc.PropertyException;
 import ess.strings.CustomErrorMessages;
 
 /**
- * This class reads all values from config.properties, stores them in a Property
+ * This class reads all values from config.properties, stores them in a <code>Property</code>
  * object and provides a basic method to retrieve the value from a certain key
  * and a customized method for getting a list of explicit rules. This class
  * implements the Singleton pattern. It relies on a valid config.properties file
@@ -18,8 +18,6 @@ import ess.strings.CustomErrorMessages;
  *
  */
 public final class ProPraProperties {
-    
-    // TODO JUnit Tests
 
 	/********************** logging keys **********************************/
 
@@ -106,7 +104,7 @@ public final class ProPraProperties {
 	}
 
 	/**
-	 * Load properties from config.properties.
+	 * Loads properties from config.properties.
 	 * 
 	 * @return a Properties object holding the values from the configuration file.
 	 * @throws IOException

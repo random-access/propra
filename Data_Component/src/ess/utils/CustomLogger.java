@@ -14,7 +14,7 @@ import ess.exc.PropertyException;
 import ess.strings.CustomErrorMessages;
 
 /**
- * This class provides a customized global Logger object. 
+ * This class provides a customized global <code>Logger</code> object. 
  * The minimum log level and the output target can be set in the config.properties file.
  * To format the log output, an instance {@link CustomLogFormatter} is used
  * 
@@ -93,11 +93,10 @@ public final class CustomLogger {
     }
 
     /**
-     * Parse the path to a directory where the logs should be stored.
+     * Parses the path to a directory where the logs should be stored.
      * Create the necessary directory structure if it doesn't exist yet and
      * setup a file handler to manage writing to file. 
      * The logs are rotated.
-     * If an inf
      * @param path log directory
      * @throws PropertyException if log directory cannot be created due to insufficient permissions
      * or other I/O errors
@@ -125,7 +124,7 @@ public final class CustomLogger {
     }
 
     /**
-     * Parse the value of log_console from config.properties to determine if
+     * Parses the value of log_console from config.properties to determine if
      * logging should be displayed.
      * This method treats any invalid output as if log_console was set to false.
      * 
@@ -154,12 +153,12 @@ public final class CustomLogger {
     }
 
     /**
-     * Parse the value of log_level from config.properties. Every log with level
+     * Parses the value of log_level from config.properties. Every log with level
      * equal or above the given log level will pass the filter and be displayed
      * or written to file.
      * If no valid Level is specified in config.properties, the log level is set to OFF
-     * (usually I would output a short warning message about invalid logger config,
-     * but as in the final version there should be no logging output at all, 
+     * (usually I would output a short warning message about invalid logger configuration,
+     * but in the final version there should be no logging output at all, therefore
      * I decided to use this solution).
      * 
      * @param logLevelName

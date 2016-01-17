@@ -1,13 +1,13 @@
 package ess.data;
 
 /**
- * Tiles are rectangular areas filling the surface of a composite.
+ * Tiles are rectangular areas filling the <code>Surface</code> of a <code>Composite</code>.
  * 
  * They are read from an input source (e.g. XML-files), external measurements get 
  * converted into internal measurements during import.<br>
  * <br>
- * The attribute id holds an identification String which can be used for identifying a tile, 
- * because it is unique in a composite.
+ * The attribute id holds an identification String which can be used for identifying a Tile sort, 
+ * because it is unique in a Composite.
  *
  * @author Monika Schrenk
  */
@@ -17,7 +17,7 @@ public class Tile {
 	private int rows, cols;
 
 	/**
-	 * Instantiates a new tile with its identifier, its internal width and its internal height.
+	 * Instantiates a new <code>Tile</code> with its identifier, width and height.
 	 *
 	 * @param id an identification string unique in a composite.
 	 * @param rows an integer greater than zero.
@@ -31,36 +31,36 @@ public class Tile {
 	}
 	
 	/**
-	 * Gets the id of this tile, an identification string unique in a composite.
+	 * Gets the id of this <code>Tile</code>, an identification string unique in a Composite.
 	 *
-	 * @return the id of this tile.
+	 * @return the id of this Tile.
 	 */
 	public String getId() {
 		return id;
 	}
 
 	/**
-	 * Gets the number of columns of this tile, an integer greater than zero.
+	 * Gets the number of columns of this <code>Tile</code>, an integer greater than zero.
 	 *
-	 * @return the number of columns of this tile.
+	 * @return the number of columns of this Tile.
 	 */
 	public int getCols() {
 		return cols;
 	}
 
 	/**
-	 * Gets the number of rows, an integer greater than zero.
+	 * Gets the number of rows of this <code>Tile</code>, an integer greater than zero.
 	 *
-	 * @return the number of rows of this tile, should be an integer greater than zero.
+	 * @return the number of rows of this Tile.
 	 */
 	public int getRows() {
 		return rows;
 	}
 	
 	/**
-	 * Gets the number of fields of this tile (number of fields = rows * columns).
+	 * Gets the number of fields of this <code>Tile</code> (number of fields = rows * columns).
 	 *
-	 * @return number of fields this tile has
+	 * @return number of fields of this Tile
 	 */
 	public int getNumberOfFields() {
 		return cols * rows;
@@ -69,7 +69,7 @@ public class Tile {
 
 	
 	/**
-	 * Two tiles have the same HashCode, if id, row and column attributes have the same value.
+	 * Two Tiles have the same hash code, if id, row and column attributes have the same value.
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -84,7 +84,7 @@ public class Tile {
 	
 
 	/**
-	 * Two tiles are equal, if id, row and column attributes have the same value.
+	 * Two Tiles are equal, if id, row and column attributes have the same value.
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -113,10 +113,10 @@ public class Tile {
 	}
 
 	/**
-	 * Human-readable, textual representation of this tile,
-	 * showing the values of its id, row and column.
+	 * Human-readable, textual representation of this <code>Tile</code>,
+	 * showing the values of its id, row and column fields.
 	 *
-	 * @return a String describing this tile
+	 * @return a String describing this Tile
 	 */
 	@Override
 	public String toString() {
