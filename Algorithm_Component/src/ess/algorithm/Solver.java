@@ -56,7 +56,7 @@ public class Solver implements ISolver {
      * </ul>
      *
      * @param composite
-     *            holding the data the <code>Solver</code> needs for building a solution
+     *            holding the data the Solver needs for building a solution
      * @throws PropertyException
      *             if any parameter was not defined properly in the configuration
      *             file or the configuration file cannot be read
@@ -169,5 +169,4 @@ public class Solver implements ISolver {
         }
         composite.setSurfaceTileList(output);
     }
-
 }

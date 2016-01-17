@@ -5,7 +5,7 @@ import ess.data.Position;
 
 /** 
  * This interface should be implemented by all classes that are responsible for finding the next free 
- * position to place a tile inside a composite.
+ * position to place a <code>Tile</code> inside a <code>Composite</code>.
  * 
  * @author Monika Schrenk
  *
@@ -13,12 +13,11 @@ import ess.data.Position;
 public interface IPositionFinder {
 	
     /**
-     * Returns the next free position where a tile should be placed 
-     * (which means the top right corner position of the tile should be placed there).
-     * @param composite The composite holding the surface in which the tile should be placed.
-     * @param pos The position where the last tile was placed.
-     * @return A free position for placing the next tile.
+     * Returns the next free <code>Position</code> where a <code>Tile</code> should be placed 
+     * (which means the top right Corner of the Tile that should be placed there).
+     * @param composite a Composite holding the Surface in which a Tile should be placed.
+     * @param pos Position where the last Tile was placed.
+     * @return A free Position for placing the next Tile.
      */
 	Position findNextFreePosition(Composite composite, Position pos);
-	
 }

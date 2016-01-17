@@ -12,10 +12,10 @@ import ess.rules.sets.IRuleSet;
 import ess.rules.sets.ValidationRuleSet;
 
 /**
- * This class is an implementation of IRuleChecker for checking rules during a
- * validation algorithm. If any explicit rule gets broken, the check continues
- * because the validator must return a list of all explicit rules that were
- * broken.<br>
+ * This class is an implementation of <code>IRuleChecker</code> for checking
+ * IRules during validation. If any explicit rule gets broken, the check
+ * continues because the validator must return a list of all explicit rules that
+ * were broken.<br>
  * If an implicit rule gets broken, the validator returns immediately because
  * validation cannot be continued in this case. <br>
  * This class provides an additional method for retrieving the list of broken
@@ -28,7 +28,7 @@ public class ValidationRuleChecker implements IRuleChecker {
     private IRuleSet ruleSet;
 
     /**
-     * Instantiates a ValidationRuleChecker.
+     * Instantiates a <code>ValidationRuleChecker</code>.
      * 
      * @param composite
      *            the composite
@@ -41,7 +41,7 @@ public class ValidationRuleChecker implements IRuleChecker {
     }
 
     /**
-     * Checks if placing a tile breaks any of the explicit rules activated via
+     * Checks if placing a <code>Tile</code> breaks any of the explicit rules activated via
      * config.properties. The check continues until all rules are checked
      * because all errors must be discovered during validation.
      * 
@@ -61,7 +61,7 @@ public class ValidationRuleChecker implements IRuleChecker {
     }
 
     /**
-     * Checks if placing a tile breaks any of the implicit rules activated via
+     * Checks if placing a <code>Tile</code> breaks any of the implicit rules activated via
      * config.properties. If a rule is broken the tile cannot be placed, in this
      * case the check is stopped immediately.
      * 
@@ -88,7 +88,7 @@ public class ValidationRuleChecker implements IRuleChecker {
     }
 
     /**
-     * Checks if the composite is filled completely.
+     * Checks if the <code>Composite</code> is filled completely.
      * 
      * @see IRuleChecker#checkEndConditions(ess.data.Composite, ess.data.Tile,
      *      ess.data.Position)
@@ -107,14 +107,12 @@ public class ValidationRuleChecker implements IRuleChecker {
     }
 
     /**
-     * Returns a list of all explicit rules that were broken during validation
-     * and additionally Validation.OTHER if any implicit rule or end condition
-     * got broken.
+     * Returns a list of all explicit rules that were broken during validation, including
+     * <code>Validation.OTHER</code> if any implicit rule or end condition got broken.
      * 
      * @return A list with broken rules.
      */
     public LinkedList<Validation> getErrorList() {
         return ErrorMapper.mapErrorsForAlgoComponent(ruleSet);
     }
-
 }

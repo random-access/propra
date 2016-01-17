@@ -36,7 +36,7 @@ public class Validator {
      * 
      * @param composite holding the data the validator needs for building a solution
      * @throws PropertyException if any module was not defined properly in the configuration file or the configuration file 
-     * cannot be read
+     * cannot be read.
      */
     public Validator(Composite composite) throws PropertyException {
         this.composite = composite;

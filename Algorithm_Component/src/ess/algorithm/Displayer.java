@@ -8,8 +8,8 @@ import ess.data.Tile;
 import ess.exc.PropertyException;
 
 /**
- * This class is an implementation of IDisplayer, which fills the 
- * surface of a composite with the given tiles from top left to bottom
+ * This class is an implementation of <code>IDisplayer</code>, which fills the 
+ * Surface of a Composite with the given Tiles from top left to bottom
  * right, line by line. 
  * @author monika
  *
@@ -21,7 +21,7 @@ public class Displayer implements IDisplayer {
 
     /**
      * Instantiates a <code>Displayer</code>.
-     * @param composite the <code>Composite</code> whose <code>Surface</code> gets filled with
+     * @param composite the Composite whose Surface gets filled with
      * tiles.
      * @throws PropertyException if any parameter was not defined properly in the configuration 
      * file or the configuration file cannot be read

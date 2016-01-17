@@ -17,14 +17,8 @@ import ess.strings.CustomErrorMessages;
 import ess.utils.CustomLogger;
 
 /**
- * Diese Klasse wird als API (Application Programming Interface) verwendet. Das
- * bedeutet, dass diese Klasse als Bibliothek fuer andere Applikationen verwendet
- * werden kann.
- * 
- * Bitte achten Sie darauf, am bereits implementierten Rahmen (Klassenname,
- * Package, Methodensignaturen) !!KEINE!! Veraenderungen vorzunehmen.
- * Selbstverstaendlich koennen und muessen Sie innerhalb einer Methode Aenderungen
- * vornehmen.
+ * This class is used as API (Application Programming Interface). This means
+ * that it can be used as a library for other applications. 
  */
 public class RoemischerVerbund extends AbstractOutputObservable implements IRoemischerVerbund, DisplayableWithoutCheck {
     
@@ -36,49 +30,49 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
     private String pathToXml;
 
     /**
-     * Fehlertypen, die bei der Validierung auftreten koennen.
+     * Error types found during validation.
      */
     public enum Validation {
         /**
-         * Fliesenkombination kann durch eine groessere Fliese ersetzt werden.
+         * A combination of tiles can be replaced with a larger tile.
          */
         FLIESEN_AUSTAUSCHBAR,
 
         /**
-         * Zwei gleiche Fliesen liegen nebeneinander.
+         * Two equal tiles lie exactly beside each other.
          */
         GLEICHE_FLIESEN,
 
         /**
-         * Die maximale Fugenlaenge wurde ueberschritten.
+         * The maximum gap length has been exceeded.
          */
         MAX_FUGENLAENGE,
 
         /**
-         * Es bilden sich Fugenkreuze.
+         * Crossings have been found. 
          */
         FUGENKREUZE,
 
         /**
-         * Sonstige Fehler sind aufgetreten.
+         * Other errors have occurred.
          */
         FLIESE_UNPASSEND
     }
 
     /**
-     * Ueberprueft die eingegebene Loesung auf Korrektheit.
+     * Tests if a given solution is correct.
      *
-     * @param xmlFile Dokument, das validiert werden soll.
-     * @param maxFugenlaenge Die maximale Fugenlaenge.
-     * @return Liste von Fehlern, die fehlgeschlagen sind.
+     * @param xmlFile path to the document that needs to be validated.
+     * @param maxGapLength maximum gap length that is allowed
+     * @return a list of broken rules
      */
     @Override
-    public List<Validation> validateSolution(String xmlFile, int maxFugenlaenge) {
+    public List<Validation> validateSolution(String xmlFile, int maxGapLength) {
         this.pathToXml = xmlFile;
         try {
             IDataExchanger dataExchanger = new XMLDataExchanger();
             composite = dataExchanger.readFromSource(xmlFile);
-            convertGapLength(maxFugenlaenge, composite);
+            convertGapLength(maxGapLength, composite);
             Validator validator = new Validator(composite);
             errorList = validator.validateSolution();
             hasValidSolution = errorList.size() == 0;
@@ -91,21 +85,19 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
     }
 
     /**
-     * Ermittelt eine Loesung zu den eingegebenen Daten.
+     * Calculates a solution for the given data.
      *
-     * @param xmlFile
-     *            Eingabedokument, das die Probleminstanzen enthaelt.
-     * @param maxLineLength
-     *            maximale Fugenlaenge der zu berechnenden Loesung.
-     * @return konnte eine Loesung gefunden werden? true = ja, false = nein.
+     * @param xmlFile document holding the input data.
+     * @param maxGapLength maximum gap length that is allowed
+     * @return <code>true</code>, if a solution could be found, else <code>false</code>. 
      */
     @Override
-    public boolean solve(String xmlFile, int maxLineLength) {
+    public boolean solve(String xmlFile, int maxGapLength) {
         this.pathToXml = xmlFile;
         try {
             IDataExchanger dataExchanger = new XMLDataExchanger();
             composite = dataExchanger.readFromSource(xmlFile);
-            convertGapLength(maxLineLength, composite);
+            convertGapLength(maxGapLength, composite);
             ISolver solver = new Solver(composite);
             hasValidSolution = solver.solve();
             if (hasValidSolution) {

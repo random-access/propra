@@ -2,11 +2,12 @@ package ess.algorithm;
 
 /**
  * <code>ISolver</code> is the basic interface for calculating solutions for Roman Composites
- * and should be implemented by every concrete <code>Solver</code>. It defines a single method,
+ * and should be implemented by every concrete Solver. It defines a single method,
  * {@link #solve()}. Override this method with the specific calculation logic.
- * Currently the concrete <code>Solver</code> gets instantiated directly in
+ * <br><br>
+ * Currently an instance of solver <code>Solver</code> is initialized directly in
  * {@link RoemischerVerbund}, so changing the object type there changes the
- * <code>Solver</code> that gets used.
+ * Solver that gets used.
  * 
  * @author Monika Schrenk
  */
@@ -15,8 +16,7 @@ public interface ISolver {
     /**
      * Calculates a solution for a given <code>Composite</code>.
      *
-     * @return true, if a solution could be calculated, else false.
+     * @return <code>true</code>, if a solution could be calculated, else <code>false</code>.
      */
     boolean solve();
-
 }

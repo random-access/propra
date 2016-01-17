@@ -5,29 +5,25 @@ import java.util.List;
 import ess.algorithm.RoemischerVerbund.Validation;
 
 /**
- * The Interface <code>IRoemischerVerbund<code>.
+ * The Interface <code>IRoemischerVerbund</code> defines the methods for API use.
  */
 public interface IRoemischerVerbund {
 
     /**
-     * Ueberprueft die eingegebene Loesung auf Korrektheit.
+     * Tests if the given solution is correct. 
      *
-     * @param xmlFile
-     *            Dokument, das validiert werden soll.
-     * @param maxFugenLaenge
-     *            maximale Fugenlaenge der zu berechnenden Loesung.
-     * @return Liste von Fehlern, die fehlgeschlagen sind.
+     * @param xmlFile path to the document that needs to be validated.
+     * @param maxGapLength maximum gap length that is allowed
+     * @return a list of broken rules
      */
-    List<Validation> validateSolution(String xmlFile, int maxFugenLaenge);
+    List<Validation> validateSolution(String xmlFile, int maxGapLength);
 
     /**
-     * Ermittelt eine Loesung zu den eingegebenen Daten.
+     * Calculates a solution for the given data.
      *
-     * @param xmlFile
-     *            Eingabedokument, das die Probleminstanzen enthält.
-     * @param maxFugenLaenge
-     *            maximale Fugenlaenge der zu berechnenden Loesung.
-     * @return konnte eine Loesung gefunden werden? true = ja, false = nein.
+     * @param xmlFile document holding the input data.
+     * @param maxGapLength maximum gap length that is allowed
+     * @return <code>true</code>, if a solution could be found, else <code>false</code>. 
      */
-    boolean solve(String xmlFile, int maxFugenLaenge);
+    boolean solve(String xmlFile, int maxGapLength);
 }

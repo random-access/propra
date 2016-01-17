@@ -10,7 +10,7 @@ import ess.exc.PropertyException;
 import ess.utils.ProPraProperties;
 
 /**
- * This class is an implementation of ITileChooser that chooses the next tile
+ * This class is an implementation of <code>ITileChooser</code> that chooses the next Tile
  * sorted by the order set in config.properties.
  * 
  * @author Monika Schrenk
@@ -20,9 +20,9 @@ public class SortedTileChooser implements ITileChooser {
 	private ArrayList<Tile> tileSorts;
 
 	/**
-	 * Instantiates a new sorted tile chooser.
+	 * Instantiates a new <code>SortedTileChooser</code>.
 	 *
-	 * @param composite The composite that stores the surface where the next tile should be inserted.
+	 * @param composite The Composite that stores the Surface where the next Tile should be inserted.
 	 * @throws PropertyException if config.properties cannot be read or if it stores invalid values.
 	 */
 	public SortedTileChooser(Composite composite) throws PropertyException {
@@ -31,7 +31,7 @@ public class SortedTileChooser implements ITileChooser {
 	}
 
 	/**    
-	 * Choose the next tile to place using a tile order defined in config.properties. 
+	 * Choose the next Tile to place using an order defined in config.properties. 
 	 * @see ITileChooser#getNextTile(ess.data.Position, ess.data.Tile)
 	 */
 	@Override
@@ -61,5 +61,4 @@ public class SortedTileChooser implements ITileChooser {
 			Collections.sort(tileSorts, c);
 		}
 	}
-
 }

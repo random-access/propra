@@ -5,9 +5,9 @@ import ess.data.Position;
 import ess.data.Surface;
 
 /**
- * This class is an implementation IPositionFinder that returns positions
- * from top left to bottom right, changing between iterating through rows and
- * iterating through columns. <br>
+ * This class is an implementation of <code>IPositionFinder</code> that returns the next
+ * <code>Position</code> from top left to bottom right, changing between iterating through 
+ * rows and iterating through columns. <br>
  * <br>
  * Example (order of positions that are returned): <br>
  * <br>
@@ -32,8 +32,8 @@ import ess.data.Surface;
 public class DiagonalPosFinder implements IPositionFinder {
 
     /**
-     * Returns the next free position in the given surface, which is the next
-     * position in the array from the top left row to the bottom right column holding a null value.
+     * Returns the next free <code>Position</code> in the given <code>Surface</code>, which is the next
+     * Position in the array from the top left row to the bottom right column holding a null value.
      * 
      * @see ess.algorithm.modules.IPositionFinder#findNextFreePosition(ess.data.Composite, ess.data.Position)
      */

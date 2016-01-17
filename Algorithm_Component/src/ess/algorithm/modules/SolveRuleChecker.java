@@ -9,8 +9,8 @@ import ess.rules.sets.IRuleSet;
 import ess.rules.sets.SolveRuleSet;
 
 /**
- * This class is an implementation of IRuleChecker that is optimized for
- * checking rules during a solve algorithm. If any rule gets broken, the check 
+ * This class is an implementation of <code>IRuleChecker</code> that is optimized for
+ * checking IRules during running a solve algorithm. If any rule gets broken, the check 
  * exits immediately to improve performance.
  * 
  * @author Monika Schrenk
@@ -20,8 +20,8 @@ public class SolveRuleChecker implements IRuleChecker {
 private IRuleSet ruleSet;
 	
     /**
-     * Instantiates a SolveRuleChecker.
-     * @param composite the composite 
+     * Instantiates a <code>SolveRuleChecker</code>.
+     * @param composite the Composite that gets checked 
      * @throws PropertyException if the config.properties file cannot be read or if it contains
      * invalid parameters
      */
@@ -30,8 +30,8 @@ private IRuleSet ruleSet;
 	}
 
 	/**
-	 * Checks if placing a tile breaks any of the explicit rules activated via config.properties.
-	 * If a rule is broken the tile cannot be placed, in this case the check is stopped immediately. 
+	 * Checks if placing a <code>Tile</code> breaks any of the explicit rules activated via config.properties.
+	 * If a rule is broken the Tile cannot be placed, in this case the check is stopped immediately. 
 	 * @see IRuleChecker#checkExplicitRules(ess.data.Composite, ess.data.Tile, ess.data.Position)
 	 */
 	@Override
@@ -45,8 +45,8 @@ private IRuleSet ruleSet;
 	}
 
 	/**
-     * Checks if placing a tile breaks any of the implicit rules activated via config.properties.
-     * If a rule is broken the tile cannot be placed, in this case the check is stopped immediately. 
+     * Checks if placing a <code>Tile</code> breaks any of the implicit rules activated via config.properties.
+     * If a rule is broken the Tile cannot be placed, in this case the check is stopped immediately. 
      * @see IRuleChecker#checkExplicitRules(ess.data.Composite, ess.data.Tile, ess.data.Position)
      */
 	@Override
@@ -60,7 +60,7 @@ private IRuleSet ruleSet;
 	}
 	
 	/**
-     * Checks if the composite is filled completely.
+     * Checks if the <code>Composite</code> is filled completely.
      * 
      * @see IRuleChecker#checkEndConditions(ess.data.Composite, ess.data.Tile,
      *      ess.data.Position)

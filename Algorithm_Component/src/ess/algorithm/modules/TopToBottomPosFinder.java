@@ -5,10 +5,10 @@ import ess.data.Position;
 import ess.data.Surface;
 
 /**
- * This class is an implementation IPositionFinder that returns positions
+ * This class is an implementation of <code>IPositionFinder</code> that returns Positions
  * from top to bottom, iterating through the columns from left to right. <br>
  * <br>
- * Example (order of positions that are returned): <br>
+ * Example (order of Positions that are returned): <br>
  * <br>
  * a b c d<br>
  * <br>
@@ -22,8 +22,8 @@ import ess.data.Surface;
 public class TopToBottomPosFinder implements IPositionFinder {
 
     /**
-     * Returns the next free position in the given surface, which is the next
-     * position in the array from top to bottom holding a null value.
+     * Returns the next free <code>Position</code> in the given <code>Surface</code>, which is the next
+     * Position in the array from top to bottom holding a null value.
      * 
      * @see IPositionFinder#findNextFreePosition(Composite, Position)
      */
@@ -40,5 +40,4 @@ public class TopToBottomPosFinder implements IPositionFinder {
 		}
 		return null;
 	}	
-	
 }

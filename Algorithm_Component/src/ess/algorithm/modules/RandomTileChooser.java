@@ -8,7 +8,7 @@ import ess.data.Composite;
 import ess.data.Tile;
 
 /**
- * This class is an implementation of ITileChooser that chooses the next tile
+ * This class is an implementation of <code>ITileChooser</code> that chooses the next <code>Tile</code>
  * randomly. 
  * 
  * @author Monika Schrenk
@@ -26,9 +26,9 @@ public class RandomTileChooser implements ITileChooser {
     private Random random;
 
     /**
-     * Instantiates a new sorted tile chooser.
+     * Instantiates a new <code>RandomTileChooser</code>.
      *
-     * @param composite The composite that stores the surface where the next tile should be inserted.
+     * @param composite The Composite that stores the surface where the next Tile should be inserted.
      */
     public RandomTileChooser(Composite composite) {
         tileSorts = new ArrayList<>(composite.getTileSorts());
@@ -37,7 +37,7 @@ public class RandomTileChooser implements ITileChooser {
     }
 
     /**
-     * Choose the next tile that should be placed randomly for each position.
+     * Choose the next Tile that should be placed randomly for each Position.
      * 
      * @see ITileChooser#getNextTile(ess.data.Position, ess.data.Tile)
      */
@@ -74,5 +74,4 @@ public class RandomTileChooser implements ITileChooser {
     private int getRandomTileIndex() {
         return random.nextInt(tileSorts.size());
     }
-
 }
