@@ -10,7 +10,6 @@ import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Tile;
 import ess.exc.PropertyException;
-import ess.utils.ProPraLogger;
 
 /**
  * This class is responsible for validating a composite with a given installation plan against a set
@@ -40,7 +39,6 @@ public class Validator {
      * cannot be read
      */
     public Validator(Composite composite) throws PropertyException {
-        ProPraLogger.setup();
         this.composite = composite;
         posFinder = new TopToBottomPosFinder();
         ruleChecker = new ValidationRuleChecker(composite);

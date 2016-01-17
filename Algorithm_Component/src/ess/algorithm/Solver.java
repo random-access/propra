@@ -16,7 +16,7 @@ import ess.data.Position;
 import ess.data.Tile;
 import ess.exc.PropertyException;
 import ess.strings.CustomErrorMessages;
-import ess.utils.ProPraLogger;
+import ess.utils.CustomLogger;
 import ess.utils.ProPraProperties;
 
 /**
@@ -30,7 +30,7 @@ import ess.utils.ProPraProperties;
  */
 public class Solver implements ISolver {
 
-    private static final Logger LOG = Logger.getGlobal();
+    private final Logger logger = CustomLogger.getLogger();
 
     private IPositionFinder posFinder;
     private IRuleChecker ruleChecker;
@@ -62,7 +62,6 @@ public class Solver implements ISolver {
      *             file or the configuration file cannot be read
      */
     public Solver(Composite composite) throws PropertyException {
-        ProPraLogger.setup();
         this.composite = composite;
         posList = new LinkedList<>();
         loadModules();
@@ -114,8 +113,8 @@ public class Solver implements ISolver {
                     foundTileThatFits = true;
                     pos = posFinder.findNextFreePosition(composite, pos);
                     if (ruleChecker.checkEndConditions(composite, tile, pos)) {
-                        // log.info("Iterations: " + counter);
-                        LOG.info("Found a solution.");
+                        // logger.info("Iterations: " + counter);
+                        logger.info("Found a solution.");
                         prepareCompositeForDataOutput();
                         return true;
                     }
@@ -136,12 +135,12 @@ public class Solver implements ISolver {
                     composite.getSurface().removeEntry(tile, pos);
                 }
                 if (posList.isEmpty()) {
-                    LOG.info("Choose another tile as first...");
+                    logger.info("Choose another tile as first...");
                 }
             }
         } while (pos != null);
-        // log.info("Iterations: " + counter);
-        LOG.info("Found no solution.");
+        // logger.info("Iterations: " + counter);
+        logger.info("Found no solution.");
         return false;
     }
 

@@ -6,7 +6,6 @@ import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Tile;
 import ess.exc.PropertyException;
-import ess.utils.ProPraLogger;
 
 /**
  * This class is an implementation of IDisplayer, which fills the 
@@ -28,7 +27,6 @@ public class Displayer implements IDisplayer {
      * file or the configuration file cannot be read
      */
     public Displayer(Composite composite) throws PropertyException {
-        ProPraLogger.setup();
         this.composite = composite;
         posFinder = new TopToBottomPosFinder();
     }

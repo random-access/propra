@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import ess.algorithm.AbstractOutputObservable;
 import ess.strings.CustomErrorMessages;
 import ess.strings.CustomInfoMessages;
+import ess.utils.CustomLogger;
 
 /**
  * An implementation of <code>CompositeObserver</code> that shows info about 
@@ -15,7 +16,7 @@ import ess.strings.CustomInfoMessages;
  */
 public class HeadlessObserver implements ICompositeObserver {
 
-    private Logger log = Logger.getGlobal();
+    private final Logger logger = CustomLogger.getLogger();
     private ExecMode mode;
 
     /* (non-Javadoc)
@@ -25,7 +26,7 @@ public class HeadlessObserver implements ICompositeObserver {
     public void observe(AbstractOutputObservable obs, ExecMode execMode) {
         this.mode = execMode;
         obs.addObserver(this);
-        log.info("Added headless observer ...");
+        logger.info("Added headless observer ...");
     }
 
     /* (non-Javadoc)
@@ -33,7 +34,7 @@ public class HeadlessObserver implements ICompositeObserver {
      */
     @Override
     public void update(Observable o, Object arg) {
-        log.info("Got headless request...");
+        logger.info("Got headless request...");
         AbstractOutputObservable obs = (AbstractOutputObservable) o;
         String message;
         switch (mode) {

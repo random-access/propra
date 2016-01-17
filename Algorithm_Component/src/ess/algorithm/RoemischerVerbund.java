@@ -14,6 +14,7 @@ import ess.io.XMLDataExchanger;
 import ess.io.XMLValues;
 import ess.io.exc.DataExchangeException;
 import ess.strings.CustomErrorMessages;
+import ess.utils.CustomLogger;
 
 /**
  * Diese Klasse wird als API (Application Programming Interface) verwendet. Das
@@ -26,8 +27,8 @@ import ess.strings.CustomErrorMessages;
  * vornehmen.
  */
 public class RoemischerVerbund extends AbstractOutputObservable implements IRoemischerVerbund, DisplayableWithoutCheck {
-
-    private static final Logger LOG = Logger.getGlobal();
+    
+    private final Logger logger = CustomLogger.getLogger();
     
     private List<Validation> errorList;
     private boolean hasValidSolution;
@@ -172,7 +173,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
     // notify all registered observers that the algorithm has
     // finished and the output can be displayed
     private void sendNotificationToOutputObservers() {
-        LOG.info("Sending output request...");
+        logger.info("Sending output request...");
         setChanged();
         notifyObservers();
     }

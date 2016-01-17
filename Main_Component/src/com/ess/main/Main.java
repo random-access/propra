@@ -5,9 +5,8 @@ import java.util.logging.Logger;
 import ess.algorithm.AbstractOutputObservable;
 import ess.algorithm.RoemischerVerbund;
 import ess.exc.InvalidInputException;
-import ess.exc.PropertyException;
 import ess.strings.CustomErrorMessages;
-import ess.utils.ProPraLogger;
+import ess.utils.CustomLogger;
 
 /**
  * Haupteinstiegspunkt der Anwendung.
@@ -36,7 +35,7 @@ import ess.utils.ProPraLogger;
  */
 public final class Main {
 
-    private static Logger log = Logger.getGlobal();
+    private static final Logger LOGGER = CustomLogger.getLogger();
 
     // prevents instantiation
     private Main() {
@@ -49,20 +48,19 @@ public final class Main {
      */
     public static void main(String[] args) {
         try {
-            ProPraLogger.setup();
             InputParser inputParser = new InputParser(args);
             RoemischerVerbund v = new RoemischerVerbund();
             
-            log.info("Setting path to " + inputParser.getPath() + "...");
-            log.info("Setting max. tile length to " + inputParser.getMaxTileLength() + "...");
-            log.info("Setting mode to " + inputParser.getMode() + "...");
+            LOGGER.info("Setting path to " + inputParser.getPath() + "...");
+            LOGGER.info("Setting max. tile length to " + inputParser.getMaxTileLength() + "...");
+            LOGGER.info("Setting mode to " + inputParser.getMode() + "...");
 
             initDisplay(inputParser.getMode(), (AbstractOutputObservable) v);
             
             executeAlgorithm(v, inputParser);
             
         // Output all expected Exceptions in a human-readable, textual representation.
-        } catch (InvalidInputException | PropertyException e) {
+        } catch (InvalidInputException e) {
             System.out.println(e.getMessage());
             System.exit(0);
         }

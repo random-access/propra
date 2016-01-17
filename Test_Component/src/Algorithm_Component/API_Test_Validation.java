@@ -180,5 +180,31 @@ public class API_Test_Validation {
         assertTrue("Alle 5 Fehler muessen in diesem Fall ausgegeben werden", errorList.size() == 5);
     }
     
+    @Test
+    public void validateTooManyTiles() {
+     // Arrange (set all necessary preconditions and inputs.)
+        IRoemischerVerbund api = new RoemischerVerbund();
+
+        // Act (on the object or method under test.)
+        List<Validation> errorList = api.validateSolution("instances/validationInstances/too-many-tiles.xml", 120);
+
+        // Assert (that the expected results have occurred.))
+        assertTrue("errorList ist null", errorList != null);
+        assertTrue("Alle 5 Fehler muessen in diesem Fall ausgegeben werden", errorList.contains(Validation.FLIESE_UNPASSEND));
+    }
+    
+    @Test
+    public void validateNoTiles() {
+     // Arrange (set all necessary preconditions and inputs.)
+        IRoemischerVerbund api = new RoemischerVerbund();
+
+        // Act (on the object or method under test.)
+        List<Validation> errorList = api.validateSolution("instances/validationInstances/no-tiles.xml", 120);
+
+        // Assert (that the expected results have occurred.))
+        assertTrue("errorList ist null", errorList != null);
+        assertTrue("Alle 5 Fehler muessen in diesem Fall ausgegeben werden", errorList.contains(Validation.FLIESE_UNPASSEND));
+    }
+    
     
 }

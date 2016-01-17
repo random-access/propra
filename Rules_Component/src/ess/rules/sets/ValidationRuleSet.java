@@ -13,6 +13,7 @@ import ess.rules.IRule;
 import ess.rules.endconditions.SurfaceIsFilledCompletelyRule;
 import ess.rules.implicit.TileCoversOtherTileRule;
 import ess.rules.implicit.TileExceedsSurfaceRule;
+import ess.utils.CustomLogger;
 import ess.utils.ProPraProperties;
 
 /**
@@ -25,7 +26,7 @@ import ess.utils.ProPraProperties;
  */
 public class ValidationRuleSet implements IRuleSet {
 	
-	private static final Logger LOG = Logger.getGlobal();
+	private final Logger logger = CustomLogger.getLogger();
 
 	private LinkedList<ErrorType> errorList;
 	private LinkedList<IRule> explicitRuleSet;
@@ -104,7 +105,7 @@ public class ValidationRuleSet implements IRuleSet {
                 Constructor<?> constructor = Class.forName(ruleName).getConstructor(Composite.class);
                 IRule rule = (IRule) constructor.newInstance(composite);
                 explicitRuleSet.add(rule);
-                LOG.info("Activated " + rule.getClass().getSimpleName() + " ...");
+                logger.info("Activated " + rule.getClass().getSimpleName() + " ...");
             }
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SecurityException
                 | IllegalArgumentException | NoSuchMethodException | InvocationTargetException e) {
@@ -116,13 +117,13 @@ public class ValidationRuleSet implements IRuleSet {
 	// Used for adding all implicit rules to this RuleSet.
 	private void addImplicitRules(Composite composite) {
 		implicitRuleSet.add(new TileExceedsSurfaceRule(composite));
-		LOG.info("Activated EntryExceedsSurfaceRule ...");
+		logger.info("Activated EntryExceedsSurfaceRule ...");
 		implicitRuleSet.add(new TileCoversOtherTileRule(composite));
-		LOG.info("Activated EntryCoversOtherTileRule ...");
+		logger.info("Activated EntryCoversOtherTileRule ...");
 	}
 	
 	private void addEndConditions(Composite composite) {
 		endConditionSet.add(new SurfaceIsFilledCompletelyRule(composite));
-		LOG.info("Activated SurfaceIsFilledCompletelyRule ...");
+		logger.info("Activated SurfaceIsFilledCompletelyRule ...");
 	}
 }

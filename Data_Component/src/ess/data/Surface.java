@@ -111,6 +111,9 @@ public class Surface {
      *            inserted
      */
     public void insertEntryWherePossible(Tile tile, Position pos) {
+        if (pos == null) {
+            return;
+        }
         Tile newTile = new Tile(tile.getId(), tile.getRows(), tile.getCols());
         for (int i = pos.getRow(); i <= pos.getRow() + tile.getRows() - 1; i++) {
             for (int j = pos.getCol(); j <= pos.getCol() + tile.getCols() - 1; j++) {

@@ -10,6 +10,7 @@ import ess.data.Composite;
 import ess.strings.CustomErrorMessages;
 import ess.ui.ICompositeView;
 import ess.ui.MainWindow;
+import ess.utils.CustomLogger;
 
 /**
  * An implementation of CompositeObserver that shows a graphical
@@ -19,7 +20,7 @@ import ess.ui.MainWindow;
  */
 public class DisplayObserver implements ICompositeObserver {
 
-    private Logger log = Logger.getGlobal();
+    private final Logger logger = CustomLogger.getLogger();
     private ExecMode mode;
 
     /* (non-Javadoc)
@@ -29,7 +30,7 @@ public class DisplayObserver implements ICompositeObserver {
     public void observe(AbstractOutputObservable obs, ExecMode execMode) {
         obs.addObserver(this);
         this.mode = execMode;
-        log.info("Added display observer ...");
+        logger.info("Added display observer ...");
     }
 
     /* (non-Javadoc)
@@ -37,7 +38,7 @@ public class DisplayObserver implements ICompositeObserver {
      */
     @Override
     public void update(Observable o, Object arg) {
-        log.info("Got display request...");
+        logger.info("Got display request...");
         final AbstractOutputObservable obs = (AbstractOutputObservable) o;
         Composite c = obs.getComposite();
         final ICompositeView view = new MainWindow(c);
