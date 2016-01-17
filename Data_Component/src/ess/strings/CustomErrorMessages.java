@@ -128,7 +128,7 @@ public final class CustomErrorMessages {
     /**
      * Error message for invalid number of parameter
      */
-    public static final String ERRO_INVALID_PARAM_COUNT = "Ung\u00fcltige Parameteranzahl. \n\n"
+    public static final String ERROR_INVALID_PARAM_COUNT = "Ung\u00fcltige Parameteranzahl. \n\n"
             + CustomInfoMessages.INFO_EXEC_CALL;
     
     /**

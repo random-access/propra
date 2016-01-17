@@ -97,7 +97,7 @@ public class InputParser {
 			throw new InvalidInputException(CustomInfoMessages.INFO_USAGE);
 		}
 		if (args.length != NO_OF_PARAMS) {
-			throw new InvalidInputException(CustomErrorMessages.ERRO_INVALID_PARAM_COUNT);
+			throw new InvalidInputException(CustomErrorMessages.ERROR_INVALID_PARAM_COUNT);
 		}
 	}
 	
