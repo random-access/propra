@@ -12,8 +12,8 @@ import javax.swing.JComponent;
 import ess.data.Surface;
 
 /**
- * This class is a subclass of JComponent that can display 
- * a composite's surface.
+ * This class is a subclass of <code>JComponent</code> that can display 
+ * a Composite's Surface.
  * 
  * It provides methods for dynamically increasing and decreasing the 
  * field size in order to make zooming possible.
@@ -58,7 +58,7 @@ public class CompositePanel extends JComponent implements Zoomable {
     }
 
     /** 
-     * Returns the size of the background grid.
+     * Returns the preferred size of this Component, which equals the size of the background grid.
      * 
      * @see javax.swing.JComponent#getPreferredSize()
      */
@@ -70,7 +70,7 @@ public class CompositePanel extends JComponent implements Zoomable {
     }
 
     /**
-     * Returns the size of the background grid.
+     * Returns the minimum size of this Component grid which is equal to its preferred size.
      * 
      * @see javax.swing.JComponent#getMinimumSize()
      */
@@ -80,7 +80,7 @@ public class CompositePanel extends JComponent implements Zoomable {
     }
 
     /** 
-     * Returns the size of the background grid.
+     * Returns the maximum size of this Component which is equal to its preferred size.
      * 
      * @see javax.swing.JComponent#getMaximumSize()
      */
@@ -90,7 +90,7 @@ public class CompositePanel extends JComponent implements Zoomable {
     }
 
     /**
-     * Paints the surface of the composite.
+     * Paints the Surface of the Composite.
      * 
      * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
      */
@@ -107,13 +107,13 @@ public class CompositePanel extends JComponent implements Zoomable {
         drawTiles(g2D);
     }
     
-    // Colorizes the background.
+    // Set the background color.
     private void drawBackground(Graphics2D g2d) {
         g2d.setColor(LIGHT_BLUE);
         g2d.fill(new Rectangle(0, 0, getWidth(), getHeight()));
     }
 
-    // Draws the tile borders.
+    // Draw the tile borders.
     private void drawTiles(Graphics2D g2d) {
         g2d.setColor(Color.BLACK);
         g2d.setStroke(new BasicStroke(STROKE_WIDTH_FG));
@@ -135,7 +135,6 @@ public class CompositePanel extends JComponent implements Zoomable {
                     g2d.drawLine(currentFieldSize * (j + 1) + STROKE_CORRECTION, currentFieldSize * i + STROKE_CORRECTION, 
                             currentFieldSize * (j + 1) + STROKE_CORRECTION, currentFieldSize * (i + 1) + STROKE_CORRECTION);
                 }
-
             }
         }
     }
@@ -158,7 +157,7 @@ public class CompositePanel extends JComponent implements Zoomable {
 
     
     /**
-     * Increase the size of a single field by 1 pixel and refresh the view.
+     * Increases the size of a single field by 1 pixel and refreshes the view.
      */
     public void zoomIn() {
         if (currentFieldSize < MAX_FIELD_SIZE) {
@@ -168,7 +167,7 @@ public class CompositePanel extends JComponent implements Zoomable {
     }
     
     /**
-     * Decrease the size of a single field by 1 pixel and refresh the view.
+     * Decreases the size of a single field by 1 pixel and refreshes the view.
      */
     public void zoomOut() {
         if (currentFieldSize > MIN_FIELD_SIZE) {
@@ -176,5 +175,4 @@ public class CompositePanel extends JComponent implements Zoomable {
         }
         this.revalidate();
     }
-
 }

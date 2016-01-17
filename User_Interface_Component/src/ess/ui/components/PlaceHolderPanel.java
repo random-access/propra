@@ -12,7 +12,7 @@ import javax.swing.JComponent;
 
 /**
  * This component displays a sad smiley. It can be used as a placeholder for 
- * CompositePanel if there is no valid composite that can be displayed.
+ * <code>CompositePanel</code> if there is no valid Composite that can be displayed.
  * 
  * This component is zoomable to some extent.
  * 
@@ -32,9 +32,8 @@ public class PlaceHolderPanel extends JComponent implements Zoomable {
     private int currentLength;
     private int currentZoomFactor;
     
-
     /**
-     * Instantiates a PlaceHolderPanel with a default size of 200 pixel
+     * Instantiates a <code>PlaceHolderPanel</code> with a default size of 200 pixel
      * in height and width.
      */
     public PlaceHolderPanel() {
@@ -74,7 +73,7 @@ public class PlaceHolderPanel extends JComponent implements Zoomable {
      
     
     /**
-     * Paints the surface of the composite.
+     * Paints the surface of the Composite.
      * 
      * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
      */
@@ -96,13 +95,11 @@ public class PlaceHolderPanel extends JComponent implements Zoomable {
         g2D.drawOval((currentLength / 2) - 65, (currentLength / 2) - 65, 130, 130);
         g2D.fillOval((currentLength / 2) - 35, (currentLength / 2) - 25, 15, 15);
         g2D.fillOval((currentLength / 2) + 20, (currentLength / 2) - 25, 15, 15);
-        g2D.drawArc((currentLength / 2) - 30, (currentLength / 2) + 15, 60, 60, 30, 120);
-        
-        
+        g2D.drawArc((currentLength / 2) - 30, (currentLength / 2) + 15, 60, 60, 30, 120); 
     }
     
     /**
-     * Increase the size of this component by ZOOM_STEP pixel and refresh the view.
+     * Increase the size of this component by <code>ZOOM_STEP</code> pixel and refresh the view.
      */
     public void zoomIn() {
         if (currentZoomFactor < MAX_ZOOM_FACTOR) {
@@ -112,7 +109,7 @@ public class PlaceHolderPanel extends JComponent implements Zoomable {
     }
     
     /**
-     * Decrease the size of this component by ZOOM_STEP pixel and refresh the view.
+     * Decrease the size of this component by <code>ZOOM_STEP</code> pixel and refresh the view.
      */
     public void zoomOut() {
         if (currentZoomFactor > MIN_ZOOM_FACTOR) {
@@ -120,6 +117,4 @@ public class PlaceHolderPanel extends JComponent implements Zoomable {
         }
         this.revalidate();
     }
-
-
 }

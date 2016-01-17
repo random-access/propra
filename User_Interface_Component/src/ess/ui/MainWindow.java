@@ -36,7 +36,7 @@ import ess.ui.components.PlaceHolderPanel;
 import ess.ui.components.Zoomable;
 
 /**
- * This class is an implementation of IComposite view that displays a composite,
+ * This class is an implementation of <code>ICompositeView</code> that displays a Composite,
  * using the Swing framework.
  * 
  * @author Monika Schrenk
@@ -75,7 +75,7 @@ public class MainWindow extends JFrame implements ICompositeView {
     private Composite composite;
 
     /**
-     * Instantiates a MainWindow for displaying composite.
+     * Instantiates a <code>MainWindow</code> for displaying a <code>Composite</code>.
      * 
      * @param composite the data that gets displayed
      */
@@ -253,5 +253,4 @@ public class MainWindow extends JFrame implements ICompositeView {
             }
         });
     }
-
 }
