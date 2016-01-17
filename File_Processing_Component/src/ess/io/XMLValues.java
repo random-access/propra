@@ -1,7 +1,7 @@
 package ess.io;
 
 /**
- * This class holds string values used by {@link ess.io.XMLDataExchanger}.
+ * This class holds String values used by {@link ess.io.XMLDataExchanger}.
  * 
  * @author Monika Schrenk
  *
@@ -17,8 +17,8 @@ public final class XMLValues {
 	public static final String PATH_TO_DTD = "/resources/DataModel.dtd";
 	
 	/**
-	 * Integer used for converting tiles to their internal representation.
-	 * If CONVERSION_UNIT = x, we assume that all tile sorts and the surfaces width and length 
+	 * Integer used for converting Tiles to their internal representation.
+	 * If <code>CONVERSION_UNIT</code> = x, we assume that all tile sorts and the surfaces width and length 
 	 * are multiples of x, and can be divided by x for internal data representation.
 	 */
 	public static final int CONVERSION_UNIT = 20;
@@ -69,6 +69,5 @@ public final class XMLValues {
 	/**
 	 * XML tag for tile number in composite
 	 */
-	public static final String NR = "Nr";
-	
+	public static final String NR = "Nr";	
 }
