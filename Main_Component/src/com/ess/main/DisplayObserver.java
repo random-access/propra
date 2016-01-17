@@ -40,6 +40,10 @@ public class DisplayObserver implements ICompositeObserver {
     public void update(Observable o, Object arg) {
         logger.info("Got display request...");
         final AbstractOutputObservable obs = (AbstractOutputObservable) o;
+        if (obs.getErrorMessage() != null) {
+            System.out.println(obs.getErrorMessage());
+            return;
+        }
         Composite c = obs.getComposite();
         final ICompositeView view = new MainWindow(c);
         SwingUtilities.invokeLater(new Runnable() {
@@ -51,7 +55,7 @@ public class DisplayObserver implements ICompositeObserver {
                         view.display(obs.hasValidComposite(), null, obs.getPathToSource(), 's');
                         break;
                     case VALIDATE_DISPLAY:
-                        view.display(obs.hasValidComposite(), obs.getErrors(), obs.getPathToSource(), 'v');
+                        view.display(obs.hasValidComposite(), obs.getErrorList(), obs.getPathToSource(), 'v');
                         break;
                     case DISPLAY:
                         view.display(obs.hasValidComposite(), null, obs.getPathToSource(), 'd');

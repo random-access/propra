@@ -24,6 +24,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
     
     private final Logger logger = CustomLogger.getLogger();
     
+    private String errorMessage;
     private List<Validation> errorList;
     private boolean hasValidSolution;
     private Composite composite;
@@ -76,11 +77,11 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
             Validator validator = new Validator(composite);
             errorList = validator.validateSolution();
             hasValidSolution = errorList.size() == 0;
-            sendNotificationToOutputObservers();
         } catch (DataExchangeException | PropertyException | InvalidLengthValueException e) {
-            System.out.println(e.getMessage());
+            errorMessage = e.getMessage();
             errorList = addAllErrorsToErrorList();
         }
+        sendNotificationToOutputObservers();
         return errorList;
     }
 
@@ -103,11 +104,11 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
             if (hasValidSolution) {
                 dataExchanger.writeToTarget(composite, xmlFile);                
             } 
-            sendNotificationToOutputObservers();
         } catch (DataExchangeException | PropertyException | InvalidLengthValueException e) {
-            System.out.println(e.getMessage());
+            errorMessage = e.getMessage();
             hasValidSolution = false;
         }
+        sendNotificationToOutputObservers();
         return hasValidSolution;
     }
     
@@ -120,10 +121,18 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
             IDisplayer displayer = new Displayer(composite);
             displayer.constructOutput();
             hasValidSolution = true;
-            sendNotificationToOutputObservers();
         } catch (DataExchangeException | PropertyException e) {
-            System.out.println(e.getMessage());
+            errorMessage = e.getMessage();
         }
+        sendNotificationToOutputObservers();
+    }
+    
+    /* (non-Javadoc)
+     * @see ess.algorithm.AbstractOutputObservable#getErrorMessage()
+     */
+    @Override
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
     /* (non-Javadoc)
@@ -138,7 +147,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
      * @see ess.algorithm.AbstractOutputObservable#getErrors()
      */
     @Override
-    public List<String> getErrors() {
+    public List<String> getErrorList() {
         if (errorList == null) {
             return new LinkedList<>();
         }
@@ -183,4 +192,5 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
     public boolean hasValidComposite() {
         return hasValidSolution;
     }
+
 }

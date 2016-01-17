@@ -109,25 +109,25 @@ public final class CustomErrorMessages {
     /**
      * Error message for invalid value for parameter execution mode
      */
-    public static final String ERROR_INVALID_EXEC_MODE = "Unbekannter Ausf\u00fchrungsmodus.\n\n"
+    public static final String ERROR_INVALID_EXEC_MODE = "Unbekannter Ausf\u00fchrungsmodus.\n"
             + CustomInfoMessages.INFO_PARAM_EXECMODE;
     
     /**
      * Error message for invalid value for parameter gap length
      */
-    public static final String ERROR_INVALID_LENGTH = "Ung\u00fcltiger Wert f\u00fcr die maximale Fugenl\u00e4nge.\n\n"
+    public static final String ERROR_INVALID_LENGTH = "Ung\u00fcltiger Wert f\u00fcr die maximale Fugenl\u00e4nge.\n"
             + CustomInfoMessages.INFO_PARAM_LENGTH;
 
     /**
      * Error message for invalid input parameter or wrong parameter order.
      */
-    public static final String ERROR_INVALID_PARAM = "Ung\u00fcltiger Parameter oder falsche Parameterreihenfolge.\n\n"
+    public static final String ERROR_INVALID_PARAM = "Ung\u00fcltiger Parameter oder falsche Parameterreihenfolge.\n"
             + CustomInfoMessages.INFO_EXEC_CALL;
     
     /**
      * Error message for invalid number of parameter
      */
-    public static final String ERROR_INVALID_PARAM_COUNT = "Ung\u00fcltige Parameteranzahl. \n\n"
+    public static final String ERROR_INVALID_PARAM_COUNT = "Ung\u00fcltige Parameteranzahl. \n"
             + CustomInfoMessages.INFO_EXEC_CALL;
     
     /**

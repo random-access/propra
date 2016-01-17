@@ -15,9 +15,17 @@ import ess.data.Composite;
  *
  */
 public abstract class AbstractOutputObservable extends Observable {
+    
+    /**
+     * Gets a <code>String</code> holding an error message to display if a composite contains invalid data
+     * or any other Exception happens, which makes it impossible to finish solving / validating / displaying a
+     * Composite 
+     * @return String with an error message
+     */
+    public abstract String getErrorMessage();
 	
     /**
-     * Get the <code>Composite</code> to be able to display it. <br><br>
+     * Gets the <code>Composite</code> to be able to display it. <br><br>
      * 
      * Please make sure to call this after the <code>Solver</code> or <code>Validator</code> has finished its algorithm.
      * @return a Composite
@@ -25,14 +33,14 @@ public abstract class AbstractOutputObservable extends Observable {
 	public abstract Composite getComposite();
 	
 	/**
-	 * Get the error list to print out any errors that were found. 
+	 * Gets the error list to print out any errors that were found. 
 	 * The list that is returned contains an info message for each error. 
 	 * It doesn't contain duplicate messages. The error list gets only filled during validation.<br><br>
 	 * Please make sure to call this method after the <code>Validator</code> has finished validation.
 	 * @return a list containing info messages for every rule that was discovered to be broken at least once 
 	 * during Validation.
 	 */
-	public abstract List<String> getErrors();
+	public abstract List<String> getErrorList();
 	
 	/**
 	 * Indicates if a valid solution for a <code>Composite</code> could be found or the given data

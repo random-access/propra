@@ -5,8 +5,7 @@ package ess.strings;
 * I collected all error messages here to avoid duplicate String constants and to have an overview about what gets displayed
 * to the user.<br><br>
 * 
-* Some info messages take parameters (in the future, currently not...), they should be used with 
-* String.format(message, parameter).
+* Some info messages take parameters, they should be used with String.format(message, parameter).
 * 
 * @author Monika Schrenk
 *
@@ -133,7 +132,8 @@ public final class CustomInfoMessages {
 	 * Usage hints.
 	 */
 	public static final String INFO_HINTS = "Wichtig: \n"
-			+ "\t Es m\u00fcssen *alle* Parameter mit angegeben werden, auch bei der Option d!\n"
+			+ "\t Es m\u00fcssen *alle* Parameter mit angegeben werden, auch bei der Option d! Die Fugenlänge wird bei "
+			+ "r=d ignoriert.\n"
 			+ "\t Bitte *keine Leerzeichen* zwischen Parameter und Wert einf\u00fcgen!";
 	
 	/**
