@@ -179,7 +179,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
         notifyObservers();
     }
     
-    // converts the gap lenght into internal measurments
+    // converts the gap length into internal measurements
     // throws InvalidLengthValueException if maxGapLength is negative
     private void convertGapLength(int maxGapLength, Composite c) throws InvalidLengthValueException {
         if (maxGapLength < 0) {

@@ -38,8 +38,7 @@ public final class Main {
     private static final Logger LOGGER = CustomLogger.getLogger();
 
     // prevents instantiation
-    private Main() {
-    }
+    private Main() { }
 
     /**
      * This is the main method that starts the application.
