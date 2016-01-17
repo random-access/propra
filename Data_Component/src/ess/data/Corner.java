@@ -36,8 +36,8 @@ public enum Corner {
 
     private int nextRowOffset, nextColOffset;
 
-    // private constructor to initialize the Enums
-    private Corner(int neighbourRowOffset, int neighbourColOffset) {
+    // initialize the Enums, private by default
+    Corner(int neighbourRowOffset, int neighbourColOffset) {
         this.nextRowOffset = neighbourRowOffset;
         this.nextColOffset = neighbourColOffset;
     }

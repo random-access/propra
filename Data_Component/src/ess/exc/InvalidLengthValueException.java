@@ -21,24 +21,4 @@ public class InvalidLengthValueException extends Exception {
         super(message);
     }
 
-    /**
-     * Instantiates a new InvalidLengthValueException, passing its cause.
-     *
-     * @param cause a Throwable that caused this exception.
-     */
-    public InvalidLengthValueException(Throwable cause) {
-        super(cause);
-    }
-
-    /**
-     * Instantiates a new InvalidLengthValueException, passing an error message
-     * and its cause.
-     *
-     * @param message an error message with additional information.
-     * @param cause a Throwable that caused this exception.
-     */
-    public InvalidLengthValueException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
 }

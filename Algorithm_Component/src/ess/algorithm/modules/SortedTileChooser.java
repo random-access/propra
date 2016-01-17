@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import ess.data.Composite;
-import ess.data.Position;
 import ess.data.Tile;
 import ess.data.TileComparator;
 import ess.exc.PropertyException;
@@ -27,20 +26,21 @@ public class SortedTileChooser implements ITileChooser {
 	 * @throws PropertyException if config.properties cannot be read or if it stores invalid values.
 	 */
 	public SortedTileChooser(Composite composite) throws PropertyException {
-		tileSorts = new ArrayList<Tile>(composite.getTileSorts());
+		tileSorts = new ArrayList<>(composite.getTileSorts());
 		applySortingStrategy();
 	}
 
-	/* (non-Javadoc)
-	 * @see ess.algorithm.modules.ITileChooser#getNextTile(ess.data.Position, ess.data.Tile)
+	/**    
+	 * Choose the next tile to place using a tile order defined in config.properties. 
+	 * @see ITileChooser#getNextTile(ess.data.Position, ess.data.Tile)
 	 */
 	@Override
-	public Tile getNextTile(Position pos, Tile tile) {
+	public Tile getNextTile(Tile lastTile) {
 		if (!tileSorts.isEmpty()) {
-			if (tile == null) {
+			if (lastTile == null) {
 				return tileSorts.get(0);
 			}
-			int nextIndex = tileSorts.indexOf(tile) + 1;
+			int nextIndex = tileSorts.indexOf(lastTile) + 1;
 			if (nextIndex < tileSorts.size()) {
 				return tileSorts.get(nextIndex);
 			}
@@ -48,7 +48,7 @@ public class SortedTileChooser implements ITileChooser {
 		return null;
 	}
 	
-	// Loads the sorting strategy from config.properties and sorts the tiles
+	// Loads the sorting strategy (or strategies) from config.properties and sorts the tiles
 	private void applySortingStrategy() throws PropertyException {
 		ProPraProperties properties = ProPraProperties.getInstance();
 		String sortings = properties.getValue(ProPraProperties.KEY_TILE_CHOOSER_STRATEGY);

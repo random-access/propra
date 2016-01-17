@@ -42,8 +42,8 @@ public enum Edge {
 	private int nextRowOffset, nextColOffset;
 	private Corner firstCorner, secondCorner;
 	
-	// private constructor to initialize the Enums
-	private Edge(int nextRowOffset, int nextColOffset, Corner firstCorner, Corner secondCorner) {
+	// initialize the Enums, private by default
+	Edge(int nextRowOffset, int nextColOffset, Corner firstCorner, Corner secondCorner) {
 		this.nextRowOffset = nextRowOffset;
 		this.nextColOffset = nextColOffset;
 		this.firstCorner = firstCorner;

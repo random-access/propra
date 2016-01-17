@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import ess.data.Composite;
-import ess.data.Position;
 import ess.data.Tile;
 
 /**
@@ -32,19 +31,21 @@ public class RandomTileChooser implements ITileChooser {
      * @param composite The composite that stores the surface where the next tile should be inserted.
      */
     public RandomTileChooser(Composite composite) {
-        tileSorts = new ArrayList<Tile>(composite.getTileSorts());
+        tileSorts = new ArrayList<>(composite.getTileSorts());
         testedTiles = new LinkedList<>();
         random = new Random();
     }
 
-    /* (non-Javadoc)
-     * @see ess.algorithm.modules.ITileChooser#getNextTile(ess.data.Position, ess.data.Tile)
+    /**
+     * Choose the next tile that should be placed randomly for each position.
+     * 
+     * @see ITileChooser#getNextTile(ess.data.Position, ess.data.Tile)
      */
     @Override
-    public Tile getNextTile(Position pos, Tile tile) {
+    public Tile getNextTile(Tile lastTile) {
         
         // if trying to fetch a tile at pos for the first time, create a new array to store informations
-        if (tile == null) {
+        if (lastTile == null) {
             testedTiles.add(new boolean[tileSorts.size()]);
         } 
         
@@ -52,8 +53,8 @@ public class RandomTileChooser implements ITileChooser {
         int randomIndex = getRandomTileIndex();
         boolean[] currentTestedTiles = testedTiles.peekLast();
         
-        // first try to fetch tile at a random index, then iterate through all tiles, trying to find 
-        // a tile that wasn't tried out yet
+        // first try to fetch tile at a random index, if it was already tried out, then 
+        // iterate through all tiles and try to find a tile that wasn't tried out yet
         for (int i = 0; i < tileSorts.size(); i++) {
             int curr = (randomIndex + i) % tileSorts.size();
             

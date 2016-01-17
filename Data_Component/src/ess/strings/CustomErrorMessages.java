@@ -33,6 +33,12 @@ public final class CustomErrorMessages {
             + "bitte ein valides Loglevel eingeben";
     
     /**
+     * Error message for invalid heuristic.
+     */
+    public static final String ERROR_INVALID_VALUE_HEURISTICS = "Ung\u00fcltiger Parameter in der Property-Datei "
+            + "bei den Heuristiken, \n bitte g\u00fcltige Bezeichner angeben.";
+    
+    /**
      * Error message for not being able to create log file.
      */
     public static final String ERROR_LOG_CREATE = "Logdateien k\u00f6nnen nicht angelegt werden. Bitte "
@@ -45,14 +51,24 @@ public final class CustomErrorMessages {
     public static final String ERROR_PROPERTY_READ = "Property-Datei existiert nicht oder kann nicht gelesen werden.";
     
 
-    /********************************************* XML PARSING *************************************************************/
+    /********************************************* XML I / O *************************************************************/
     
     /**
-     * Error message for invalid value for lengths.
+     * Error message for invalid value for tile length.
      */
-    public static final String ERROR_INVALID_DATATYPE_TILE_LENGTH = "Ung\u00fcltiger Wert für Fliesenl\u00e4nge! Alle "
-            + "Fliesenl\u00e4ngen m\u00fcssen positive "
-            + "Ganzzahlen und ein Vielfaches von 20 sein.";
+    public static final String ERROR_INVALID_DATATYPE_TILE_LENGTH = "Ung\u00fcltiger Wert f\u00fcr Fliesenl\u00e4nge! Alle "
+            + "Fliesenl\u00e4ngen m\u00fcssen positive Ganzzahlen und ein Vielfaches von 20 sein.";
+    
+    /**
+     * Error message for duplicate tiles
+     */
+    public static final String ERROR_DUPLICATE_TILE = "Duplikate bei Fliesensorten sind nicht erlaubt.";
+    
+    /**
+     * Error message for invalid value for surface length.
+     */
+    public static final String ERROR_INVALID_DATATYPE_SURFACE_LENGTH = "Ung\u00fcltiger Wert f\u00fcr Ma\u00dfe des "
+            + "Verlegungsplans! H\u00f6he und Breite m\u00fcssen positive Ganzzahlen und ein Vielfaches von 20 sein.";
     
     /**
      * Error message for file with invalid XML content
@@ -60,6 +76,21 @@ public final class CustomErrorMessages {
     public static final String ERROR_INVALID_CONTENT = "Die Datei %s kann nicht eingelesen werden, da die Struktur "
             + "keinem R\u00f6mischen Verbund "
             + "entspricht.";
+    
+    /**
+     * Error message for problems reading XML from source.
+     */
+    public static final String ERROR_READING_XML = "Fehler beim Lesen der Datei %s";
+    
+    /**
+     * Error message for invalid XML content.
+     */
+    public static final String ERROR_XML_CONTENT = "Die Datei %s enth\u00e4lt ung\u00fcltige XML-Inhalte: \n--> %s";
+    
+    /**
+     * Error message for problems writing XML to target.
+     */
+    public static final String ERROR_WRITING_XML = "Fehler beim Schreiben in Datei %s";
     
     /**
      * Error message for missing or inaccessible DTD
@@ -72,9 +103,9 @@ public final class CustomErrorMessages {
      */
     public static final String ERROR_VALIDATING_XML = "Ein interner Fehler ist aufgetreten, die DTD-Validierung konnte "
             + "nicht initialisiert werden.";
-    
+   
 
-    /********************************************* INPUT PARSING *******************************************************/
+    /********************************************* PARAMETER PARSING *******************************************************/
     
     /**
      * Error message for invalid value for parameter execution mode
@@ -97,13 +128,13 @@ public final class CustomErrorMessages {
     /**
      * Error message for invalid number of parameter
      */
-    public static final String ERRO_INVALID_PARAM_COUNT = "Ung\u00fcltige Parameteranzahl. \n\n"
+    public static final String ERROR_INVALID_PARAM_COUNT = "Ung\u00fcltige Parameteranzahl. \n\n"
             + CustomInfoMessages.INFO_EXEC_CALL;
     
     /**
-     * Error message for invalid mode // TODO duplicate of ERROR_INVALID_PARAM?
+     * Error message for invalid execution mode
      */
-    public static final String UNSUPPORTED_MODE = "Dieser Modus wurde noch nicht vollständig implementiert.";
+    public static final String UNSUPPORTED_MODE = "Dieser Modus wurde noch nicht vollst\u00e4ndig implementiert.";
 
     
     /**************************************************** GENERAL ERRORS **************************************************/
@@ -116,9 +147,12 @@ public final class CustomErrorMessages {
     /**
      * Error message for invalid paths in file system.
      */
-    public static final String ERROR_PATH_NOT_FOUND = "%s existiert nicht oder ist ein Verzeichnis.";
+    public static final String ERROR_INVALID_PATH = "%s existiert nicht, ist ein Verzeichnis oder kann aufgrund fehlender "
+            + "Berechtigungen nicht gelesen werden.";
     
     
     /***************************************************** UI ERRORS ********************************************************/
     public static final String ERROR_APP_ICON = "Anwendungs-Icon konnte nicht geladen werden.";
+
+
 }

@@ -3,6 +3,7 @@ package ess.rules.explicit;
 import ess.data.Composite;
 import ess.data.Edge;
 import ess.data.Position;
+import ess.data.Surface;
 import ess.data.Tile;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
@@ -16,24 +17,37 @@ import ess.rules.IRule;
  * @author Monika Schrenk
  */
 public class SameTileRule implements IRule {
+    
+    private Composite composite;
+    
+    /**
+     * Initializes an instance of SameTileRule
+     * @param composite the composite
+     */
+    public SameTileRule(Composite composite) {
+        this.composite = composite;
+    }
 
 	@Override
-	public boolean check(Composite c, Tile tile, Position pos) {
+	public boolean check(Tile tile, Position pos) {
 		for (Edge edge : Edge.values()) {
-			if (hasCommonEdgeWithSameTile(c, tile, pos, edge)) {
+			if (hasCommonEdgeWithSameTile(tile, pos, edge)) {
 				return false;
 			}
 		}
 		return true;
 	}
 	
-	private boolean hasCommonEdgeWithSameTile(Composite c, Tile tile, Position pos, Edge edge) {
-		Position corner1 = c.getSurface().getCornerPos(tile, pos, edge.getFirstCorner());
-		Position corner2 = c.getSurface().getCornerPos(tile, pos, edge.getSecondCorner());
-		Tile outsideTile = null;
+	// Tests if a tile has a common edge with another tile with the same ID at 
+	// a given edge.
+	private boolean hasCommonEdgeWithSameTile(Tile tile, Position pos, Edge edge) {
+	    Surface s = composite.getSurface();
+		Position corner1 = s.getCornerPos(tile, pos, edge.getFirstCorner());
+		Position corner2 = s.getCornerPos(tile, pos, edge.getSecondCorner());
+		Tile outsideTile;
 		for (int i = corner1.getRow(); i <= corner2.getRow(); i++) {
 			for (int j = corner1.getCol(); j <= corner2.getCol(); j++) { 
-				outsideTile = c.getSurface().getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());
+				outsideTile = s.getEntryAt(i + edge.getNextRowOffset(), j + edge.getNextColOffset());
 				if (outsideTile == null || !tile.equals(outsideTile)) {
 					return false;
 				}

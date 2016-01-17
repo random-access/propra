@@ -50,30 +50,34 @@ public final class CustomInfoMessages {
 	/**
 	 * Info that the composite is valid.
 	 */
-	public static final String INFO_VALID_COMPOSITE = "Dies ist ein gültiger Römischer Verbund.";
+	public static final String INFO_VALIDATION_SUCCESS = "Dies ist ein g\u00fcltiger R\u00f6mischer Verbund.";
 	
+	/**
+     * Info that the composite is invalid.
+     */
+    public static final String INFO_VALIDATION_FAILURE = "Dies ist kein g\u00fcltiger R\u00f6mischer Verbund.";
 	
 	/******************************************* Info about execution mode ********************************************/
 	
 	/**
 	 * Info that composite was solved successfully
 	 */
-	public static final String INFO_SOLVE = "Aus den gegebenen Daten konnte ein Römischer Verbund erzeugt werden:";
+	public static final String INFO_SOLVE_SUCCESS = "Aus den gegebenen Daten konnte ein R\u00f6mischer Verbund erzeugt werden.";
 	
 	/**
 	 * Info that there is no solution for composite
 	 */
-	public static final String INFO_NOT_SOLVED = "Aus den gegebenen Daten konnte kein Römischer Verbund erzeugt werden.";
+	public static final String INFO_SOLVE_FAILURE = "Aus den gegebenen Daten konnte kein R\u00f6mischer Verbund erzeugt werden.";
 	
 	/**
 	 * Info about results of validation
 	 */
-	public static final String INFO_VALIDATE  = "Ergebnis der Validierung des Römischen Verbunds:";
+	public static final String INFO_VALIDATE  = "Ergebnis der Validierung des R\u00f6mischen Verbunds:";
 	
 	/**
 	 * Info about display-only mode
 	 */
-	public static final String INFO_DISPLAY = "Der Römische Verbund wurde im Anzeigemodus geöffnet.";
+	public static final String INFO_DISPLAY = "Der R\u00f6mische Verbund wurde im Anzeigemodus ge\u00f6ffnet.";
 	
 	
 	/******************************************* Info about application usage *****************************************/

@@ -8,6 +8,7 @@ import ess.data.Surface;
 import ess.data.Tile;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
+import ess.strings.CustomErrorMessages;
 
 /**
  * This implementation of IRule checks if a tile that is about to be placed at pos 
@@ -22,29 +23,48 @@ import ess.rules.IRule;
  */
 public class MaxLineLengthRule implements IRule {
     
+    private Composite composite;
+    
+    /**
+     * Initializes an instance of MaxLineLengthRule.
+     *
+     * @param composite the composite
+     */
+    public MaxLineLengthRule(Composite composite) {
+        this.composite = composite;
+    }
+    
+    /* (non-Javadoc)
+     * @see ess.rules.IRule#check(ess.data.Tile, ess.data.Position)
+     */
     @Override
-    public boolean check(Composite c, Tile tile, Position pos) {
+    public boolean check(Tile tile, Position pos) {
         for (Edge edge : Edge.values()) {
-            if (calculateLineLength(c, tile, pos, edge) > c.getMaxLineLength()) {
+            if (calculateLineLength(tile, pos, edge) > composite.getMaxLineLength()) {
                 return false;
             }
         }
         return true;
     }
 
-    private int calculateLineLength(Composite c, Tile tile, Position pos, Edge edge) {
+    // Calculates the total length of a straight line in the composite which contains 
+    // the given edge of the given tile. 
+    // The total length is the length of the tile's edge in addition to the the extension
+    // of this line going "backwards" and going "forward".
+    private int calculateLineLength(Tile tile, Position pos, Edge edge) {
         Corner c1 = edge.getFirstCorner();
         Corner c2 = edge.getSecondCorner();
         
-        int row1 = c.getSurface().getCornerRow(tile, pos, c1);
-        int col1 = c.getSurface().getCornerCol(tile, pos, c1);
-        int row2 = c.getSurface().getCornerRow(tile, pos, c2);
-        int col2 = c.getSurface().getCornerCol(tile, pos, c2);
+        int row1 = composite.getSurface().getCornerRow(tile, pos, c1);
+        int col1 = composite.getSurface().getCornerCol(tile, pos, c1);
+        int row2 = composite.getSurface().getCornerRow(tile, pos, c2);
+        int col2 = composite.getSurface().getCornerCol(tile, pos, c2);
 
-        return getLineLength(c.getSurface(), edge, row1, col1, -1) + getLineLength(c.getSurface(), edge, row2, col2, 1)
+        return getLineLength(edge, row1, col1, -1) + getLineLength(edge, row2, col2, 1)
                 + getEntryLength(edge, tile);
     }
 
+    // Returns the length of a tile at the given edge.
     private int getEntryLength(Edge edge, Tile t) {
         switch(edge) {
             case TOP:
@@ -52,13 +72,14 @@ public class MaxLineLengthRule implements IRule {
                 return t.getCols();
             case LEFT:
             case RIGHT:
-                return t.getRows();
-            default:
-                throw new IllegalArgumentException("Not a valid edge!");
+                return t.getRows();  
         }
+        throw new IllegalArgumentException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, edge));
     }
 
-    private int getLineLength(Surface s, Edge edge, int startRow, int startCol, int step) {
+    // Returns the length of the extension of a tile's edge, either going "back" or going "forward".
+    private int getLineLength(Edge edge, int startRow, int startCol, int step) {
+        Surface s = composite.getSurface();
         boolean isLine = true;
         int currentLineLength = 0;
         Tile innerTile;
@@ -66,44 +87,45 @@ public class MaxLineLengthRule implements IRule {
         switch(edge) {
             case TOP:
             case BOTTOM:
-                int innerRow = startRow;
-                int outerRow = innerRow + edge.getNextRowOffset();
+                int outerRow = startRow + edge.getNextRowOffset();
                 int currentCol = startCol + step;
-                while (s.isInsideSurface(innerRow,  currentCol) && isLine) {
-                    innerTile = s.getEntryAt(innerRow, currentCol);
+                while (s.isInsideSurface(startRow,  currentCol) && isLine) {
+                    innerTile = s.getEntryAt(startRow, currentCol);
                     outerTile = s.getEntryAt(outerRow, currentCol);
-                    if (!s.isInsideSurface(outerRow, currentCol) || innerTile == null && outerTile == null || innerTile != null
-                            && outerTile != null && innerTile == outerTile) {
+                    if (!s.isInsideSurface(outerRow, currentCol)
+                           || innerTile == null && outerTile == null 
+                           || innerTile == outerTile) {
                         isLine = false;
                     } else {
                         currentLineLength++;
                     }
                     currentCol += step;
                 }
-                break;
+                return currentLineLength;
             case LEFT:
             case RIGHT:
-                int innerCol = startCol;
-                int outerCol = innerCol + edge.getNextColOffset();
+                int outerCol = startCol + edge.getNextColOffset();
                 int currentRow = startRow + step;
-                while (s.isInsideSurface(currentRow,  innerCol) && isLine) {
-                    innerTile = s.getEntryAt(currentRow, innerCol);
+                while (s.isInsideSurface(currentRow,  startCol) && isLine) {
+                    innerTile = s.getEntryAt(currentRow, startCol);
                     outerTile = s.getEntryAt(currentRow, outerCol);
-                    if (!s.isInsideSurface(currentRow, outerCol) || innerTile == null && outerTile == null || innerTile != null
-                            && outerTile != null && innerTile == outerTile) {
+                    if (!s.isInsideSurface(currentRow, outerCol) 
+                            || innerTile == null && outerTile == null 
+                            || innerTile == outerTile) {
                         isLine = false;
                     } else {
                         currentLineLength++;
                     }
                     currentRow += step;
                 }
-                break;
-            default:
-                throw new IllegalArgumentException("Not a valid edge!");
+                return currentLineLength;
         }
-        return currentLineLength;
+        throw new IllegalArgumentException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, edge));
     }
 
+    /* (non-Javadoc)
+     * @see ess.rules.IRule#getErrorType()
+     */
     @Override
     public ErrorType getErrorType() {
         return ErrorType.MAX_LINE_LENGTH;

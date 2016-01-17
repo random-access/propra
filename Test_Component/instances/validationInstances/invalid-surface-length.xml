@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RoemischerVerbund length2="77" length1="80">
+  <Fliesentypen>
+    <Fliesentyp ident="_0">
+      <length1>40</length1>
+      <length2>60</length2>
+    </Fliesentyp>
+  </Fliesentypen>
+  <Verlegungsplan>
+    <Platte fliesenId="_0">
+      <Nr>0</Nr>
+    </Platte>
+  </Verlegungsplan>
+</RoemischerVerbund>

@@ -21,7 +21,7 @@ public class Surface_Utils_Test {
 		for (int i = 0; i < cols * rows; i++) {
 			Tile t = new Tile("_" + i, 1, 1);
 			Position p = new Position(i / cols, i % cols);
-			surface.insertEntry(t,p);
+			surface.insertEntry(t, p);
 		}
 		
 		// Assert (that the expected results have occurred.))
@@ -40,7 +40,7 @@ public class Surface_Utils_Test {
 		int height = 3;
 		Surface s = new Surface(width, height);
 		Tile t1 = new Tile("_2", 3, 1);
-		Position p1 = new Position(0, 1);;
+		Position p1 = new Position(0, 1);
 
 		// Act (on the object or method under test.)
 		s.insertEntry(t1, p1);

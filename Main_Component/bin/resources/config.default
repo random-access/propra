@@ -18,6 +18,10 @@ CrossingsRule=true
 MaxLineLengthRule=true
 ReplaceableTileRule=true
 
+## Additional Rules  ##
+## Rules are only used for solver, and only checked if all explicit rules are activated ##
+## To activate a rule, set its value to "true", to deactivate it, set its value to "false" ##
+MinDistanceToBorderRule=true
 
 #########################
 ### Solver Heuristics ###
@@ -48,7 +52,7 @@ tile_chooser_strategy=fields_asc, cols_desc
 ## "all" (output every logging - same as "finest") ##
 log_level=off
 
-## Define if logging should be outputted on console ##
+## Define if logging should be displayed on console ##
 ## set to true, if logging should be displayed in console, else false ##
 log_console=false
 

@@ -57,7 +57,7 @@ public class Surface {
      * @return tile at pos or null, if pos is outside of the surface.
      */
     public Tile getEntryAt(Position pos) {
-        return (isInsideSurface(pos)) ? fields[pos.getRow()][pos.getCol()] : null;
+        return getEntryAt(pos.getRow(), pos.getCol());
     }
 
     /**
@@ -72,8 +72,8 @@ public class Surface {
     }
 
     /**
-     * Inserts a given tile in the given surface at the given position, for
-     * example: called on an empty surface with 3 rows and 4 columns, for a 3x2
+     * Inserts tile in this surface at pos. 
+     * Example: called on an empty surface with 3 rows and 4 columns, for a 3x2
      * tile with insert position (0,2) will produce the following result: <br>
      * _ _ x x x _ <br>
      * _ _ x x x _ <br>
@@ -81,6 +81,9 @@ public class Surface {
      * <br>
      * <b>Hint</b>: All fields that get filled with a tile refer to the same tile object, 
      * so testing if the next field belongs to this tile as well can be performed via == operator.
+     * To speed up calculation, this method only handles correct parameters, 
+     * it must be made sure that pos is inside the surface's bounds, otherwise an
+     * IndexOutOfBoundsException will be thrown.
      *
      * @param tile
      *            the tile that should be inserted
@@ -96,9 +99,38 @@ public class Surface {
             }
         }
     }
+    
+    
+    /**
+     * Inserts tile at pos. Simply leaves out all fields that are not inside the surface.
+     * This method is for display any composite no matter if valid or not.
+     * @param tile
+     *            the tile that should be inserted
+     * @param pos
+     *            the left upper corner of the position the tile should be
+     *            inserted
+     */
+    public void insertEntryWherePossible(Tile tile, Position pos) {
+        if (pos == null) {
+            return;
+        }
+        Tile newTile = new Tile(tile.getId(), tile.getRows(), tile.getCols());
+        for (int i = pos.getRow(); i <= pos.getRow() + tile.getRows() - 1; i++) {
+            for (int j = pos.getCol(); j <= pos.getCol() + tile.getCols() - 1; j++) {
+                if (isInsideSurface(i, j)) {
+                    fields[i][j] = newTile;
+                }
+            }
+        }
+    }
+    
+    
 
     /**
      * Removes a given tile in this surface at the specified position.
+     * To speed up calculation, this method only handles correct parameters, 
+     * it must be made sure that pos is inside the surface's bounds and
+     * the correct tile gets removed, otherwise an IndexOutOfBoundsException will be thrown.
      * @param tile the tile sort to be removed
      * @param pos the top left position of the tile
      */
@@ -116,10 +148,10 @@ public class Surface {
      * @param pos a position.
      * @return true, if the position's row is an edge row or the positions's column is an edge column,
      * otherwise false.
-     * @see {@link #isEdgeRow(int)} and {@link #isEdgeCol(int)}
+     * @see {@link #isBorderRow(int)} and {@link #isBorderCol(int)}
      */
-    public boolean isEdgePosition(Position pos) {
-        return isEdgeRow(pos) || isEdgeCol(pos);
+    public boolean isBorderPosition(Position pos) {
+        return isBorderRow(pos) || isBorderCol(pos);
     }
 
     /**
@@ -127,10 +159,10 @@ public class Surface {
      * @param pos a position.
      * @return true, if the position's row is an edge row,
      * otherwise false.
-     * @see {@link #isEdgeRow(int)}
+     * @see {@link #isBorderRow(int)}
      */
-    public boolean isEdgeRow(Position pos) {
-        return isEdgeRow(pos.getRow());
+    public boolean isBorderRow(Position pos) {
+        return isBorderRow(pos.getRow());
     }
 
     /**
@@ -140,7 +172,7 @@ public class Surface {
      * @return true, if the position's row is an edge row,
      * otherwise false.
      */
-    public boolean isEdgeRow(int row) {
+    public boolean isBorderRow(int row) {
         return row == 0 || row == this.getRows() - 1;
     }
 
@@ -149,10 +181,10 @@ public class Surface {
      * @param pos a position.
      * @return true, if the position's column is an edge column,
      * otherwise false.
-     * @see {@link #isEdgeCol(int)}
+     * @see {@link #isBorderCol(int col)}
      */
-    public boolean isEdgeCol(Position pos) {
-        return isEdgeCol(pos.getCol());
+    public boolean isBorderCol(Position pos) {
+        return isBorderCol(pos.getCol());
     }
     
     /**
@@ -162,7 +194,7 @@ public class Surface {
      * @return true, if the position's column is an edge column,
      * otherwise false.
      */
-    public boolean isEdgeCol(int col) {
+    public boolean isBorderCol(int col) {
         return col == 0 || col == this.getCols() - 1;
     }
 
@@ -186,7 +218,7 @@ public class Surface {
      * Returns true if the position's row and col are inside the surface, else false.
      * @param pos a position.
      * @return true if row and column of the given position are inside this surface, otherwise false.
-     * @see {@link #isInsideSurface(row, col)}
+     * @see {@link #isInsideSurface(int row, int col)}
      */
     public boolean isInsideSurface(Position pos) {
         return isInsideSurface(pos.getRow(), pos.getCol());
@@ -206,8 +238,7 @@ public class Surface {
      * @return tile at the same row as the position at the given corner.
      */
     public Tile getHorizontalNeighbourTile(Tile tile, Position pos, Corner c) {
-        Position nPos = new Position(getCornerRow(tile, pos, c), getCornerCol(tile, pos, c) + c.getNextColOffset());
-        return (isInsideSurface(nPos)) ? getEntryAt(nPos) : null;
+        return getEntryAt(getCornerRow(tile, pos, c), getCornerCol(tile, pos, c) + c.getNextColOffset());
     }
 
     /**
@@ -224,8 +255,7 @@ public class Surface {
      * @return tile at the same column as the position at the given corner.
      */
     public Tile getVerticalNeighbourTile(Tile tile, Position pos, Corner c) {
-        Position nPos = new Position(getCornerRow(tile, pos, c) + c.getNextRowOffset(), getCornerCol(tile, pos, c));
-        return (isInsideSurface(nPos)) ? getEntryAt(nPos) : null;
+        return getEntryAt(getCornerRow(tile, pos, c) + c.getNextRowOffset(), getCornerCol(tile, pos, c));
     }
 
     /**
@@ -243,15 +273,13 @@ public class Surface {
      * @return tile at the same diagonal as the position at the given corner.
      */
     public Tile getDiagonalNeighbourTile(Tile tile, Position pos, Corner c) {
-        Position nPos = new Position(getCornerRow(tile, pos, c) + c.getNextRowOffset(), getCornerCol(tile, pos, c)
+        return getEntryAt(getCornerRow(tile, pos, c) + c.getNextRowOffset(), getCornerCol(tile, pos, c)
                 + c.getNextColOffset());
-        return (isInsideSurface(nPos)) ? getEntryAt(nPos) : null;
     }
 
     /**
-     * Returns the position of the top left corner of a tile at a given position in this surface,
-     * when given any of the tile's corners.
-      * @param t the tile sort.
+     * Returns the position of a corner of tile at a given position in this surface.
+     * @param t the tile sort.
      * @param p the position of the tile inside the surface.
      * @param c the corner of the given position.
      * @return the top left position of the given tile.
@@ -262,7 +290,7 @@ public class Surface {
     }
 
     /**
-     * Get the row of the given corner of a tile at the given position in this surface.
+     * Get the row of a corner of a tile at the given position in this surface.
      * @param t the tile sort.
      * @param p the position of the tile inside the surface.
      * @param c the corner of the given position.
@@ -275,14 +303,14 @@ public class Surface {
                 return p.getRow();
             case BOTTOM_LEFT:
             case BOTTOM_RIGHT:
-                return p.getRow() + t.getRows() - 1;
-            default:
-                throw new InvalidParameterException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, c));
+                return p.getRow() + t.getRows() - 1; 
         }
+        // for enum values added in the future that are not included above by accident
+        throw new InvalidParameterException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, c));
     }
 
     /**
-     * Get the column of the given corner of a tile at the given position in this surface.
+     * Get the column of a corner of a tile at the given position in this surface.
      * @param t the tile sort.
      * @param p the position of the tile inside the surface.
      * @param c the corner of the given position.
@@ -296,9 +324,9 @@ public class Surface {
             case TOP_RIGHT:
             case BOTTOM_RIGHT:
                 return p.getCol() + t.getCols() - 1;
-            default:
-                throw new InvalidParameterException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, c));
         }
+        // for enum values added in the future that are not included above by accident
+        throw new InvalidParameterException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, c));
     }
     
     /**
@@ -318,10 +346,10 @@ public class Surface {
             case BOTTOM_LEFT:
                 return new Position(p.getRow() - t.getRows() + 1, p.getCol());
             case BOTTOM_RIGHT:
-                return new Position(p.getRow() - t.getRows() + 1, p.getCol() - t.getCols() + 1);
-            default:
-                throw new InvalidParameterException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, c));
+                return new Position(p.getRow() - t.getRows() + 1, p.getCol() - t.getCols() + 1);    
         }
+        // for enum values added in the future that are not included above by accident
+        throw new InvalidParameterException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, c));
     }
 
     /**
@@ -331,9 +359,9 @@ public class Surface {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("rows: ").append(fields.length).append(", cols: ").append(fields[0].length).append("\n");
-        for (int i = 0; i < fields.length; i++) {
+        for (Tile[] field : fields) {
             for (int j = 0; j < fields[0].length; j++) {
-                Tile t = fields[i][j];
+                Tile t = field[j];
                 if (t == null) {
                     sb.append("__ ");
                 } else {

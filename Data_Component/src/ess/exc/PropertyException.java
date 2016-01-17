@@ -20,26 +20,5 @@ public class PropertyException extends Exception {
     public PropertyException(String message) {
         super(message);
     }
-    
-
-    /**
-     * Instantiates a new PropertyException, passing its cause.
-     *
-     * @param cause a Throwable that caused this exception.
-     */
-    public PropertyException(Throwable cause) {
-        super(cause);
-    }
-
-    /**
-     * Constructs a new PropertyException, passing an error message
-     * and its cause.
-     * 
-     * @param message an error message holding additional information.
-     * @param cause  a Throwable that caused this exception.
-     */
-    public PropertyException(String message, Throwable cause) {
-        super(message, cause);
-    }
 
 }

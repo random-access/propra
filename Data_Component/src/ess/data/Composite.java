@@ -20,9 +20,6 @@ public class Composite {
 	private Surface surface;
 	private int maxLineLength;
 
-	// TODO check if 2 tilesort w same ID exist
-	// TODO check if 2 tilesorts w same size exist
-	// TODO check if ID of tiles in composite (ValidationInstance) exists in tilesort section
 	/**
 	 * Instantiate a new composite.
 	 *
@@ -94,7 +91,6 @@ public class Composite {
 	 * @param maxLineLength maximum length of a straight line in a surface
 	 */
 	public void setMaxLineLength(int maxLineLength) {
-		// TODO make sure that maxLineLength is a positive integer
 		this.maxLineLength = maxLineLength;
 	}
 	
@@ -108,14 +104,13 @@ public class Composite {
 	}
 	
 	/**
-	 * Returns the first tile in the list of tile sorts with identificator id. 
-	 * The list of tile sorts must therefore only hold tiles with different id's, this should
-	 * be tested before filling the list of tile sorts.
-	 * @param id The identificator of a tile.
-	 * @return The first tile in the list of tile sorts with identificator id.
+	 * Returns the first tile in the list of tile sorts with identifier ID, assuming
+	 * that each tile in tileSorts has a different ID. For XML input, this is checked 
+	 * during DTD validation.
+	 * @param id The identifier of a tile.
+	 * @return The first tile in the list of tile sorts with identifier id.
 	 */
 	public Tile findTileById(String id) {
-		// TODO make sure each tile in tileSorts has a different ID
 		for (Tile t : tileSorts) {
 			if (id.equals(t.getId())) {
 				return t;
@@ -144,7 +139,6 @@ public class Composite {
 				filteredTiles.add(t);
 			}
 		}
-		// Collections.sort(filteredTiles, TileComparator.FIELDS_DESC);
 		return filteredTiles;
 	}
 

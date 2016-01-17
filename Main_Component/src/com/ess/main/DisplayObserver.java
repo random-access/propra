@@ -8,9 +8,9 @@ import javax.swing.SwingUtilities;
 import ess.algorithm.AbstractOutputObservable;
 import ess.data.Composite;
 import ess.strings.CustomErrorMessages;
-import ess.strings.CustomInfoMessages;
 import ess.ui.ICompositeView;
 import ess.ui.MainWindow;
+import ess.utils.CustomLogger;
 
 /**
  * An implementation of CompositeObserver that shows a graphical
@@ -18,9 +18,9 @@ import ess.ui.MainWindow;
  * an AbstractOutputObservable if there is a valid composite
  * to be displayed.
  */
-public class DisplayObserver implements CompositeObserver {
+public class DisplayObserver implements ICompositeObserver {
 
-    private Logger log = Logger.getGlobal();
+    private final Logger logger = CustomLogger.getLogger();
     private ExecMode mode;
 
     /* (non-Javadoc)
@@ -30,7 +30,7 @@ public class DisplayObserver implements CompositeObserver {
     public void observe(AbstractOutputObservable obs, ExecMode execMode) {
         obs.addObserver(this);
         this.mode = execMode;
-        log.info("Added display observer ...");
+        logger.info("Added display observer ...");
     }
 
     /* (non-Javadoc)
@@ -38,7 +38,7 @@ public class DisplayObserver implements CompositeObserver {
      */
     @Override
     public void update(Observable o, Object arg) {
-        log.info("Got display request...");
+        logger.info("Got display request...");
         final AbstractOutputObservable obs = (AbstractOutputObservable) o;
         Composite c = obs.getComposite();
         final ICompositeView view = new MainWindow(c);
@@ -48,14 +48,13 @@ public class DisplayObserver implements CompositeObserver {
             public void run() {
                 switch(mode) {
                     case SOLVE_DISPLAY:
-                        // TODO change signatures, add mode to UI
-                        view.display(null, obs.getPathToSource(), CustomInfoMessages.INFO_SOLVE);
+                        view.display(obs.hasValidComposite(), null, obs.getPathToSource(), 's');
                         break;
                     case VALIDATE_DISPLAY:
-                        view.display(obs.getErrors(), obs.getPathToSource(), CustomInfoMessages.INFO_VALIDATE);
+                        view.display(obs.hasValidComposite(), obs.getErrors(), obs.getPathToSource(), 'v');
                         break;
                     case DISPLAY:
-                        view.display(null, obs.getPathToSource(), CustomInfoMessages.INFO_DISPLAY);
+                        view.display(obs.hasValidComposite(), null, obs.getPathToSource(), 'd');
                         break;
                     default:
                         throw new UnsupportedOperationException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, mode));

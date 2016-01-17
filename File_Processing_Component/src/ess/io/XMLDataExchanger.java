@@ -14,7 +14,6 @@ import java.util.List;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
@@ -22,6 +21,7 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.input.sax.XMLReaders;
 import org.jdom2.output.Format;
@@ -42,8 +42,6 @@ import ess.strings.CustomErrorMessages;
 public class XMLDataExchanger implements IDataExchanger {
 
 	private Document doc;
-	
-	// TODO check same tile ID
 
 	/*
 	 * (non-Javadoc)
@@ -57,15 +55,21 @@ public class XMLDataExchanger implements IDataExchanger {
 			SAXBuilder sb = new SAXBuilder(XMLReaders.DTDVALIDATING);
 			doc = sb.build(is);
 			Element rootElement = doc.getRootElement();
-			int cols = convertSize(rootElement
+			int cols = convertSurfaceSize(rootElement
 					.getAttributeValue(XMLValues.LENGTH_1));
-			int rows = convertSize(rootElement
+			int rows = convertSurfaceSize(rootElement
 					.getAttributeValue(XMLValues.LENGTH_2));
 			ArrayList<Tile> tileSorts = readTileSorts(rootElement);
 			ArrayList<String> surfaceTiles = readSurfaceTiles(rootElement);
 			return new Composite(rows, cols, surfaceTiles, tileSorts);
-		} catch (Exception e) {
-			throw new DataExchangeException(e);
+		} catch (InvalidSizeValueException | PropertyException exc) {
+		    throw new DataExchangeException(exc.getMessage());
+		} catch (IOException exc) {
+		    throw new DataExchangeException(String.format(CustomErrorMessages.ERROR_READING_XML, 
+		            Paths.get(pathToSource).getFileName()));
+		} catch (JDOMException exc) {
+		    throw new DataExchangeException(String.format(CustomErrorMessages.ERROR_XML_CONTENT, 
+		            Paths.get(pathToSource).getFileName(), exc.getMessage()));
 		}
 	}
 
@@ -92,7 +96,7 @@ public class XMLDataExchanger implements IDataExchanger {
 			outputter.setFormat(Format.getPrettyFormat());
 			outputter.output(doc, os);
 		} catch (IOException e) {
-			throw new DataExchangeException(e);
+			throw new DataExchangeException(CustomErrorMessages.ERROR_WRITING_XML);
 		}
 	}
 	
@@ -133,20 +137,21 @@ public class XMLDataExchanger implements IDataExchanger {
 			String dtdLocation = this.getClass().getResource(pathToDTD)
 					.toString();
 			locateFile(xmlSrc);
-			// TODO check paths elsewhere && output appropriate exceptions
 			TransformerFactory tf = TransformerFactory.newInstance();
 			Transformer tr = tf.newTransformer();
+			tr.setErrorListener(new XMLTransformerErrorListener());
 			tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, dtdLocation);
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			Result res = new StreamResult(baos);
 			tr.transform(new StreamSource(xmlSrc), res);
 			return new ByteArrayInputStream(baos.toByteArray());
-		} catch (TransformerConfigurationException e) {
-			throw new PropertyException(
-					CustomErrorMessages.ERROR_VALIDATING_XML);
 		} catch (TransformerException e) {
+		    // Somehow still printing some fatal errors to System.err. This might be a JDK bug, see:
+		    // http://stackoverflow.com/questions/21208325/how-do-i-change-the-default-logging-in-java-transformer
+		    // e.printStackTrace();
+		    // As we don't have to handle invalid XML, this won't be fixed for now.
 			throw new PropertyException(String.format(
-					CustomErrorMessages.ERROR_INVALID_CONTENT, xmlSrc));
+					CustomErrorMessages.ERROR_INVALID_CONTENT, Paths.get(xmlSrc).getFileName()));
 		}
 	}
 	
@@ -155,18 +160,18 @@ public class XMLDataExchanger implements IDataExchanger {
 	private void locateFile(String xmlSrc) throws PropertyException {
 		if (!Files.isRegularFile(Paths.get(xmlSrc))) {
 			throw new PropertyException(String.format(
-					CustomErrorMessages.ERROR_PATH_NOT_FOUND, "\"" + xmlSrc
+					CustomErrorMessages.ERROR_INVALID_PATH, "\"" + xmlSrc
 							+ "\""));
 		}
 	}
 
 	private ArrayList<String> readSurfaceTiles(Element rootElement) {
-		Element verlegungsplan = rootElement.getChild(XMLValues.VERLEGUNGSPLAN);
+		Element plan = rootElement.getChild(XMLValues.VERLEGUNGSPLAN);
 		ArrayList<String> tiles = new ArrayList<>();
-		if (verlegungsplan == null) {
+		if (plan == null) {
 			return tiles;
 		}
-		List<Element> fliesen = verlegungsplan.getChildren();
+		List<Element> fliesen = plan.getChildren();
 		for (Element elem : fliesen) {
 			tiles.add(elem.getAttributeValue(XMLValues.FLIESEN_ID));
 		}
@@ -180,18 +185,18 @@ public class XMLDataExchanger implements IDataExchanger {
 		List<Element> fliesen = fliesentypen.getChildren();
 		ArrayList<Tile> tiles = new ArrayList<>();
 		for (Element elem : fliesen) {
-			String id = elem.getAttributeValue(XMLValues.IDENT);
-			int cols = convertSize(elem.getChildText(XMLValues.LENGTH_1));
-			int rows = convertSize(elem.getChildText(XMLValues.LENGTH_2));
+		    String id = elem.getAttributeValue(XMLValues.IDENT);
+			int cols = convertTileSize(elem.getChildText(XMLValues.LENGTH_1));
+			int rows = convertTileSize(elem.getChildText(XMLValues.LENGTH_2));
 			tiles.add(new Tile(id, rows, cols));
 		}
 		return tiles;
 	}
 	
-	// Converts a length value into the internal data model
+	// Converts a tile length value into the internal data model
 	// Throws an InvalidSizeValueException if valueToConvert is not a positive integer 
 	// or if valueToConvert can not be exactly divided by 20.
-	private int convertSize(String valueToConvert)
+	private int convertTileSize(String valueToConvert)
 			throws InvalidSizeValueException {
 		try {
 			int externalSize = Integer.parseInt(valueToConvert);
@@ -202,7 +207,21 @@ public class XMLDataExchanger implements IDataExchanger {
 		} catch (NumberFormatException e) {
 			throw new InvalidSizeValueException(CustomErrorMessages.ERROR_INVALID_DATATYPE_TILE_LENGTH);
 		}
-		
 	}
-
+	
+	// Converts a surface length value into the internal data model
+    // Throws an InvalidSizeValueException if valueToConvert is not a positive integer 
+    // or if valueToConvert can not be exactly divided by 20.
+    private int convertSurfaceSize(String valueToConvert)
+            throws InvalidSizeValueException {
+        try {
+            int externalSize = Integer.parseInt(valueToConvert);
+            if (externalSize <= 0 || externalSize % XMLValues.CONVERSION_UNIT != 0) {
+                throw new InvalidSizeValueException(CustomErrorMessages.ERROR_INVALID_DATATYPE_SURFACE_LENGTH);
+            }
+            return externalSize / XMLValues.CONVERSION_UNIT;
+        } catch (NumberFormatException e) {
+            throw new InvalidSizeValueException(CustomErrorMessages.ERROR_INVALID_DATATYPE_SURFACE_LENGTH);
+        }
+    }
 }

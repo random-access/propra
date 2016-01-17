@@ -21,23 +21,4 @@ public class InvalidInputException extends Exception {
 		super(message);
 	}
 
-    /**
-     * Instantiates a new InvalidInputException, passing its cause.
-     *
-     * @param cause a Throwable that caused this exception.
-     */
-	public InvalidInputException(Throwable cause) {
-		super(cause);
-	}
-
-    /**
-     * Instantiates a new InvalidInputException, passing an error message
-     * and its cause.
-     *
-     * @param message an error message with additional information.
-     * @param cause a Throwable that caused this exception.
-     */
-	public InvalidInputException(String message, Throwable cause) {
-		super(message, cause);
-	}
 }

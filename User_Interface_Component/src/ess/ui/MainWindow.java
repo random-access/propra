@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -13,14 +14,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.WindowConstants;
 
 import ess.data.Composite;
 import ess.strings.CustomErrorMessages;
@@ -28,9 +32,12 @@ import ess.strings.CustomInfoMessages;
 import ess.ui.components.CompositePanel;
 import ess.ui.components.CustomLabel;
 import ess.ui.components.CustomPanel;
+import ess.ui.components.PlaceHolderPanel;
+import ess.ui.components.Zoomable;
 
 /**
- * This class is an implementation of IComposite view that displays a composite.
+ * This class is an implementation of IComposite view that displays a composite,
+ * using the Swing framework.
  * 
  * @author Monika Schrenk
  *
@@ -61,7 +68,7 @@ public class MainWindow extends JFrame implements ICompositeView {
     // window components
     private JPanel pnlTop, pnlInfo, pnlCenter, pnlBottom;
     private JScrollPane scpCenter;
-    private CompositePanel pnlComposite;
+    private Zoomable pnlComposite;
     private JButton btnClose;
 
     // data that gets displayed
@@ -74,26 +81,27 @@ public class MainWindow extends JFrame implements ICompositeView {
      */
     public MainWindow(Composite composite) {
         this.composite = composite;
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         try {
             setIconImage(ImageIO.read(getClass().getResourceAsStream("/resources/ic_starter.png")));
         } catch (IOException e) {
-            // if application icon is missing, just inform the user, but continue everything else
+            // if application icon is missing, just inform the user, but continue running the application
             System.out.println(CustomErrorMessages.ERROR_APP_ICON);
         }
-        // TODO open with best possible zoom
-        // TODO view file path & different modes (d, v, s)
     }
 
+    /* (non-Javadoc)
+     * @see ess.ui.ICompositeView#display(java.lang.boolean, java.util.List, java.lang.String, java.lang.String)
+     */
     @Override
-    public void display(List<String> errorList, String pathToSource, String execMode) {
+    public void display(boolean hasValidComposite, List<String> errorList, String pathToSource, char execMode) {
         // show file path as title
         setTitle(pathToSource);
 
         // create window components and add them together
         createAndAddTopArea();
-        createAndAddInfoLabels(errorList, execMode);
-        createAndAddCenterArea();
+        createAndAddInfoLabels(hasValidComposite, errorList, execMode);
+        createAndAddCenterArea(hasValidComposite, execMode);
         createAndAddBottomArea();
         addListeners();
 
@@ -115,8 +123,9 @@ public class MainWindow extends JFrame implements ICompositeView {
     }
 
     // construct center area of window (data)
-    private void createAndAddCenterArea() {
-        pnlComposite = new CompositePanel(composite.getSurface(), INITIAL_FIELD_SIZE);
+    private void createAndAddCenterArea(boolean hasValidComposite, char execMode) {
+        pnlComposite = execMode != 's' || hasValidComposite
+                ? new CompositePanel(composite.getSurface(), INITIAL_FIELD_SIZE) : new PlaceHolderPanel();
         pnlCenter = new CustomPanel(COMPONENT_PADDING);
         pnlCenter.setLayout(new GridBagLayout());
         JLabel lblZoomInfo = new CustomLabel("Zum Zoomen + und - verwenden.", DEFAULT_FONT_SIZE, Color.BLACK);
@@ -133,7 +142,7 @@ public class MainWindow extends JFrame implements ICompositeView {
         gbc = new GridBagConstraints();
         gbc.gridy = 1;
         gbc.weighty = 1;
-        pnlCenter.add(pnlComposite, gbc);
+        pnlCenter.add((JComponent) pnlComposite, gbc);
 
         // make content of center scrollable to be able to display very large composites
         scpCenter = new JScrollPane(pnlCenter);
@@ -166,22 +175,56 @@ public class MainWindow extends JFrame implements ICompositeView {
     }
 
     // create labels that hold info messages, depending on application mode
-    private void createAndAddInfoLabels(List<String> errorList, String execMode) {
-        pnlInfo.add(new CustomLabel(execMode, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY));
-        if (errorList == null) {
-            return;
-        }
-        if (errorList.size() == 0) {
-            JLabel label = new CustomLabel(CustomInfoMessages.INFO_VALID_COMPOSITE, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
-            pnlInfo.add(label);
-        } else {
-            for (int i = 0; i < errorList.size(); i++) {
-                JLabel label = new CustomLabel(errorList.get(i), DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
-                pnlInfo.add(label);
-            }
+    private void createAndAddInfoLabels(boolean hasValidComposite, List<String> errorList, char execMode) {
+        switch(execMode) {
+            case 's':
+                createSolveInfos(hasValidComposite);
+                break;
+            case 'v':
+                createValidateInfos(hasValidComposite, errorList);
+                break;
+            case 'd':
+                createDisplayInfos(hasValidComposite);
+                break;
+            default: 
+                throw new InvalidParameterException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, execMode));
         }
     }
 
+    private void createDisplayInfos(boolean hasValidComposite) {
+        // Add info about display mode
+        String mode = CustomInfoMessages.INFO_DISPLAY;
+        JLabel lblMode = new CustomLabel(mode, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
+        pnlInfo.add(lblMode);
+    }
+
+    private void createValidateInfos(boolean hasValidComposite, List<String> errorList) {
+        // Add info about validation mode
+        JLabel lblMode = new CustomLabel(CustomInfoMessages.INFO_VALIDATE, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
+        lblMode.setFont(lblMode.getFont().deriveFont(Font.BOLD));
+        pnlInfo.add(lblMode);
+        
+        // Add info about success / failure when validating
+        String status = hasValidComposite 
+                ? CustomInfoMessages.INFO_VALIDATION_SUCCESS : CustomInfoMessages.INFO_VALIDATION_FAILURE;
+        JLabel lblStatus = new CustomLabel(status, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
+        pnlInfo.add(lblStatus);
+
+        // Add error list
+        for (String error : errorList) {
+            JLabel label = new CustomLabel("\u2022 " + error, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
+            pnlInfo.add(label);
+        }
+    }
+
+    private void createSolveInfos(boolean hasValidComposite) {
+        // Add info about success / failure when solving
+        String status = hasValidComposite ? CustomInfoMessages.INFO_SOLVE_SUCCESS : CustomInfoMessages.INFO_SOLVE_FAILURE;
+        JLabel lblStatus = new CustomLabel(status, DEFAULT_FONT_SIZE, Color.LIGHT_GRAY);
+        pnlInfo.add(lblStatus);
+    }
+
+    // Method for adding all listeners to the main panel
     private void addListeners() {
         // Exit application when clicking on close button
         btnClose.addActionListener(new ActionListener() {
@@ -199,10 +242,10 @@ public class MainWindow extends JFrame implements ICompositeView {
             public void keyPressed(KeyEvent e) {
                 switch(e.getKeyChar()) {
                     case '+':
-                        pnlComposite.increaseFieldSize();
+                        pnlComposite.zoomIn();
                         break;
                     case '-':
-                        pnlComposite.decreaseFieldSize();
+                        pnlComposite.zoomOut();
                         break;
                     default:
                         // do nothing when other keys are pressed

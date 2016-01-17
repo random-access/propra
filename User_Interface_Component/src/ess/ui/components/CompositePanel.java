@@ -21,9 +21,9 @@ import ess.data.Surface;
  * @author Monika Schrenk
  *
  */
-public class CompositePanel extends JComponent {
+public class CompositePanel extends JComponent implements Zoomable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -4131400974188958938L;
     
     // bounds for the size of a single field in pixels
     private static final int MAX_FIELD_SIZE = 50;
@@ -57,6 +57,11 @@ public class CompositePanel extends JComponent {
         this.surface = surface;
     }
 
+    /** 
+     * Returns the size of the background grid.
+     * 
+     * @see javax.swing.JComponent#getPreferredSize()
+     */
     @Override
     public Dimension getPreferredSize() {
         int contentWidth = currentFieldSize * surface.getCols() + 2 * (STROKE_CORRECTION + MINOR_STROKE_CORR);
@@ -64,30 +69,51 @@ public class CompositePanel extends JComponent {
         return new Dimension(contentWidth, contentHeight);
     }
 
+    /**
+     * Returns the size of the background grid.
+     * 
+     * @see javax.swing.JComponent#getMinimumSize()
+     */
     @Override
     public Dimension getMinimumSize() {
         return getPreferredSize();
     }
 
+    /** 
+     * Returns the size of the background grid.
+     * 
+     * @see javax.swing.JComponent#getMaximumSize()
+     */
     @Override
     public Dimension getMaximumSize() {
         return getPreferredSize();
     }
 
+    /**
+     * Paints the surface of the composite.
+     * 
+     * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
+        drawComposite(g2D);
+    }
+    
+    private void drawComposite(Graphics2D g2D) {
         drawBackground(g2D);
         drawGrid(g2D);
         drawTiles(g2D);
     }
     
+    // Colorizes the background.
     private void drawBackground(Graphics2D g2d) {
         g2d.setColor(LIGHT_BLUE);
         g2d.fill(new Rectangle(0, 0, getWidth(), getHeight()));
     }
 
+    // Draws the tile borders.
     private void drawTiles(Graphics2D g2d) {
         g2d.setColor(Color.BLACK);
         g2d.setStroke(new BasicStroke(STROKE_WIDTH_FG));
@@ -114,6 +140,7 @@ public class CompositePanel extends JComponent {
         }
     }
 
+    // Draws the background grid.
     private void drawGrid(Graphics2D g2D) {
         g2D.setColor(Color.LIGHT_GRAY);
         g2D.setStroke(new BasicStroke(STROKE_WIDTH_BG));
@@ -128,10 +155,12 @@ public class CompositePanel extends JComponent {
         }
     }
     
+
+    
     /**
      * Increase the size of a single field by 1 pixel and refresh the view.
      */
-    public void increaseFieldSize() {
+    public void zoomIn() {
         if (currentFieldSize < MAX_FIELD_SIZE) {
             currentFieldSize++;
         }
@@ -141,7 +170,7 @@ public class CompositePanel extends JComponent {
     /**
      * Decrease the size of a single field by 1 pixel and refresh the view.
      */
-    public void decreaseFieldSize() {
+    public void zoomOut() {
         if (currentFieldSize > MIN_FIELD_SIZE) {
             currentFieldSize--;
         }

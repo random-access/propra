@@ -13,7 +13,7 @@ package ess.data;
  *
  */
 public class Position implements Comparable<Position> {
-	
+
 	private int row;
 	private int col;
 	
@@ -60,9 +60,10 @@ public class Position implements Comparable<Position> {
 		this.col = column;
 	}
 	
+	
 	/**
-	 * Overridden by position to be consistent with {@link #equals()}.
-	 * Two positions have the same Hashcode if their rows and columns are the same.
+	 * Two positions have the same Hashcode, if row and column attributes have the same values.
+	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
@@ -73,13 +74,10 @@ public class Position implements Comparable<Position> {
 		return result;
 	}
 	
+	
 	/**
-	 * Two positions pos1 and pos2 are equal under the following conditions:
-	 * <ul>
-	 *     <li>pos1 != null && pos2 != null AND</li>
-	 *     <li>pos1.getRow() == pos2.getRow() AND</li>
-	 *     <li>pos1.getCol() == pos2.getCol().</li>
-	 * </ul>
+	 * Two positions are equal, if row and column attributes have the same values.
+	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -93,19 +91,15 @@ public class Position implements Comparable<Position> {
 			return false;
 		}
 		Position other = (Position) obj;
-		if (col != other.col) {
-			return false;
-		}
-		if (row != other.row) {
-			return false;
-		}
-		return true;
+		return col == other.col && row == other.row;
 	}
 	
 	
 	/**
 	 * Human-readable, textual representation of this position,
 	 * showing the values of its row and column.
+	 *
+	 * @return the string
 	 */
 	@Override
 	public String toString() {
@@ -121,6 +115,9 @@ public class Position implements Comparable<Position> {
 	 *     <li>pos1.getRow() <= pos2.getRow() AND</li>
 	 *     <li>if pos1.getRow() == pos2.getRos(), pos1.getColumn() <= pos2.getColumn()</li>
 	 * </ul>
+	 *
+	 * @param otherPos the other pos
+	 * @return the int
 	 */
 	@Override
 	public int compareTo(Position otherPos) {

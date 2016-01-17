@@ -11,28 +11,27 @@ import ess.exc.InvalidLengthValueException;
 import ess.exc.PropertyException;
 import ess.io.IDataExchanger;
 import ess.io.XMLDataExchanger;
+import ess.io.XMLValues;
 import ess.io.exc.DataExchangeException;
 import ess.strings.CustomErrorMessages;
-import ess.strings.CustomInfoMessages;
+import ess.utils.CustomLogger;
 
 /**
  * Diese Klasse wird als API (Application Programming Interface) verwendet. Das
- * bedeutet, dass diese Klasse als Bibliothek für andere Applikationen verwendet
+ * bedeutet, dass diese Klasse als Bibliothek fuer andere Applikationen verwendet
  * werden kann.
  * 
  * Bitte achten Sie darauf, am bereits implementierten Rahmen (Klassenname,
- * Package, Methodensignaturen) !!KEINE!! Veränderungen vorzunehmen.
- * Selbstverständlich können und müssen Sie innerhalb einer Methode Änderungen
+ * Package, Methodensignaturen) !!KEINE!! Veraenderungen vorzunehmen.
+ * Selbstverstaendlich koennen und muessen Sie innerhalb einer Methode Aenderungen
  * vornehmen.
  */
-public class RoemischerVerbund extends AbstractOutputObservable implements IRoemischerVerbund {
-
-    private static final Logger LOG = Logger.getGlobal();
+public class RoemischerVerbund extends AbstractOutputObservable implements IRoemischerVerbund, DisplayableWithoutCheck {
     
-    // TODO put together with XMLValues.CONVERSION_UNIT
-    private static final int CONVERSION_UNIT = 20; 
+    private final Logger logger = CustomLogger.getLogger();
     
     private List<Validation> errorList;
+    private boolean hasValidSolution;
     private Composite composite;
     private String pathToXml;
 
@@ -41,7 +40,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
      */
     public enum Validation {
         /**
-         * Flieskombination kann durch eine größere Fliese ersetzt werden.
+         * Fliesenkombination kann durch eine groessere Fliese ersetzt werden.
          */
         FLIESEN_AUSTAUSCHBAR,
 
@@ -51,7 +50,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
         GLEICHE_FLIESEN,
 
         /**
-         * Die maximale Fugenlänge wurde überschritten.
+         * Die maximale Fugenlaenge wurde ueberschritten.
          */
         MAX_FUGENLAENGE,
 
@@ -63,14 +62,14 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
         /**
          * Sonstige Fehler sind aufgetreten.
          */
-        FLIESE_UNPASSEND;
+        FLIESE_UNPASSEND
     }
 
     /**
-     * Überprüft die eingegebene Lösung auf Korrektheit.
+     * Ueberprueft die eingegebene Loesung auf Korrektheit.
      *
      * @param xmlFile Dokument, das validiert werden soll.
-     * @param maxFugenlaenge Die maximale Fugenlänge.
+     * @param maxFugenlaenge Die maximale Fugenlaenge.
      * @return Liste von Fehlern, die fehlgeschlagen sind.
      */
     @Override
@@ -82,22 +81,23 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
             convertGapLength(maxFugenlaenge, composite);
             Validator validator = new Validator(composite);
             errorList = validator.validateSolution();
+            hasValidSolution = errorList.size() == 0;
             sendNotificationToOutputObservers();
-            return errorList;
         } catch (DataExchangeException | PropertyException | InvalidLengthValueException e) {
-            System.out.println(e.getCause().getMessage());
-            return addAllErrorsToErrorList();
+            System.out.println(e.getMessage());
+            errorList = addAllErrorsToErrorList();
         }
+        return errorList;
     }
 
     /**
-     * Ermittelt eine Lösung zu den eingegebenen Daten.
+     * Ermittelt eine Loesung zu den eingegebenen Daten.
      *
      * @param xmlFile
-     *            Eingabedokument, das die Probleminstanzen enthält.
+     *            Eingabedokument, das die Probleminstanzen enthaelt.
      * @param maxLineLength
-     *            maximale Fugenlänge der zu berechnenden Lösung.
-     * @return konnte eine Lösung gefunden werden? true = ja, false = nein.
+     *            maximale Fugenlaenge der zu berechnenden Loesung.
+     * @return konnte eine Loesung gefunden werden? true = ja, false = nein.
      */
     @Override
     public boolean solve(String xmlFile, int maxLineLength) {
@@ -107,17 +107,30 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
             composite = dataExchanger.readFromSource(xmlFile);
             convertGapLength(maxLineLength, composite);
             ISolver solver = new Solver(composite);
-            boolean solved = solver.solve();
-            if (solved) {
-                dataExchanger.writeToTarget(composite, xmlFile);
-                sendNotificationToOutputObservers();
-            } else {
-                System.out.println(CustomInfoMessages.INFO_NOT_SOLVED);
-            }
-            return solved;
+            hasValidSolution = solver.solve();
+            if (hasValidSolution) {
+                dataExchanger.writeToTarget(composite, xmlFile);                
+            } 
+            sendNotificationToOutputObservers();
         } catch (DataExchangeException | PropertyException | InvalidLengthValueException e) {
-            System.out.println(e.getCause().getMessage());
-            return false;
+            System.out.println(e.getMessage());
+            hasValidSolution = false;
+        }
+        return hasValidSolution;
+    }
+    
+    @Override
+    public void display(String xmlFile) {
+        this.pathToXml = xmlFile;
+        try {
+            IDataExchanger dataExchanger = new XMLDataExchanger();
+            composite = dataExchanger.readFromSource(xmlFile);
+            IDisplayer displayer = new Displayer(composite);
+            displayer.constructOutput();
+            hasValidSolution = true;
+            sendNotificationToOutputObservers();
+        } catch (DataExchangeException | PropertyException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -135,7 +148,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
     @Override
     public List<String> getErrors() {
         if (errorList == null) {
-            return new LinkedList<String>();
+            return new LinkedList<>();
         }
         return ErrorMapper.mapErrorsForUi(errorList);
     }
@@ -160,7 +173,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
     // notify all registered observers that the algorithm has
     // finished and the output can be displayed
     private void sendNotificationToOutputObservers() {
-        LOG.info("Sending output request...");
+        logger.info("Sending output request...");
         setChanged();
         notifyObservers();
     }
@@ -171,6 +184,11 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
         if (maxGapLength < 0) {
             throw new InvalidLengthValueException(CustomErrorMessages.ERROR_INVALID_LENGTH);
         }
-        c.setMaxLineLength(maxGapLength / CONVERSION_UNIT);
+        c.setMaxLineLength(maxGapLength / XMLValues.CONVERSION_UNIT);
+    }
+
+    @Override
+    public boolean hasValidComposite() {
+        return hasValidSolution;
     }
 }

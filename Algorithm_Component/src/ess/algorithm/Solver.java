@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.logging.Logger;
 
 import ess.algorithm.modules.IPositionFinder;
 import ess.algorithm.modules.IRuleChecker;
@@ -14,12 +15,13 @@ import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Tile;
 import ess.exc.PropertyException;
-import ess.utils.ProPraLogger;
+import ess.strings.CustomErrorMessages;
+import ess.utils.CustomLogger;
 import ess.utils.ProPraProperties;
 
 /**
- * This class implements a single-threaded Solver, which finds a solution for a
- * given surface size and a given maximum tile length which respects the rules
+ * This implementation of <code>ISolver</code> finds a solution for a
+ * given <code>Surface</code> and a given maximum tile length which respects the rules
  * activated in the configuration file if a solution exists.
  * 
  * @see ISolver
@@ -28,38 +30,38 @@ import ess.utils.ProPraProperties;
  */
 public class Solver implements ISolver {
 
-    // private static final Logger log = Logger.getGlobal();
+    private final Logger logger = CustomLogger.getLogger();
 
     private IPositionFinder posFinder;
     private IRuleChecker ruleChecker;
     private ITileChooser tileChooser;
+    
     private LinkedList<Position> posList;
     private Composite composite;
 
     // private long counter;
 
     /**
-     * Instantiates a new Solver and loads the modules. Modules are parts of the
+     * Instantiates a new <code>Solver</code> and loads the modules. Modules are parts of the
      * algorithm that can be configured via configuration file to optimize the
      * algorithm. The algorithm can be influenced by:
      * 
      * <ul>
-     * <li>Use of different TileChoosers (how the next tile from tile sorts gets
+     * <li>Switching implementation of <code>ITileChooser</code> (how the next tile from tile sorts gets
      * chosen)</li>
-     * <li>Use of different PositionFinders (which return the next position in
+     * <li>Switching implementation of <code>IPositionFinder</code> (which returns the next position in
      * the surface to place a tile)</li>
-     * <li>Use of different RuleCheckers (currently there is only 1 RuleChecker
-     * optimized for solving)</li>
+     * <li>Switching implementation of <code>IRuleChecker</code> (how <code>IRule</code>s activated
+     * via configuration file get checked)</li>
      * </ul>
      *
      * @param composite
-     *            holding the data the solver needs for building a solution
+     *            holding the data the <code>Solver</code> needs for building a solution
      * @throws PropertyException
-     *             if any module was not defined properly in the configuration
+     *             if any parameter was not defined properly in the configuration
      *             file or the configuration file cannot be read
      */
     public Solver(Composite composite) throws PropertyException {
-        ProPraLogger.setup();
         this.composite = composite;
         posList = new LinkedList<>();
         loadModules();
@@ -76,7 +78,7 @@ public class Solver implements ISolver {
             posFinder = (IPositionFinder) Class.forName(posFinderName).newInstance();
 
             // initialize RuleChecker
-            ruleChecker = new SolveRuleChecker();
+            ruleChecker = new SolveRuleChecker(composite);
 
             // initialize selected implementation of ITileChooser
             String tileChooserName = ProPraProperties.HEURISTICS_PACKAGE + properties.getValue(ProPraProperties.KEY_TILE_CHOOSER);
@@ -85,7 +87,7 @@ public class Solver implements ISolver {
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException
                 | SecurityException | IllegalArgumentException | InvocationTargetException e) {
             throw new PropertyException(
-                    "Invalid parameter in properties file in heuristics. Please check if your properties file is valid.", e);
+                    CustomErrorMessages.ERROR_INVALID_VALUE_HEURISTICS);
         }
     }
 
@@ -96,29 +98,29 @@ public class Solver implements ISolver {
     public boolean solve() {
         Position pos = posFinder.findNextFreePosition(composite, null);
         Tile tile = null;
-        boolean foundTileThatFits = true;
+        boolean foundTileThatFits;
 
         // try to place tiles using backtracking as long as there are any
         // possibilities
         do {
-            tile = tileChooser.getNextTile(pos, tile);
+            tile = tileChooser.getNextTile(tile);
             foundTileThatFits = false;
 
             // try out all possible tiles at the current position
-            while (tile != null && !foundTileThatFits) {
+            while (tile != null) {
                 if (placeNextTile(tile, pos)) {
                     posList.add(pos);
                     foundTileThatFits = true;
                     pos = posFinder.findNextFreePosition(composite, pos);
                     if (ruleChecker.checkEndConditions(composite, tile, pos)) {
-                        // log.info("Iterations: " + counter);
-                        // log.info("Found a solution :) \n" + c);
+                        // logger.info("Iterations: " + counter);
+                        logger.info("Found a solution.");
                         prepareCompositeForDataOutput();
                         return true;
                     }
                     tile = null;
                 } else {
-                    tile = tileChooser.getNextTile(pos, tile);
+                    tile = tileChooser.getNextTile(tile);
                 }
             }
 
@@ -126,16 +128,19 @@ public class Solver implements ISolver {
             // could be found at the current position
             if (!foundTileThatFits) {
                 pos = posList.pollLast();
-                
+
                 // pos is null if tile list is empty
                 if (pos != null) {
                     tile = composite.getSurface().getEntryAt(pos);
                     composite.getSurface().removeEntry(tile, pos);
                 }
+                if (posList.isEmpty()) {
+                    logger.info("Choose another tile as first...");
+                }
             }
         } while (pos != null);
-        // log.info("Iterations: " + counter);
-        // log.info("Found no solution :(.");
+        // logger.info("Iterations: " + counter);
+        logger.info("Found no solution.");
         return false;
     }
 

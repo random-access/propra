@@ -6,7 +6,7 @@ import ess.data.Tile;
 import ess.exc.PropertyException;
 import ess.rules.IRule;
 import ess.rules.sets.IRuleSet;
-import ess.rules.sets.RuleSet;
+import ess.rules.sets.SolveRuleSet;
 
 /**
  * This class is an implementation of IRuleChecker that is optimized for
@@ -21,46 +21,54 @@ private IRuleSet ruleSet;
 	
     /**
      * Instantiates a SolveRuleChecker.
+     * @param composite the composite 
      * @throws PropertyException if the config.properties file cannot be read or if it contains
      * invalid parameters
      */
-	public SolveRuleChecker() throws PropertyException {
-		ruleSet = new RuleSet();
+	public SolveRuleChecker(Composite composite) throws PropertyException {
+		ruleSet = new SolveRuleSet(composite);
 	}
 
-	/* (non-Javadoc)
-	 * @see ess.algorithm.modules.IRuleChecker#checkExplicitRules(ess.data.Composite, ess.data.Tile, ess.data.Position)
+	/**
+	 * Checks if placing a tile breaks any of the explicit rules activated via config.properties.
+	 * If a rule is broken the tile cannot be placed, in this case the check is stopped immediately. 
+	 * @see IRuleChecker#checkExplicitRules(ess.data.Composite, ess.data.Tile, ess.data.Position)
 	 */
 	@Override
 	public boolean checkExplicitRules(Composite composite, Tile tile, Position pos) {
 		for (IRule rule : ruleSet.getExplicitRules()) {
-			 if (!rule.check(composite, tile, pos)) {
+			 if (!rule.check(tile, pos)) {
 				 return false;
 			 }
 		}
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see ess.algorithm.modules.IRuleChecker#checkImplicitRules(ess.data.Composite, ess.data.Tile, ess.data.Position)
-	 */
+	/**
+     * Checks if placing a tile breaks any of the implicit rules activated via config.properties.
+     * If a rule is broken the tile cannot be placed, in this case the check is stopped immediately. 
+     * @see IRuleChecker#checkExplicitRules(ess.data.Composite, ess.data.Tile, ess.data.Position)
+     */
 	@Override
 	public boolean checkImplicitRules(Composite composite, Tile tile, Position pos) {
 		for (IRule rule : ruleSet.getImplicitRules()) {
-			 if (!rule.check(composite, tile, pos)) {
+			 if (!rule.check(tile, pos)) {
 				 return false;
 			 }
 		}
 		return true;
 	}
 	
-	/* (non-Javadoc)
-	 * @see ess.algorithm.modules.IRuleChecker#checkEndConditions(ess.data.Composite, ess.data.Tile, ess.data.Position)
-	 */
+	/**
+     * Checks if the composite is filled completely.
+     * 
+     * @see IRuleChecker#checkEndConditions(ess.data.Composite, ess.data.Tile,
+     *      ess.data.Position)
+     */
 	@Override
 	public boolean checkEndConditions(Composite composite, Tile tile, Position pos) {
 		for (IRule rule : ruleSet.getEndConditions()) {
-			 if (!rule.check(composite, tile, pos)) {
+			 if (!rule.check(tile, pos)) {
 				 return false;
 			 }
 		}

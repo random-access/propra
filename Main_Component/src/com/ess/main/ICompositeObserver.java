@@ -10,7 +10,7 @@ import ess.algorithm.AbstractOutputObservable;
  * 
  * @author Monika Schrenk
  */
-public interface CompositeObserver extends Observer {
+public interface ICompositeObserver extends Observer {
 
     /**
      * Subscribes this instance for obtaining notifications from 
@@ -20,6 +20,6 @@ public interface CompositeObserver extends Observer {
      * about the composite.
      * @param mode Execution mode entered by the user.
      */
-    public void observe(AbstractOutputObservable obs, ExecMode mode);
+    void observe(AbstractOutputObservable obs, ExecMode mode);
 
 }

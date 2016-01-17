@@ -13,6 +13,8 @@ import java.util.logging.LogRecord;
  *
  */
 public class CustomLogFormatter extends Formatter {
+    
+    // TODO JUnit Tests
 	
 	/**
 	 * Formats the LogRecord object. 

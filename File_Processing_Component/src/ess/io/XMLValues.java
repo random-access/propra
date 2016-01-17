@@ -1,7 +1,7 @@
 package ess.io;
 
 /**
- * This class holds string values used by {@link ess.io.XMLDataImporter} and {@link ess.io.XMLDataExporter}
+ * This class holds string values used by {@link ess.io.XMLDataExchanger}.
  * 
  * @author Monika Schrenk
  *
@@ -18,7 +18,7 @@ public final class XMLValues {
 	
 	/**
 	 * Integer used for converting tiles to their internal representation.
-	 * If {@link #CONVERSION_UNIT} = x, we assume that all tile sorts and the surfaces width and length 
+	 * If CONVERSION_UNIT = x, we assume that all tile sorts and the surfaces width and length 
 	 * are multiples of x, and can be divided by x for internal data representation.
 	 */
 	public static final int CONVERSION_UNIT = 20;

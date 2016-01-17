@@ -10,7 +10,6 @@ import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Tile;
 import ess.exc.PropertyException;
-import ess.utils.ProPraLogger;
 
 /**
  * This class is responsible for validating a composite with a given installation plan against a set
@@ -25,13 +24,14 @@ public class Validator {
     private ValidationRuleChecker ruleChecker;
     
     /**
-     * Instantiates a new validator and sets up the validator-optimized modules, therefore using
+     * Instantiates a new <code>Validator</code> and sets up modules optimized for validation, therefore using
      * 
      * <ul>
-     *      <li>A TopToBottom position finder, because the installation plan provides the tiles from top left to bottom right</li>
-     *      <li>No TileChooser, because the tiles must not be chosen for validation</li>
-     *      <li>A ValidationRuleChecker which checks every rule, regardless of the rule before was broken or not, because the
-     *      information is needed for building the error list</li>
+     *      <li>A <code>TopToBottomPosFinder</code>, because the installation plan provides the tiles from top 
+     *      left to bottom right</li>
+     *      <li>No <code>ITileChooser</code>, because the tiles must not be selected from a list for validation</li>
+     *      <li>A <code>ValidationRuleChecker</code> which checks every <code>IRule</code> even if a previous one
+     *      was already broken, because this information is needed for returning an error list</li>
      * </ul>
      * 
      * @param composite holding the data the validator needs for building a solution
@@ -39,10 +39,9 @@ public class Validator {
      * cannot be read
      */
     public Validator(Composite composite) throws PropertyException {
-        ProPraLogger.setup();
-        posFinder = new TopToBottomPosFinder();
-        ruleChecker = new ValidationRuleChecker();
         this.composite = composite;
+        posFinder = new TopToBottomPosFinder();
+        ruleChecker = new ValidationRuleChecker(composite);
     }
     /**
      * Validates the given composite against the rules activated in the configuration file. 
@@ -50,34 +49,33 @@ public class Validator {
      * during construction.
      */
     public List<Validation> validateSolution() {
-        fillSurface(composite);
+        fillSurface();
         return ruleChecker.getErrorList();
     }
 
     // fills the surface with tiles in tileList, checking all rules before placing a tile.
-    private void fillSurface(Composite c) {
+    private void fillSurface() {
         Position pos = null;
         Tile tile = null;
         
         // try to place all tiles in the composite's tile list in the surface
-        for (String ident : c.getSurfaceTileList()) {
-            pos = posFinder.findNextFreePosition(c, pos);
-            tile = c.findTileById(ident);
-            if (ruleChecker.checkImplicitRules(c, tile, pos)) {
-                ruleChecker.checkExplicitRules(c, tile, pos);
+        for (String ident : composite.getSurfaceTileList()) {
+            pos = posFinder.findNextFreePosition(composite, pos);
+            tile = composite.findTileById(ident);
+            if (ruleChecker.checkImplicitRules(composite, tile, pos)) {
+                ruleChecker.checkExplicitRules(composite, tile, pos);
                 // if an explicit rule gets broken, continue to validate to maybe find other broken rules
-                c.getSurface().insertEntry(tile, pos);
+                composite.getSurface().insertEntry(tile, pos);
             } else {
                 // if an implicit rule gets broken (tiles overlapping the surface or other tiles
                 // or too many / not enough tiles in construction plan)
-                // it doesn't make sense to continue to place tiles
-                // as there might be exceptions.
-                return;
+                // place tile everywhere where it is possible, don't care about overwriting other tiles
+                composite.getSurface().insertEntryWherePossible(tile, pos);
             }
         }
         
-        // this currently only test if the surface is filled completely
-        pos = posFinder.findNextFreePosition(c, pos);
-        ruleChecker.checkEndConditions(c, tile, pos);
+        // test if the surface is filled completely
+        pos = posFinder.findNextFreePosition(composite, pos);
+        ruleChecker.checkEndConditions(composite, tile, pos);
     }
 }

@@ -19,7 +19,7 @@ public interface IRuleChecker {
      * @param pos The position where tile will be placed (left upper corner)
      * @return True, if no explicit rule was broken, else false.
      */
-	public boolean checkExplicitRules(Composite c, Tile tile, Position pos);
+	boolean checkExplicitRules(Composite c, Tile tile, Position pos);
 	
 	/**
      * Performs a check against the implicit rules of a RuleSet.
@@ -28,7 +28,7 @@ public interface IRuleChecker {
      * @param pos The position where tile will be placed (left upper corner)
      * @return True, if no implicit rule was broken, else false.
      */
-	public boolean checkImplicitRules(Composite c, Tile tile, Position pos);
+	boolean checkImplicitRules(Composite c, Tile tile, Position pos);
 	
 	/**
      * Performs a check against the end conditions of a RuleSet.
@@ -38,5 +38,5 @@ public interface IRuleChecker {
      * @param pos The next free position
      * @return True, if no end condition was broken, else false.
      */
-	public boolean checkEndConditions(Composite c, Tile tile, Position pos);
+	boolean checkEndConditions(Composite c, Tile tile, Position pos);
 }
