@@ -7,8 +7,8 @@ import ess.rules.ErrorType;
 import ess.rules.IRule;
 
 /**
- * This implementation of IRule checks if a surface is filled completely with tiles 
- * by searching if there is any free spot in a composite's surface left.
+ * This implementation of <code>IRule</code> checks if a surface is filled completely with Tiles 
+ * by searching if there is any free spot in a Composite's Surface left.
  * 
  * @author Monika Schrenk
  *
@@ -16,9 +16,9 @@ import ess.rules.IRule;
 public class SurfaceIsFilledCompletelyRule implements IRule {
     
     /**
-     * Initializes an instance of SurfaceIsFilledCompletelyRule.
+     * Initializes an instance of <code>SurfaceIsFilledCompletelyRule</code>.
      *
-     * @param composite the composite
+     * @param composite the Composite that will be checked against this set of rules.
      */
     public SurfaceIsFilledCompletelyRule(Composite composite) {
         // nothing needs to be done
@@ -39,5 +39,4 @@ public class SurfaceIsFilledCompletelyRule implements IRule {
 	public boolean check(Tile t, Position pos) {
 		return pos == null;
 	}
-
 }

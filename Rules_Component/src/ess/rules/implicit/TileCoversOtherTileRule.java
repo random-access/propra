@@ -7,10 +7,9 @@ import ess.rules.ErrorType;
 import ess.rules.IRule;
 
 /**
- * This implementation of IRule checks if a tile that is about to be placed at pos 
- * covers any other tile. It does so by checking if every
- * field that should contain the new tile is still empty. If this is the case, the rule is 
- * not broken.
+ * This implementation of <code>IRule</code> checks if a Tile that is about to be placed at the 
+ * given Position covers any other Tile. It does so by checking if every field that should contain 
+ * the new Tile is still empty. If this is the case, the rule is not broken.
  * 
  * @author Monika Schrenk
  */
@@ -19,9 +18,9 @@ public class TileCoversOtherTileRule implements IRule {
     private Composite composite;
     
     /**
-     * Initializes an instance of TileCoversOtherTileRule.
+     * Initializes an instance of <code>TileCoversOtherTileRule</code>.
      *
-     * @param composite the composite
+     * @param composite the Composite that will be checked against this set of rules.
      */
     public TileCoversOtherTileRule(Composite composite) {
         this.composite = composite;
@@ -49,5 +48,4 @@ public class TileCoversOtherTileRule implements IRule {
 	public ErrorType getErrorType() {
 		return ErrorType.OTHER;
 	}
-
 }

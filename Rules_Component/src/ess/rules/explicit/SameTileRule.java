@@ -9,9 +9,9 @@ import ess.rules.ErrorType;
 import ess.rules.IRule;
 
 /** 
- * This implementation of IRule checks if a tile that is about to be placed at pos 
- * is placed exactly beneath a tile with the same ID. It does so by checking if every
- * edge has at least 1 outer neighbor entry with a different tile id or null. 
+ * This implementation of <code>IRule</code> checks if a Tile that is about to be placed at the given 
+ * Position is placed exactly beneath a Tile with the same ID. It does so by checking if every Edge has 
+ * at least 1 outer neighbor Tile with a different id or null. 
  * If this is the case, the rule is not broken.
  * 
  * @author Monika Schrenk
@@ -21,8 +21,8 @@ public class SameTileRule implements IRule {
     private Composite composite;
     
     /**
-     * Initializes an instance of SameTileRule
-     * @param composite the composite
+     * Initializes an instance of <code>SameTileRule</code>.
+     * @param composite the Composite that will be checked against this set of rules.
      */
     public SameTileRule(Composite composite) {
         this.composite = composite;

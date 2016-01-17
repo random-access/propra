@@ -9,11 +9,10 @@ import ess.rules.ErrorType;
 import ess.rules.IRule;
 
 /**
- * This implementation of IRule checks if a tile that is about to be placed at pos 
- * creates a cross of tiles. It does so by checking every position a corner of tile will be
- * inserted, comparing the column neighbor tile, row neighbor tile and diagonal neighbor tile.
- *  If at least two of the neighbor tiles with a common edge are the same, the rule is 
- * not broken.
+ * This implementation of <code>IRule</code> checks if a Tile that is about to be placed at a given
+ * Position creates a cross with other Tiles. It does so by checking every Position a Corner of a 
+ * Tile will be inserted, comparing the column neighbor Tile, row neighbor Tile and diagonal neighbor Tile.
+ * If at least two of the neighbor Tiles with a common edge are the same, the rule is not broken.
  * 
  * @author Monika Schrenk
  */
@@ -22,9 +21,9 @@ public class CrossingsRule implements IRule {
     private Composite composite;
     
     /**
-     * Initializes an instance of CrossingsRule.
+     * Initializes an instance of <code>CrossingsRule</code>.
      *
-     * @param composite the composite
+     * @param composite the Composite that will be checked against this set of rules.
      */
     public CrossingsRule(Composite composite) {
         this.composite = composite;
@@ -69,6 +68,4 @@ public class CrossingsRule implements IRule {
 	public ErrorType getErrorType() {
 		return ErrorType.CROSSINGS;
 	}
-	
-
 }

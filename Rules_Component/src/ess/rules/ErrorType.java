@@ -32,5 +32,4 @@ public enum ErrorType {
 	 * ErrorType of all other rules.
 	 */
 	OTHER
-
 }

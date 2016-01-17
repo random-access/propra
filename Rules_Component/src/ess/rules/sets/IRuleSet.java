@@ -8,9 +8,10 @@ import ess.rules.IRule;
 /**
  * This interface should be implemented by classes putting together a collection of rules.
  * 
- * A RuleSet can return 3 sorts of rules that are stored in different lists:
+ * An <code>IRuleSet</code> can return 3 sorts of rules that are stored in different lists:
  * <ol>
- *  <li>{@link #getExplicitRules()}, a list of explicit rules for checking the conditions B1-B4</li>
+ *  <li>{@link #getExplicitRules()}, a list of explicit rules for checking the conditions B1-B4 and maybe some additional 
+ *  rules for performance improvement (Rules that help detecting invalid constellations as early as possible</li>
  *  <li>{@link #getImplicitRules()}, a list of implicit rules for checking if a tile can be placed at a certain position 
  *  without invalidating the whole composite</li>
  *  <li>{@link #getEndConditions()}, a list of end conditions for checking if the surface is filled completely with tiles</li>
@@ -49,5 +50,4 @@ public interface IRuleSet {
 	 * @param errorType The ErrorType belonging to the rule that was broken.
 	 */
 	void addError(ErrorType errorType);
-
 }

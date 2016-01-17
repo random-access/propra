@@ -17,7 +17,7 @@ import ess.utils.CustomLogger;
 import ess.utils.ProPraProperties;
 
 /**
- * This class is an implementation of IRuleSet that loads the explicit
+ * This class is an implementation of <code>IRuleSet</code> that loads the explicit
  * rules that were activated in config.properties. <br>
  * Additionally, it activates all implicit rules and all end conditions.
  * 
@@ -34,8 +34,8 @@ public class ValidationRuleSet implements IRuleSet {
 	private LinkedList<IRule> endConditionSet;
 
 	/**
-	 * Instantiates a ValidationRuleSet.
-	 * @param composite the composite
+	 * Instantiates a <code>ValidationRuleSet</code>.
+	 * @param composite the Composite that will be checked against this rule set
 	 * @throws PropertyException if config.properties could not be read
 	 * or if it contains invalid parameters.
 	 */

@@ -9,14 +9,13 @@ import ess.rules.ErrorType;
 import ess.rules.IRule;
 
 /**
- * This implementation of IRule uses the fact that if there is a single tile
- * with smallest width w, all higher tiles must be placed at least w+1 away from
- * the sides (left and right) of the surface. The narrowest tile itself must be
- * placed w+1 away from the sides as well. Otherwise it would be necessary to
- * place 2 of the narrowest tiles above each other which is not allowed, if
- * SameTileRule is active. Same fact is true for the height of tiles, if there
- * is a single tile with a smaller height the the others.
- * 
+ * This implementation of <code>IRule</code> uses the fact that if there is a single Tile with smallest 
+ * width w, all higher Tiles must be placed at least w+1 away from the sides (left and right) of the 
+ * surface. The narrowest Tile itself must be placed w+1 away from the sides as well. Otherwise it would 
+ * be necessary to place two of the narrowest tiles above each other which is not allowed, if 
+ * <code>SameTileRule</code> is active. Same fact is true for the height of Tiles, if there is a single 
+ * Tile with a smaller height than the others.
+ * <br><br>
  * This is an additional rule, which means that it will only be activated if all
  * explicit rules are active to avoid conflicting rule checks.
  * 
@@ -35,10 +34,9 @@ public class MinDistanceToBorderRule implements IRule {
     }
 
     /**
-     * Initializes an instance of MinDistanceToBorderRule.
+     * Initializes an instance of <code>MinDistanceToBorderRule</code>.
      *
-     * @param composite
-     *            the composite
+     * @param composite the Composite that will be checked against this set of rules.
      */
     public MinDistanceToBorderRule(Composite composite) {
         this.composite = composite;

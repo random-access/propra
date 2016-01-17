@@ -9,9 +9,9 @@ import ess.rules.ErrorType;
 import ess.rules.IRule;
 
 /**
- * This implementation of IRule checks if a tile that is about to be placed at pos 
- * exceeds the surface of composite. It does so by checking if the top left edge and the bottom
- * right edge of the tile are both inside the surface, when placed at pos. 
+ * This implementation of <code>IRule</code> checks if a Tile that is about to be placed at the given
+ * Position exceeds the Surface of a Composite. It does so by checking if the top left edge and the 
+ * bottom right edge of the Tile are both inside the Surface, when placed at the given Position. 
  * If this is the case, the rule is not broken.
  * 
  * @author Monika Schrenk
@@ -21,9 +21,9 @@ public class TileExceedsSurfaceRule implements IRule {
     private Composite composite;
     
     /**
-     * Initializes an instance of TileExceedsSurfaceRule.
+     * Initializes an instance of <code>TileExceedsSurfaceRule</code>.
      *
-     * @param composite the composite
+     * @param composite the Composite that will be checked against this set of rules.
      */
     public TileExceedsSurfaceRule(Composite composite) {
         this.composite = composite;
@@ -46,6 +46,5 @@ public class TileExceedsSurfaceRule implements IRule {
 	public ErrorType getErrorType() {
 		return ErrorType.OTHER;
 	}
-
 }
 

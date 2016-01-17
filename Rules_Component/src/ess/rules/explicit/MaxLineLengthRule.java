@@ -11,13 +11,12 @@ import ess.rules.IRule;
 import ess.strings.CustomErrorMessages;
 
 /**
- * This implementation of IRule checks if a tile that is about to be placed at pos 
- * exceeds the maximum line length (causes a border in the composite's surface having 
- * a straight line longer than composite's maxTileLenght. It does so by checking if the
- * sum of the edge of the tile that will be placed, the left extension of this line
- * and the right extension of this line is larger than maxTileLength. It checks all
- * 4 edges. If all of these values are shorter than maxLineLength, the rule is 
- * not broken.
+ * This implementation of <code>IRule</code> checks if a tile that is about to be placed at the given
+ * Position exceeds the maximum gap length (causes a border in the composite's surface having a straight 
+ * line longer than composite's <code>maxGapLength</code>. It does so by checking if the sum of the Edge 
+ * of the Tile that will be placed, the left extension of this line and the right extension of this line 
+ * is larger than the composite's <code>maxGapLength</code>. It checks all 4 edges. If all of these values 
+ * are shorter than the composite's <code>maxGapLength</code>, the rule is not broken.
  * 
  * @author Monika Schrenk
  */
@@ -26,9 +25,9 @@ public class MaxLineLengthRule implements IRule {
     private Composite composite;
     
     /**
-     * Initializes an instance of MaxLineLengthRule.
+     * Initializes an instance of <code>MaxLineLengthRule</code>.
      *
-     * @param composite the composite
+     * @param composite the Composite that will be checked against this set of rules.
      */
     public MaxLineLengthRule(Composite composite) {
         this.composite = composite;

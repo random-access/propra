@@ -12,12 +12,11 @@ import ess.rules.ErrorType;
 import ess.rules.IRule;
 
 /**
- * This implementation of IRule checks if a tile that is about to be placed at
- * pos forms a combination with other tiles that can be replaced by a larger
- * tile. It does so by checking if every tile larger than the tile that is about
- * to be placed inside the composite's surface, aligned with any of the 4
- * corners, is either overlapping the surface or doesn't exactly align with
- * edges of tiles. If this is the case, the rule is not broken.
+ * This implementation of <code>IRule</code> checks if a Tile that is about to be placed at the given 
+ * Position forms a combination with other Tiles that can be replaced by a larger Tile. It does so by 
+ * checking if every Tile larger than the Tile that is about to be placed inside the Composite's Surface, 
+ * aligned with any of the 4 Corners, is either overlapping the surface or doesn't exactly align with
+ * edges of Tiles. If this is the case, the rule is not broken.
  * 
  * @author Monika Schrenk
  */
@@ -27,10 +26,9 @@ public class ReplaceableTileRule implements IRule {
     private Composite composite;
 
     /**
-     * Initializes an instance of ReplaceableTileRule.
+     * Initializes an instance of <code>ReplaceableTileRule</code>.
      *
-     * @param composite
-     *            the composite
+     * @param composite the Composite that will be checked against this set of rules.
      */
     public ReplaceableTileRule(Composite composite) {
         this.composite = composite;
@@ -131,5 +129,4 @@ public class ReplaceableTileRule implements IRule {
     public ErrorType getErrorType() {
         return ErrorType.REPLACEABLE_TILE;
     }
-
 }
