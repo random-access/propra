@@ -4,7 +4,7 @@ import ess.exc.InvalidInputException;
 import ess.strings.CustomErrorMessages;
 
 /**
- * This enum provides different values for the execution modes entered by the user via command line.
+ * This Enum provides different values for the execution modes entered by the user via command line.
  * 
  * @author Monika Schrenk
  */
@@ -35,9 +35,9 @@ public enum ExecMode {
 	DISPLAY;
 	
 	/**
-	 * Returns the corresponding execution mode value when called with a string that
+	 * Returns the corresponding <code>ExecMode</code> value when called with a string that
 	 * stores the user input. <br>
-	 * If the user input isn't valid, this method throws an InvalidInputException holding
+	 * If the user input isn't valid, this method throws an <code>InvalidInputException</code> holding
 	 * an info message that can be displayed.
 	 * @param shortcut User input for parameter r=x ("r=" must be already removed).
 	 * @return The corresponding ExecMode.

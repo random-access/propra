@@ -13,9 +13,9 @@ import ess.ui.MainWindow;
 import ess.utils.CustomLogger;
 
 /**
- * An implementation of CompositeObserver that shows a graphical
- * representation of a composite. It gets notified by 
- * an AbstractOutputObservable if there is a valid composite
+ * An implementation of <code>CompositeObserver<code> that shows a graphical
+ * representation of a <code>Composite</code>. It gets notified by 
+ * an <code>AbstractOutputObservable</code> if there is a valid Composite
  * to be displayed.
  */
 public class DisplayObserver implements ICompositeObserver {

@@ -5,7 +5,7 @@ import ess.strings.CustomErrorMessages;
 import ess.strings.CustomInfoMessages;
 
 /**
- * This class is responsible for parsing the parameters the user 
+ * This class is responsible for parsing all parameters the user 
  * entered when starting the application via terminal.
  * 
  * @author monika
@@ -21,7 +21,7 @@ public class InputParser {
 	private static final int NO_OF_PARAMS = 3;
 
 	/**
-	 * Constructs an InputParser, passing in the parameters.
+	 * Constructs an <code>InputParser</code>, passing in the parameters.
 	 * @param args Parameters the user entered.
 	 * @throws InvalidInputException if a parameter is considered invalid.
 	 */
@@ -33,16 +33,16 @@ public class InputParser {
 	}
 	
 	/**
-	 * Returns the execution mode entered by the user.
-	 * @return Execution mode.
+	 * Returns the <code>ExecMode<code> entered by the user.
+	 * @return the execution mode.
 	 */
 	public ExecMode getMode() {
 		return mode;
 	}
 	
 	/**
-	 * Returns the path to a source holding infos about a composite.
-	 * @return ?ath to a source of a composite.
+	 * Returns the path to a source holding infos about a Composite.
+	 * @return path to a source of a composite.
 	 */
 	public String getPath() {
 		return path;

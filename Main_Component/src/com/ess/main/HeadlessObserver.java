@@ -12,7 +12,7 @@ import ess.utils.CustomLogger;
  * An implementation of <code>CompositeObserver</code> that shows info about 
  * the <code>Composite</code> in a terminal. It gets notified by 
  * an <code>AbstractOutputObservable</code> if there is a valid 
- * <code>Composite</code> to be displayed.
+ * Composite to be displayed.
  */
 public class HeadlessObserver implements ICompositeObserver {
 

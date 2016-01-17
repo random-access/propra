@@ -1,7 +1,7 @@
 package ess.rules;
 
 /**
- * This enum holds values for each error type that can occur during
+ * This Enum holds values for each error type that can occur during
  * checking of rules.
  * 
  * @author Monika Schrenk

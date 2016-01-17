@@ -6,7 +6,7 @@ import ess.algorithm.AbstractOutputObservable;
 
 /**
  * This interface should be implemented by any class that wants to obtain notifications
- * if solving or validating a composite was successful.
+ * if solving or validating a Composite was successful.
  * 
  * @author Monika Schrenk
  */
@@ -14,7 +14,7 @@ public interface ICompositeObserver extends Observer {
 
     /**
      * Subscribes this instance for obtaining notifications from 
-     * AbstractOutputObservable.
+     * <code>AbstractOutputObservable</code>.
      * 
      * @param obs An instance of AbstractOutputObservable that holds information
      * about the composite.
