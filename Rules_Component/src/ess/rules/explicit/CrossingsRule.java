@@ -46,7 +46,6 @@ public class CrossingsRule implements IRule {
 	private boolean checkCorner(Corner corner, Tile tile, Position pos) {
 	    Surface surface = composite.getSurface();
 		Position cornerPos = surface.getCornerPos(tile, pos, corner);
-		// TODO maybe border check is not necessary?
 		if (surface.isBorderPosition(cornerPos)) {
 			return true;
 		}
