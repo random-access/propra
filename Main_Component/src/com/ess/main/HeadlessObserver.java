@@ -40,24 +40,23 @@ public class HeadlessObserver implements ICompositeObserver {
             System.out.println(obs.getErrorMessage());
             return;
         }
-        String message;
+        System.out.println(constructInfoMessage(obs));
+        for (String s : obs.getErrorList()) {
+            System.out.println(s);
+        }
+    }
+    
+    // puts together a success / error message depending on the mode 
+    private String constructInfoMessage(AbstractOutputObservable obs) {
         switch (mode) {
             case SOLVE:
-                message = obs.hasValidComposite() 
+                return obs.hasValidComposite() 
                     ? CustomInfoMessages.INFO_SOLVE_SUCCESS : CustomInfoMessages.INFO_SOLVE_FAILURE;
-                System.out.println(message);
-                for (String s : obs.getErrorList()) {
-                    System.out.println(s);
-                }
-                break;
             case VALIDATE:
-                message = obs.hasValidComposite() 
-                    ? CustomInfoMessages.INFO_VALIDATION_SUCCESS : CustomInfoMessages.INFO_VALIDATION_FAILURE;
-                System.out.println(message);
-                break;
-           default:
-                throw new UnsupportedOperationException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, mode));
+                return obs.hasValidComposite() 
+                    ? CustomInfoMessages.INFO_VALIDATION_SUCCESS : CustomInfoMessages.INFO_VALIDATION_FAILURE;  
+            default:
+                throw new UnsupportedOperationException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, mode));  
         }
-        
     }
 }
