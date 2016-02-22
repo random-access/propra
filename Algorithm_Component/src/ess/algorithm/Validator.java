@@ -17,7 +17,7 @@ import ess.exc.PropertyException;
  * 
  * @author Monika Schrenk
  */
-public class Validator { 
+class Validator { 
 
     private Composite composite;
     private IPositionFinder posFinder;

@@ -28,7 +28,7 @@ import ess.utils.ProPraProperties;
  * 
  * @author Monika Schrenk
  */
-public class Solver implements ISolver {
+class Solver implements ISolver {
 
     private final Logger logger = CustomLogger.getLogger();
 

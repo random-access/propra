@@ -14,7 +14,7 @@ import ess.exc.PropertyException;
  * @author monika
  *
  */
-public class Displayer implements IDisplayer {
+class Displayer implements IDisplayer {
 
     private Composite composite;
     private IPositionFinder posFinder;
