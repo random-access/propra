@@ -21,7 +21,7 @@ public class Displayer_Test {
         Tile tile = new Tile("_1", 2, 2);
         tileList.add(tile.getId());
         tileSorts.add(tile);
-        
+
         new Displayer(c).constructOutput();
         
         for (int i = 0; i < c.getSurface().getRows(); i++) {
