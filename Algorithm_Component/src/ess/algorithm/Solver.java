@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import ess.algorithm.modules.IPositionFinder;
 import ess.algorithm.modules.IRuleChecker;
 import ess.algorithm.modules.ITileChooser;
-import ess.algorithm.modules.SolveRuleChecker;
+import ess.algorithm.modules.ParallelRuleChecker;
 import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Tile;
@@ -78,7 +78,7 @@ public class Solver implements ISolver {
             posFinder = (IPositionFinder) Class.forName(posFinderName).newInstance();
 
             // initialize RuleChecker
-            ruleChecker = new SolveRuleChecker(composite);
+            ruleChecker = new ParallelRuleChecker(composite);
 
             // initialize selected implementation of ITileChooser
             String tileChooserName = ProPraProperties.HEURISTICS_PACKAGE + properties.getValue(ProPraProperties.KEY_TILE_CHOOSER);

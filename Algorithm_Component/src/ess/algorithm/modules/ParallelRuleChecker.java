@@ -18,20 +18,30 @@ import ess.rules.IRule;
 import ess.rules.sets.IRuleSet;
 import ess.rules.sets.SolveRuleSet;
 
-public class ParallelSolveRuleChecker implements IRuleChecker {
+/**
+ * This class is an implementation of IRuleChecker that checks all rules in parallel.
+ * 
+ * @author monika
+ *
+ */
+public class ParallelRuleChecker implements IRuleChecker {
 
     private IRuleSet ruleSet;
     private Executor executor;
     private CompletionService<Boolean> completionService;
     private final int threadPoolSize;
-
-    private class IRuleCallableWrapper implements Callable<Boolean> {
+    private ArrayList<Future<Boolean>> futureResults;
+    private boolean result;
+    private int expectedResults;
+    
+    // wrapper class for a single rule check
+    private class IRuleWrapper implements Callable<Boolean> {
 
         private Tile tile;
         private Position pos;
         private IRule rule;
 
-        IRuleCallableWrapper(IRule rule, Tile tile, Position pos) {
+        IRuleWrapper(IRule rule, Tile tile, Position pos) {
             this.rule = rule;
             this.tile = tile;
             this.pos = pos;
@@ -41,11 +51,10 @@ public class ParallelSolveRuleChecker implements IRuleChecker {
         public Boolean call() {
             return rule.check(tile, pos);
         }
-
     }
 
     /**
-     * Instantiates a ParallelSolveRuleChecker.
+     * Instantiates a ParallelRuleChecker.
      * 
      * @param composite
      *            the composite
@@ -53,40 +62,40 @@ public class ParallelSolveRuleChecker implements IRuleChecker {
      *             if the config.properties file cannot be read or if it
      *             contains invalid parameters
      */
-    public ParallelSolveRuleChecker(Composite composite) throws PropertyException {
+    public ParallelRuleChecker(Composite composite) throws PropertyException {
         ruleSet = new SolveRuleSet(composite);
         threadPoolSize = ruleSet.getExplicitRules().size();
         executor = Executors.newFixedThreadPool(threadPoolSize);
         completionService = new ExecutorCompletionService<Boolean>(executor);
+        futureResults = new ArrayList<>();
     }
-    
 
+    /**
+     * Checks all explicit rules in parallel, currently waiting for every rule check to finish.
+     * Could be optimized by only running a single check until one of the results outputs false
+     *
+     * @see IRuleChecker#checkExplicitRules(ess.data.Composite, ess.data.Tile,
+     *      ess.data.Position)
+     */
     @Override
-    public synchronized boolean checkExplicitRules(Composite c, Tile tile, Position pos) {
-        ArrayList<Future<Boolean>> futureResults = new ArrayList<>();
+    public boolean checkExplicitRules(Composite c, Tile tile, Position pos) {
+        futureResults.clear();
         for (IRule rule : ruleSet.getExplicitRules()) {
-            futureResults.add(completionService.submit(new IRuleCallableWrapper(rule, tile, pos)));
+            futureResults.add(completionService.submit(new IRuleWrapper(rule, tile, pos)));
         }
 
-        int expectedResults = threadPoolSize;
-        boolean result = true;
-        try {
-            while (expectedResults > 0) {
-                try {
-                    // take() blocks until a result is available
-                    result &= completionService.take().get();
-                    expectedResults--;
-//                    if (!result) {
-//                        break;
-//                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        result = true;
+        expectedResults = threadPoolSize;
+        
+        while (expectedResults > 0) {
+            try {
+                // take() blocks until a result is available
+                result &= completionService.take().get();
+                expectedResults--;
+            } catch (Exception e) {
+                // TODO error handling
+                e.printStackTrace();
             }
-        } finally {
-//            for (Future<Boolean> f : futureResults) {
-//                f.cancel(true);
-//            }
         }
         return result;
     }
@@ -128,7 +137,6 @@ public class ParallelSolveRuleChecker implements IRuleChecker {
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
-        System.out.println("Finishing..");
         ExecutorService pool = (ExecutorService) executor;
         pool.shutdown();
         try {
