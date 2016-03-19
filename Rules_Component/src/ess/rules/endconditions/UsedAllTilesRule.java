@@ -35,13 +35,11 @@ public class UsedAllTilesRule implements IRule{
                 }
                 if (usedTiles.size() == composite.getTileSorts().size()) {
                 	setSmallestTile();
-                	// setUnusedTiles();
                     return true;
                 }
             }
         }
         setSmallestTile();
-        // setUnusedTiles();
         return false;
     }
     
@@ -58,16 +56,6 @@ public class UsedAllTilesRule implements IRule{
         	}
         }
     }
-    
-//    private ArrayList<Tile> setUnusedTiles() {
-//        ArrayList<Tile> unusedTiles = new ArrayList<>();
-//        for (Tile t : composite.getTileSorts()) {
-//            if (!usedTiles.contains(t)) {
-//                composite.getSurface().addToUnusedTiles(t);
-//            }
-//        }
-//        return unusedTiles;
-//    }
     
     @Override
     public String getAdditionalErrorMessage() {

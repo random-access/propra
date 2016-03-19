@@ -19,7 +19,6 @@ public class Surface {
 
     private Tile[][] fields;
     private ArrayList<Tile> smallestTiles;
-    private ArrayList<Tile> unusedTiles;
 
     /**
      * Instantiates a new <code>Surface</code>.
@@ -29,7 +28,6 @@ public class Surface {
     public Surface(int rows, int cols) {
         fields = new Tile[rows][cols];
         smallestTiles = new ArrayList<>();
-        unusedTiles = new ArrayList<>();
     }
 
     /**
@@ -361,21 +359,23 @@ public class Surface {
         throw new InvalidParameterException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, c));
     }
     
+    /**
+     * Add a tile to the list of smallest tiles placed inside this surface
+     * @param smallestTile
+     */
     public void addToSmallestTileList(Tile smallestTile) {
         smallestTiles.add(smallestTile);
     }
     
-    
+    /**
+     * Returns a list of smallest tiles placed inside this surface.
+     * Smallest tiles are all tiles with the least amount of fields.
+     * This list gets filled during solving / validating a composite. 
+     * Before those actions are finished, this list is empty.
+     * @return a list of all smallest tiles inside this surface.
+     */
     public ArrayList<Tile> getSmallestTile() {
         return smallestTiles;
-    }
-    
-    public void addToUnusedTiles(Tile unusedTile) {
-        unusedTiles.add(unusedTile);
-    }
-    
-    public ArrayList<Tile> getUnusedTiles() {
-        return unusedTiles;
     }
 
     /**
