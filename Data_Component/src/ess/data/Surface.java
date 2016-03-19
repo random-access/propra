@@ -2,6 +2,7 @@ package ess.data;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import ess.strings.CustomErrorMessages;
 
@@ -18,7 +19,7 @@ import ess.strings.CustomErrorMessages;
 public class Surface {
 
     private Tile[][] fields;
-    private ArrayList<Tile> smallestTiles;
+    private ArrayList<Tile> usedTiles;
 
     /**
      * Instantiates a new <code>Surface</code>.
@@ -27,7 +28,7 @@ public class Surface {
      */
     public Surface(int rows, int cols) {
         fields = new Tile[rows][cols];
-        smallestTiles = new ArrayList<>();
+        usedTiles = new ArrayList<>();
     }
 
     /**
@@ -360,22 +361,63 @@ public class Surface {
     }
     
     /**
-     * Add a tile to the list of smallest tiles placed inside this surface
-     * @param smallestTile
+     * Set the list of tiles used for laying out this surface.
+     * This list gets filled during solving / validating a composite. 
+     * Before those actions are finished, this list is empty.
+     * @param usedTiles
      */
-    public void addToSmallestTileList(Tile smallestTile) {
-        smallestTiles.add(smallestTile);
+    public void setUsedTiles(ArrayList<Tile> usedTiles) {
+        this.usedTiles = usedTiles;
+    }
+    
+    /**
+     * Get the list of tiles used for laying out this surface.
+     * This list gets filled during solving / validating a composite. 
+     * Before those actions are finished, this list is empty.
+     * @return
+     */
+    public ArrayList<Tile> getUsedTiles() {
+        return usedTiles;
     }
     
     /**
      * Returns a list of smallest tiles placed inside this surface.
-     * Smallest tiles are all tiles with the least amount of fields.
-     * This list gets filled during solving / validating a composite. 
-     * Before those actions are finished, this list is empty.
+     * Smallest tiles are all tiles with the smallest amount of fields.
      * @return a list of all smallest tiles inside this surface.
      */
-    public ArrayList<Tile> getSmallestTile() {
+    public ArrayList<Tile> getSmallestTiles() {
+        ArrayList<Tile> smallestTiles = new ArrayList<>();
+        if (usedTiles.size() > 0) {
+            Collections.sort(usedTiles, TileComparator.FIELDS_ASC);
+            int smallestTileSize = usedTiles.get(0).getNumberOfFields();
+            for (Tile t : usedTiles) {
+                if (t.getNumberOfFields() > smallestTileSize) {
+                    break;
+                }
+                smallestTiles.add(t);
+            }
+        }
         return smallestTiles;
+    }
+    
+    /**
+     * Returns a list of largest tiles placed inside this surface.
+     * Largest tiles are all tiles with the highest amount of fields.
+     * @return a list of all smallest tiles inside this surface.
+     */
+    public ArrayList<Tile> getLargestTiles() {
+        ArrayList<Tile> largestTiles = new ArrayList<>();
+        if (usedTiles.size() > 0) {
+            Collections.sort(usedTiles, TileComparator.FIELDS_DESC);
+            int largestTileSize = usedTiles.get(0).getNumberOfFields();
+            for (Tile t : usedTiles) {
+                if (t.getNumberOfFields() < largestTileSize) {
+                    break;
+                }
+                largestTiles.add(t);
+            }
+        }
+        return largestTiles;
     }
 
     /**

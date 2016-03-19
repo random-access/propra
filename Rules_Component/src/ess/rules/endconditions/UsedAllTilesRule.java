@@ -1,12 +1,10 @@
 package ess.rules.endconditions;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Tile;
-import ess.data.TileComparator;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
 
@@ -34,27 +32,13 @@ public class UsedAllTilesRule implements IRule{
                     usedTiles.add(currentTile);
                 }
                 if (usedTiles.size() == composite.getTileSorts().size()) {
-                	setSmallestTile();
+                    composite.getSurface().setUsedTiles(usedTiles);
                     return true;
                 }
             }
         }
-        setSmallestTile();
+        composite.getSurface().setUsedTiles(usedTiles);
         return false;
-    }
-    
-    private void setSmallestTile() {
-    	if (usedTiles.size() > 1) {
-        	Collections.sort(usedTiles, TileComparator.FIELDS_ASC);
-        	int noOfFields = usedTiles.get(0).getNumberOfFields();
-        	int currentNoOfFields = noOfFields;
-        	int index = 0;
-        	while (index < usedTiles.size() && currentNoOfFields == noOfFields) {
-        		composite.getSurface().addToSmallestTileList(usedTiles.get(index));
-        		index++;
-        		currentNoOfFields = usedTiles.get(index).getNumberOfFields();
-        	}
-        }
     }
     
     @Override
