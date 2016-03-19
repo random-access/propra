@@ -68,4 +68,9 @@ public class CrossingsRule implements IRule {
 	public ErrorType getErrorType() {
 		return ErrorType.CROSSINGS;
 	}
+	
+    @Override
+    public String getAdditionalErrorMessage() {
+        return "";
+    }
 }

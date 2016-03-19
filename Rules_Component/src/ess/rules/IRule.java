@@ -22,6 +22,12 @@ public interface IRule {
 	ErrorType getErrorType();
 	
 	/**
+	 * Returns any additional error message concerning this rule
+	 * @return
+	 */
+	String getAdditionalErrorMessage();
+	
+	/**
 	 * Checks if this rule is broken when tile will be placed into the Composite's surface.
 	 * Rules are checked before the tile is placed, so implementations must deal with 
 	 * the tile not being placed yet. 

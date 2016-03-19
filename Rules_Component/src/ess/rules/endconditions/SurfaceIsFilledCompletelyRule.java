@@ -39,4 +39,9 @@ public class SurfaceIsFilledCompletelyRule implements IRule {
 	public boolean check(Tile t, Position pos) {
 		return pos == null;
 	}
+	
+    @Override
+    public String getAdditionalErrorMessage() {
+        return "";
+    }
 }

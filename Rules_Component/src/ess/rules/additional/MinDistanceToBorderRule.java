@@ -130,4 +130,9 @@ public class MinDistanceToBorderRule implements IRule {
             return tile.getRows();
         }
     }
+
+    @Override
+    public String getAdditionalErrorMessage() {
+        return "";
+    }
 }

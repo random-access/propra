@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import ess.algorithm.modules.ErrorMapper;
 import ess.data.Composite;
 import ess.exc.InvalidLengthValueException;
 import ess.exc.PropertyException;
@@ -26,6 +25,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
     
     private String errorMessage;
     private List<Validation> errorList;
+    private List<String> errorMessages;
     private boolean hasValidSolution;
     private Composite composite;
     private String pathToXml;
@@ -53,6 +53,11 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
          * Crossings have been found. 
          */
         FUGENKREUZE,
+        
+        /**
+         * Not all tiles are used
+         */
+        NICHT_GENUTZTE_FLIESE,
 
         /**
          * Other errors have occurred.
@@ -76,6 +81,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
             convertGapLength(maxGapLength, composite);
             Validator validator = new Validator(composite);
             errorList = validator.validateSolution();
+            errorMessages = validator.getErrorMessages();
             hasValidSolution = errorList.size() == 0;
         } catch (DataExchangeException | PropertyException | InvalidLengthValueException e) {
             errorMessage = e.getMessage();
@@ -148,10 +154,7 @@ public class RoemischerVerbund extends AbstractOutputObservable implements IRoem
      */
     @Override
     public List<String> getErrorList() {
-        if (errorList == null) {
-            return new LinkedList<>();
-        }
-        return ErrorMapper.mapErrorsForUi(errorList);
+        return (errorMessages == null)? new LinkedList<String>() : errorMessages;
     }
 
     /* (non-Javadoc)

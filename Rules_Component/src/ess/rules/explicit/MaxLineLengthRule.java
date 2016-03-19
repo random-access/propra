@@ -129,4 +129,9 @@ public class MaxLineLengthRule implements IRule {
     public ErrorType getErrorType() {
         return ErrorType.MAX_LINE_LENGTH;
     }
+    
+    @Override
+    public String getAdditionalErrorMessage() {
+        return "";
+    }
 }

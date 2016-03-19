@@ -60,4 +60,9 @@ public class SameTileRule implements IRule {
 	public ErrorType getErrorType() {
 		return ErrorType.SAME_TILE;
 	}
+	
+    @Override
+    public String getAdditionalErrorMessage() {
+        return "";
+    }
 }

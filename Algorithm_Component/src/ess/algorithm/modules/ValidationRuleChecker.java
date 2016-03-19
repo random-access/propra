@@ -1,12 +1,12 @@
 package ess.algorithm.modules;
 
-import java.util.LinkedList;
+import java.util.HashMap;
 
-import ess.algorithm.RoemischerVerbund.Validation;
 import ess.data.Composite;
 import ess.data.Position;
 import ess.data.Tile;
 import ess.exc.PropertyException;
+import ess.rules.ErrorType;
 import ess.rules.IRule;
 import ess.rules.sets.IRuleSet;
 import ess.rules.sets.ValidationRuleSet;
@@ -53,7 +53,7 @@ public class ValidationRuleChecker implements IRuleChecker {
         for (IRule rule : ruleSet.getExplicitRules()) {
             boolean ok = rule.check(tile, pos);
             if (!ok) {
-                ruleSet.addError(rule.getErrorType());
+                ruleSet.addError(rule.getErrorType(), rule.getAdditionalErrorMessage());
             }
             validMove &= ok;
         }
@@ -70,17 +70,18 @@ public class ValidationRuleChecker implements IRuleChecker {
      */
     @Override
     public boolean checkImplicitRules(Composite composite, Tile tile, Position pos) {
-        for (IRule rule : ruleSet.getEndConditions()) {
+        // not working with additional end condition
+        /* for (IRule rule : ruleSet.getEndConditions()) {
             boolean isEnd = rule.check(tile, pos);
             if (isEnd) {
                 ruleSet.addError(rule.getErrorType());
                 return false;
             }
-        }
+        } */
         for (IRule rule : ruleSet.getImplicitRules()) {
             boolean ok = rule.check(tile, pos);
             if (!ok) {
-                ruleSet.addError(rule.getErrorType());
+                ruleSet.addError(rule.getErrorType(), rule.getAdditionalErrorMessage());
                 return false;
             }
         }
@@ -99,7 +100,7 @@ public class ValidationRuleChecker implements IRuleChecker {
         for (IRule rule : ruleSet.getEndConditions()) {
             boolean isEnd = rule.check(tile, pos);
             if (!isEnd) {
-                ruleSet.addError(rule.getErrorType());
+                ruleSet.addError(rule.getErrorType(), rule.getAdditionalErrorMessage());
             }
             completed &= isEnd;
         }
@@ -108,11 +109,12 @@ public class ValidationRuleChecker implements IRuleChecker {
 
     /**
      * Returns a list of all explicit rules that were broken during validation, including
-     * <code>Validation.OTHER</code> if any implicit rule or end condition got broken.
+     * <code>Validation.OTHER</code> if any implicit rule or end condition got broken as key, 
+     * additional error messages as value.
      * 
      * @return A list with broken rules.
      */
-    public LinkedList<Validation> getErrorList() {
-        return ErrorMapper.mapErrorsForAlgoComponent(ruleSet);
+    public HashMap<ErrorType, String> getErrorList() {
+        return ruleSet.getErrorList();
     }
 }

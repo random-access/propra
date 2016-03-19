@@ -129,4 +129,9 @@ public class ReplaceableTileRule implements IRule {
     public ErrorType getErrorType() {
         return ErrorType.REPLACEABLE_TILE;
     }
+    
+    @Override
+    public String getAdditionalErrorMessage() {
+        return "";
+    }
 }

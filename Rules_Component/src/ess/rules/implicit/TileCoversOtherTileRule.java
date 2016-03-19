@@ -48,4 +48,9 @@ public class TileCoversOtherTileRule implements IRule {
 	public ErrorType getErrorType() {
 		return ErrorType.OTHER;
 	}
+	
+    @Override
+    public String getAdditionalErrorMessage() {
+        return "";
+    }
 }

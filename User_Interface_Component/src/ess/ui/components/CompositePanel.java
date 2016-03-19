@@ -125,13 +125,20 @@ public class CompositePanel extends JComponent implements Zoomable {
         // draw inner tile borders
         for (int i = 0; i < surface.getRows(); i++) {
             for (int j = 0; j < surface.getCols(); j++) {
+                // draw tile colors
+                if (surface.getSmallestTile().contains(surface.getEntryAt(i, j))) {
+                    colorizeTile(g2d, i, j, Color.GREEN);
+                }
+                
                 // draw tile border below
                 if (i + 1 < surface.getRows() && surface.getEntryAt(i, j) != surface.getEntryAt(i + 1, j)) {
+                    g2d.setColor(Color.BLACK);
                     g2d.drawLine(currentFieldSize * j + STROKE_CORRECTION, currentFieldSize * (i + 1) + STROKE_CORRECTION, 
                             currentFieldSize * (j + 1) + STROKE_CORRECTION, currentFieldSize * (i + 1) + STROKE_CORRECTION);
                 }
                 // draw tile border right
                 if (j + 1 < surface.getCols() && surface.getEntryAt(i, j) != surface.getEntryAt(i, j + 1)) {
+                    g2d.setColor(Color.BLACK);
                     g2d.drawLine(currentFieldSize * (j + 1) + STROKE_CORRECTION, currentFieldSize * i + STROKE_CORRECTION, 
                             currentFieldSize * (j + 1) + STROKE_CORRECTION, currentFieldSize * (i + 1) + STROKE_CORRECTION);
                 }
@@ -154,8 +161,11 @@ public class CompositePanel extends JComponent implements Zoomable {
         }
     }
     
+    private void colorizeTile(Graphics2D g2d, int i, int j, Color color) {
+        g2d.setColor(color);
+        g2d.fillRect(currentFieldSize * j + STROKE_CORRECTION + 1, currentFieldSize * i + STROKE_CORRECTION + 1, currentFieldSize-1, currentFieldSize-1);
+    }
 
-    
     /**
      * Increases the size of a single field by 1 pixel and refreshes the view.
      */

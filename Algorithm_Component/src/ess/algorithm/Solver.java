@@ -112,8 +112,9 @@ class Solver implements ISolver {
                     posList.add(pos);
                     foundTileThatFits = true;
                     pos = posFinder.findNextFreePosition(composite, pos);
-                    if (ruleChecker.checkEndConditions(composite, tile, pos)) {
+                    if (pos == null) {
                         // logger.info("Iterations: " + counter);
+                        ruleChecker.checkEndConditions(composite, tile, pos); // TODO
                         logger.info("Found a solution.");
                         prepareCompositeForDataOutput();
                         return true;

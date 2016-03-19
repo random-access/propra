@@ -1,6 +1,7 @@
 package ess.data;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 
 import ess.strings.CustomErrorMessages;
 
@@ -17,6 +18,8 @@ import ess.strings.CustomErrorMessages;
 public class Surface {
 
     private Tile[][] fields;
+    private ArrayList<Tile> smallestTiles;
+    private ArrayList<Tile> unusedTiles;
 
     /**
      * Instantiates a new <code>Surface</code>.
@@ -25,6 +28,8 @@ public class Surface {
      */
     public Surface(int rows, int cols) {
         fields = new Tile[rows][cols];
+        smallestTiles = new ArrayList<>();
+        unusedTiles = new ArrayList<>();
     }
 
     /**
@@ -354,6 +359,23 @@ public class Surface {
         }
         // for enum values added in the future that are not included above by accident
         throw new InvalidParameterException(String.format(CustomErrorMessages.ERROR_INVALID_ENUM, c));
+    }
+    
+    public void addToSmallestTileList(Tile smallestTile) {
+        smallestTiles.add(smallestTile);
+    }
+    
+    
+    public ArrayList<Tile> getSmallestTile() {
+        return smallestTiles;
+    }
+    
+    public void addToUnusedTiles(Tile unusedTile) {
+        unusedTiles.add(unusedTile);
+    }
+    
+    public ArrayList<Tile> getUnusedTiles() {
+        return unusedTiles;
     }
 
     /**
