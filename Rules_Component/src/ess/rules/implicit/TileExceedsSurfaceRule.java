@@ -49,7 +49,7 @@ public class TileExceedsSurfaceRule implements IRule {
 	
     @Override
     public String getAdditionalErrorMessage() {
-        return "";
+        return "Tiles exceed the surface";
     }
 }
 

@@ -51,6 +51,6 @@ public class TileCoversOtherTileRule implements IRule {
 	
     @Override
     public String getAdditionalErrorMessage() {
-        return "";
+        return "Tiles are covering other tiles.";
     }
 }

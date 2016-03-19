@@ -6,10 +6,15 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.Properties;
 
 import javax.swing.JComponent;
 
+import ess.data.Composite;
 import ess.data.Surface;
+import ess.exc.PropertyException;
+import ess.strings.CustomErrorMessages;
+import ess.utils.ProPraProperties;
 
 /**
  * This class is a subclass of <code>JComponent</code> that can display 
@@ -45,16 +50,29 @@ public class CompositePanel extends JComponent implements Zoomable {
 
     // data to be displayed
     private Surface surface;
+    
+    private enum ColorStrategy {
+        NO_COLOR,
+        SMALLEST_TILE_GREEN,
+        RANDOM_COLOR
+    }
+    
+    private ColorStrategy currentColorStrategy;
+    private TileColorMapper colorMapper;
 
     /**
      * Instantiates a new CompositePanel.
      * @param surface Data to be displayed.
      * @param initialFieldSize Initial size of a single field in pixel.
      */
-    public CompositePanel(Surface surface, int initialFieldSize) {
+    public CompositePanel(Composite c, int initialFieldSize) {
         super();
         this.currentFieldSize = initialFieldSize;
-        this.surface = surface;
+        this.surface = c.getSurface();
+        currentColorStrategy = parseColorStrategy();
+        if (currentColorStrategy == ColorStrategy.RANDOM_COLOR) {
+            colorMapper = TileColorMapper.getInstance(c.getTileSorts());
+        }
     }
 
     /** 
@@ -101,6 +119,18 @@ public class CompositePanel extends JComponent implements Zoomable {
         drawComposite(g2D);
     }
     
+    private ColorStrategy parseColorStrategy() {
+        try {
+            ProPraProperties properties = ProPraProperties.getInstance();
+            String colorStrategyName = properties.getValue(ProPraProperties.KEY_COLORING);
+            return ColorStrategy.valueOf(colorStrategyName.toUpperCase());
+        } catch (PropertyException e) {
+            System.out.println(CustomErrorMessages.ERROR_INVALID_VALUE_COLORING);
+        }
+        return ColorStrategy.NO_COLOR;
+        
+    }
+    
     private void drawComposite(Graphics2D g2D) {
         drawBackground(g2D);
         drawGrid(g2D);
@@ -125,10 +155,7 @@ public class CompositePanel extends JComponent implements Zoomable {
         // draw inner tile borders
         for (int i = 0; i < surface.getRows(); i++) {
             for (int j = 0; j < surface.getCols(); j++) {
-                // draw tile colors
-                if (surface.getSmallestTile().contains(surface.getEntryAt(i, j))) {
-                    colorizeTile(g2d, i, j, Color.GREEN);
-                }
+                colorizeTile(g2d, i, j);
                 
                 // draw tile border below
                 if (i + 1 < surface.getRows() && surface.getEntryAt(i, j) != surface.getEntryAt(i + 1, j)) {
@@ -146,6 +173,22 @@ public class CompositePanel extends JComponent implements Zoomable {
         }
     }
 
+    private void colorizeTile(Graphics2D g2d, int i, int j) {
+        switch (currentColorStrategy) {
+            case SMALLEST_TILE_GREEN:
+                if (surface.getSmallestTile().contains(surface.getEntryAt(i, j))) {
+                    drawTile(g2d, i, j, Color.GREEN);
+                }
+                break;
+            case RANDOM_COLOR:
+                drawTile(g2d, i, j, colorMapper.getColor(surface.getEntryAt(i, j)));
+                break;
+            default:
+                // do nothing
+        }
+
+    }
+
     // Draws the background grid.
     private void drawGrid(Graphics2D g2D) {
         g2D.setColor(Color.LIGHT_GRAY);
@@ -161,7 +204,7 @@ public class CompositePanel extends JComponent implements Zoomable {
         }
     }
     
-    private void colorizeTile(Graphics2D g2d, int i, int j, Color color) {
+    private void drawTile(Graphics2D g2d, int i, int j, Color color) {
         g2d.setColor(color);
         g2d.fillRect(currentFieldSize * j + STROKE_CORRECTION + 1, currentFieldSize * i + STROKE_CORRECTION + 1, currentFieldSize-1, currentFieldSize-1);
     }
