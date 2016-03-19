@@ -158,7 +158,15 @@ public final class CustomErrorMessages {
     
     
     /***************************************************** UI ERRORS ********************************************************/
+    /**
+     * Error for missing app icon.
+     */
     public static final String ERROR_APP_ICON = "Anwendungs-Icon konnte nicht geladen werden.";
+
+    /**
+     * Error if TileColorMapper doesn't know a certain tile and cannot return a color.
+     */
+    public static final String ERROR_COLOR_NOT_FOUND = "Zur gegebenen Fliese wurde keine Farbe generiert. Interner Fehler.";
 
 
 }

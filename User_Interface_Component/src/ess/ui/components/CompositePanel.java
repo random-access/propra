@@ -48,7 +48,6 @@ public class CompositePanel extends JComponent implements Zoomable {
     private int currentFieldSize;
 
     // data to be displayed
-    private Composite composite;
     private Surface surface;
     
     // How to color the tiles, parsed from config
@@ -71,7 +70,6 @@ public class CompositePanel extends JComponent implements Zoomable {
     public CompositePanel(Composite composite, int initialFieldSize) {
         super();
         this.currentFieldSize = initialFieldSize;
-        this.composite = composite;
         this.surface = composite.getSurface();
         currentColorStrategy = parseColorStrategy();
         colorMapper = TileColorMapper.getInstance(composite.getTileSorts(), currentColorStrategy);
@@ -121,6 +119,7 @@ public class CompositePanel extends JComponent implements Zoomable {
         drawComposite(g2D);
     }
     
+    // Read the color strategy from config file & return the corresponding ColorStrategy enum value.
     private ColorStrategy parseColorStrategy() {
         try {
             ProPraProperties properties = ProPraProperties.getInstance();
@@ -132,6 +131,7 @@ public class CompositePanel extends JComponent implements Zoomable {
         return ColorStrategy.NO_COLOR;
     }
     
+    // Draw the whole composite
     private void drawComposite(Graphics2D g2D) {
         drawBackground(g2D);
         drawGrid(g2D);
@@ -215,6 +215,7 @@ public class CompositePanel extends JComponent implements Zoomable {
 
     }
     
+    // Method for drawing a single tile
     private void drawTile(Graphics2D g2d, int i, int j, Color color) {
         g2d.setColor(color);
         g2d.fillRect(currentFieldSize * j + STROKE_CORRECTION + 1, currentFieldSize * i + STROKE_CORRECTION + 1, currentFieldSize-1, currentFieldSize-1);
