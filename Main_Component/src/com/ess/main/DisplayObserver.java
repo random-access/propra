@@ -17,6 +17,9 @@ import ess.utils.CustomLogger;
  * representation of a <code>Composite</code>. It gets notified by 
  * an <code>AbstractOutputObservable</code> if there is a valid Composite
  * to be displayed.
+ * 
+ * @author Monika Schrenk
+ * 
  */
 public class DisplayObserver implements ICompositeObserver {
 

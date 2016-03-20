@@ -40,6 +40,15 @@ tile_chooser=SortedTileChooser
 ##  "rows_desc", "cols_desc" or "fields_desc" ##
 tile_chooser_strategy=fields_asc, cols_desc
 
+###################
+### UI Settings ###
+###################
+
+## Set coloring of tiles
+## Set this value to "no_color" if tiles should not be colored at all,
+## to "smallest_tile_green if smallest tile should be colored green (task from Praesenztag)
+## or to "random_color" if each tile sort should get a random color
+coloring=no_color
 
 #######################
 ## Logging settings ###

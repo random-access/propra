@@ -29,6 +29,11 @@ public enum ErrorType {
 	SAME_TILE, 
 	
 	/**
+	 * ErrorType of UsedAllTilesRule
+	 */
+	NOT_ALL_TILES_USED,
+	
+	/**
 	 * ErrorType of all other rules.
 	 */
 	OTHER

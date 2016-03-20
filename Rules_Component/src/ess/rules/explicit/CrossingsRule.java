@@ -68,4 +68,12 @@ public class CrossingsRule implements IRule {
 	public ErrorType getErrorType() {
 		return ErrorType.CROSSINGS;
 	}
+	
+	/* (non-Javadoc)
+     * @see ess.rules.IRule#getAdditionalErrorMessage()
+     */
+    @Override
+    public String getAdditionalErrorMessage() {
+        return "";
+    }
 }

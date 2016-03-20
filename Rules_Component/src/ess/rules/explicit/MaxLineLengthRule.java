@@ -129,4 +129,12 @@ public class MaxLineLengthRule implements IRule {
     public ErrorType getErrorType() {
         return ErrorType.MAX_LINE_LENGTH;
     }
+    
+    /* (non-Javadoc)
+     * @see ess.rules.IRule#getAdditionalErrorMessage()
+     */
+    @Override
+    public String getAdditionalErrorMessage() {
+        return "";
+    }
 }

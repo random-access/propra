@@ -39,4 +39,12 @@ public class SurfaceIsFilledCompletelyRule implements IRule {
 	public boolean check(Tile t, Position pos) {
 		return pos == null;
 	}
+	
+	/* (non-Javadoc)
+     * @see ess.rules.IRule#getAdditionalErrorMessage()
+     */
+    @Override
+    public String getAdditionalErrorMessage() {
+        return "";
+    }
 }

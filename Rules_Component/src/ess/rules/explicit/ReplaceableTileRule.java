@@ -129,4 +129,12 @@ public class ReplaceableTileRule implements IRule {
     public ErrorType getErrorType() {
         return ErrorType.REPLACEABLE_TILE;
     }
+    
+    /* (non-Javadoc)
+     * @see ess.rules.IRule#getAdditionalErrorMessage()
+     */
+    @Override
+    public String getAdditionalErrorMessage() {
+        return "";
+    }
 }

@@ -38,6 +38,13 @@ public final class CustomErrorMessages {
             + "bei den Heuristiken, \n bitte g\u00fcltige Bezeichner angeben.";
     
     /**
+     * Error message for invalid heuristic.
+     */
+    public static final String ERROR_INVALID_VALUE_COLORING = "Ung\u00fcltiger Parameter in der Property-Datei "
+            + "f\u00fcr die Fliesenfarben, \n bitte g\u00fcltige Bezeichner angeben.\n"
+            + "Verwende daher keine Farben für die Fliesen.";
+    
+    /**
      * Error message for not being able to create log file.
      */
     public static final String ERROR_LOG_CREATE = "Logdateien k\u00f6nnen nicht angelegt werden. Bitte "
@@ -151,7 +158,15 @@ public final class CustomErrorMessages {
     
     
     /***************************************************** UI ERRORS ********************************************************/
+    /**
+     * Error for missing app icon.
+     */
     public static final String ERROR_APP_ICON = "Anwendungs-Icon konnte nicht geladen werden.";
+
+    /**
+     * Error if TileColorMapper doesn't know a certain tile and cannot return a color.
+     */
+    public static final String ERROR_COLOR_NOT_FOUND = "Zur gegebenen Fliese wurde keine Farbe generiert. Interner Fehler.";
 
 
 }

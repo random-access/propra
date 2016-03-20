@@ -1,5 +1,6 @@
 package ess.rules.sets;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import ess.rules.ErrorType;
@@ -16,7 +17,8 @@ import ess.rules.IRule;
  *  without invalidating the whole composite</li>
  *  <li>{@link #getEndConditions()}, a list of end conditions for checking if the surface is filled completely with tiles</li>
  * </ol>
- * @author monika
+ * 
+ * @author Monika Schrenk
  *
  */
 public interface IRuleSet {
@@ -40,14 +42,14 @@ public interface IRuleSet {
 	LinkedList<IRule> getEndConditions();
 	
 	/**
-	 * Returns a list of errors that occurred during validation.
-	 * @return List of rules that were broken.
+	 * Returns a map of errors that occurred during validation (as key) and additional messages (as value)
+	 * @return HashMap of rules that were broken and additional messages
 	 */
-	LinkedList<ErrorType> getErrorList();
+	HashMap<ErrorType, String> getErrorList();
 
 	/**
 	 * Add an error to this RuleSet's errorList
 	 * @param errorType The ErrorType belonging to the rule that was broken.
 	 */
-	void addError(ErrorType errorType);
+	void addError(ErrorType errorType, String additionalMsg);
 }

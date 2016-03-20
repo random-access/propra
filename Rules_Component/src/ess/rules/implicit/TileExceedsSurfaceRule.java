@@ -46,5 +46,13 @@ public class TileExceedsSurfaceRule implements IRule {
 	public ErrorType getErrorType() {
 		return ErrorType.OTHER;
 	}
+	
+	/* (non-Javadoc)
+     * @see ess.rules.IRule#getAdditionalErrorMessage()
+     */
+    @Override
+    public String getAdditionalErrorMessage() {
+        return "Fliesen gehen \u00fcber den Rand hinaus.";
+    }
 }
 

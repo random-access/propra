@@ -125,7 +125,7 @@ public class MainWindow extends JFrame implements ICompositeView {
     // construct center area of window (data)
     private void createAndAddCenterArea(boolean hasValidComposite, char execMode) {
         pnlComposite = execMode != 's' || hasValidComposite
-                ? new CompositePanel(composite.getSurface(), INITIAL_FIELD_SIZE) : new PlaceHolderPanel();
+                ? new CompositePanel(composite, INITIAL_FIELD_SIZE) : new PlaceHolderPanel();
         pnlCenter = new CustomPanel(COMPONENT_PADDING);
         pnlCenter.setLayout(new GridBagLayout());
         JLabel lblZoomInfo = new CustomLabel("Zum Zoomen + und - verwenden.", DEFAULT_FONT_SIZE, Color.BLACK);

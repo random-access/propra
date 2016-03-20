@@ -32,6 +32,9 @@ import ess.utils.CustomLogger;
  * the maximum gap length l must be a positive integer, which represents the gap length in cm. 
  * <br><br>
  * Example Parameter Call: r=s if="bin\\verbund1.xml" l=1200
+ * 
+ * @author Monika Schrenk
+ * 
  */
 public final class Main {
 

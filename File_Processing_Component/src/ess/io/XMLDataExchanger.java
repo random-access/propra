@@ -38,6 +38,9 @@ import ess.strings.CustomErrorMessages;
  * This class represents an XML implementation of <code>IDataExchanger</code>. It is 
  * responsible for reading input data from XML and writing the output to
  * XML, if a solution for a Composite could be found.
+ * 
+ * @author Monika Schrenk
+ * 
  */
 public class XMLDataExchanger implements IDataExchanger {
 

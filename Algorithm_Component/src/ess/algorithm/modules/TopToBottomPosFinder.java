@@ -18,6 +18,8 @@ import ess.data.Surface;
  * a b c d<br>
  * d e f g <br>
  * h i j k 
+ * 
+ * @author Monika Schrenk
  */
 public class TopToBottomPosFinder implements IPositionFinder {
 

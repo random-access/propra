@@ -9,7 +9,11 @@ import java.awt.Rectangle;
 
 import javax.swing.JComponent;
 
+import ess.data.Composite;
 import ess.data.Surface;
+import ess.exc.PropertyException;
+import ess.strings.CustomErrorMessages;
+import ess.utils.ProPraProperties;
 
 /**
  * This class is a subclass of <code>JComponent</code> that can display 
@@ -45,16 +49,30 @@ public class CompositePanel extends JComponent implements Zoomable {
 
     // data to be displayed
     private Surface surface;
+    
+    // How to color the tiles, parsed from config
+    private ColorStrategy currentColorStrategy;
+    private TileColorMapper colorMapper;
 
+    
+    public enum ColorStrategy {
+        NO_COLOR,
+        SMALLEST_TILE_GREEN,
+        LARGEST_TILE_RED,
+        RANDOM_COLOR
+    }
+    
     /**
      * Instantiates a new CompositePanel.
      * @param surface Data to be displayed.
      * @param initialFieldSize Initial size of a single field in pixel.
      */
-    public CompositePanel(Surface surface, int initialFieldSize) {
+    public CompositePanel(Composite composite, int initialFieldSize) {
         super();
         this.currentFieldSize = initialFieldSize;
-        this.surface = surface;
+        this.surface = composite.getSurface();
+        currentColorStrategy = parseColorStrategy();
+        colorMapper = TileColorMapper.getInstance(composite.getTileSorts(), currentColorStrategy);
     }
 
     /** 
@@ -101,6 +119,19 @@ public class CompositePanel extends JComponent implements Zoomable {
         drawComposite(g2D);
     }
     
+    // Read the color strategy from config file & return the corresponding ColorStrategy enum value.
+    private ColorStrategy parseColorStrategy() {
+        try {
+            ProPraProperties properties = ProPraProperties.getInstance();
+            String colorStrategyName = properties.getValue(ProPraProperties.KEY_COLORING);
+            return ColorStrategy.valueOf(colorStrategyName.toUpperCase());
+        } catch (PropertyException e) {
+            System.out.println(CustomErrorMessages.ERROR_INVALID_VALUE_COLORING);
+        }
+        return ColorStrategy.NO_COLOR;
+    }
+    
+    // Draw the whole composite
     private void drawComposite(Graphics2D g2D) {
         drawBackground(g2D);
         drawGrid(g2D);
@@ -111,32 +142,6 @@ public class CompositePanel extends JComponent implements Zoomable {
     private void drawBackground(Graphics2D g2d) {
         g2d.setColor(LIGHT_BLUE);
         g2d.fill(new Rectangle(0, 0, getWidth(), getHeight()));
-    }
-
-    // Draw the tile borders.
-    private void drawTiles(Graphics2D g2d) {
-        g2d.setColor(Color.BLACK);
-        g2d.setStroke(new BasicStroke(STROKE_WIDTH_FG));
-
-        // draw outer tile borders
-        g2d.drawRect(STROKE_CORRECTION, STROKE_CORRECTION, currentFieldSize * surface.getCols() + STROKE_CORRECTION, 
-                currentFieldSize * surface.getRows() + STROKE_CORRECTION);
-
-        // draw inner tile borders
-        for (int i = 0; i < surface.getRows(); i++) {
-            for (int j = 0; j < surface.getCols(); j++) {
-                // draw tile border below
-                if (i + 1 < surface.getRows() && surface.getEntryAt(i, j) != surface.getEntryAt(i + 1, j)) {
-                    g2d.drawLine(currentFieldSize * j + STROKE_CORRECTION, currentFieldSize * (i + 1) + STROKE_CORRECTION, 
-                            currentFieldSize * (j + 1) + STROKE_CORRECTION, currentFieldSize * (i + 1) + STROKE_CORRECTION);
-                }
-                // draw tile border right
-                if (j + 1 < surface.getCols() && surface.getEntryAt(i, j) != surface.getEntryAt(i, j + 1)) {
-                    g2d.drawLine(currentFieldSize * (j + 1) + STROKE_CORRECTION, currentFieldSize * i + STROKE_CORRECTION, 
-                            currentFieldSize * (j + 1) + STROKE_CORRECTION, currentFieldSize * (i + 1) + STROKE_CORRECTION);
-                }
-            }
-        }
     }
 
     // Draws the background grid.
@@ -153,9 +158,69 @@ public class CompositePanel extends JComponent implements Zoomable {
             g2D.drawLine(currentFieldSize * i, 0, currentFieldSize * i, currentFieldSize * surface.getRows());
         }
     }
-    
 
+    // Draw tile borders & colorize tiles
+    private void drawTiles(Graphics2D g2d) {
+        g2d.setColor(Color.BLACK);
+        g2d.setStroke(new BasicStroke(STROKE_WIDTH_FG));
+
+        // draw outer tile borders
+        g2d.drawRect(STROKE_CORRECTION, STROKE_CORRECTION, currentFieldSize * surface.getCols() + STROKE_CORRECTION, 
+                currentFieldSize * surface.getRows() + STROKE_CORRECTION);
+
+        // draw inner tile borders
+        for (int i = 0; i < surface.getRows(); i++) {
+            for (int j = 0; j < surface.getCols(); j++) {
+                colorizeTile(g2d, i, j);
+                drawTileBorders(g2d, i, j);
+            }
+        }
+    }
+
+    // Draws the inner tile borders of a single field in the grid
+    private void drawTileBorders(Graphics2D g2d, int i, int j) {
+        // draw tile border below
+        if (i + 1 < surface.getRows() && surface.getEntryAt(i, j) != surface.getEntryAt(i + 1, j)) {
+            g2d.setColor(Color.BLACK);
+            g2d.drawLine(currentFieldSize * j + STROKE_CORRECTION, currentFieldSize * (i + 1) + STROKE_CORRECTION, 
+                    currentFieldSize * (j + 1) + STROKE_CORRECTION, currentFieldSize * (i + 1) + STROKE_CORRECTION);
+        }
+        // draw tile border right
+        if (j + 1 < surface.getCols() && surface.getEntryAt(i, j) != surface.getEntryAt(i, j + 1)) {
+            g2d.setColor(Color.BLACK);
+            g2d.drawLine(currentFieldSize * (j + 1) + STROKE_CORRECTION, currentFieldSize * i + STROKE_CORRECTION, 
+                    currentFieldSize * (j + 1) + STROKE_CORRECTION, currentFieldSize * (i + 1) + STROKE_CORRECTION);
+        }
+    }
+
+    // Draws the background color of a single field in the grid
+    private void colorizeTile(Graphics2D g2d, int i, int j) {
+        switch (currentColorStrategy) {
+            case SMALLEST_TILE_GREEN:
+                if (surface.getSmallestTiles().contains(surface.getEntryAt(i, j))) {
+                    drawTile(g2d, i, j, colorMapper.getColor(surface.getEntryAt(i, j)));
+                }
+                break;
+            case RANDOM_COLOR:
+                drawTile(g2d, i, j, colorMapper.getColor(surface.getEntryAt(i, j)));
+                break;
+            case LARGEST_TILE_RED:
+                if (surface.getLargestTiles().contains(surface.getEntryAt(i, j))) {
+                    drawTile(g2d, i, j, colorMapper.getColor(surface.getEntryAt(i, j)));
+                }
+                break;
+            case NO_COLOR:
+                // do nothing
+        }
+
+    }
     
+    // Method for drawing a single tile
+    private void drawTile(Graphics2D g2d, int i, int j, Color color) {
+        g2d.setColor(color);
+        g2d.fillRect(currentFieldSize * j + STROKE_CORRECTION + 1, currentFieldSize * i + STROKE_CORRECTION + 1, currentFieldSize-1, currentFieldSize-1);
+    }
+
     /**
      * Increases the size of a single field by 1 pixel and refreshes the view.
      */

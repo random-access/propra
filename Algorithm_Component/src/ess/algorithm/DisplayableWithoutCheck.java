@@ -6,7 +6,7 @@ package ess.algorithm;
  * <b>Advantages</b>: Saves time for a large Composite, it is also possible to show an invalid
  * Composite, if there is no structural problem with the input itself.
  * 
- * @author monika
+ * @author Monika Schrenk
  *
  */
 public interface DisplayableWithoutCheck {

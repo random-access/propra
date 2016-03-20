@@ -10,6 +10,9 @@ import ess.io.exc.DataExchangeException;
  * external data and the corresponding internal representation.
  * Source and target are identified by their paths, which could be paths on the local file system but also network or database
  * paths.
+ * 
+ * @author Monika Schrenk
+ * 
  */
 public interface IDataExchanger {
 	

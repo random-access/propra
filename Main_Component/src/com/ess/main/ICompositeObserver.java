@@ -9,6 +9,7 @@ import ess.algorithm.AbstractOutputObservable;
  * if solving or validating a Composite was successful.
  * 
  * @author Monika Schrenk
+ * 
  */
 public interface ICompositeObserver extends Observer {
 

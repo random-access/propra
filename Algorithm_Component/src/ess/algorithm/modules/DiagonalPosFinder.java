@@ -28,6 +28,8 @@ import ess.data.Surface;
  * a b c d<br>
  * d f g h <br>
  * e i j k
+ * 
+ * @author Monika Schrenk
  */
 public class DiagonalPosFinder implements IPositionFinder {
 

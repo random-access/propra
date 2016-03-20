@@ -130,4 +130,12 @@ public class MinDistanceToBorderRule implements IRule {
             return tile.getRows();
         }
     }
+
+    /* (non-Javadoc)
+     * @see ess.rules.IRule#getAdditionalErrorMessage()
+     */
+    @Override
+    public String getAdditionalErrorMessage() {
+        return "";
+    }
 }

@@ -3,6 +3,7 @@ package ess.rules.sets;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.logging.Logger;
 
@@ -11,6 +12,7 @@ import ess.exc.PropertyException;
 import ess.rules.ErrorType;
 import ess.rules.IRule;
 import ess.rules.endconditions.SurfaceIsFilledCompletelyRule;
+import ess.rules.endconditions.UsedAllTilesRule;
 import ess.rules.implicit.TileCoversOtherTileRule;
 import ess.rules.implicit.TileExceedsSurfaceRule;
 import ess.utils.CustomLogger;
@@ -28,7 +30,7 @@ public class ValidationRuleSet implements IRuleSet {
 	
 	private final Logger logger = CustomLogger.getLogger();
 
-	private LinkedList<ErrorType> errorList;
+	private HashMap<ErrorType, String> errorList;
 	private LinkedList<IRule> explicitRuleSet;
 	private LinkedList<IRule> implicitRuleSet;
 	private LinkedList<IRule> endConditionSet;
@@ -40,7 +42,7 @@ public class ValidationRuleSet implements IRuleSet {
 	 * or if it contains invalid parameters.
 	 */
     public ValidationRuleSet(Composite composite) throws PropertyException {
-		errorList = new LinkedList<>();
+		errorList = new HashMap<>();
 		explicitRuleSet = new LinkedList<>();
 		implicitRuleSet = new LinkedList<>();
 		endConditionSet = new LinkedList<>();
@@ -79,9 +81,9 @@ public class ValidationRuleSet implements IRuleSet {
 	 * @see ess.rules.sets.IRuleSet#addError(ess.rules.ErrorType)
 	 */
 	@Override
-	public void addError(ErrorType errorType) {
-		if (!errorList.contains(errorType)) {
-			errorList.add(errorType);
+	public void addError(ErrorType errorType, String msg) {
+		if (!errorList.containsKey(errorType)) {
+			errorList.put(errorType, msg);
 		}
 	}
 
@@ -89,7 +91,7 @@ public class ValidationRuleSet implements IRuleSet {
 	 * @see ess.rules.sets.IRuleSet#getErrorList()
 	 */
 	@Override
-	public LinkedList<ErrorType> getErrorList() {
+	public HashMap<ErrorType, String> getErrorList() {
 		return errorList;
 	}
 
@@ -122,8 +124,11 @@ public class ValidationRuleSet implements IRuleSet {
 		logger.info("Activated EntryCoversOtherTileRule ...");
 	}
 	
+	// Used for adding all end conditions to this RuleSet
 	private void addEndConditions(Composite composite) {
 		endConditionSet.add(new SurfaceIsFilledCompletelyRule(composite));
 		logger.info("Activated SurfaceIsFilledCompletelyRule ...");
+		endConditionSet.add(new UsedAllTilesRule(composite));
+        logger.info("Activated UsedAllTilesRule ...");
 	}
 }

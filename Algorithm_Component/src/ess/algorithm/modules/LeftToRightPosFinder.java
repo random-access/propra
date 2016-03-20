@@ -25,6 +25,8 @@ import ess.data.Surface;
  * a d g j <br>
  * b e h k <br>
  * c f i l
+ * 
+ * @author Monika Schrenk
  */
 public class LeftToRightPosFinder implements IPositionFinder {
 

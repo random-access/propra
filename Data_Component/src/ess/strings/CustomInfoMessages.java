@@ -41,6 +41,11 @@ public final class CustomInfoMessages {
 	        + "Stelle \u00fcberschritten.";
 	
 	/**
+	 * Info that not all tiles were used for building the composite.
+	 */
+	public static final String INFO_UNUSED_TILES = "F\u00fcr diese L\u00f6sung wurden nicht alle Fliesen genutzt.";
+	
+	/**
 	 * Info that composite is not valid because of other reasons.
 	 */
 	public static final String INFO_OTHER = "Diese L\u00f6sung enth\u00e4lt sonstige Fehler.";
@@ -148,4 +153,6 @@ public final class CustomInfoMessages {
 	 */
 	public static final String INFO_USAGE = INFO_PROGRAM + "\n\n" + INFO_EXEC_CALL + "\n\n" 
 			+ INFO_PARAMS + "\n\n" + INFO_HINTS + "\n\n" + INFO_EXAMPLES + "\n";
+
+    
 }

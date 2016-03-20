@@ -8,7 +8,7 @@ import ess.strings.CustomInfoMessages;
  * This class is responsible for parsing all parameters the user 
  * entered when starting the application via terminal.
  * 
- * @author monika
+ * @author Monika Schrenk
  *
  */
 public class InputParser {

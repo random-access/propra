@@ -1,8 +1,10 @@
 package ess.algorithm;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import ess.algorithm.RoemischerVerbund.Validation;
+import ess.algorithm.modules.ErrorMapper;
 import ess.algorithm.modules.IPositionFinder;
 import ess.algorithm.modules.TopToBottomPosFinder;
 import ess.algorithm.modules.ValidationRuleChecker;
@@ -43,14 +45,23 @@ class Validator {
         posFinder = new TopToBottomPosFinder();
         ruleChecker = new ValidationRuleChecker(composite);
     }
+    
     /**
      * Validates the given composite against the rules activated in the configuration file. 
-     * @return a list of rules that were broken at least once, or an empty list if no error occurred 
+     * @return a list of rules that were broken at least once or an empty list if no error occurred 
      * during construction.
      */
-    public List<Validation> validateSolution() {
+    public LinkedList<Validation> validateSolution() {
         fillSurface();
-        return ruleChecker.getErrorList();
+        return ErrorMapper.mapErrorsForAlgoComponent(ruleChecker.getErrorList());
+    }
+    
+    /**
+     * Returns a list of error messages for displaying
+     * @return A list of Strings with error messages
+     */
+    public List<String> getErrorMessages() {
+        return ErrorMapper.mapErrorsForUiV2(ruleChecker.getErrorList());
     }
 
     // fills the surface with tiles in tileList, checking all rules before placing a tile.
@@ -62,7 +73,7 @@ class Validator {
         for (String ident : composite.getSurfaceTileList()) {
             pos = posFinder.findNextFreePosition(composite, pos);
             tile = composite.findTileById(ident);
-            if (ruleChecker.checkImplicitRules(composite, tile, pos)) {
+            if (pos != null && ruleChecker.checkImplicitRules(composite, tile, pos)) {
                 ruleChecker.checkExplicitRules(composite, tile, pos);
                 // if an explicit rule gets broken, continue to validate to maybe find other broken rules
                 composite.getSurface().insertEntry(tile, pos);

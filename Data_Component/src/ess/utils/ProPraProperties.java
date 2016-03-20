@@ -66,6 +66,9 @@ public final class ProPraProperties {
 
 	/** Property key for tile chooser strategy */
 	public static final String KEY_TILE_CHOOSER_STRATEGY = "tile_chooser_strategy";
+	
+	/*************************** UI keys ************************************/
+	public static final String KEY_COLORING = "coloring";
 
 	// ProPraProperties singleton
 	private static ProPraProperties instance;
