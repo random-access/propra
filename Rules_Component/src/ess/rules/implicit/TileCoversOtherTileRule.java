@@ -49,8 +49,11 @@ public class TileCoversOtherTileRule implements IRule {
 		return ErrorType.OTHER;
 	}
 	
+	/* (non-Javadoc)
+     * @see ess.rules.IRule#getAdditionalErrorMessage()
+     */
     @Override
     public String getAdditionalErrorMessage() {
-        return "Tiles are covering other tiles.";
+        return "Fliesen \u00fcberlappen sich gegenseitig.";
     }
 }

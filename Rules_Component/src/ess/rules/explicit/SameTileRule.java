@@ -56,11 +56,17 @@ public class SameTileRule implements IRule {
 		return true;
 	}
 
+	/* (non-Javadoc)
+     * @see ess.rules.IRule#getErrorType()
+     */
 	@Override
 	public ErrorType getErrorType() {
 		return ErrorType.SAME_TILE;
 	}
 	
+	/* (non-Javadoc)
+     * @see ess.rules.IRule#getAdditionalErrorMessage()
+     */
     @Override
     public String getAdditionalErrorMessage() {
         return "";

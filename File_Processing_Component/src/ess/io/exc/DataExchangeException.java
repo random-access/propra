@@ -2,6 +2,9 @@ package ess.io.exc;
 
 /**
  * This <code>Exception</code> is thrown when a problem occurs during XML input or output.
+ * 
+ * @author Monika Schrenk
+ * 
  */
 public class DataExchangeException extends Exception {
 

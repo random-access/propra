@@ -6,6 +6,8 @@ import ess.algorithm.RoemischerVerbund.Validation;
 
 /**
  * The Interface <code>IRoemischerVerbund</code> defines the methods for API use.
+ * 
+ * @author Monika Schrenk
  */
 public interface IRoemischerVerbund {
 

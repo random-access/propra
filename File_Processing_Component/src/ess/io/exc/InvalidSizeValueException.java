@@ -3,6 +3,9 @@ package ess.io.exc;
 /**
  * This <code>Exception</code> is thrown when the measurements of a Composite read
  * from XML are invalid.
+ * 
+ * @author Monika Schrenk
+ * 
  */
 public class InvalidSizeValueException extends Exception {
 

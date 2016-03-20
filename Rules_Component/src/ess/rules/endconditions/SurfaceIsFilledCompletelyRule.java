@@ -40,6 +40,9 @@ public class SurfaceIsFilledCompletelyRule implements IRule {
 		return pos == null;
 	}
 	
+	/* (non-Javadoc)
+     * @see ess.rules.IRule#getAdditionalErrorMessage()
+     */
     @Override
     public String getAdditionalErrorMessage() {
         return "";

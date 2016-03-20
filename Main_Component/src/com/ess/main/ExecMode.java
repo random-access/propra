@@ -7,6 +7,7 @@ import ess.strings.CustomErrorMessages;
  * This Enum provides different values for the execution modes entered by the user via command line.
  * 
  * @author Monika Schrenk
+ * 
  */
 public enum ExecMode {
 	/**

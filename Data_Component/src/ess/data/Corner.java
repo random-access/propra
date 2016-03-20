@@ -12,7 +12,6 @@ package ess.data;
  * 
  * @author Monika Schrenk
  * 
- *
  */
 public enum Corner {
     /**

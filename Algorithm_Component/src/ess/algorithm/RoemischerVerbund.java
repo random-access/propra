@@ -18,6 +18,8 @@ import ess.utils.CustomLogger;
 /**
  * This class is used as API (Application Programming Interface). This means
  * that it can be used as a library for other applications. 
+ * 
+ * @author Monika Schrenk
  */
 public class RoemischerVerbund extends AbstractOutputObservable implements IRoemischerVerbund, DisplayableWithoutCheck {
     

@@ -17,7 +17,8 @@ import ess.rules.IRule;
  *  without invalidating the whole composite</li>
  *  <li>{@link #getEndConditions()}, a list of end conditions for checking if the surface is filled completely with tiles</li>
  * </ol>
- * @author monika
+ * 
+ * @author Monika Schrenk
  *
  */
 public interface IRuleSet {

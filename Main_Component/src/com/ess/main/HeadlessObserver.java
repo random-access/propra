@@ -13,6 +13,9 @@ import ess.utils.CustomLogger;
  * the <code>Composite</code> in a terminal. It gets notified by 
  * an <code>AbstractOutputObservable</code> if there is a valid 
  * Composite to be displayed.
+ * 
+ * @author Monika Schrenk
+ * 
  */
 public class HeadlessObserver implements ICompositeObserver {
 

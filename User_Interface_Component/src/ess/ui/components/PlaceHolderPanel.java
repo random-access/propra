@@ -16,7 +16,7 @@ import javax.swing.JComponent;
  * 
  * This component is zoomable to some extent.
  * 
- * @author monika
+ * @author Monika Schrenk
  *
  */
 public class PlaceHolderPanel extends JComponent implements Zoomable {

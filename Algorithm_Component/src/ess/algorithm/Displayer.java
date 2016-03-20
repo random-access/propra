@@ -11,7 +11,7 @@ import ess.exc.PropertyException;
  * This class is an implementation of <code>IDisplayer</code>, which fills the 
  * Surface of a Composite with the given Tiles from top left to bottom
  * right, line by line. 
- * @author monika
+ * @author Monika Schrenk
  *
  */
 public class Displayer implements IDisplayer {

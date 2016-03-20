@@ -12,7 +12,9 @@ import java.util.Collections;
  * <li>an ArrayList of Strings holding the output of a Composite and</li>
  * <li>an int holding the maximum length of straight lines that is allowed in this Composite.</li>
  * </ul> 
+ * 
  * @author Monika Schrenk
+ * 
  */
 public class Composite {
 	

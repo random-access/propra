@@ -131,6 +131,9 @@ public class MinDistanceToBorderRule implements IRule {
         }
     }
 
+    /* (non-Javadoc)
+     * @see ess.rules.IRule#getAdditionalErrorMessage()
+     */
     @Override
     public String getAdditionalErrorMessage() {
         return "";
