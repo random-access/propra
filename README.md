@@ -1,11 +1,13 @@
 # propra
 Meine Implementierung der Aufgabenstellung vom Grundpraktikum Programmierung 2015 (Fernuni Hagen)
 
-
+<p align="center">
+<img width="70%" src="https://github.com/random-access/propra/blob/master/Screenshot.png" alt="Screenshot">
+</p>
 
 _Validiert und verlegt einen Römischen Verbund aus Angaben in einer XML-Datei._
 
-**Aufruf**: `java -jar ProPra.jar r=\<Option\> if=\<Pfad\> l=\<Wert\>`
+**Aufruf**: `java -jar ProPra.jar r=<Option> if=<Pfad> l=<Wert>`
 
 - **Pfad**: gültiger Pfad zur XML-Datei eines zu validierenden bzw. zu verlegenden Römischen Verbunds. 
 Bei Leerzeichen im Pfad bitte Semikolons verwenden.
